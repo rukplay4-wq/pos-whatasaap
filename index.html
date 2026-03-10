@@ -1080,6 +1080,17 @@ function saveSt() {
 function initFirebase() {
   if (!db) return;
   // Carga inmediata con get() — no espera al onSnapshot
+  db.collection('tienda').doc(DOC_ID).get({source:'cache'}).then(function(doc) {
+    if (doc.exists) {
+      var data = doc.data();
+      if (data.C) C = Object.assign({}, DC, data.C);
+      if (data.P) P = data.P;
+      if (data.CATS) CATS = data.CATS;
+      if (data.ORD) ORD = data.ORD;
+      if (data.CUS) CUS = data.CUS;
+      applyC(); renderCat(); renderTicker();
+    }
+  }).catch(function(){});
   db.collection('tienda').doc(DOC_ID).get().then(function(doc) {
     if (!doc.exists) return;
     var data = doc.data();
@@ -1146,8 +1157,10 @@ var ACAT = 'Todos';
 
 // Arranca el listener en tiempo real de Firebase
 window.addEventListener('DOMContentLoaded', function() {
+  // Render inmediato con datos locales (sin esperar Firebase)
+  applyC(); renderCat(); renderTicker(); renderProdList(); renderCatList(); renderOrds(); renderCRM();
+  // Luego Firebase actualiza en background
   if (db) { initFirebase(); }
-  else { console.warn('Firebase no disponible'); }
 });
 
 window.addEventListener('load', function() {
