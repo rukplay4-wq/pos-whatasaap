@@ -1014,21 +1014,53 @@ function loadSt() {
   return null;
 }
 
-// Limpia base64 para que no supere el límite de Firestore (1MB)
-function stripBase64(obj) {
+// Comprime imagen base64 para que quepa en Firestore
+function compressImg(b64, maxW, quality, cb) {
+  if (!b64 || !b64.startsWith('data:image')) { cb(b64); return; }
+  var img = new Image();
+  img.onload = function() {
+    var w = img.width, h = img.height;
+    if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    c.getContext('2d').drawImage(img, 0, 0, w, h);
+    cb(c.toDataURL('image/jpeg', quality));
+  };
+  img.onerror = function() { cb(b64); };
+  img.src = b64;
+}
+
+function stripBase64(obj, cb) {
   var o = JSON.parse(JSON.stringify(obj));
-  // Config
-  if (o.C) {
-    if (o.C.logo && o.C.logo.startsWith('data:')) o.C.logo = '';
-    if (o.C.bimg && o.C.bimg.startsWith('data:')) o.C.bimg = '';
+  var tasks = [];
+  // Comprimir logo
+  if (o.C && o.C.logo && o.C.logo.startsWith('data:')) {
+    tasks.push(function(done) {
+      compressImg(o.C.logo, 200, 0.7, function(r){ o.C.logo = r; done(); });
+    });
   }
-  // Productos
+  // Comprimir banner
+  if (o.C && o.C.bimg && o.C.bimg.startsWith('data:')) {
+    tasks.push(function(done) {
+      compressImg(o.C.bimg, 800, 0.6, function(r){ o.C.bimg = r; done(); });
+    });
+  }
+  // Comprimir productos
   if (o.P) {
     for (var i = 0; i < o.P.length; i++) {
-      if (o.P[i].img && o.P[i].img.startsWith('data:')) o.P[i].img = o.P[i].emoji || '';
+      (function(idx) {
+        if (o.P[idx].img && o.P[idx].img.startsWith('data:')) {
+          tasks.push(function(done) {
+            compressImg(o.P[idx].img, 400, 0.65, function(r){ o.P[idx].img = r; done(); });
+          });
+        }
+      })(i);
     }
   }
-  return o;
+  // Ejecutar todas las tareas en secuencia
+  var i = 0;
+  function next() { if (i >= tasks.length) { cb(o); return; } tasks[i++](next); }
+  next();
 }
 
 function saveSt() {
@@ -1036,10 +1068,10 @@ function saveSt() {
   var data = {C:C, P:P, CATS:CATS, ORD:ORD, CUS:CUS, _ts: ts};
   // Siempre guarda todo (con imágenes) en local
   try { localStorage.setItem(SK, JSON.stringify(data)); } catch(e) {}
-  // A la nube solo va sin base64
+  // A la nube va con imágenes comprimidas
   if (db) {
-    var cloudData = stripBase64(data);
     window._saving = true;
+    stripBase64(data, function(cloudData) {
     db.collection('tienda').doc(DOC_ID).set(cloudData)
       .then(function() {
         window._saving = false;
@@ -1053,6 +1085,7 @@ function saveSt() {
         if (el) { el.innerHTML = '❌ Error nube: ' + (err.code||err.message||'desconocido'); setTimeout(function(){ el.textContent=''; }, 4000); }
         toast('❌ Firebase: ' + (err.code||err.message||'error al guardar'), 'e');
       });
+    }); // end stripBase64
   } else {
     // Firebase no conectado aún — reintentar
     var el = document.getElementById('save-ind');
