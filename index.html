@@ -297,25 +297,8 @@ select.fi option{background:#111122}
 .pinfo{padding:10px}
 .padd,.pqc{margin-top:auto}
 </style>
-  <script>
-  // Carga Firebase de forma asíncrona y segura
-  function loadScript(src, cb) {
-    var s = document.createElement('script');
-    s.src = src;
-    s.onload = cb;
-    s.onerror = function() { console.warn('Firebase SDK no disponible (modo offline)'); if(cb) cb(true); };
-    document.head.appendChild(s);
-  }
-  window._fbReady = false;
-  loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js', function(err) {
-    if (err) return;
-    loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js', function(err2) {
-      if (err2) return;
-      window._fbReady = true;
-      if (window._initFirebaseFn) window._initFirebaseFn();
-    });
-  });
-  </script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
 <div id="pts"></div>
@@ -966,8 +949,6 @@ select.fi option{background:#111122}
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 // ============================================================
 // DATOS Y ESTADO
