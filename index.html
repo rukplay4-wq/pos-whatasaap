@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1036,26 +1037,65 @@ function loadSt() {
   return null;
 }
 
-// Guarda en Firestore + localStorage
+// Limpia base64 para que no supere el límite de Firestore (1MB)
+function stripBase64(obj) {
+  var o = JSON.parse(JSON.stringify(obj));
+  // Config
+  if (o.C) {
+    if (o.C.logo && o.C.logo.startsWith('data:')) o.C.logo = '';
+    if (o.C.bimg && o.C.bimg.startsWith('data:')) o.C.bimg = '';
+  }
+  // Productos
+  if (o.P) {
+    for (var i = 0; i < o.P.length; i++) {
+      if (o.P[i].img && o.P[i].img.startsWith('data:')) o.P[i].img = o.P[i].emoji || '';
+    }
+  }
+  return o;
+}
+
 function saveSt() {
-  var data = {C:C, P:P, CATS:CATS, ORD:ORD, CUS:CUS, _ts: Date.now()};
-  // Siempre guarda local como respaldo
+  var ts = Date.now();
+  var data = {C:C, P:P, CATS:CATS, ORD:ORD, CUS:CUS, _ts: ts};
+  // Siempre guarda todo (con imágenes) en local
   try { localStorage.setItem(SK, JSON.stringify(data)); } catch(e) {}
-  // Guarda en la nube
+  // A la nube solo va sin base64
   if (db) {
-    db.collection('tienda').doc(DOC_ID).set(data)
+    var cloudData = stripBase64(data);
+    window._saving = true;
+    db.collection('tienda').doc(DOC_ID).set(cloudData)
       .then(function() {
+        window._saving = false;
         var el = document.getElementById('save-ind');
         if (el) { el.innerHTML = '☁️ Guardado en la nube'; setTimeout(function(){ el.textContent=''; }, 2500); }
       })
       .catch(function(err) {
+        window._saving = false;
         console.warn('Firebase save error:', err);
         var el = document.getElementById('save-ind');
-        if (el) { el.innerHTML = '✅ Guardado local'; setTimeout(function(){ el.textContent=''; }, 2000); }
+        if (el) { el.innerHTML = '❌ Error nube: ' + (err.code||err.message||'desconocido'); setTimeout(function(){ el.textContent=''; }, 4000); }
+        toast('❌ Firebase: ' + (err.code||err.message||'error al guardar'), 'e');
       });
   } else {
+    // Firebase no conectado aún — reintentar
     var el = document.getElementById('save-ind');
-    if (el) { el.textContent = '✅ Guardado'; setTimeout(function(){ el.textContent=''; }, 2000); }
+    if (el) { el.innerHTML = '⚠️ Sin conexión con la nube — reintentando...'; }
+    setTimeout(function() {
+      if (db) {
+        var cloudData = stripBase64({C:C,P:P,CATS:CATS,ORD:ORD,CUS:CUS,_ts:Date.now()});
+        db.collection('tienda').doc(DOC_ID).set(cloudData)
+          .then(function() {
+            var e2 = document.getElementById('save-ind');
+            if (e2) { e2.innerHTML = '☁️ Guardado en la nube'; setTimeout(function(){ e2.textContent=''; }, 2500); }
+          })
+          .catch(function(err) {
+            console.warn('Firebase retry error:', err);
+            toast('❌ Error Firebase: ' + err.code, 'e');
+          });
+      } else {
+        toast('⚠️ Sin internet — datos guardados solo en este dispositivo', 'e');
+      }
+    }, 3000);
   }
 }
 
@@ -1071,25 +1111,32 @@ function initFirebase() {
   db.collection('tienda').doc(DOC_ID).onSnapshot(function(doc) {
     if (!doc.exists) return;
     var data = doc.data();
-    if (!data || !data._ts) return;
-    // Solo actualiza si los datos de la nube son más recientes
-    var localTs = 0;
-    try { var r = JSON.parse(localStorage.getItem(SK)||'{}'); localTs = r._ts || 0; } catch(e) {}
-    if (data._ts <= localTs) return; // datos locales son más recientes, no pisar
-    // Aplicar datos de la nube
-    if (data.C)    { C    = Object.assign({}, DC, data.C); }
+    if (!data) return;
+    // Aplicar datos de la nube SIEMPRE (excepto si el admin está guardando en este momento)
+    if (window._saving) return;
+    // Preservar imágenes base64 locales si la nube las tiene vacías
+    var localSt = null;
+    try { localSt = JSON.parse(localStorage.getItem(SK)||'{}'); } catch(e) {}
+    if (data.C) {
+      var cloudC = Object.assign({}, DC, data.C);
+      // Restaurar imágenes base64 del local si la nube no las tiene
+      if (localSt && localSt.C) {
+        if (!cloudC.logo && localSt.C.logo) cloudC.logo = localSt.C.logo;
+        if (!cloudC.bimg && localSt.C.bimg) cloudC.bimg = localSt.C.bimg;
+      }
+      C = cloudC;
+    }
     if (data.P)    { P    = data.P; }
     if (data.CATS) { CATS = data.CATS; }
     if (data.ORD)  { ORD  = data.ORD; }
     if (data.CUS)  { CUS  = data.CUS; }
     // Guardar local
-    try { localStorage.setItem(SK, JSON.stringify(data)); } catch(e) {}
+    try { localStorage.setItem(SK, JSON.stringify({C:C,P:P,CATS:CATS,ORD:ORD,CUS:CUS,_ts:data._ts||Date.now()})); } catch(e) {}
     // Actualizar UI
-    applyC(); renderProd(); renderCatTabs();
+    applyC(); renderCat(); renderTicker();
     if (document.getElementById('adm') && document.getElementById('adm').classList.contains('show')) {
-      fillForm(); renderProdList(); renderOrds(); renderCRM();
+      fillForm(); renderProdList(); renderCatList(); renderOrds(); renderCRM();
     }
-    console.log('🔄 Tienda actualizada desde la nube');
   }, function(err) {
     console.warn('Firebase listener error:', err);
   });
