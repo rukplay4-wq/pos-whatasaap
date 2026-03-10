@@ -966,6 +966,8 @@ select.fi option{background:#111122}
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 // ============================================================
 // DATOS Y ESTADO
@@ -1017,17 +1019,10 @@ var FB_CFG = {
   appId: "1:648626327178:web:f78c8819653500514ba773"
 };
 var fbApp, db;
-function _doInitFirebase() {
-  try {
-    if (typeof firebase === 'undefined') return;
-    fbApp = firebase.initializeApp(FB_CFG);
-    db    = firebase.firestore();
-    // Si ya se llamo initFirebase antes de que cargara, ejecutarlo ahora
-    if (window._pendingFirebaseInit) initFirebase();
-  } catch(e) { console.warn('Firebase init error:', e); }
-}
-if (window._fbReady) { _doInitFirebase(); }
-else { window._initFirebaseFn = _doInitFirebase; }
+try {
+  fbApp = firebase.initializeApp(FB_CFG);
+  db = firebase.firestore();
+} catch(e) { console.warn('Firebase init error:', e); }
 
 var DOC_ID = 'store';
 
@@ -1101,8 +1096,7 @@ function saveSt() {
 
 // Carga datos desde Firestore y actualiza la tienda en tiempo real
 function initFirebase() {
-  window._pendingFirebaseInit = false;
-  if (!db) { _doInitFirebase(); if (!db) return; }
+  if (!db) return;
   // Mostrar indicador en línea
   setTimeout(function() {
     var ind = document.getElementById('sync-ind');
@@ -1156,7 +1150,7 @@ var ACAT = 'Todos';
 // Arranca el listener en tiempo real de Firebase
 window.addEventListener('DOMContentLoaded', function() {
   if (db) { initFirebase(); }
-  else { window._pendingFirebaseInit = true; }
+  else { console.warn('Firebase no disponible'); }
 });
 
 window.addEventListener('load', function() {
