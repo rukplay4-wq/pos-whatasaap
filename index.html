@@ -1003,6 +1003,7 @@ var fbApp, db;
 try {
   fbApp = firebase.initializeApp(FB_CFG);
   db = firebase.firestore();
+  db.enablePersistence({synchronizeTabs: true}).catch(function(){});
 } catch(e) { console.warn('Firebase init error:', e); }
 
 var DOC_ID = 'store';
@@ -1078,6 +1079,21 @@ function saveSt() {
 // Carga datos desde Firestore y actualiza la tienda en tiempo real
 function initFirebase() {
   if (!db) return;
+  // Carga inmediata con get() — no espera al onSnapshot
+  db.collection('tienda').doc(DOC_ID).get().then(function(doc) {
+    if (!doc.exists) return;
+    var data = doc.data();
+    if (!data) return;
+    if (data.C) { C = Object.assign({}, DC, data.C); }
+    if (data.P) P = data.P;
+    if (data.CATS) CATS = data.CATS;
+    if (data.ORD) ORD = data.ORD;
+    if (data.CUS) CUS = data.CUS;
+    applyC(); renderCat(); renderTicker();
+    if (document.getElementById('adm') && document.getElementById('adm').classList.contains('show')) {
+      fillForm(); renderProdList(); renderCatList(); renderOrds(); renderCRM();
+    }
+  }).catch(function(){});
   // Mostrar indicador en línea
   setTimeout(function() {
     var ind = document.getElementById('sync-ind');
