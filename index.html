@@ -1131,7 +1131,8 @@ var fbApp, db;
 try {
   fbApp = firebase.initializeApp(FB_CFG);
   db = firebase.firestore();
-  db.enablePersistence({synchronizeTabs: true}).catch(function(){});
+  db.settings({ experimentalForceLongPolling: true, merge: true });
+  db.enablePersistence({synchronizeTabs:false}).catch(function(){});
 } catch(e) { console.warn('Firebase init error:', e); }
 
 var DOC_ID = 'store';
