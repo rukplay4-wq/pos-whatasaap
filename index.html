@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,7 +19,8 @@
   --ctickbg1:#f0a500;--ctickbg2:#ff6b00;--cticktext:#000000;--ctickgdir:90deg;
   --cheroeyebrow:#f0a500;--cherosub:rgba(255,255,255,0.85);
   --cherobtn1bg:#f0a500;--cherobtn1txt:#000000;--cherobtn2brd:#f0a500;--cherobtn2txt:#f0a500;
-  --fhead:'Playfair Display',serif;--fbody:'DM Sans',sans-serif
+  --fhead:'Playfair Display',serif;--fbody:'DM Sans',sans-serif;
+  --fsocbg:rgba(255,255,255,0.13);--fsocbrd:rgba(255,255,255,0.30);--fsocc:#e0e0f0;--fsocrad:50px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -140,8 +142,9 @@ select.fi option{background:#111122}
 #ftr-nm{font-family:var(--fhead);font-size:21px;margin-bottom:7px;color:var(--cftxt)}
 #ftr-inf{font-size:13px;color:var(--cftxt);margin-bottom:14px}
 #ftr-soc{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.fsoc{padding:7px 15px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50px;font-size:13px;font-weight:600;transition:all .2s}
-.fsoc:hover{background:rgba(240,165,0,.1);border-color:rgba(240,165,0,.3);color:var(--cp)}
+/* ── PATCH 1: Botones sociales visibles siempre ── */
+.fsoc{padding:7px 15px;background:var(--fsocbg,rgba(255,255,255,.13));border:1.5px solid var(--fsocbrd,rgba(255,255,255,.30));border-radius:var(--fsocrad,50px);font-size:13px;font-weight:600;color:var(--fsocc,#e0e0f0);transition:all .2s}
+.fsoc:hover{background:rgba(240,165,0,.18);border-color:var(--cp);color:var(--cp);transform:translateY(-2px)}
 .fcopy{font-size:12px;color:rgba(255,255,255,.18)}
 .empty{text-align:center;padding:48px 18px;color:var(--cmut)}
 .empty .ei{font-size:50px;margin-bottom:12px;display:block}
@@ -742,6 +745,44 @@ select.fi option{background:#111122}
               <div class="cfg-zone-body">
                 <div class="cpair"><label>Fondo del pie de página</label><div class="csw"><input type="color" id="c-cftr" oninput="liveC()"><span id="c-cftrh">#07070f</span></div></div>
                 <div class="cpair"><label>Color del texto del pie de página</label><div class="csw"><input type="color" id="c-cftxt" oninput="liveC()"><span id="c-cftxth">#8888aa</span></div></div>
+
+                <!-- ── NUEVO: Botones de redes sociales ── -->
+                <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,.07);padding-top:14px">
+                  <div style="font-size:11px;font-weight:800;color:var(--cp);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">🔗 BOTONES DE REDES SOCIALES</div>
+                  <div style="font-size:11px;color:var(--cmut);margin-bottom:10px">Personaliza el aspecto de los botones de Instagram, Facebook, TikTok y WhatsApp en el pie de página.</div>
+
+                  <!-- Vista previa en vivo -->
+                  <div style="margin-bottom:12px;padding:10px;background:rgba(255,255,255,.03);border-radius:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                    <span style="font-size:11px;color:var(--cmut);margin-right:4px">Vista previa:</span>
+                    <span id="prev-fsoc1" style="padding:7px 15px;background:var(--fsocbg);border:1.5px solid var(--fsocbrd);border-radius:var(--fsocrad);font-size:13px;font-weight:600;color:var(--fsocc)">📷 Instagram</span>
+                    <span id="prev-fsoc2" style="padding:7px 15px;background:var(--fsocbg);border:1.5px solid var(--fsocbrd);border-radius:var(--fsocrad);font-size:13px;font-weight:600;color:var(--fsocc)">💬 WhatsApp</span>
+                  </div>
+
+                  <div class="frow">
+                    <div class="fg"><label class="fl">Fondo del botón</label><div class="csw"><input type="color" id="c-fsocbg" oninput="liveC();updHex()"><span id="c-fsocbgh">#333355</span></div></div>
+                    <div class="fg"><label class="fl">Color del texto</label><div class="csw"><input type="color" id="c-fsocc" oninput="liveC();updHex()"><span id="c-fsocch">#e0e0f0</span></div></div>
+                  </div>
+                  <div class="fg"><label class="fl">Color del borde</label><div class="csw"><input type="color" id="c-fsocbrd" oninput="liveC();updHex()"><span id="c-fsocbrdh">#555577</span></div></div>
+                  <div class="fg"><label class="fl">Forma de los botones</label>
+                    <select class="fi" id="c-fsocrad" onchange="liveC()" style="max-width:220px">
+                      <option value="50px">💊 Cápsula (redondeado)</option>
+                      <option value="12px">▢ Redondeado suave</option>
+                      <option value="6px">■ Cuadrado suave</option>
+                      <option value="0px">⬛ Cuadrado exacto</option>
+                    </select>
+                  </div>
+                  <div style="margin-top:10px">
+                    <div style="font-size:11px;font-weight:700;color:var(--cp);margin-bottom:8px">🎨 Estilos rápidos para los botones</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px">
+                      <button class="btn bsm" style="background:rgba(255,255,255,.13);border:1.5px solid rgba(255,255,255,.3);color:#e0e0f0;border-radius:50px" onclick="setSocStyle('glass')">🪟 Glass</button>
+                      <button class="btn bsm" style="background:#f0a500;color:#000;border-radius:50px;border:none" onclick="setSocStyle('gold')">✨ Dorado</button>
+                      <button class="btn bsm" style="background:rgba(0,0,0,0);border:1.5px solid #f0a500;color:#f0a500;border-radius:50px" onclick="setSocStyle('outline')">⭕ Outline</button>
+                      <button class="btn bsm" style="background:#ffffff;color:#111;border-radius:50px;border:1px solid #ccc" onclick="setSocStyle('white')">☁️ Blanco</button>
+                      <button class="btn bsm" style="background:#1a1a3a;border:1.5px solid rgba(120,120,200,.4);color:#b0b0e0;border-radius:50px" onclick="setSocStyle('dark')">🌙 Dark</button>
+                      <button class="btn bsm" style="background:rgba(240,165,0,.12);border:1.5px solid rgba(240,165,0,.35);color:#f0a500;border-radius:50px" onclick="setSocStyle('tinted')">🟡 Tinted</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -973,12 +1014,12 @@ var DC = {
   tktbg:'#ffffff', tktbg2:'#f5f0e8', tkttxt:'#111111', tktmut:'#555555', tktbrd:'#cccccc', tktaccent:'#f0a500',
   cmodbg:'#141428', cmodhdr:'#0d0d1e', cmodtxt:'#f0f0ff', cmodinp:'rgba(255,255,255,0.06)', cmodinpbrd:'rgba(255,255,255,0.09)', cmodlbl:'#8888aa', cmodbtn:'rgba(255,255,255,0.05)',
   eyebrow:'✨ Bienvenido', cheroeyebrow:'#f0a500', cherosub:'rgba(220,220,255,0.85)',
-  eyebrow:'✨ Bienvenido',
   btn1:'Ver Catálogo 🛍️', btn1show:true, btn1action:'catalog', btn1url:'',
   btn2:'Mi Carrito 🛒',  btn2show:true, btn2action:'cart',    btn2url:'',
   fhead:'Playfair Display', fbody:'DM Sans',
   pwd:'03035579a7f2c9d1e8b4',
-  dispMsg:'🚛 *¡TU PEDIDO VA EN CAMINO!* 🚛\n¡Pronto llegará a tu puerta! 🙏'
+  dispMsg:'🚛 *¡TU PEDIDO VA EN CAMINO!* 🚛\n¡Pronto llegará a tu puerta! 🙏',
+  fsocbg:'rgba(255,255,255,0.13)',fsocbrd:'rgba(255,255,255,0.30)',fsocc:'#e0e0f0',fsocrad:'50px'
 };
 var DP = [
   {id:'p1',name:'Sneakers Urban Pro',desc:'Zapatillas urbanas premium, comodidad y estilo.',price:189900,img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80',emoji:'👟',cat:'Calzado',stock:30},
@@ -1008,13 +1049,11 @@ try {
 
 var DOC_ID = 'store';
 
-// Carga datos desde Firestore (con fallback a localStorage)
 function loadSt() {
   try { var r = localStorage.getItem(SK); if (r) return JSON.parse(r); } catch(e) {}
   return null;
 }
 
-// Comprime imagen base64 para que quepa en Firestore
 function compressImg(b64, maxW, quality, cb) {
   if (!b64 || !b64.startsWith('data:image')) { cb(b64); return; }
   var img = new Image();
@@ -1033,19 +1072,16 @@ function compressImg(b64, maxW, quality, cb) {
 function stripBase64(obj, cb) {
   var o = JSON.parse(JSON.stringify(obj));
   var tasks = [];
-  // Comprimir logo
   if (o.C && o.C.logo && o.C.logo.startsWith('data:')) {
     tasks.push(function(done) {
       compressImg(o.C.logo, 200, 0.7, function(r){ o.C.logo = r; done(); });
     });
   }
-  // Comprimir banner
   if (o.C && o.C.bimg && o.C.bimg.startsWith('data:')) {
     tasks.push(function(done) {
       compressImg(o.C.bimg, 800, 0.6, function(r){ o.C.bimg = r; done(); });
     });
   }
-  // Comprimir productos
   if (o.P) {
     for (var i = 0; i < o.P.length; i++) {
       (function(idx) {
@@ -1057,7 +1093,6 @@ function stripBase64(obj, cb) {
       })(i);
     }
   }
-  // Ejecutar todas las tareas en secuencia
   var i = 0;
   function next() { if (i >= tasks.length) { cb(o); return; } tasks[i++](next); }
   next();
@@ -1066,9 +1101,7 @@ function stripBase64(obj, cb) {
 function saveSt() {
   var ts = Date.now();
   var data = {C:C, P:P, CATS:CATS, ORD:ORD, CUS:CUS, _ts: ts};
-  // Siempre guarda todo (con imágenes) en local
   try { localStorage.setItem(SK, JSON.stringify(data)); } catch(e) {}
-  // A la nube va con imágenes comprimidas
   if (db) {
     window._saving = true;
     stripBase64(data, function(cloudData) {
@@ -1085,9 +1118,8 @@ function saveSt() {
         if (el) { el.innerHTML = '❌ Error nube: ' + (err.code||err.message||'desconocido'); setTimeout(function(){ el.textContent=''; }, 4000); }
         toast('❌ Firebase: ' + (err.code||err.message||'error al guardar'), 'e');
       });
-    }); // end stripBase64
+    });
   } else {
-    // Firebase no conectado aún — reintentar
     var el = document.getElementById('save-ind');
     if (el) { el.innerHTML = '⚠️ Sin conexión con la nube — reintentando...'; }
     setTimeout(function() {
@@ -1109,10 +1141,8 @@ function saveSt() {
   }
 }
 
-// Carga datos desde Firestore y actualiza la tienda en tiempo real
 function initFirebase() {
   if (!db) return;
-  // Carga inmediata con get() — no espera al onSnapshot
   db.collection('tienda').doc(DOC_ID).get({source:'cache'}).then(function(doc) {
     if (doc.exists) {
       var data = doc.data();
@@ -1138,7 +1168,6 @@ function initFirebase() {
       fillForm(); renderProdList(); renderCatList(); renderOrds(); renderCRM();
     }
   }).catch(function(){});
-  // Mostrar indicador en línea
   setTimeout(function() {
     var ind = document.getElementById('sync-ind');
     if (ind) ind.style.display = '';
@@ -1147,14 +1176,11 @@ function initFirebase() {
     if (!doc.exists) return;
     var data = doc.data();
     if (!data) return;
-    // Aplicar datos de la nube SIEMPRE (excepto si el admin está guardando en este momento)
     if (window._saving) return;
-    // Preservar imágenes base64 locales si la nube las tiene vacías
     var localSt = null;
     try { localSt = JSON.parse(localStorage.getItem(SK)||'{}'); } catch(e) {}
     if (data.C) {
       var cloudC = Object.assign({}, DC, data.C);
-      // Restaurar imágenes base64 del local si la nube no las tiene
       if (localSt && localSt.C) {
         if (!cloudC.logo && localSt.C.logo) cloudC.logo = localSt.C.logo;
         if (!cloudC.bimg && localSt.C.bimg) cloudC.bimg = localSt.C.bimg;
@@ -1165,9 +1191,7 @@ function initFirebase() {
     if (data.CATS) { CATS = data.CATS; }
     if (data.ORD)  { ORD  = data.ORD; }
     if (data.CUS)  { CUS  = data.CUS; }
-    // Guardar local
     try { localStorage.setItem(SK, JSON.stringify({C:C,P:P,CATS:CATS,ORD:ORD,CUS:CUS,_ts:data._ts||Date.now()})); } catch(e) {}
-    // Actualizar UI
     applyC(); renderCat(); renderTicker();
     if (document.getElementById('adm') && document.getElementById('adm').classList.contains('show')) {
       fillForm(); renderProdList(); renderCatList(); renderOrds(); renderCRM();
@@ -1188,11 +1212,8 @@ var CS   = 1;
 var OF   = 'all';
 var ACAT = 'Todos';
 
-// Arranca el listener en tiempo real de Firebase
 window.addEventListener('DOMContentLoaded', function() {
-  // Render inmediato con datos locales (sin esperar Firebase)
   applyC(); renderCat(); renderTicker(); renderProdList(); renderCatList(); renderOrds(); renderCRM();
-  // Luego Firebase actualiza en background
   if (db) { initFirebase(); }
 });
 
@@ -1234,6 +1255,11 @@ function applyC() {
   s.setProperty('--chtxt',  C.chtxt || '#f0f0ff');
   s.setProperty('--cftr',  C.cftr  || '#07070f');
   s.setProperty('--cftxt', C.cftxt || '#8888aa');
+  // ── NUEVO: variables CSS para botones sociales ──
+  s.setProperty('--fsocbg',  C.fsocbg  || 'rgba(255,255,255,0.13)');
+  s.setProperty('--fsocbrd', C.fsocbrd || 'rgba(255,255,255,0.30)');
+  s.setProperty('--fsocc',   C.fsocc   || '#e0e0f0');
+  s.setProperty('--fsocrad', C.fsocrad || '50px');
   s.setProperty('--ctabc', C.ctabc || '#f0a500');
   s.setProperty('--cprice',C.cprice|| '#f0a500');
   s.setProperty('--ctickbg1',  C.ctickbg1  || '#f0a500');
@@ -1242,7 +1268,6 @@ function applyC() {
   s.setProperty('--ctickgdir', C.ctickgdir || '90deg');
   s.setProperty('--cheroeyebrow', C.cheroeyebrow || '#f0a500');
   s.setProperty('--cherosub',     C.cherosub     || 'rgba(220,220,255,0.85)');
-  // Eyebrow text
   var ey = document.getElementById('hero-eyebrow');
   if(ey) ey.textContent = C.eyebrow || '✨ Bienvenido';
   s.setProperty('--spd',   (C.spd  || 30) + 's');
@@ -1280,12 +1305,10 @@ function applyC() {
   document.getElementById('hero-sub').textContent   = C.sub  || '';
   var eyel = document.getElementById('hero-eyebrow');
   if(eyel) eyel.textContent = C.eyebrow || '✨ Bienvenido';
-  // Botón 1
   var b1w = document.getElementById('hero-btn1-wrap');
   var b1el = document.getElementById('hero-btn1');
   if(b1w) b1w.style.display = (C.btn1show===false) ? 'none' : '';
   if(b1el) b1el.textContent = C.btn1 || 'Ver Catálogo 🛍️';
-  // Botón 2
   var b2w = document.getElementById('hero-btn2-wrap');
   var b2el = document.getElementById('hero-btn2');
   if(b2w) b2w.style.display = (C.btn2show===false) ? 'none' : '';
@@ -1357,11 +1380,9 @@ function renderCat() {
     var qty = inC ? inC.qty : 0;
 
     var imgH = p.img
-    var imgH = p.img
       ? '<img src="' + p.img + '" alt="" loading="lazy" onerror="this.onerror=null;this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
         '<div class="pph" style="display:none">' + (p.emoji||'📦') + '</div>'
       : '<div class="pph">' + (p.emoji||'📦') + '</div>';
-    var ctrl = qty > 0
     var ctrl = qty > 0
       ? '<div class="pqc"><button data-id="' + p.id + '" onclick="cqty(this.dataset.id,-1)">−</button><span class="pqn">' + qty + '</span><button data-id="' + p.id + '" onclick="cqty(this.dataset.id,1)">+</button></div>'
       : '<div class="padd" data-id="' + p.id + '" onclick="addC(this.dataset.id)">+</div>';
@@ -1471,7 +1492,7 @@ function renderCartB() {
 }
 
 // ============================================================
-// CHECKOUT — Al confirmar, crea pedido Y abre WA automáticamente
+// CHECKOUT
 // ============================================================
 function openChk() {
   if (!CART.length) return;
@@ -1639,12 +1660,10 @@ function buildDispatchMsg(o) {
     dispMsg;
 }
 
-// Al confirmar pedido: guarda en caja Y abre WA automáticamente
 function placeOrd() {
   var o = mkOrd();
   ORD.unshift(o);
 
-  // Registrar cliente
   var wk = o.wa.replace(/[^0-9]/g,'');
   if (!CUS[wk]) CUS[wk] = {name:o.name, wa:o.wa, orders:[], totalSpent:0};
   CUS[wk].name = o.name;
@@ -1654,18 +1673,15 @@ function placeOrd() {
 
   saveSt();
 
-  // Abrir WhatsApp automáticamente con el pedido
   var waNum = (C.wa||'').replace(/[^0-9]/g,'');
   if (waNum) {
     var msg = buildWAmsg(o);
     window.open('https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg), '_blank');
   }
 
-  // Cerrar checkout y mostrar confirmación
   closeM('m-chk');
   document.getElementById('m-ok').classList.remove('hidden');
 
-  // Limpiar carrito y formulario
   CART = []; updCartN(); renderCat();
   ['cn-nm','cn-wa','cn-addr','cn-city','cn-notes'].forEach(function(id){ document.getElementById(id).value=''; });
   document.getElementById('cn-pay').value = '';
@@ -1712,7 +1728,7 @@ function navTo(el) {
 }
 
 // ============================================================
-// SUBIR IMAGEN (convierte a base64)
+// SUBIR IMAGEN
 // ============================================================
 function upImg(ev, inputId, prevId, type) {
   var file = ev.target.files[0];
@@ -1732,19 +1748,16 @@ function upImg(ev, inputId, prevId, type) {
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
       var data = canvas.toDataURL('image/jpeg', 0.82);
 
-      // Guardar en config según tipo y persistir inmediatamente
       if (type === 'logo')   { C.logo  = data; applyC(); saveSt(); }
       if (type === 'banner') { C.bimg  = data; applyC(); saveSt(); }
       if (type === 'prod')   { window._prodImg = data; }
 
-      // Mostrar en input como confirmación
       var inp = document.getElementById(inputId);
       if (inp) inp.value = '(imagen subida ✓)';
 
       var prev = document.getElementById(prevId);
       if (prev) { prev.src = data; prev.style.display = 'block'; }
 
-      // Para productos, guardar en variable temporal
       if (type === 'prod') { window._prodImg = data; }
 
       toast('📷 Imagen cargada correctamente','s');
@@ -1777,6 +1790,12 @@ function fillForm() {
   sv('c-chdr', C.chdr); sv('c-chdr2', C.chdr2||C.chdr||'#0d0d1a'); sv('c-chtxt',C.chtxt);
   var selHdrDir=document.getElementById('c-chdrdir'); if(selHdrDir){for(var i=0;i<selHdrDir.options.length;i++){if(selHdrDir.options[i].value===(C.chdrdir||'90deg')){selHdrDir.selectedIndex=i;break;}}}
   sv('c-cftr', C.cftr||'#07070f'); sv('c-cftxt',C.cftxt||'#8888aa');
+  // ── NUEVO: campos de botones sociales ──
+  sv('c-fsocbg',  C.fsocbg  || 'rgba(255,255,255,0.13)');
+  sv('c-fsocbrd', C.fsocbrd || 'rgba(255,255,255,0.30)');
+  sv('c-fsocc',   C.fsocc   || '#e0e0f0');
+  var selFsocR = document.getElementById('c-fsocrad');
+  if(selFsocR){ for(var i=0;i<selFsocR.options.length;i++){ if(selFsocR.options[i].value===(C.fsocrad||'50px')){selFsocR.selectedIndex=i;break;} } }
   sv('c-dispmsg', C.dispMsg||'🚛 *¡TU PEDIDO VA EN CAMINO!* 🚛\n¡Pronto llegará a tu puerta! 🙏');
   sv('c-tktbg',C.tktbg||'#ffffff'); sv('c-tktbg2',C.tktbg2||'#f5f0e8');
   sv('c-tkttxt',C.tkttxt||'#111111'); sv('c-tktmut',C.tktmut||'#555555');
@@ -1790,7 +1809,6 @@ function fillForm() {
   sv('c-cherosub',  C.cherosub||'#ddddff');
   var selDir = document.getElementById('c-ctickgdir');
   if(selDir){ for(var i=0;i<selDir.options.length;i++){ if(selDir.options[i].value===(C.ctickgdir||'90deg')){selDir.selectedIndex=i;break;} } }
-  sv('c-eyebrow', C.eyebrow||'✨ Bienvenido');
   sv('c-btn1', C.btn1||'Ver Catálogo 🛍️'); sv('c-btn2', C.btn2||'Mi Carrito 🛒');
   var cb1s=document.getElementById('c-btn1show'); if(cb1s) cb1s.checked=(C.btn1show!==false);
   var cb2s=document.getElementById('c-btn2show'); if(cb2s) cb2s.checked=(C.btn2show!==false);
@@ -1799,20 +1817,17 @@ function fillForm() {
   sv('c-btn1url', C.btn1url||''); sv('c-btn2url', C.btn2url||'');
   toggleBtnUrl(1); toggleBtnUrl(2);
   sv('c-ctabc',C.ctabc||'#f0a500'); sv('c-cprice',C.cprice||'#f0a500');
-  // Fuentes
   var selFH = document.getElementById('c-fhead');
   if(selFH){ for(var i=0;i<selFH.options.length;i++){ if(selFH.options[i].value===(C.fhead||'Playfair Display')){selFH.selectedIndex=i;break;} } }
   var selFB = document.getElementById('c-fbody');
   if(selFB){ for(var i=0;i<selFB.options.length;i++){ if(selFB.options[i].value===(C.fbody||'DM Sans')){selFB.selectedIndex=i;break;} } }
 
-  // Logo
   if (C.logo) {
     var lp = document.getElementById('prev-logo');
     if (lp) { lp.src = C.logo; lp.style.display = 'block'; }
     var li = document.getElementById('c-logo');
     if (li) li.value = C.logo.startsWith('data:') ? '(imagen subida ✓)' : C.logo;
   }
-  // Banner
   if (C.bimg) {
     var bp = document.getElementById('prev-bimg');
     if (bp) { bp.src = C.bimg; bp.style.display = 'block'; }
@@ -1838,7 +1853,8 @@ function updHex() {
     ['c-ccardbrd','c-ccardbrdh'],['c-cdesc','c-cdesch'],
     ['c-cbgg1','c-cbgg1h'],['c-cbgg2','c-cbgg2h'],
     ['c-ctickbg1','c-ctickbg1h'],['c-ctickbg2','c-ctickbg2h'],['c-cticktext','c-cticktexth'],
-    ['c-cheroeyebrow','c-cheroeyebrowh'],['c-cherosub','c-cherosubh']
+    ['c-cheroeyebrow','c-cheroeyebrowh'],['c-cherosub','c-cherosubh'],
+    ['c-fsocbg','c-fsocbgh'],['c-fsocc','c-fsocch'],['c-fsocbrd','c-fsocbrdh']
   ];
   for (var i = 0; i < pairs.length; i++) {
     var inp = document.getElementById(pairs[i][0]);
@@ -1866,7 +1882,6 @@ function liveC() {
   if(dirEl) C.ctickgdir = dirEl.value;   C.cattl = g('c-cattl'); C.cur   = g('c-cur') || '$';
   C.wa    = g('c-wa');    C.nit   = g('c-nit');   C.phone = g('c-phone');
   C.ig    = g('c-ig');    C.fb    = g('c-fb');     C.tt    = g('c-tt');
-  // Solo actualizar bimg/logo desde el campo si NO es base64 ya guardado
   var logoVal = g('c-logo');
   if (logoVal && !logoVal.startsWith('(imagen')) C.logo = logoVal;
   var bimgVal = g('c-bimg');
@@ -1886,6 +1901,11 @@ function liveC() {
   C.chdr  = g('c-chdr'); C.chdr2 = g('c-chdr2')||C.chdr; C.chtxt = g('c-chtxt');
   var sHdrDir=document.getElementById('c-chdrdir'); if(sHdrDir) C.chdrdir=sHdrDir.value;
   C.cftr  = g('c-cftr');  C.cftxt = g('c-cftxt');
+  // ── NUEVO: leer campos de botones sociales ──
+  C.fsocbg  = g('c-fsocbg')  || 'rgba(255,255,255,0.13)';
+  C.fsocbrd = g('c-fsocbrd') || 'rgba(255,255,255,0.30)';
+  C.fsocc   = g('c-fsocc')   || '#e0e0f0';
+  var selFsocRad = document.getElementById('c-fsocrad'); if(selFsocRad) C.fsocrad = selFsocRad.value;
   C.dispMsg=g('c-dispmsg');
   C.tktbg=g('c-tktbg'); C.tktbg2=g('c-tktbg2'); C.tkttxt=g('c-tkttxt');
   C.tktmut=g('c-tktmut'); C.tktbrd=g('c-tktbrd'); C.tktaccent=g('c-tktaccent');
@@ -1961,6 +1981,22 @@ function setTickerGrad(c1, c2, txt) {
   toast('🎨 Gradiente aplicado — presiona Guardar', 's');
 }
 
+// ── NUEVO: estilos rápidos para botones sociales ──
+function setSocStyle(t) {
+  var styles = {
+    glass:   {fsocbg:'rgba(255,255,255,0.13)', fsocbrd:'rgba(255,255,255,0.30)', fsocc:'#e0e0f0', fsocrad:'50px'},
+    gold:    {fsocbg:'#f0a500',                fsocbrd:'#c88000',               fsocc:'#000000', fsocrad:'50px'},
+    outline: {fsocbg:'rgba(0,0,0,0)',          fsocbrd:'#f0a500',               fsocc:'#f0a500', fsocrad:'50px'},
+    white:   {fsocbg:'#ffffff',                fsocbrd:'#cccccc',               fsocc:'#111111', fsocrad:'50px'},
+    dark:    {fsocbg:'#1a1a3a',                fsocbrd:'rgba(120,120,200,0.4)',  fsocc:'#b0b0e0', fsocrad:'50px'},
+    tinted:  {fsocbg:'rgba(240,165,0,0.12)',   fsocbrd:'rgba(240,165,0,0.35)',  fsocc:'#f0a500', fsocrad:'50px'}
+  };
+  if(!styles[t]) return;
+  Object.assign(C, styles[t]);
+  fillForm(); applyC();
+  toast('🎨 Estilo aplicado — presiona Guardar','s');
+}
+
 function setPalette(n) {
   var p = {
     gold:  {cp:'#f0a500',cbg:'#0a0a0f',ccat:'#0d0d1a',ccard:'#141428',b1:'#1a0a00',b2:'#0a0f1a',chdr:'#0d0a00',chtxt:'#f0e0a0',cftr:'#060600',cftxt:'#a08830',ctabc:'#f0a500',cprice:'#f0a500',ccatg1:'#0d0d1a',ccatg2:'#0a0a14',ccardg1:'#141428',ccardg2:'#1a1020',cbgg1:'#0a0a0f',cbgg2:'#0a0a0f',cdesc:'#9988aa'},
@@ -1992,7 +2028,6 @@ function renderProdList() {
   for (var i = 0; i < P.length; i++) {
     var p = P[i];
     var imgH = p.img ? '<img src="' + p.img + '" alt="">' : (p.emoji||'📦');
-    // IMPORTANTE: usamos data-idx con el índice en el array para evitar problemas de escape
     html += '<div class="apitem">' +
       '<div class="apth">' + imgH + '</div>' +
       '<div class="apinf">' +
@@ -2008,14 +2043,12 @@ function renderProdList() {
   el.innerHTML = html;
 }
 
-// Abre modal: null = nuevo, número = índice del producto a editar
 function openProdM(idx) {
-  window._prodImg = null; // limpiar imagen temporal
+  window._prodImg = null;
   var prev = document.getElementById('prev-prod');
   if (prev) { prev.src = ''; prev.style.display = 'none'; }
 
   if (idx === null || idx === undefined) {
-    // NUEVO producto
     document.getElementById('prod-ttl').textContent = 'Nuevo Producto';
     document.getElementById('p-eid').value    = '';
     document.getElementById('p-name').value   = '';
@@ -2025,7 +2058,6 @@ function openProdM(idx) {
     document.getElementById('p-emoji').value  = '📦';
     document.getElementById('p-stock').value  = '999';
   } else {
-    // EDITAR producto existente
     var p = P[idx];
     if (!p) { toast('Producto no encontrado','e'); return; }
     document.getElementById('prod-ttl').textContent = 'Editar Producto';
@@ -2037,11 +2069,9 @@ function openProdM(idx) {
     document.getElementById('p-stock').value  = p.stock != null ? p.stock : 999;
     document.getElementById('p-img').value    = (p.img && p.img.startsWith('data:')) ? '(imagen guardada ✓)' : (p.img||'');
     if (p.img) { prev.src = p.img; prev.style.display = 'block'; }
-    // Pre-cargar imagen guardada en temporal
     if (p.img) window._prodImg = p.img;
   }
 
-  // Llenar categorías
   var csel = document.getElementById('p-cat');
   var catHtml = '';
   for (var i = 0; i < CATS.length; i++) {
@@ -2063,7 +2093,6 @@ function saveProd() {
   var isEdit = eidVal !== '';
   var idx    = isEdit ? parseInt(eidVal) : -1;
 
-  // Imagen: prioridad → base64 subida (_prodImg) → URL del campo
   var imgVal = document.getElementById('p-img').value;
   var finalImg = '';
   if (window._prodImg) {
@@ -2135,7 +2164,7 @@ function delCat(idx) {
 }
 
 // ============================================================
-// CAJA DE PEDIDOS — Al despachar abre WA automáticamente
+// CAJA DE PEDIDOS
 // ============================================================
 function renderOrds() {
   var el = document.getElementById('orders-list');
@@ -2198,12 +2227,10 @@ function openDisp(oid) {
   if (!o) { toast('Pedido no encontrado','e'); return; }
 
   var html = '';
-  // Ticket visual
   html += '<div style="margin-bottom:14px">';
   html += '<p style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">🧾 Detalle del pedido</p>';
   html += buildTkt(o);
   html += '</div>';
-  // Dispatch message preview
   html += '<div style="background:rgba(47,133,90,.1);border:1px solid rgba(47,133,90,.25);border-radius:10px;padding:12px;margin-bottom:4px">';
   html += '<p style="font-size:12px;font-weight:700;color:#68d391;margin-bottom:8px">📱 Mensaje que recibirá el cliente en WhatsApp</p>';
   html += '<pre style="font-size:11px;color:#a8e6a3;white-space:pre-wrap;line-height:1.6;font-family:monospace;margin:0">' + escH(buildDispatchMsg(o)) + '</pre>';
@@ -2223,18 +2250,15 @@ function dispatchOrd(oid) {
   for (var i = 0; i < ORD.length; i++) { if (ORD[i].id === oid) { o = ORD[i]; break; } }
   if (!o) { toast('Pedido no encontrado','e'); return; }
 
-  // Marcar como despachado
   o.status = 'dispatched';
   o.dispTs = new Date().toLocaleString('es-CO');
 
-  // Actualizar CRM
   if (CUS[o.cusId]) {
     CUS[o.cusId].lastDisp = o.dispTs;
     CUS[o.cusId].dispatched = (CUS[o.cusId].dispatched||0) + 1;
   }
   saveSt();
 
-  // Abrir WA del cliente con ticket completo
   var waNum = o.wa.replace(/[^0-9]/g,'');
   if (!waNum) { toast('⚠️ El pedido no tiene número de WhatsApp','e'); renderOrds(); renderCRM(); return; }
   var msg = buildDispatchMsg(o);
@@ -2356,6 +2380,7 @@ function dlFile(name, content, type) {
   a.href = URL.createObjectURL(new Blob([content],{type:type}));
   a.download = name; a.click();
 }
+function escH(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function renderPts() {
   var c = document.getElementById('pts');
   for (var i = 0; i < 10; i++) {
