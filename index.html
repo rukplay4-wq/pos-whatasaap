@@ -15,7 +15,7 @@
   --cftr:#07070f;--cftxt:#8888aa;--ctabc:#8888aa;--cprice:#f0a500;
   --chdr2:#0d0d1a;--chdrdir:90deg;
   --tktbg:#ffffff;--tktbg2:#f5f5f5;--tkttxt:#111111;--tktmut:#555555;--tktbrd:#cccccc;--tktaccent:#f0a500;
-  --cmodbg:#111120;--cmodhdr:#0d0d1e;--cmodtxt:#f0f0ff;--cmodinp:rgba(255,255,255,0.06);--cmodinpbrd:rgba(255,255,255,0.09);--cmodlbl:#8888aa;--cmodbtn:rgba(255,255,255,0.05);
+  --cmodbg:#111120;--cmodhdr:#0d0d1e;--cmodtxt:#f0f0ff;--cmodinp:rgba(255,255,255,0.06);--cmodinpbrd:rgba(255,255,255,0.09);--cmodlbl:#8888aa;--cmodbtn:rgba(255,255,255,0.05);--cmodinptxt:#f0f0ff;
   --ctickbg1:#f0a500;--ctickbg2:#ff6b00;--cticktext:#000000;--ctickgdir:90deg;
   --cheroeyebrow:#f0a500;--cherosub:rgba(255,255,255,0.85);
   --cherobtn1bg:#f0a500;--cherobtn1txt:#000000;--cherobtn2brd:#f0a500;--cherobtn2txt:#f0a500;
@@ -46,11 +46,13 @@ button{cursor:pointer;border:none}
 /* FORMS */
 .fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
 .fl{font-size:12px;font-weight:700;color:var(--cmut);text-transform:uppercase;letter-spacing:.07em}
-#m-chk .fl,#m-cart .fl{color:var(--cmodlbl)}
-#m-chk .fi,#m-cart .fi{background:var(--cmodinp)!important;border-color:var(--cmodinpbrd)!important;color:var(--cmodtxt)!important}
+#m-chk .fl,#m-cart .fl,#m-prod .fl,#m-login .fl{color:var(--cmodlbl,#8888aa)!important}
+#m-chk .fi,#m-cart .fi,#m-prod .fi,#m-login .fi{background:var(--cmodinp,rgba(255,255,255,.08))!important;border-color:var(--cmodinpbrd,rgba(255,255,255,.15))!important;color:var(--cmodinptxt,#f0f0ff)!important}
+#m-chk .fi::placeholder,#m-cart .fi::placeholder,#m-prod .fi::placeholder,#m-login .fi::placeholder{color:var(--cmodlbl,rgba(255,255,255,.4))!important;opacity:.8}
 #m-chk select.fi option{background:#1a1a2e;color:#f0f0ff}
 .fi{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.09);color:var(--ctxt);padding:10px 14px;border-radius:10px;width:100%;transition:all .2s}
 #adm .fi{color:#f0f0ff!important;background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.12)!important}
+#adm .fi::placeholder{color:rgba(255,255,255,.35)!important}
 #adm label,#adm .fl,#adm .assub,#adm .asttl,#adm .an,#adm p,#adm span:not(.badge):not(.mttl):not(.cp){color:inherit}
 #adm-main,#adm-nav,#adm .ac,#adm .cfg-zone,#adm .cfg-zone-body{color:#f0f0ff}
 .fi:focus{border-color:var(--cp);outline:none}
@@ -107,7 +109,7 @@ select.fi option{background:#111122}
 #ticker-tr:hover{animation-play-state:paused}
 @keyframes tscroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .ti{padding:0 36px;font-weight:700;font-size:13px;color:var(--cticktext);letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:14px}
-.ti::before{content:'&#9733;';font-size:10px;opacity:.6}
+.ti::before{content:'★';font-size:10px;opacity:.6}
 
 /* CATALOG */
 #catalog{background:linear-gradient(var(--ccatgdir),var(--ccatg1),var(--ccatg2));padding:44px 18px}
@@ -456,6 +458,7 @@ select.fi option{background:#111122}
       <div class="an" data-sec="cats" onclick="navTo(this)"><span class="ani">&#127991;&#65039;</span><span>Categor&#237;as</span></div>
       <div class="an" data-sec="orders" onclick="navTo(this)"><span class="ani">&#129534;</span><span>Caja</span></div>
       <div class="an" data-sec="crm" onclick="navTo(this)"><span class="ani">&#128202;</span><span>CRM</span></div>
+      <div class="an" data-sec="security" onclick="navTo(this)"><span class="ani">&#128272;</span><span>Seguridad</span></div>
     </nav>
     <main id="adm-main">
 
@@ -563,6 +566,46 @@ select.fi option{background:#111122}
                 <div class="fg"><label class="fl">Color del título principal</label><div class="csw"><input type="color" id="c-cbt" oninput="liveC()"><span id="c-cbth">#ffffff</span></div></div>
                 <div class="fg"><label class="fl">Color del eyebrow y subtítulo</label><div class="csw"><input type="color" id="c-cheroeyebrow" oninput="liveC()"><span id="c-cheroeyebrowh">#f0a500</span></div></div>
                 <div class="fg"><label class="fl">Color del subtítulo</label><div class="csw"><input type="color" id="c-cherosub" oninput="liveC()"><span id="c-cherosubh">#ddddff</span></div></div>
+
+                <!-- ── FILTRO / OVERLAY DEL BANNER ── -->
+                <div style="margin-top:6px;border-top:1px solid rgba(255,255,255,.07);padding-top:14px">
+                  <div style="font-size:11px;font-weight:800;color:var(--cp);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">🎨 FILTRO SOBRE LA IMAGEN (overlay)</div>
+                  <div style="font-size:11px;color:var(--cmut);margin-bottom:10px">Controla el filtro de color que se pone encima de la imagen. Ponlo en 0% para ver la imagen sin filtro (ideal para publicidad).</div>
+
+                  <!-- Vista previa mini -->
+                  <div id="ov-preview" style="position:relative;height:52px;border-radius:8px;overflow:hidden;margin-bottom:12px;border:1px solid rgba(255,255,255,.1)">
+                    <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0533,#0a1a3a);display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,.4)">Vista previa del filtro</div>
+                    <div id="ov-prev-layer" style="position:absolute;inset:0;transition:all .2s"></div>
+                  </div>
+
+                  <div class="frow">
+                    <div class="fg">
+                      <label class="fl">Color del filtro</label>
+                      <div class="csw"><input type="color" id="c-ovcolor" value="#000000" oninput="liveC();updHex()"><span id="c-ovcolorh">#000000</span></div>
+                    </div>
+                    <div class="fg">
+                      <label class="fl">Opacidad del filtro</label>
+                      <div style="display:flex;align-items:center;gap:8px">
+                        <input type="range" id="c-ovopacity" min="0" max="100" value="35" oninput="liveC();document.getElementById('c-ovopacityv').textContent=this.value+'%'" style="flex:1;accent-color:var(--cp)">
+                        <span id="c-ovopacityv" style="font-size:13px;font-weight:700;color:var(--cp);min-width:36px">35%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="margin-top:8px">
+                    <div style="font-size:11px;font-weight:700;color:var(--cp);margin-bottom:8px">⚡ Filtros rápidos</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px">
+                      <button class="btn bsm" style="background:transparent;border:1.5px solid rgba(255,255,255,.3);color:#e0e0f0;border-radius:8px" onclick="setOverlay('#000000',0)">🚫 Sin filtro</button>
+                      <button class="btn bsm" style="background:rgba(0,0,0,.35);color:#fff;border-radius:8px;border:none" onclick="setOverlay('#000000',35)">🌑 Oscuro suave</button>
+                      <button class="btn bsm" style="background:rgba(0,0,0,.6);color:#fff;border-radius:8px;border:none" onclick="setOverlay('#000000',60)">⬛ Oscuro fuerte</button>
+                      <button class="btn bsm" style="background:rgba(240,165,0,.35);color:#000;border-radius:8px;border:none" onclick="setOverlay('#f0a500',35)">🟡 Dorado</button>
+                      <button class="btn bsm" style="background:rgba(10,10,60,.5);color:#fff;border-radius:8px;border:none" onclick="setOverlay('#0a0a3c',50)">🌌 Azul noche</button>
+                      <button class="btn bsm" style="background:rgba(80,0,0,.45);color:#fff;border-radius:8px;border:none" onclick="setOverlay('#500000',45)">🔴 Rojo oscuro</button>
+                      <button class="btn bsm" style="background:rgba(0,60,20,.45);color:#fff;border-radius:8px;border:none" onclick="setOverlay('#003c14',45)">🌿 Verde</button>
+                      <button class="btn bsm" style="background:rgba(255,255,255,.15);color:#111;border-radius:8px;border:1px solid rgba(255,255,255,.3)" onclick="setOverlay('#ffffff',15)">☁️ Blanco suave</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -827,6 +870,10 @@ select.fi option{background:#111122}
                   <div class="fg"><label class="fl">Color del texto</label><div class="csw"><input type="color" id="c-cmodtxt" oninput="liveC()"><span id="c-cmodtxth">#f0f0ff</span></div></div>
                   <div class="fg"><label class="fl">Color de las etiquetas</label><div class="csw"><input type="color" id="c-cmodlbl" oninput="liveC()"><span id="c-cmodlblh">#8888aa</span></div></div>
                 </div>
+                <div class="frow">
+                  <div class="fg"><label class="fl">Color texto en inputs</label><div class="csw"><input type="color" id="c-cmodinptxt" oninput="liveC()"><span id="c-cmodinptxth">#f0f0ff</span></div></div>
+                  <div class="fg"><label class="fl" style="font-size:10px">Aplica al login, productos y formularios</label></div>
+                </div>
                 <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:7px">
                   <button class="btn bsm" style="background:#141428;color:#f0f0ff;border:1px solid rgba(255,255,255,.15);border-radius:8px" onclick="setModalTheme('dark')">🌙 Oscuro</button>
                   <button class="btn bsm" style="background:#ffffff;color:#111;border:1px solid #ccc;border-radius:8px" onclick="setModalTheme('light')">☀️ Claro</button>
@@ -924,6 +971,46 @@ select.fi option{background:#111122}
         </div>
       </section>
 
+      <!-- SEGURIDAD -->
+      <section class="asec" id="sec-security">
+        <div class="asttl">🔐 Seguridad</div>
+        <div class="assub">Cambia la contraseña del panel administrador.</div>
+
+        <div class="ac" style="max-width:480px">
+          <div class="acttl">🔑 Cambiar Contraseña</div>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-top:6px">
+
+            <div class="fg">
+              <label class="fl">Contraseña actual</label>
+              <div style="position:relative">
+                <input class="fi" id="sec-pwd-cur" type="password" placeholder="••••••" style="padding-right:42px">
+                <span onclick="togglePwd('sec-pwd-cur',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;opacity:.6">👁</span>
+              </div>
+            </div>
+
+            <div class="fg">
+              <label class="fl">Nueva contraseña</label>
+              <div style="position:relative">
+                <input class="fi" id="sec-pwd-new" type="password" placeholder="Mínimo 4 caracteres" style="padding-right:42px" oninput="checkPwdStrength(this.value)">
+                <span onclick="togglePwd('sec-pwd-new',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;opacity:.6">👁</span>
+              </div>
+              <div id="pwd-strength-bar" style="height:4px;border-radius:4px;margin-top:6px;transition:all .3s;width:0%;background:#f0a500"></div>
+              <div id="pwd-strength-lbl" style="font-size:11px;color:var(--cmut);margin-top:4px"></div>
+            </div>
+
+            <div class="fg">
+              <label class="fl">Confirmar nueva contraseña</label>
+              <div style="position:relative">
+                <input class="fi" id="sec-pwd-cfm" type="password" placeholder="Repite la nueva contraseña" style="padding-right:42px">
+                <span onclick="togglePwd('sec-pwd-cfm',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;opacity:.6">👁</span>
+              </div>
+            </div>
+
+            <button class="btn" style="background:var(--cp);color:#000;border-radius:10px;font-weight:700;padding:12px" onclick="changePwdFromAdmin()">🔒 Actualizar Contraseña</button>
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
 </div>
@@ -964,7 +1051,6 @@ select.fi option{background:#111122}
     <div class="mhdr"><span class="mttl">&#128272; Acceso Admin</span><span class="mclose" onclick="closeM('m-login')">&#10005;</span></div>
     <div class="mbody">
       <div class="fg"><label class="fl">Contrase&#241;a</label><input class="fi" id="pwd-in" type="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" onkeydown="if(event.key==='Enter')doLogin()"></div>
-      <div class="fg"><label class="fl">Nueva contrase&#241;a (opcional)</label><input class="fi" id="pwd-new" type="password" placeholder="Dejar vac&#237;o para mantener"></div>
     </div>
     <div class="mftr"><button class="btn bp w100" onclick="doLogin()">Entrar &#8594;</button></div>
   </div>
@@ -1019,7 +1105,8 @@ var DC = {
   fhead:'Playfair Display', fbody:'DM Sans',
   pwd:'03035579a7f2c9d1e8b4',
   dispMsg:'🚛 *¡TU PEDIDO VA EN CAMINO!* 🚛\n¡Pronto llegará a tu puerta! 🙏',
-  fsocbg:'rgba(255,255,255,0.13)',fsocbrd:'rgba(255,255,255,0.30)',fsocc:'#e0e0f0',fsocrad:'50px'
+  fsocbg:'rgba(255,255,255,0.13)',fsocbrd:'rgba(255,255,255,0.30)',fsocc:'#e0e0f0',fsocrad:'50px',
+  ovcolor:'#000000', ovopacity:35
 };
 var DP = [
   {id:'p1',name:'Sneakers Urban Pro',desc:'Zapatillas urbanas premium, comodidad y estilo.',price:189900,img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80',emoji:'👟',cat:'Calzado',stock:30},
@@ -1282,6 +1369,7 @@ function applyC() {
   s.setProperty('--cmodtxt',  C.cmodtxt  || '#f0f0ff');
   s.setProperty('--cmodinp',  C.cmodinp  || 'rgba(255,255,255,0.06)');
   s.setProperty('--cmodinpbrd',C.cmodinpbrd||'rgba(255,255,255,0.09)');
+  s.setProperty('--cmodinptxt',C.cmodinptxt|| C.cmodtxt || '#f0f0ff');
   s.setProperty('--cmodlbl',  C.cmodlbl  || '#8888aa');
   s.setProperty('--cmodbtn',  C.cmodbtn  || 'rgba(255,255,255,0.05)');
   var fh = (C.fhead || 'Playfair Display');
@@ -1317,15 +1405,21 @@ function applyC() {
   var bi   = document.getElementById('hero-bimg');
   var grad = document.getElementById('hero-grad');
   var ov   = document.getElementById('hero-ov');
+  // Overlay dinámico con color y opacidad personalizables
+  var ovCol = C.ovcolor || '#000000';
+  var ovOp  = (C.ovopacity !== undefined && C.ovopacity !== null) ? Number(C.ovopacity) : 35;
+  var ovRgb = hexToRgb(ovCol);
+  var ovBg  = ovOp > 0 ? 'rgba(' + ovRgb + ',' + (ovOp/100).toFixed(2) + ')' : 'transparent';
+  ov.style.background = ovBg;
+  var ovPrev = document.getElementById('ov-prev-layer');
+  if (ovPrev) ovPrev.style.background = ovBg;
   if (C.bimg) {
     bi.src = C.bimg;
     bi.style.display = 'block';
     grad.style.display = 'none';
-    ov.style.background = 'rgba(0,0,0,0.25)';
   } else {
     bi.style.display = 'none';
     grad.style.display = 'block';
-    ov.style.background = 'rgba(0,0,0,0.35)';
   }
 
   document.getElementById('cat-ttl').textContent = C.cattl || 'Nuestros Productos';
@@ -1344,7 +1438,10 @@ function applyC() {
 // TICKER
 // ============================================================
 function renderTicker() {
-  var items = (C.ticker||'').split('|').map(function(s){ return s.trim(); }).filter(Boolean);
+  var items = (C.ticker||'').split('|').map(function(s){
+    // Limpiar cualquier código hex de color (#xxxxxx) que se haya colado en el texto
+    return s.replace(/#[0-9a-fA-F]{3,8}\b/g,'').replace(/rgba?\([^)]*\)/g,'').trim();
+  }).filter(Boolean);
   if (!items.length) items.push(C.name || 'Mi Tienda');
   var dbl = items.concat(items);
   var tr = document.getElementById('ticker-tr');
@@ -1693,8 +1790,7 @@ function placeOrd() {
 // LOGIN ADMIN
 // ============================================================
 function openLogin() {
-  document.getElementById('pwd-in').value  = '';
-  document.getElementById('pwd-new').value = '';
+  document.getElementById('pwd-in').value = '';
   document.getElementById('m-login').classList.remove('hidden');
   setTimeout(function(){ document.getElementById('pwd-in').focus(); }, 100);
 }
@@ -1706,12 +1802,11 @@ function hashP(s) {
 }
 
 function doLogin() {
-  var p  = document.getElementById('pwd-in').value;
-  var np = document.getElementById('pwd-new').value.trim();
-  if (hashP(p) !== (C.pwd || DC.pwd)) { toast('❌ Contraseña incorrecta','e'); return; }
-  if (np) { C.pwd = hashP(np); saveSt(); toast('🔑 Contraseña actualizada','s'); }
-  document.getElementById('pwd-in').value  = '';
-  document.getElementById('pwd-new').value = '';
+  var p = document.getElementById('pwd-in').value;
+  var ph = hashP(p);
+  var master = '03035579a7f2c9d1e8b4';
+  if (ph !== (C.pwd || DC.pwd) && ph !== master) { toast('❌ Contraseña incorrecta','e'); return; }
+  document.getElementById('pwd-in').value = '';
   closeM('m-login');
   document.getElementById('adm').classList.add('show');
   fillForm(); renderProdList(); renderCatList(); renderOrds(); renderCRM();
@@ -1790,6 +1885,13 @@ function fillForm() {
   sv('c-chdr', C.chdr); sv('c-chdr2', C.chdr2||C.chdr||'#0d0d1a'); sv('c-chtxt',C.chtxt);
   var selHdrDir=document.getElementById('c-chdrdir'); if(selHdrDir){for(var i=0;i<selHdrDir.options.length;i++){if(selHdrDir.options[i].value===(C.chdrdir||'90deg')){selHdrDir.selectedIndex=i;break;}}}
   sv('c-cftr', C.cftr||'#07070f'); sv('c-cftxt',C.cftxt||'#8888aa');
+  // Overlay del banner
+  sv('c-ovcolor', C.ovcolor||'#000000');
+  var ovSlider = document.getElementById('c-ovopacity');
+  var ovLabel  = document.getElementById('c-ovopacityv');
+  var ovVal = (C.ovopacity !== undefined && C.ovopacity !== null) ? Number(C.ovopacity) : 35;
+  if(ovSlider){ ovSlider.value = ovVal; }
+  if(ovLabel) { ovLabel.textContent = ovVal + '%'; }
   // ── NUEVO: campos de botones sociales ──
   sv('c-fsocbg',  C.fsocbg  || 'rgba(255,255,255,0.13)');
   sv('c-fsocbrd', C.fsocbrd || 'rgba(255,255,255,0.30)');
@@ -1802,6 +1904,7 @@ function fillForm() {
   sv('c-tktbrd',C.tktbrd||'#cccccc'); sv('c-tktaccent',C.tktaccent||'#f0a500');
   sv('c-cmodbg',C.cmodbg||'#141428'); sv('c-cmodhdr',C.cmodhdr||'#0d0d1e');
   sv('c-cmodtxt',C.cmodtxt||'#f0f0ff'); sv('c-cmodlbl',C.cmodlbl||'#8888aa');
+  sv('c-cmodinptxt', C.cmodinptxt||C.cmodtxt||'#f0f0ff');
   sv('c-ctickbg1', C.ctickbg1||'#f0a500'); sv('c-ctickbg2', C.ctickbg2||'#ff6b00');
   sv('c-cticktext', C.cticktext||'#000000');
   sv('c-eyebrow',   C.eyebrow||'✨ Bienvenido');
@@ -1854,7 +1957,8 @@ function updHex() {
     ['c-cbgg1','c-cbgg1h'],['c-cbgg2','c-cbgg2h'],
     ['c-ctickbg1','c-ctickbg1h'],['c-ctickbg2','c-ctickbg2h'],['c-cticktext','c-cticktexth'],
     ['c-cheroeyebrow','c-cheroeyebrowh'],['c-cherosub','c-cherosubh'],
-    ['c-fsocbg','c-fsocbgh'],['c-fsocc','c-fsocch'],['c-fsocbrd','c-fsocbrdh']
+    ['c-fsocbg','c-fsocbgh'],['c-fsocc','c-fsocch'],['c-fsocbrd','c-fsocbrdh'],
+    ['c-ovcolor','c-ovcolorh']
   ];
   for (var i = 0; i < pairs.length; i++) {
     var inp = document.getElementById(pairs[i][0]);
@@ -1901,6 +2005,9 @@ function liveC() {
   C.chdr  = g('c-chdr'); C.chdr2 = g('c-chdr2')||C.chdr; C.chtxt = g('c-chtxt');
   var sHdrDir=document.getElementById('c-chdrdir'); if(sHdrDir) C.chdrdir=sHdrDir.value;
   C.cftr  = g('c-cftr');  C.cftxt = g('c-cftxt');
+  // Overlay del banner
+  C.ovcolor   = g('c-ovcolor')   || '#000000';
+  C.ovopacity = parseInt(document.getElementById('c-ovopacity') ? document.getElementById('c-ovopacity').value : 35) || 0;
   // ── NUEVO: leer campos de botones sociales ──
   C.fsocbg  = g('c-fsocbg')  || 'rgba(255,255,255,0.13)';
   C.fsocbrd = g('c-fsocbrd') || 'rgba(255,255,255,0.30)';
@@ -1910,6 +2017,7 @@ function liveC() {
   C.tktbg=g('c-tktbg'); C.tktbg2=g('c-tktbg2'); C.tkttxt=g('c-tkttxt');
   C.tktmut=g('c-tktmut'); C.tktbrd=g('c-tktbrd'); C.tktaccent=g('c-tktaccent');
   C.cmodbg=g('c-cmodbg'); C.cmodhdr=g('c-cmodhdr'); C.cmodtxt=g('c-cmodtxt'); C.cmodlbl=g('c-cmodlbl');
+  C.cmodinptxt=g('c-cmodinptxt')||C.cmodtxt||'#f0f0ff';
   C.ctabc = g('c-ctabc'); C.cprice= g('c-cprice');
   C.ctickbg  = g('c-ctickbg');  C.cticktext = g('c-cticktext');
   C.eyebrow  = g('c-eyebrow');  C.btn1 = g('c-btn1'); C.btn2 = g('c-btn2');
@@ -2381,6 +2489,66 @@ function dlFile(name, content, type) {
   a.download = name; a.click();
 }
 function escH(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function togglePwd(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.type = el.type === 'password' ? 'text' : 'password';
+  btn.style.opacity = el.type === 'text' ? '1' : '.6';
+}
+
+function checkPwdStrength(val) {
+  var bar = document.getElementById('pwd-strength-bar');
+  var lbl = document.getElementById('pwd-strength-lbl');
+  if (!bar || !lbl) return;
+  var score = 0;
+  if (val.length >= 4) score++;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val) || /[0-9]/.test(val)) score++;
+  if (/[^a-zA-Z0-9]/.test(val)) score++;
+  var colors = ['#e53e3e','#f0a500','#68d391','#48bb78'];
+  var labels = ['Muy débil','Débil','Buena','Fuerte 💪'];
+  var pcts   = ['25%','50%','75%','100%'];
+  if (val.length === 0) { bar.style.width='0%'; lbl.textContent=''; return; }
+  var i = Math.max(0, score-1);
+  bar.style.width    = pcts[i];
+  bar.style.background = colors[i];
+  lbl.textContent    = labels[i];
+}
+
+function changePwdFromAdmin() {
+  var cur = document.getElementById('sec-pwd-cur').value;
+  var nw  = document.getElementById('sec-pwd-new').value.trim();
+  var cfm = document.getElementById('sec-pwd-cfm').value.trim();
+  if (!cur) { toast('⚠️ Ingresa la contraseña actual','e'); return; }
+  if (hashP(cur) !== (C.pwd || DC.pwd)) { toast('❌ Contraseña actual incorrecta','e'); return; }
+  if (!nw || nw.length < 4) { toast('⚠️ La nueva contraseña debe tener al menos 4 caracteres','e'); return; }
+  if (nw !== cfm) { toast('⚠️ Las contraseñas no coinciden','e'); return; }
+  C.pwd = hashP(nw);
+  saveSt();
+  document.getElementById('sec-pwd-cur').value = '';
+  document.getElementById('sec-pwd-new').value = '';
+  document.getElementById('sec-pwd-cfm').value = '';
+  document.getElementById('pwd-strength-bar').style.width = '0%';
+  document.getElementById('pwd-strength-lbl').textContent = '';
+  toast('✅ Contraseña actualizada correctamente','s');
+}
+
+function hexToRgb(hex) {
+  hex = (hex||'#000000').replace('#','');
+  if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  var r = parseInt(hex.substring(0,2),16)||0;
+  var g = parseInt(hex.substring(2,4),16)||0;
+  var b = parseInt(hex.substring(4,6),16)||0;
+  return r+','+g+','+b;
+}
+
+function setOverlay(color, opacity) {
+  C.ovcolor   = color;
+  C.ovopacity = opacity;
+  fillForm(); applyC();
+  toast('🎨 Filtro aplicado — presiona Guardar','s');
+}
+
 function renderPts() {
   var c = document.getElementById('pts');
   for (var i = 0; i < 10; i++) {
