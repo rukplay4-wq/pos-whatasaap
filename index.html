@@ -1,23 +1,5 @@
 
 
-<!--
-================================================================================
-  SISTEMA POS WHATSAPP
-  © 2024-2026 Nova Anuncios. Todos los derechos reservados.
-================================================================================
-  Este software es propiedad exclusiva de Nova Anuncios.
-  Está protegido por las leyes de derechos de autor y tratados internacionales.
-
-  PROHIBIDO:
-  - Copiar, reproducir o distribuir este código sin autorización escrita.
-  - Modificar, descompilar o realizar ingeniería inversa.
-  - Usar este código para crear productos derivados sin licencia.
-  - Vender o sublicenciar este software a terceros.
-
-  El uso no autorizado será perseguido legalmente.
-  Contacto: Nova Anuncios
-================================================================================
--->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1248,17 +1230,6 @@ function saveSt() {
 
 function initFirebase() {
   if (!db) return;
-  db.collection('tienda').doc(DOC_ID).get({source:'cache'}).then(function(doc) {
-    if (doc.exists) {
-      var data = doc.data();
-      if (data.C) C = Object.assign({}, DC, data.C);
-      if (data.P) P = data.P;
-      if (data.CATS) CATS = data.CATS;
-      if (data.ORD) ORD = data.ORD;
-      if (data.CUS) CUS = data.CUS;
-      applyC(); renderCat(); renderTicker();
-    }
-  }).catch(function(){});
   db.collection('tienda').doc(DOC_ID).get().then(function(doc) {
     if (!doc.exists) return;
     var data = doc.data();
