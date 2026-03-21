@@ -6023,27 +6023,36 @@ function enviarCalificacion() {
 
 function verQRProducto(idx) {
   var p = P[idx]; if (!p) return;
-  var base = (C.siteUrl||window.location.href.split('?')[0]);
+  var base = (C.siteUrl || window.location.href.split('?')[0]);
   var link = base + '?addprod=' + p.id;
-  window._qrProdLink = link; window._qrProdId = p.id; window._qrProdName = p.name;
-  var m = document.getElementById('m-qr'); if (!m) return;
-  var ttl = document.getElementById('qr-title'); if(ttl) ttl.textContent = p.name;
-  var urlTxt = document.getElementById('qr-url-txt'); if(urlTxt) urlTxt.textContent = link;
-  var container = document.getElementById('qr-container'); if (!container) return;
-  var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(link)+'&bgcolor=ffffff&color=000000&margin=10';
-  var div = document.createElement('div'); div.style.textAlign='center';
-  var img = document.createElement('img'); img.src=qrSrc; img.style.cssText='width:200px;height:200px;border-radius:8px;margin-bottom:8px';
-  div.appendChild(img);
-  var info = document.createElement('div'); info.style.cssText='font-size:11px;color:#555;font-weight:700;margin-bottom:4px';
-  info.textContent = p.id + (p.ref?' | '+p.ref:''); div.appendChild(info);
-  var btnRow = document.createElement('div'); btnRow.style.cssText='display:flex;gap:6px;justify-content:center';
-  var btnCopy = document.createElement('button');
-  btnCopy.textContent='📋 Copiar link'; btnCopy.style.cssText='padding:6px 12px;background:#f0a500;color:#000;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer';
-  btnCopy.onclick=function(){ navigator.clipboard&&navigator.clipboard.writeText(window._qrProdLink).then(function(){ btnCopy.textContent='✅ Copiado'; setTimeout(function(){ btnCopy.textContent='📋 Copiar link'; },2000); }); };
-  btnRow.appendChild(btnCopy); div.appendChild(btnRow);
-  container.innerHTML=''; container.appendChild(div);
-  m.style.display='flex';
+  window._qrProdLink = link;
+
+  // Crear o reutilizar modal propio para QR de producto
+  var m = document.getElementById('m-qr-prod');
+  if (!m) {
+    m = document.createElement('div');
+    m.id = 'm-qr-prod';
+    m.style.cssText = 'display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.85);align-items:center;justify-content:center;flex-direction:column;gap:12px';
+    m.onclick = function(e){ if(e.target===m) m.style.display='none'; };
+    document.body.appendChild(m);
+  }
+
+  var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(link)+'&bgcolor=ffffff&color=000000&margin=10';
+
+  m.innerHTML =
+    '<div style="background:#fff;padding:20px;border-radius:16px;text-align:center;max-width:300px">' +
+      '<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px">' + p.name + '</div>' +
+      '<div style="font-size:11px;color:#666;margin-bottom:12px">ID: ' + p.id + (p.ref?' · Ref: '+p.ref:'') + '</div>' +
+      '<img src="'+qrSrc+'" style="width:220px;height:220px;border-radius:8px;display:block;margin:0 auto 12px">' +
+      '<div style="display:flex;gap:8px;justify-content:center">' +
+        '<button onclick="navigator.clipboard&&navigator.clipboard.writeText(window._qrProdLink)" style="padding:8px 16px;background:#f0a500;color:#000;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">📋 Copiar link</button>' +
+        '<button onclick="cerrarQRProd()" style="padding:8px 16px;background:#eee;color:#333;border:none;border-radius:8px;font-size:13px;cursor:pointer">Cerrar</button>' +
+      '</div>' +
+    '</div>';
+  m.style.display = 'flex';
 }
+
+function cerrarQRProd(){ var m=document.getElementById('m-qr-prod'); if(m) m.style.display='none'; }
 
 function generarTodosQRProductos() {
   if (!P.length) { toast('⚠️ No hay productos','e'); return; }
