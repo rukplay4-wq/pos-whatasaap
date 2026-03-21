@@ -285,8 +285,8 @@ select.fi option{background:#111122}
 @keyframes scanLine{0%{top:0}50%{top:calc(100% - 2px)}100%{top:0}}
 /* POS responsive */
 @media(max-width:900px){
-  #cajapanel-registradora > div{grid-template-columns:1fr!important}
-  #cajapanel-registradora > div > div:last-child{position:static!important}
+  @media(max-width:860px){#pos-grid{grid-template-columns:1fr!important}}
+  @media(min-width:861px){#pos-grid{grid-template-columns:220px 1fr 280px}}
 }
 
 /* Toasts */
@@ -1731,133 +1731,142 @@ window.addEventListener('DOMContentLoaded', function(){
 
         <!-- TAB: REGISTRADORA (MOSTRADOR) — POS COMPLETO -->
         <div id="cajapanel-registradora" style="display:none">
-          <div style="display:grid;grid-template-columns:1fr 320px;gap:14px">
 
-            <!-- COLUMNA IZQUIERDA: Escáner + Búsqueda + Productos -->
-            <div style="display:flex;flex-direction:column;gap:12px">
+          <!-- BARRA SUPERIOR: modo escáner -->
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:12px;border:1px solid rgba(255,255,255,.07);flex-wrap:wrap">
+            <div style="font-size:13px;font-weight:700;color:var(--cp)">📷 Escáner</div>
+            <button class="btn bp bsm" onclick="iniciarEscaner()" id="btn-iniciar-scan" style="border-radius:8px">📷 Esta cámara</button>
+            <button class="btn bo bsm" onclick="detenerEscaner()" id="btn-detener-scan" style="display:none;border-radius:8px">⏹ Detener</button>
+            <button class="btn bsm" onclick="activarEscanerRemoto()" style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:8px">📱 Celular remoto</button>
+            <div id="scan-feedback" style="font-size:12px;color:var(--cmut);margin-left:4px">Toca un botón para escanear</div>
+          </div>
 
-              <!-- Escáner de cámara -->
-              <div class="ac" style="padding:14px">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                  <div class="acttl" style="margin:0;border:none;padding:0">📷 Escáner de productos</div>
-                  <div style="display:flex;gap:6px">
-                    <button class="btn bp bsm" onclick="iniciarEscaner()" id="btn-iniciar-scan" style="border-radius:8px">📷 Cámara</button>
-                    <button class="btn bo bsm" onclick="detenerEscaner()" id="btn-detener-scan" style="display:none;border-radius:8px">⏹ Detener</button>
-                  </div>
-                </div>
-                <!-- Video escáner -->
-                <div id="scanner-wrap" style="display:none;position:relative;border-radius:10px;overflow:hidden;background:#000;margin-bottom:10px">
-                  <video id="scanner-video" style="width:100%;display:block;max-height:180px;object-fit:cover" playsinline autoplay muted></video>
+          <!-- GRID POS: 3 columnas en desktop, 1 en móvil -->
+          <div style="display:grid;grid-template-columns:240px 1fr 300px;gap:12px;align-items:start" id="pos-grid">
+
+            <!-- COL 1: CÁMARA -->
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="ac" style="padding:0;overflow:hidden">
+                <div id="scanner-wrap" style="position:relative;background:#000;aspect-ratio:1">
+                  <video id="scanner-video" style="width:100%;height:100%;display:block;object-fit:cover" playsinline autoplay muted></video>
+                  <!-- Marco de escaneo -->
                   <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
-                    <div style="width:160px;height:90px;border:2px solid var(--cp);border-radius:8px;position:relative;box-shadow:0 0 0 9999px rgba(0,0,0,.45)">
-                      <div style="position:absolute;top:-2px;left:-2px;width:14px;height:14px;border-top:3px solid var(--cp);border-left:3px solid var(--cp);border-radius:3px 0 0 0"></div>
-                      <div style="position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-top:3px solid var(--cp);border-right:3px solid var(--cp);border-radius:0 3px 0 0"></div>
-                      <div style="position:absolute;bottom:-2px;left:-2px;width:14px;height:14px;border-bottom:3px solid var(--cp);border-left:3px solid var(--cp);border-radius:0 0 0 3px"></div>
-                      <div style="position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;border-bottom:3px solid var(--cp);border-right:3px solid var(--cp);border-radius:0 0 3px 0"></div>
+                    <div style="width:70%;height:70%;border:2px solid var(--cp);border-radius:8px;position:relative;box-shadow:0 0 0 9999px rgba(0,0,0,.5)">
+                      <div style="position:absolute;top:-2px;left:-2px;width:16px;height:16px;border-top:3px solid var(--cp);border-left:3px solid var(--cp);border-radius:3px 0 0 0"></div>
+                      <div style="position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-top:3px solid var(--cp);border-right:3px solid var(--cp);border-radius:0 3px 0 0"></div>
+                      <div style="position:absolute;bottom:-2px;left:-2px;width:16px;height:16px;border-bottom:3px solid var(--cp);border-left:3px solid var(--cp);border-radius:0 0 0 3px"></div>
+                      <div style="position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-bottom:3px solid var(--cp);border-right:3px solid var(--cp);border-radius:0 0 3px 0"></div>
                       <div id="scan-line" style="position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cp),transparent);animation:scanLine 1.5s ease-in-out infinite;top:0"></div>
                     </div>
                   </div>
-                  <div id="scan-feedback" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;white-space:nowrap">Apunta al QR o código de barras del producto</div>
                 </div>
-                <!-- Búsqueda por texto -->
-                <div style="position:relative">
-                  <input id="reg-buscar" class="fi" placeholder="🔍 Buscar producto por nombre, ref o categoría..." oninput="buscarProductoRegistradora(this.value)" autocomplete="off" style="padding-left:14px">
-                  <div id="reg-sugerencias" style="background:var(--ccard);border:1px solid rgba(255,255,255,.12);border-radius:10px;margin-top:4px;display:none;max-height:220px;overflow-y:auto;position:absolute;left:0;right:0;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.5)"></div>
+                <!-- Placeholder cuando cámara está off -->
+                <div id="scanner-placeholder" style="aspect-ratio:1;background:rgba(255,255,255,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer" onclick="iniciarEscaner()">
+                  <div style="font-size:48px">📷</div>
+                  <div style="font-size:12px;color:var(--cmut);text-align:center">Toca para activar<br>la cámara</div>
                 </div>
               </div>
-
-              <!-- Grid de productos rápidos por categoría -->
-              <div class="ac" style="padding:14px">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                  <div class="acttl" style="margin:0;border:none;padding:0">🛍️ Catálogo rápido</div>
-                  <div id="reg-cat-tabs" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-                </div>
-                <div id="reg-prod-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;max-height:280px;overflow-y:auto"></div>
+              <!-- Búsqueda -->
+              <div style="position:relative">
+                <input id="reg-buscar" class="fi" placeholder="🔍 Buscar..." oninput="buscarProductoRegistradora(this.value)" autocomplete="off" style="font-size:13px">
+                <div id="reg-sugerencias" style="background:var(--ccard);border:1px solid rgba(255,255,255,.12);border-radius:10px;margin-top:4px;display:none;max-height:200px;overflow-y:auto;position:absolute;left:0;right:0;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.5)"></div>
               </div>
+              <!-- Info escáner remoto -->
+              <div id="scan-remoto-info" style="display:none;padding:10px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:10px;font-size:12px;color:#a5b4fc;text-align:center">
+                <div style="font-size:20px;margin-bottom:4px">📱</div>
+                <div style="font-weight:700;margin-bottom:4px">Escáner remoto activo</div>
+                <div style="color:rgba(165,180,252,.7)">Abre el link en tu celular y escanea</div>
+                <div id="scan-remoto-link" style="margin-top:6px;word-break:break-all;font-size:10px;opacity:.7"></div>
+              </div>
+            </div>
 
-              <!-- Lista de items agregados -->
-              <div class="ac" style="padding:14px">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                  <div class="acttl" style="margin:0;border:none;padding:0">🛒 Productos en caja</div>
-                  <button onclick="limpiarRegistradora()" style="background:none;border:none;color:#fc8181;font-size:12px;cursor:pointer;font-weight:600">🗑 Limpiar</button>
+            <!-- COL 2: CATÁLOGO -->
+            <div class="ac" style="padding:12px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                <div style="font-size:13px;font-weight:700">🛍️ Productos</div>
+                <div id="reg-cat-tabs" style="display:flex;gap:4px;flex-wrap:wrap"></div>
+              </div>
+              <div id="reg-prod-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(85px,1fr));gap:8px;max-height:calc(100vh - 280px);overflow-y:auto"></div>
+            </div>
+
+            <!-- COL 3: CAJA (ticket) -->
+            <div style="display:flex;flex-direction:column;gap:8px;position:sticky;top:0">
+
+              <!-- Items agregados -->
+              <div class="ac" style="padding:12px;max-height:280px;overflow-y:auto">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <div style="font-size:13px;font-weight:700">🛒 Caja</div>
+                  <button onclick="limpiarRegistradora()" style="background:none;border:none;color:#fc8181;font-size:11px;cursor:pointer;font-weight:600">🗑 Limpiar</button>
                 </div>
                 <div id="reg-items-lista">
-                  <div style="text-align:center;padding:24px;color:var(--cmut)"><div style="font-size:28px;margin-bottom:8px">🛒</div><div style="font-size:13px">Escanea o toca un producto</div></div>
+                  <div style="text-align:center;padding:20px;color:var(--cmut)"><div style="font-size:28px;margin-bottom:6px">🛒</div><div style="font-size:12px">Escanea o toca un producto</div></div>
                 </div>
               </div>
 
-            </div><!-- fin columna izquierda -->
-
-            <!-- COLUMNA DERECHA: Cobro -->
-            <div style="display:flex;flex-direction:column;gap:10px;position:sticky;top:0;align-self:start">
-
               <!-- Total -->
-              <div class="ac" style="padding:14px;background:rgba(240,165,0,.06);border:1px solid rgba(240,165,0,.2)">
-                <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--cmut);margin-bottom:4px"><span>Subtotal</span><span id="reg-subtotal">$0</span></div>
-                <div id="reg-descuento-wrap" style="display:none;justify-content:space-between;font-size:13px;color:#68d391;margin-bottom:4px"><span>🎟️ Descuento</span><span id="reg-descuento-monto">-$0</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:28px;font-weight:800;color:var(--cp);padding-top:8px;border-top:1px solid rgba(255,255,255,.08)"><span>TOTAL</span><span id="reg-total">$0</span></div>
+              <div style="padding:12px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.25);border-radius:12px">
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--cmut);margin-bottom:3px"><span>Subtotal</span><span id="reg-subtotal">$0</span></div>
+                <div id="reg-descuento-wrap" style="display:none;justify-content:space-between;font-size:12px;color:#68d391;margin-bottom:3px"><span>🎟️ Dcto</span><span id="reg-descuento-monto">-$0</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:26px;font-weight:900;color:var(--cp);padding-top:6px;border-top:1px solid rgba(255,255,255,.08)"><span>TOTAL</span><span id="reg-total">$0</span></div>
               </div>
 
               <!-- Cupón -->
-              <div class="ac" style="padding:12px">
-                <div style="font-size:11px;font-weight:700;color:var(--cmut);text-transform:uppercase;margin-bottom:6px">🎟️ Cupón de descuento</div>
-                <div style="display:flex;gap:6px">
-                  <input class="fi" id="reg-cupon" placeholder="CÓDIGO" style="flex:1;text-transform:uppercase;text-align:center;letter-spacing:.1em" oninput="this.value=this.value.toUpperCase()">
-                  <button class="btn bp bsm" onclick="aplicarCuponRegistradora()" style="border-radius:8px">OK</button>
+              <div style="display:flex;gap:6px">
+                <input class="fi" id="reg-cupon" placeholder="🎟️ Cupón" style="flex:1;text-transform:uppercase;text-align:center;letter-spacing:.08em;font-size:13px" oninput="this.value=this.value.toUpperCase()">
+                <button class="btn bp bsm" onclick="aplicarCuponRegistradora()" style="border-radius:8px">OK</button>
+              </div>
+              <div id="reg-cupon-msg" style="font-size:11px;margin-top:-4px"></div>
+
+              <!-- Método pago -->
+              <select class="fi" id="reg-pago" onchange="mostrarEfectivoReg()" style="font-size:13px">
+                <option value="">💳 Método de pago...</option>
+                <option value="Efectivo">💵 Efectivo</option>
+                <option value="Nequi">🟣 Nequi</option>
+                <option value="Daviplata">🔴 Daviplata</option>
+                <option value="Bancolombia">🟡 Bancolombia</option>
+                <option value="Transferencia">🏦 Transferencia</option>
+                <option value="Tarjeta">💳 Tarjeta</option>
+                <option value="Otro">📲 Otro</option>
+              </select>
+
+              <!-- Efectivo cambio -->
+              <div id="reg-efectivo-wrap" style="display:none;display:flex;gap:8px;align-items:center">
+                <input class="fi" id="reg-efectivo-valor" type="number" placeholder="Recibió $" oninput="calcularCambio()" style="flex:1;font-size:14px;font-weight:700;text-align:center">
+                <div style="text-align:center;min-width:72px;padding:6px;background:rgba(104,211,145,.08);border-radius:10px;border:1px solid rgba(104,211,145,.2)">
+                  <div style="font-size:9px;color:var(--cmut)">CAMBIO</div>
+                  <div id="reg-cambio" style="font-size:16px;font-weight:800;color:#68d391">$0</div>
                 </div>
-                <div id="reg-cupon-msg" style="font-size:11px;margin-top:4px"></div>
               </div>
 
-              <!-- Datos del cobro -->
-              <div class="ac" style="padding:12px">
-                <div style="font-size:11px;font-weight:700;color:var(--cmut);text-transform:uppercase;margin-bottom:8px">👤 Datos del cobro</div>
-                <div class="fg"><label class="fl">Cliente (opcional)</label><input class="fi" id="reg-cliente" placeholder="Nombre" style="font-size:13px"></div>
-                <div class="fg"><label class="fl">WhatsApp</label><input class="fi" id="reg-wa" placeholder="+57..." type="tel" style="font-size:13px"></div>
-                <div class="fg"><label class="fl">Método de pago *</label>
-                  <select class="fi" id="reg-pago" onchange="mostrarEfectivoReg()" style="font-size:13px">
-                    <option value="">Selecciona...</option>
-                    <option value="Efectivo">💵 Efectivo</option>
-                    <option value="Nequi">🟣 Nequi</option>
-                    <option value="Daviplata">🔴 Daviplata</option>
-                    <option value="Bancolombia">🟡 Bancolombia</option>
-                    <option value="Transferencia">🏦 Transferencia</option>
-                    <option value="Tarjeta">💳 Tarjeta débito/crédito</option>
-                    <option value="Otro">📲 Otro</option>
-                  </select>
-                </div>
-                <div id="reg-efectivo-wrap" style="display:none">
-                  <div style="display:flex;gap:8px;align-items:center">
-                    <div style="flex:1"><label class="fl">Recibió</label><input class="fi" id="reg-efectivo-valor" type="number" placeholder="0" oninput="calcularCambio()" style="font-size:15px;font-weight:700;text-align:center"></div>
-                    <div style="text-align:center;min-width:80px;padding:8px;background:rgba(104,211,145,.08);border-radius:10px;border:1px solid rgba(104,211,145,.2)">
-                      <div style="font-size:10px;color:var(--cmut)">CAMBIO</div>
-                      <div id="reg-cambio" style="font-size:18px;font-weight:800;color:#68d391">$0</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="fg" style="margin-top:6px"><label class="fl">Notas</label><input class="fi" id="reg-notas" placeholder="Opcional" style="font-size:13px"></div>
+              <!-- Cliente + notas -->
+              <div style="display:flex;gap:6px">
+                <input class="fi" id="reg-cliente" placeholder="👤 Cliente" style="flex:1;font-size:12px">
+                <input class="fi" id="reg-wa" placeholder="📱 WA" type="tel" style="flex:1;font-size:12px">
               </div>
+              <input class="fi" id="reg-notas" placeholder="📝 Notas (opcional)" style="font-size:12px">
 
-              <!-- Botón COBRAR -->
-              <button class="btn bp w100" onclick="cobrarRegistradora()" style="padding:18px;font-size:20px;font-weight:900;border-radius:14px;letter-spacing:.05em;background:linear-gradient(135deg,var(--cp),#ff8c00)">
+              <!-- COBRAR -->
+              <button class="btn bp w100" onclick="cobrarRegistradora()" style="padding:16px;font-size:18px;font-weight:900;border-radius:14px;background:linear-gradient(135deg,var(--cp),#ff8c00);letter-spacing:.05em">
                 💳 COBRAR
               </button>
 
-              <!-- Acciones rápidas -->
-              <div style="display:flex;gap:8px">
-                <button class="btn bo bsm w100" onclick="imprimirTicketRegistradora()" style="border-radius:8px" id="btn-imprimir-reg">🖨️ Térmica</button>
-                <button class="btn bsm w100" style="background:rgba(37,211,102,.15);color:#25d366;border:1px solid rgba(37,211,102,.3);border-radius:8px" onclick="enviarWARegistradora()" id="btn-wa-reg">💬 WA</button>
-                <button class="btn bsm w100" style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:8px" onclick="generarFacturaPDF()" id="btn-pdf-reg">📄 PDF</button>
+              <!-- Acciones -->
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+                <button class="btn bo bsm" onclick="imprimirTicketRegistradora()" style="border-radius:8px;font-size:11px">🖨️ Ticket</button>
+                <button class="btn bsm" style="background:rgba(37,211,102,.12);color:#25d366;border:1px solid rgba(37,211,102,.25);border-radius:8px;font-size:11px" onclick="enviarWARegistradora()">💬 WA</button>
+                <button class="btn bsm" style="background:rgba(99,102,241,.12);color:#a5b4fc;border:1px solid rgba(99,102,241,.25);border-radius:8px;font-size:11px" onclick="generarFacturaPDF()">📄 PDF</button>
               </div>
 
               <!-- Último cobro -->
-              <div id="reg-ultimo-cobro" style="display:none" class="ac" style="padding:12px">
-                <div class="acttl" style="color:#68d391">✅ Último cobro</div>
-                <div id="reg-ultimo-cobro-info"></div>
+              <div id="reg-ultimo-cobro" style="display:none" class="ac" style="padding:10px">
+                <div class="acttl" style="color:#68d391;font-size:12px">✅ Último cobro</div>
+                <div id="reg-ultimo-cobro-info" style="font-size:12px"></div>
               </div>
 
-            </div><!-- fin columna derecha -->
-          </div><!-- fin grid POS -->
+            </div><!-- fin col3 -->
+          </div><!-- fin pos-grid -->
         </div><!-- fin tab registradora -->
+
 
         <!-- TAB: GASTOS DEL DÍA -->
         <div id="cajapanel-gastos" style="display:none">
@@ -6083,16 +6092,158 @@ function marcarCobradoDespachado(id) {
   toast('✅ Pedido cobrado','s');
 }
 
+
+// ============================================================
+// ESCÁNER REMOTO POR CELULAR
+// ============================================================
+var _scanRemotoActivo = false;
+var _scanRemotoUnsub = null;
+
+function activarEscanerRemoto() {
+  if (_scanRemotoActivo) {
+    desactivarEscanerRemoto(); return;
+  }
+  _scanRemotoActivo = true;
+  var base = (C.siteUrl || window.location.href.split('?')[0].split('#')[0]);
+  var link = base + '?modo=scanner&negocio=' + (C.name||'tienda').replace(/\s/g,'-');
+  var infoEl = document.getElementById('scan-remoto-info');
+  var linkEl = document.getElementById('scan-remoto-link');
+  if (infoEl) infoEl.style.display = 'block';
+  if (linkEl) linkEl.textContent = link;
+  toast('📱 Escáner remoto activo — abre este link en tu celular','s');
+
+  // Escuchar en Firebase por productos escaneados remotamente
+  if (db) {
+    var docRef = db.collection('tienda').doc(DOC_ID);
+    _scanRemotoUnsub = docRef.onSnapshot(function(doc) {
+      if (!doc.exists) return;
+      var data = doc.data();
+      if (data && data._scanRemoto && data._scanRemoto !== window._lastScanRemoto) {
+        window._lastScanRemoto = data._scanRemoto;
+        var prodId = data._scanRemoto;
+        var prod = P.find(function(p){ return p.id===prodId||p.ref===prodId||p.sku===prodId; });
+        if (prod) {
+          agregarProductoReg(prod);
+          sonidoPit();
+          toast('✅ '+prod.name+' — escaneado desde celular','s');
+        }
+      }
+    });
+  }
+}
+
+function desactivarEscanerRemoto() {
+  _scanRemotoActivo = false;
+  if (_scanRemotoUnsub) { _scanRemotoUnsub(); _scanRemotoUnsub = null; }
+  var infoEl = document.getElementById('scan-remoto-info');
+  if (infoEl) infoEl.style.display = 'none';
+  toast('📱 Escáner remoto desactivado','s');
+}
+
+// Modo escáner en celular: si URL tiene ?modo=scanner
+// Abre solo la cámara y envía a Firebase lo que escanea
+function iniciarModoScannerRemoto() {
+  document.body.innerHTML = '';
+  document.body.style.cssText = 'background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:16px;font-family:sans-serif';
+  var titulo = document.createElement('div');
+  titulo.style.cssText = 'color:#f0a500;font-size:18px;font-weight:700;text-align:center';
+  titulo.textContent = '📷 Escáner remoto — ' + (C.name||'Tienda');
+  document.body.appendChild(titulo);
+
+  var sub = document.createElement('div');
+  sub.style.cssText = 'color:rgba(255,255,255,.6);font-size:13px;text-align:center;padding:0 20px';
+  sub.textContent = 'Apunta al código QR del producto';
+  document.body.appendChild(sub);
+
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'position:relative;width:min(320px,90vw);height:min(320px,90vw);border-radius:16px;overflow:hidden;border:3px solid #f0a500';
+  var video = document.createElement('video');
+  video.id = 'remote-scan-video';
+  video.style.cssText = 'width:100%;height:100%;object-fit:cover';
+  video.autoplay=true; video.muted=true; video.setAttribute('playsinline','');
+  wrap.appendChild(video);
+
+  // Marco
+  var frame = document.createElement('div');
+  frame.style.cssText = 'position:absolute;inset:15%;border:2px solid #f0a500;border-radius:8px;box-shadow:0 0 0 9999px rgba(0,0,0,.5)';
+  wrap.appendChild(frame);
+
+  var fb = document.createElement('div');
+  fb.id = 'remote-scan-fb';
+  fb.style.cssText = 'position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;white-space:nowrap';
+  fb.textContent = 'Iniciando cámara...';
+  wrap.appendChild(fb);
+  document.body.appendChild(wrap);
+
+  var status = document.createElement('div');
+  status.id = 'remote-status';
+  status.style.cssText = 'color:#68d391;font-size:14px;font-weight:700;min-height:24px';
+  document.body.appendChild(status);
+
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:640,height:640}})
+    .then(function(stream){
+      video.srcObject = stream; video.play();
+      fb.textContent = 'Apunta al QR del producto';
+      // Escanear frames
+      var canvas = document.createElement('canvas');
+      var ctx2 = canvas.getContext('2d');
+      var lastCode = '';
+      setInterval(function(){
+        if (!video.videoWidth) return;
+        canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+        ctx2.drawImage(video,0,0);
+        if ('BarcodeDetector' in window) {
+          new BarcodeDetector({formats:['qr_code','code_128','ean_13','ean_8','upc_a','upc_e','code_39']})
+            .detect(canvas).then(function(codes){
+              if (!codes.length) return;
+              var code = codes[0].rawValue;
+              if (code === lastCode) return;
+              lastCode = code;
+              var prodId = code;
+              if (code.indexOf('addprod=')!==-1) prodId = code.split('addprod=')[1];
+              // Enviar a Firebase
+              if (db) {
+                db.collection('tienda').doc(DOC_ID).update({_scanRemoto: prodId, _scanTs: Date.now()})
+                  .then(function(){
+                    status.textContent = '✅ Enviado: '+prodId;
+                    // Beep
+                    try {
+                      var ctx3=new AudioContext(); var o=ctx3.createOscillator(); var g=ctx3.createGain();
+                      o.connect(g); g.connect(ctx3.destination);
+                      o.frequency.value=1200; g.gain.setValueAtTime(0.4,ctx3.currentTime);
+                      g.gain.exponentialRampToValueAtTime(0.001,ctx3.currentTime+0.15);
+                      o.start(); o.stop(ctx3.currentTime+0.15);
+                    } catch(e){}
+                    setTimeout(function(){ lastCode=''; status.textContent=''; },2000);
+                  });
+              }
+            }).catch(function(){});
+        }
+      }, 400);
+    })
+    .catch(function(){ fb.textContent='⚠️ Sin acceso a cámara'; });
+}
+
+// Detectar modo scanner al cargar
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('modo') === 'scanner') {
+    window.addEventListener('load', function(){ iniciarModoScannerRemoto(); });
+  }
+})();
+
 function sonidoPit() {
   try {
     var ctx = new (window.AudioContext || window.webkitAudioContext)();
     var osc = ctx.createOscillator();
     var gain = ctx.createGain();
     osc.connect(gain); gain.connect(ctx.destination);
-    osc.frequency.value = 880; osc.type = 'sine';
-    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+    osc.frequency.setValueAtTime(1200, ctx.currentTime);
+    osc.frequency.setValueAtTime(900, ctx.currentTime + 0.06);
+    gain.gain.setValueAtTime(0.4, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
-    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.15);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.15);
   } catch(e) {}
 }
 
