@@ -1772,11 +1772,11 @@ window.addEventListener('DOMContentLoaded', function(){
                 <div id="reg-sugerencias" style="background:var(--ccard);border:1px solid rgba(255,255,255,.12);border-radius:10px;margin-top:4px;display:none;max-height:200px;overflow-y:auto;position:absolute;left:0;right:0;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.5)"></div>
               </div>
               <!-- Info escáner remoto -->
-              <div id="scan-remoto-info" style="display:none;padding:10px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:10px;font-size:12px;color:#a5b4fc;text-align:center">
-                <div style="font-size:20px;margin-bottom:4px">📱</div>
-                <div style="font-weight:700;margin-bottom:4px">Escáner remoto activo</div>
-                <div style="color:rgba(165,180,252,.7)">Abre el link en tu celular y escanea</div>
-                <div id="scan-remoto-link" style="margin-top:6px;word-break:break-all;font-size:10px;opacity:.7"></div>
+              <div id="scan-remoto-info" style="display:none;padding:12px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:10px;font-size:12px;color:#a5b4fc;text-align:center">
+                <div style="font-weight:700;margin-bottom:6px">📱 Escanea con tu celular</div>
+                <div id="scan-remoto-qr" style="display:flex;justify-content:center;margin-bottom:6px"></div>
+                <div style="color:rgba(165,180,252,.7);font-size:11px">El celular queda como escáner.<br>Cada producto que escanees aparece aquí.</div>
+                <button onclick="desactivarEscanerRemoto()" style="margin-top:8px;background:rgba(229,62,62,.2);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:6px;padding:4px 12px;font-size:11px;cursor:pointer">✕ Desconectar</button>
               </div>
             </div>
 
@@ -6100,37 +6100,57 @@ var _scanRemotoActivo = false;
 var _scanRemotoUnsub = null;
 
 function activarEscanerRemoto() {
-  if (_scanRemotoActivo) {
-    desactivarEscanerRemoto(); return;
-  }
-  _scanRemotoActivo = true;
-  var base = (C.siteUrl || window.location.href.split('?')[0].split('#')[0]);
-  var link = base + '?modo=scanner&negocio=' + (C.name||'tienda').replace(/\s/g,'-');
-  var infoEl = document.getElementById('scan-remoto-info');
-  var linkEl = document.getElementById('scan-remoto-link');
-  if (infoEl) infoEl.style.display = 'block';
-  if (linkEl) linkEl.textContent = link;
-  toast('📱 Escáner remoto activo — abre este link en tu celular','s');
+  // Construir URL del modo scanner
+  var href = window.location.href;
+  var base = href.split('?')[0].split('#')[0];
+  var link = base + '?modo=scanner';
 
-  // Escuchar en Firebase por productos escaneados remotamente
-  if (db) {
-    var docRef = db.collection('tienda').doc(DOC_ID);
-    _scanRemotoUnsub = docRef.onSnapshot(function(doc) {
-      if (!doc.exists) return;
-      var data = doc.data();
-      if (data && data._scanRemoto && data._scanRemoto !== window._lastScanRemoto) {
-        window._lastScanRemoto = data._scanRemoto;
-        var prodId = data._scanRemoto;
-        var prod = P.find(function(p){ return p.id===prodId||p.ref===prodId||p.sku===prodId; });
-        if (prod) {
-          agregarProductoReg(prod);
-          sonidoPit();
-          toast('✅ '+prod.name+' — escaneado desde celular','s');
+  // Mostrar modal con QR grande
+  var modal = document.getElementById('m-scan-remoto');
+  if (modal) modal.style.display = 'flex';
+
+  // Generar QR
+  var qrEl = document.getElementById('m-scan-remoto-qr');
+  if (qrEl) {
+    var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(link) + '&bgcolor=ffffff&color=000000&margin=10';
+    var img = document.createElement('img');
+    img.src = qrSrc;
+    img.style.cssText = 'width:220px;height:220px;opacity:0;transition:opacity .3s';
+    img.onload = function(){ this.style.opacity=1; };
+    img.onerror = function(){ var st=document.getElementById('m-scan-remoto-status'); if(st) st.textContent='Sin conexión para generar QR'; };
+    qrEl.innerHTML = '';
+    qrEl.appendChild(img);
+  }
+
+  // Escuchar Firebase
+  if (!_scanRemotoActivo) {
+    _scanRemotoActivo = true;
+    if (db) {
+      _scanRemotoUnsub = db.collection('tienda').doc(DOC_ID).onSnapshot(function(doc) {
+        if (!doc.exists) return;
+        var data = doc.data();
+        if (data && data._scanTs && data._scanTs !== window._lastScanTs) {
+          window._lastScanTs = data._scanTs;
+          var prodId = data._scanRemoto;
+          var prod = P.find(function(p){ return p.id===prodId||p.ref===prodId||p.sku===prodId; });
+          if (prod) {
+            agregarProductoReg(prod);
+            sonidoPit();
+            var st = document.getElementById('m-scan-remoto-status');
+            if (st) { st.textContent = '✅ '+prod.name; setTimeout(function(){ st.textContent=''; },2000); }
+          }
         }
-      }
-    });
+      });
+    }
   }
 }
+
+function cerrarModalScanRemoto() {
+  var modal = document.getElementById('m-scan-remoto');
+  if (modal) modal.style.display = 'none';
+  // Mantiene escáner activo en segundo plano
+}
+
 
 function desactivarEscanerRemoto() {
   _scanRemotoActivo = false;
@@ -10203,6 +10223,15 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
     <div id="pwa-fab-close" onclick="event.stopPropagation();ocultarFabPWA()">✕</div>
   </div>
+</div>
+
+<!-- MODAL QR ESCÁNER REMOTO -->
+<div id="m-scan-remoto" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);align-items:center;justify-content:center;flex-direction:column;gap:16px">
+  <div style="font-size:20px;font-weight:700;color:#fff">📱 Escáner desde celular</div>
+  <div style="font-size:14px;color:rgba(255,255,255,.6);text-align:center;padding:0 20px">Escanea este QR con tu celular.<br>Quedará como cámara escáner para esta caja.</div>
+  <div id="m-scan-remoto-qr" style="background:#fff;padding:16px;border-radius:16px;display:flex;align-items:center;justify-content:center"></div>
+  <div id="m-scan-remoto-status" style="font-size:13px;color:#68d391;min-height:20px"></div>
+  <button onclick="cerrarModalScanRemoto()" style="padding:10px 28px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:10px;font-size:14px;cursor:pointer">Cerrar</button>
 </div>
 
 </body>
