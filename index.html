@@ -5397,12 +5397,13 @@ function loginAsesorSession() {
   // Find asesor by PIN
   var found = null;
   for (var i = 0; i < ASESORES.length; i++) {
-    if (ASESORES[i].pinHash && ASESORES[i].pinHash === hashP(pin)) {
-      found = ASESORES[i]; break;
-    }
-    if (ASESORES[i].pin && ASESORES[i].pin === pin) {
-      found = ASESORES[i]; break;
-    }
+    var a = ASESORES[i];
+    // Verifica con hashPin (como guarda guardarAsesor)
+    if (a.pin && a.pin === hashPin(pin)) { found = a; break; }
+    // Fallback: pin en texto plano (asesores viejos)
+    if (a.pin && a.pin === pin) { found = a; break; }
+    // Fallback: pinHash con hashP (compatibilidad)
+    if (a.pinHash && a.pinHash === hashP(pin)) { found = a; break; }
   }
   if (!found) { toast('❌ PIN incorrecto','e'); return; }
   // If asesor has photo, do facial recognition check
