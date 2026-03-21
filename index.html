@@ -6474,7 +6474,7 @@ function lanzarCelebracion() {
   var panel=document.getElementById('m-celebracion');
   if(!panel) return;
   var msgEl=document.getElementById('celebracion-msg');
-  if(msgEl) msgEl.textContent=C.celebracionMsg||'¡Gracias! Tu pedido está en camino 🔥';
+  if(msgEl) msgEl.textContent='';
   panel.style.display='block';
   var canvas=document.getElementById('celebracion-canvas');
   if(canvas){
@@ -9940,42 +9940,88 @@ function mostrarTicketModal(o, pago, sub, total) {
   if (!m) {
     m = document.createElement('div');
     m.id = 'm-ticket-cobro';
-    m.style.cssText = 'display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.85);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto';
-    m.onclick = function(e){ if(e.target===m) m.style.display='none'; };
+    m.style.cssText = 'display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:16px;overflow-y:auto';
+    m.onclick = function(e){ if(e.target===m) cerrarTicketCobro(); };
     document.body.appendChild(m);
   }
   var cur = C.cur||'$';
+  // Config del ticket (colores personalizables)
+  var tkBg    = C.ticketBg    || '#ffffff';
+  var tkColor = C.ticketColor || '#111111';
+  var tkAccent= C.ticketAccent|| '#f0a500';
+  var tkLogo  = C.logo || '';
+
   var itemsHtml = (o.items||[]).map(function(it){
-    return '<tr><td style="padding:4px 0">'+it.name+'</td><td style="text-align:center;padding:4px 8px">x'+it.qty+'</td><td style="text-align:right;padding:4px 0">'+cur+fmt(it.price*it.qty)+'</td></tr>';
+    return '<tr>' +
+      '<td style="padding:6px 0;font-size:13px;color:'+tkColor+'">'+it.name+'</td>' +
+      '<td style="text-align:center;padding:6px 4px;font-size:12px;color:#888">'+it.qty+'</td>' +
+      '<td style="text-align:right;padding:6px 0;font-size:13px;font-weight:600;color:'+tkColor+'">'+cur+fmt(it.price*it.qty)+'</td>' +
+    '</tr>';
   }).join('');
-  var descHtml = o.descuento>0 ? '<tr><td colspan="2" style="color:#68d391;padding:4px 0">🎟️ Descuento</td><td style="text-align:right;color:#68d391;padding:4px 0">-'+cur+fmt(o.descuento)+'</td></tr>' : '';
-  var cambioHtml = cambio>0 ? '<div style="margin-top:10px;padding:10px;background:rgba(104,211,145,.12);border:1px solid rgba(104,211,145,.3);border-radius:10px;text-align:center"><div style="font-size:12px;color:var(--cmut)">Recibió: '+cur+fmt(efectivoVal)+'</div><div style="font-size:22px;font-weight:900;color:#68d391">Cambio: '+cur+fmt(cambio)+'</div></div>' : '';
+
+  var ivaChk = document.getElementById('reg-iva-activo');
+  var ivaPct = parseFloat((document.getElementById('reg-iva-pct')||{}).value||19);
+  var iva = (ivaChk&&ivaChk.checked) ? Math.round(sub*(ivaPct/100)) : 0;
+
+  var cambioHtml = cambio>0 ?
+    '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:12px;text-align:center;margin:10px 0">' +
+      '<div style="font-size:11px;color:#666">Recibió: '+cur+fmt(efectivoVal)+'</div>' +
+      '<div style="font-size:26px;font-weight:900;color:#16a34a">'+cur+fmt(cambio)+'</div>' +
+      '<div style="font-size:11px;color:#666">de cambio</div>' +
+    '</div>' : '';
+
   m.innerHTML =
-    '<div style="background:var(--ccard,#1a1a2e);border-radius:16px;max-width:380px;width:100%;padding:20px;margin:auto;margin-top:20px;border:1px solid rgba(255,255,255,.1)">' +
-      '<div style="text-align:center;margin-bottom:16px">' +
-        '<div style="font-size:28px;margin-bottom:4px">✅</div>' +
-        '<div style="font-size:20px;font-weight:900;color:#16a34a">¡Cobrado!</div>' +
-        '<div style="font-size:12px;color:#666;margin-top:4px">'+o.id+' · '+o.ts+'</div>' +
+    '<div style="background:'+tkBg+';border-radius:20px;max-width:360px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)">' +
+
+      // Header con color del negocio
+      '<div style="background:'+tkAccent+';padding:20px;text-align:center">' +
+        (tkLogo ? '<img src="'+tkLogo+'" style="height:40px;object-fit:contain;margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;border-radius:6px">' : '') +
+        '<div style="font-size:16px;font-weight:900;color:#fff;letter-spacing:.05em">'+(C.name||'Mi Tienda').toUpperCase()+'</div>' +
+        '<div style="font-size:28px;font-weight:900;color:#fff;margin-top:4px">✅ ¡Cobrado!</div>' +
       '</div>' +
-      '<div style="border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:12px 0;margin-bottom:12px">' +
-        '<table style="width:100%;border-collapse:collapse;font-size:13px;color:#111">'+itemsHtml+descHtml+'</table>' +
+
+      // Cuerpo
+      '<div style="padding:16px 20px">' +
+
+        // Info pedido
+        '<div style="display:flex;justify-content:space-between;font-size:11px;color:#999;margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed #e5e7eb">' +
+          '<span>'+o.ts+'</span><span style="font-family:monospace">'+o.id+'</span>' +
+        '</div>' +
+
+        // Productos
+        '<table style="width:100%;border-collapse:collapse;margin-bottom:12px">' +
+          '<tr><th style="text-align:left;font-size:10px;color:#aaa;padding-bottom:6px;border-bottom:1px solid #f3f4f6;font-weight:600;text-transform:uppercase">Producto</th>' +
+          '<th style="text-align:center;font-size:10px;color:#aaa;padding-bottom:6px;border-bottom:1px solid #f3f4f6;font-weight:600">Cant</th>' +
+          '<th style="text-align:right;font-size:10px;color:#aaa;padding-bottom:6px;border-bottom:1px solid #f3f4f6;font-weight:600">Valor</th></tr>' +
+          itemsHtml +
+        '</table>' +
+
+        // Subtotales
+        (sub!==total ? '<div style="display:flex;justify-content:space-between;font-size:12px;color:#666;margin-bottom:4px"><span>Subtotal</span><span>'+cur+fmt(sub)+'</span></div>' : '') +
+        (iva>0 ? '<div style="display:flex;justify-content:space-between;font-size:12px;color:#6366f1;margin-bottom:4px"><span>IVA ('+ivaPct+'%)</span><span>'+cur+fmt(iva)+'</span></div>' : '') +
+        (o.descuento>0 ? '<div style="display:flex;justify-content:space-between;font-size:12px;color:#16a34a;margin-bottom:4px"><span>🎟️ Descuento</span><span>-'+cur+fmt(o.descuento)+'</span></div>' : '') +
+
+        // Total
+        '<div style="display:flex;justify-content:space-between;align-items:center;background:#f9fafb;border-radius:10px;padding:12px;margin-top:8px">' +
+          '<span style="font-size:16px;font-weight:700;color:'+tkColor+'">TOTAL</span>' +
+          '<span style="font-size:26px;font-weight:900;color:'+tkAccent+'">'+cur+fmt(total)+'</span>' +
+        '</div>' +
+
+        // Método de pago
+        '<div style="text-align:center;font-size:12px;color:#888;margin-top:8px">'+pago+'</div>' +
+
+        // Cambio
+        cambioHtml +
+
+        // Botones
+        '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px">' +
+          '<button onclick="imprimirTicketRegistradora()" style="padding:10px;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:10px;color:#374151;font-size:12px;cursor:pointer;font-weight:700">🖨️ Ticket</button>' +
+          '<button onclick="enviarWARegistradora()" style="padding:10px;background:#dcfce7;border:1px solid #86efac;border-radius:10px;color:#16a34a;font-size:12px;cursor:pointer;font-weight:700">💬 WA</button>' +
+          '<button onclick="generarFacturaPDF()" style="padding:10px;background:#ede9fe;border:1px solid #c4b5fd;border-radius:10px;color:#7c3aed;font-size:12px;cursor:pointer;font-weight:700">📄 PDF</button>' +
+        '</div>' +
+        '<button onclick="cerrarTicketCobro()" style="width:100%;margin-top:10px;padding:14px;background:'+tkAccent+';color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer">✅ Nueva venta</button>' +
+
       '</div>' +
-      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
-        '<span style="font-size:14px;color:#555">Método de pago</span>' +
-        '<span style="font-size:14px;font-weight:700">'+pago+'</span>' +
-      '</div>' +
-      (sub!==total?'<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px;color:var(--cmut)">Subtotal</span><span style="font-size:13px">'+cur+fmt(sub)+'</span></div>':'') +
-      '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:2px dashed #ddd">'+
-        '<span style="font-size:18px;font-weight:900;color:#111">TOTAL</span>' +
-        '<span style="font-size:24px;font-weight:900;color:#f0a500">'+cur+fmt(total)+'</span>' +
-      '</div>' +
-      cambioHtml +
-      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px">' +
-        '<button onclick="imprimirTicketRegistradora()" style="padding:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-size:12px;cursor:pointer;font-weight:700">🖨️ Ticket</button>' +
-        '<button onclick="enviarWARegistradora()" style="padding:10px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.25);border-radius:10px;color:#25d366;font-size:12px;cursor:pointer;font-weight:700">💬 WA</button>' +
-        '<button onclick="generarFacturaPDF()" style="padding:10px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);border-radius:10px;color:#a5b4fc;font-size:12px;cursor:pointer;font-weight:700">📄 PDF</button>' +
-      '</div>' +
-      '<button onclick="cerrarTicketCobro()" style="width:100%;margin-top:10px;padding:12px;background:var(--cp,#f0a500);color:#000;border:none;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer">✅ Nueva venta</button>' +
     '</div>';
   m.style.display = 'flex';
 }
