@@ -791,17 +791,41 @@ window.addEventListener('DOMContentLoaded', function(){
         <div class="nav-logo-ico" id="nav-logo-ico">⚙️</div>
         <div class="nav-logo-txt" id="nav-logo-txt">Panel Admin</div>
       </div>
-      <div class="nav-section">General</div>
-      <div class="an active" data-sec="cfg" onclick="navTo(this);cerrarNav()"><span class="ani">&#127912;</span><span>Configuraci&#243;n</span></div>
-      <div class="an" data-sec="dashboard" onclick="navTo(this);cerrarNav()"><span class="ani">📊</span><span>Dashboard</span></div>
-      <div class="nav-section">Inventario</div>
-      <div class="an" data-sec="prods" onclick="navTo(this);cerrarNav()"><span class="ani">&#128230;</span><span>Productos</span></div>
-      <div class="an" data-sec="cats" onclick="navTo(this);cerrarNav()"><span class="ani">&#127991;&#65039;</span><span>Categor&#237;as</span></div>
-      <div class="nav-section">Operaci&#243;n</div>
-      <div class="an" data-sec="orders" onclick="navTo(this);cerrarNav()"><span class="ani">&#129534;</span><span>Caja</span></div>
-      <div class="an" data-sec="crm" onclick="navTo(this);cerrarNav()"><span class="ani">&#128202;</span><span>CRM</span></div>
-      <div class="nav-section">Personal</div>
-      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('asesores');cerrarNav()"><span class="ani">&#128101;</span><span>Personal y Roles → CRM</span></div>
+
+      <div class="nav-section">📊 General</div>
+      <div class="an active" data-sec="dashboard" onclick="navTo(this);cerrarNav()"><span class="ani">📊</span><span>Dashboard</span></div>
+      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('negocio');cerrarNav()"><span class="ani">🏪</span><span>Mi Negocio</span></div>
+
+      <div class="nav-section">🛍️ Catálogo</div>
+      <div class="an" data-sec="prods" onclick="navTo(this);cerrarNav()"><span class="ani">📦</span><span>Productos</span></div>
+      <div class="an" data-sec="cats" onclick="navTo(this);cerrarNav()"><span class="ani">🏷️</span><span>Categorías</span></div>
+
+      <div class="nav-section">🎨 Apariencia</div>
+      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('banner');cerrarNav()"><span class="ani">🖼️</span><span>Banners</span></div>
+      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('diseno');cerrarNav()"><span class="ani">🎨</span><span>Diseño y Colores</span></div>
+      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('pwa');cerrarNav()"><span class="ani">📲</span><span>App PWA</span></div>
+
+      <div class="nav-section">💳 Pagos</div>
+      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('pagos');cerrarNav()"><span class="ani">💳</span><span>Pagos y WhatsApp</span></div>
+      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('operacion');cerrarNav()"><span class="ani">🔧</span><span>Operación</span></div>
+
+      <div class="nav-section">🛒 Ventas</div>
+      <div class="an" data-sec="orders" onclick="navTo(this);cajaSwitchTab('registradora');cerrarNav()"><span class="ani">🖨️</span><span>Registradora</span></div>
+      <div class="an" data-sec="orders" onclick="navTo(this);cajaSwitchTab('pendientes');cerrarNav()"><span class="ani">⏳</span><span>Pedidos Pendientes</span></div>
+      <div class="an" data-sec="orders" onclick="navTo(this);cajaSwitchTab('domicilios');cerrarNav()"><span class="ani">🛵</span><span>Domicilios</span></div>
+      <div class="an" data-sec="orders" onclick="navTo(this);cajaSwitchTab('tablero');cerrarNav()"><span class="ani">📋</span><span>Tablero del Día</span></div>
+
+      <div class="nav-section">👥 Equipo</div>
+      <div class="an" data-sec="asesores" onclick="navTo(this);cerrarNav()"><span class="ani">➕</span><span>Crear / Editar Roles</span></div>
+      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('asesores');cerrarNav()"><span class="ani">👥</span><span>Ver Personal</span></div>
+      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('turnos');cerrarNav()"><span class="ani">⏰</span><span>Turnos</span></div>
+
+      <div class="nav-section">📈 CRM</div>
+      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('ventas');cerrarNav()"><span class="ani">💰</span><span>Ventas del Día</span></div>
+      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('clientes');cerrarNav()"><span class="ani">🧑‍🤝‍🧑</span><span>Clientes</span></div>
+      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('puntos');cerrarNav()"><span class="ani">📍</span><span>Puntos QR</span></div>
+      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('aliados');cerrarNav()"><span class="ani">🤝</span><span>Aliados</span></div>
+      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('roles');cerrarNav()"><span class="ani">🔒</span><span>Seguridad</span></div>
     </nav>
     <main id="adm-main">
 
@@ -862,11 +886,12 @@ window.addEventListener('DOMContentLoaded', function(){
         <!-- SUBMENÚ CONFIGURACIÓN -->
         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:12px">
           <button class="btn bsm bp" id="cfgtab-negocio"   onclick="cfgSwitchTab('negocio')">🏪 Negocio</button>
-          <button class="btn bsm bo" id="cfgtab-pagos"     onclick="cfgSwitchTab('pagos')">💳 Pagos y WA</button>
+          <button class="btn bsm bo" id="cfgtab-pagos"     onclick="cfgSwitchTab('pagos')">💳 Pagos</button>
+          <button class="btn bsm bo" id="cfgtab-banner"    onclick="cfgSwitchTab('banner')">🖼️ Banners</button>
           <button class="btn bsm bo" id="cfgtab-diseno"    onclick="cfgSwitchTab('diseno')">🎨 Diseño</button>
-          <button class="btn bsm bo" id="cfgtab-banner"    onclick="cfgSwitchTab('banner')">📢 Banner</button>
-          <button class="btn bsm bo" id="cfgtab-pwa"       onclick="cfgSwitchTab('pwa')">📲 App PWA</button>
-          <button class="btn bsm bo" id="cfgtab-operacion" onclick="cfgSwitchTab('operacion')">🔧 Operación</button>
+          <button class="btn bsm bo" id="cfgtab-pwa"       onclick="cfgSwitchTab('pwa')">📲 PWA</button>
+          <button class="btn bsm bo" id="cfgtab-operacion" onclick="cfgSwitchTab('operacion')eracion')">🔧 Operación</button>
+        </div>eracion')">🔧 Operación</button>
         </div>
 
         <!-- TAB: NEGOCIO -->
@@ -1397,6 +1422,56 @@ window.addEventListener('DOMContentLoaded', function(){
 
           <div class="ac" id="cfg-zone-banner-pub" style="margin-bottom:16px">
             <div class="acttl">💰 Monetización — Banner Publicitario</div>
+            <div style="font-size:13px;color:var(--cmut);margin-bottom:14px">Vende este espacio a un anunciante. Aparece encima del catálogo visible para todos los clientes.</div>
+
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:16px">
+              <input type="checkbox" id="c-pub-activo" style="accent-color:var(--cp);width:16px;height:16px" onchange="aplicarBannerPub()"> Activar banner publicitario
+            </label>
+
+            <div class="agrid" style="margin-bottom:12px">
+              <div class="fg"><label class="fl">Texto principal</label><input class="fi" id="c-pub-titulo" placeholder="Ej: Pinturas El Color" oninput="aplicarBannerPub()"></div>
+              <div class="fg"><label class="fl">Subtexto</label><input class="fi" id="c-pub-sub" placeholder="Ej: 20% dcto en pinturas hoy" oninput="aplicarBannerPub()"></div>
+              <div class="fg"><label class="fl">URL destino (al tocar)</label><input class="fi" id="c-pub-url" placeholder="https://..." oninput="aplicarBannerPub()"></div>
+              <div class="fg"><label class="fl">Ícono / Emoji</label><input class="fi" id="c-pub-ico" placeholder="🎨" maxlength="4" oninput="aplicarBannerPub()" style="max-width:90px"></div>
+            </div>
+
+            <!-- Imágenes de las tarjetas -->
+            <div class="fg" style="margin-bottom:12px">
+              <label class="fl">📷 Imágenes de las tarjetas (hasta 6)</label>
+              <div style="font-size:11px;color:var(--cmut);margin-bottom:8px">Cada imagen es una tarjeta en el banner. Sube hasta 6 y el banner las muestra juntas.</div>
+              <label class="upbtn" style="display:inline-flex;margin-bottom:10px">
+                ➕ Subir imágenes
+                <input type="file" accept="image/*" multiple style="display:none" onchange="upBannerPubImgs(event)">
+              </label>
+              <div id="pub-imgs-preview" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+            </div>
+
+            <!-- Colores -->
+            <div class="frow" style="margin-bottom:12px">
+              <div class="fg"><label class="fl">Color fondo</label><div class="csw"><input type="color" id="c-pub-bg" value="#1a1a2e" oninput="aplicarBannerPub();updHex()"><span id="c-pub-bgh">#1a1a2e</span></div></div>
+              <div class="fg"><label class="fl">Color texto</label><div class="csw"><input type="color" id="c-pub-txt" value="#ffffff" oninput="aplicarBannerPub();updHex()"><span id="c-pub-txth">#ffffff</span></div></div>
+              <div class="fg"><label class="fl">Color botón</label><div class="csw"><input type="color" id="c-pub-cta-bg" value="#f0a500" oninput="aplicarBannerPub();updHex()"><span id="c-pub-cta-bgh">#f0a500</span></div></div>
+            </div>
+
+            <div class="fg" style="margin-bottom:12px">
+              <label class="fl">Texto del botón CTA</label>
+              <input class="fi" id="c-pub-cta-txt" placeholder="Ver más →" style="max-width:160px" oninput="aplicarBannerPub()">
+            </div>
+
+            <!-- Estilos rápidos -->
+            <div style="font-size:11px;font-weight:700;color:var(--cp);margin-bottom:8px">🎨 Estilos rápidos</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+              <button class="btn bsm" style="background:#1a1a2e;color:#f0a500;border:1px solid rgba(240,165,0,.3);border-radius:8px" onclick="setEstiloPub('#1a1a2e','#f0f0ff','#f0a500')">🌌 Dark</button>
+              <button class="btn bsm" style="background:#fff;color:#111;border:1px solid #ddd;border-radius:8px" onclick="setEstiloPub('#ffffff','#111111','#e53e3e')">⬜ Blanco</button>
+              <button class="btn bsm" style="background:#276749;color:#fff;border-radius:8px" onclick="setEstiloPub('#276749','#ffffff','#68d391')">🌿 Verde</button>
+              <button class="btn bsm" style="background:#e53e3e;color:#fff;border-radius:8px" onclick="setEstiloPub('#e53e3e','#ffffff','#fff')">❤️ Rojo</button>
+              <button class="btn bsm" style="background:#f0a500;color:#000;border-radius:8px" onclick="setEstiloPub('#f0a500','#000000','#1a1a2e')">🟡 Dorado</button>
+            </div>
+
+            <!-- Vista previa -->
+            <div style="font-size:11px;color:var(--cmut);margin-bottom:6px">Vista previa:</div>
+            <div id="pub-preview" style="border-radius:10px;overflow:hidden"></div>
+
             <div style="font-size:13px;color:var(--cmut);margin-bottom:14px">Vende este espacio a un anunciante. Aparece debajo del header visible para todos los clientes.</div>
 
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:16px">
@@ -1428,6 +1503,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
         </div>
 
+          
             <div class="cfg-zone" id="cfg-zone-banner-anim">
               <div class="cfg-zone-ttl">✨ BANNER ANIMADO (la franja de texto en movimiento)</div>
               <div class="cfg-zone-body">
@@ -9247,18 +9323,59 @@ function cfgSwitchTab(tab) {
     var b=document.getElementById('cfgtab-'+t);
     if(b) b.className='btn bsm '+(t===tab?'bp':'bo');
   });
-  // IDs de todas las zonas
-  var zonas = {
-    negocio:   ['cfg-blk-identidad'],
-    pagos:     ['cfg-zone-pagos','cfg-zone-wa','cfg-zone-envio'],
-    diseno:    ['cfg-zone-tipo','cfg-zone-header','cfg-zone-hero','cfg-zone-cat','cfg-zone-cards','cfg-zone-bg','cfg-zone-footer','cfg-zone-ticket','cfg-zone-carrito','cfg-zone-color','cfg-zone-paletas'],
-    banner:    ['cfg-blk-banners','cfg-zone-banner-anim','cfg-zone-banner-pub'],
-    pwa:       ['cfg-zone-pwa'],
-    operacion: ['cfg-zone-wa','cfg-zone-envio','cfg-zone-crm-pin']
-  };
-  var todos = ['cfg-blk-identidad','cfg-blk-banners','cfg-zone-pagos','cfg-zone-wa','cfg-zone-envio','cfg-zone-pwa','cfg-zone-tipo','cfg-zone-header','cfg-zone-hero','cfg-zone-cat','cfg-zone-cards','cfg-zone-bg','cfg-zone-footer','cfg-zone-ticket','cfg-zone-carrito','cfg-zone-color','cfg-zone-paletas','cfg-zone-crm-pin','cfg-zone-banner-pub','cfg-zone-banner-static','cfg-zone-banner-anim'];
-  todos.forEach(function(id){ var e=document.getElementById(id); if(e) e.style.display='none'; });
-  (zonas[tab]||[]).forEach(function(id){ var e=document.getElementById(id); if(e) e.style.display=''; });
+
+  // Ocultar TODOS los .ac dentro de cfgpanel-negocio
+  var neg = document.getElementById('cfgpanel-negocio');
+  if (!neg) return;
+  neg.querySelectorAll('.ac').forEach(function(ac){ ac.style.display='none'; });
+
+  // Mostrar según tab
+  if (tab === 'negocio') {
+    var el = document.getElementById('cfg-blk-identidad');
+    if (el) el.style.display = '';
+
+  } else if (tab === 'pagos') {
+    // Mostrar el .ac de Contacto y solo las zonas de pagos/wa/envio
+    ['cfg-zone-pagos','cfg-zone-wa','cfg-zone-envio'].forEach(function(id){
+      var e=document.getElementById(id); if(e){ e.style.display=''; mostrarPadreAc(e); }
+    });
+
+  } else if (tab === 'pwa') {
+    var e=document.getElementById('cfg-zone-pwa');
+    if(e){ e.style.display=''; mostrarPadreAc(e); }
+
+  } else if (tab === 'banner') {
+    var b=document.getElementById('cfg-blk-banners');
+    if(b) b.style.display='';
+    var a=document.getElementById('cfg-zone-banner-anim');
+    if(a){ a.style.display=''; mostrarPadreAc(a); }
+
+  } else if (tab === 'diseno') {
+    ['cfg-zone-tipo','cfg-zone-header','cfg-zone-hero','cfg-zone-cat','cfg-zone-cards',
+     'cfg-zone-bg','cfg-zone-footer','cfg-zone-ticket','cfg-zone-carrito',
+     'cfg-zone-color','cfg-zone-paletas'].forEach(function(id){
+      var e=document.getElementById(id); if(e){ e.style.display=''; mostrarPadreAc(e); }
+    });
+
+  } else if (tab === 'operacion') {
+    ['cfg-zone-wa','cfg-zone-envio'].forEach(function(id){
+      var e=document.getElementById(id); if(e){ e.style.display=''; mostrarPadreAc(e); }
+    });
+    var p=document.getElementById('cfg-zone-crm-pin');
+    if(p){ p.style.display=''; mostrarPadreAc(p); }
+  }
+}
+
+function mostrarPadreAc(el) {
+  // Sube en el DOM hasta encontrar el .ac padre y lo hace visible
+  var node = el.parentElement;
+  while (node) {
+    if (node.classList && node.classList.contains('ac')) {
+      node.style.display = '';
+      return;
+    }
+    node = node.parentElement;
+  }
 }
 
 function irAPedidoMesa(numMesa, alertaTs) {
