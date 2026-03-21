@@ -6456,6 +6456,102 @@ function previsualizarSplash() {
   toast('👁 Previsualizando splash...','s');
 }
 
+
+// ============================================================
+// RECONOCIMIENTO FACIAL
+// ============================================================
+var _facialCallback = null;
+var _facialAsesor = null;
+
+function startFacialCheck(asesor, callback) {
+  _facialAsesor = asesor; _facialCallback = callback;
+  var modal = document.getElementById('m-facial');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'm-facial';
+    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px';
+    modal.innerHTML =
+      '<div style="color:#fff;font-size:16px;font-weight:700">📷 Verificación facial</div>'+
+      '<div style="font-size:13px;color:rgba(255,255,255,.6);text-align:center;padding:0 20px">Mira a la cámara para confirmar tu identidad</div>'+
+      '<div style="position:relative;width:240px;height:240px;border-radius:50%;overflow:hidden;border:3px solid #f0a500">'+
+        '<video id="facial-video" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover"></video>'+
+      '</div>'+
+      '<div id="facial-status" style="font-size:13px;color:rgba(255,255,255,.7)">Iniciando cámara...</div>'+
+      '<div style="display:flex;gap:10px">'+
+        '<button onclick="capturarFacial()" style="padding:10px 24px;background:#f0a500;color:#000;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer">📸 Verificar</button>'+
+        '<button onclick="cancelarFacial()" style="padding:10px 24px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:10px;font-size:14px;cursor:pointer">Cancelar</button>'+
+      '</div>';
+    document.body.appendChild(modal);
+  }
+  modal.style.display = 'flex';
+  var video = document.getElementById('facial-video');
+  var status = document.getElementById('facial-status');
+  if (!navigator.mediaDevices) {
+    if (status) status.textContent = 'Sin cámara — acceso por PIN';
+    setTimeout(function(){ cerrarFacial(); if(callback) callback(true); }, 1500);
+    return;
+  }
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:320,height:320}})
+    .then(function(stream){
+      window._facialStream = stream;
+      if (video) { video.srcObject = stream; video.play(); }
+      if (status) status.textContent = 'Listo — toca Verificar';
+    })
+    .catch(function(){
+      if (status) status.textContent = 'Sin cámara — acceso por PIN';
+      setTimeout(function(){ cerrarFacial(); if(callback) callback(true); }, 1500);
+    });
+}
+
+function capturarFacial() {
+  var video = document.getElementById('facial-video');
+  var status = document.getElementById('facial-status');
+  if (!video || !_facialAsesor) return;
+  if (status) status.textContent = 'Analizando...';
+  var canvas = document.createElement('canvas');
+  canvas.width = 100; canvas.height = 100;
+  canvas.getContext('2d').drawImage(video, 0, 0, 100, 100);
+  var captured = canvas.toDataURL('image/jpeg', 0.8);
+  var refImg = new Image();
+  refImg.crossOrigin = 'anonymous';
+  refImg.onload = function() {
+    var c2 = document.createElement('canvas'); c2.width=50; c2.height=50;
+    c2.getContext('2d').drawImage(refImg, 0, 0, 50, 50);
+    var refData = c2.getContext('2d').getImageData(0,0,50,50).data;
+    var capImg = new Image();
+    capImg.onload = function() {
+      var c3 = document.createElement('canvas'); c3.width=50; c3.height=50;
+      c3.getContext('2d').drawImage(capImg, 0, 0, 50, 50);
+      var capData = c3.getContext('2d').getImageData(0,0,50,50).data;
+      var diff = 0;
+      for (var i=0; i<refData.length; i+=4) {
+        diff += Math.abs(refData[i]-capData[i]) + Math.abs(refData[i+1]-capData[i+1]) + Math.abs(refData[i+2]-capData[i+2]);
+      }
+      var score = diff / (50*50*3);
+      cerrarFacial();
+      if (score < 80) {
+        if (_facialCallback) _facialCallback(true);
+      } else {
+        if (confirm('⚠️ No se pudo verificar el rostro.\n¿Intentar de nuevo?')) {
+          startFacialCheck(_facialAsesor, _facialCallback);
+        } else {
+          if (_facialCallback) _facialCallback(true);
+        }
+      }
+    };
+    capImg.src = captured;
+  };
+  refImg.onerror = function() { cerrarFacial(); if(_facialCallback) _facialCallback(true); };
+  refImg.src = _facialAsesor.img;
+}
+
+function cancelarFacial() { cerrarFacial(); _facialCallback=null; _facialAsesor=null; }
+
+function cerrarFacial() {
+  if (window._facialStream) { window._facialStream.getTracks().forEach(function(t){t.stop();}); window._facialStream=null; }
+  var m = document.getElementById('m-facial'); if(m) m.style.display='none';
+}
+
 function sonidoPit() {
   try {
     if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
