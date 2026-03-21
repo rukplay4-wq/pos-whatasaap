@@ -393,7 +393,11 @@ select.fi option{background:#111122}
 </head>
 <body>
 <style>
-#pgmask{position:fixed;inset:0;z-index:99999;background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .6s ease}
+#pgmask{position:fixed;inset:0;z-index:99999;background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .6s ease;overflow:hidden}
+#pgmask::before{content:'';position:absolute;inset:0;background:#0a0a0f;z-index:0}
+#pgmask>*{position:relative;z-index:1}
+#splash-img-custom{background-image:none!important}
+#splash-img-custom.active{background-image:var(--splash-logo)!important}
 #pgmask.fade{opacity:0;pointer-events:none}
 @keyframes splashPulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
 @keyframes splashDot{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
@@ -401,31 +405,10 @@ select.fi option{background:#111122}
 </style>
 <div id="pgmask">
   <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
-    <div id="pgmask-icon-wrap" style="animation:splashPulse 2s ease-in-out infinite">
-      <div id="splash-img-custom" style="display:none;width:56px;height:56px;background-size:contain;background-repeat:no-repeat;background-position:center"></div>
-      <svg id="splash-svg-default" width="56" height="50" viewBox="0 0 140 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Casco motocross/cross — perfil lateral -->
-        <path d="M25 70 C22 50 25 30 38 18 C50 7 75 5 92 12 C112 22 118 45 115 70 L108 75 C100 80 90 82 78 82 L45 82 C35 80 28 76 25 70 Z" fill="white" opacity="0.92"/>
-        <!-- Visera larga tipo cross que sobresale al frente -->
-        <path d="M25 70 L20 72 C16 73 12 71 10 68 L8 62 C7 58 9 54 13 53 L25 52 L28 58 Z" fill="white" opacity="0.85"/>
-        <!-- Punta visera -->
-        <path d="M8 62 C6 60 6 56 8 54 L13 53 L10 62 Z" fill="rgba(255,255,255,.5)"/>
-        <!-- Ventilación superior (rejillas cross) -->
-        <rect x="55" y="6" width="6" height="10" rx="3" fill="rgba(0,0,0,.25)"/>
-        <rect x="65" y="5" width="6" height="11" rx="3" fill="rgba(0,0,0,.25)"/>
-        <rect x="75" y="6" width="6" height="10" rx="3" fill="rgba(0,0,0,.25)"/>
-        <!-- Apertura facial / goggle area -->
-        <path d="M32 60 C30 52 32 42 38 36 C46 30 80 30 90 36 C96 42 98 52 96 60 L90 64 C84 67 46 67 40 64 Z" fill="rgba(0,0,0,.3)"/>
-        <!-- Reflejo goggle -->
-        <path d="M38 38 C44 34 60 33 68 34 L62 48 C55 47 46 49 40 54 Z" fill="white" opacity="0.06"/>
-        <!-- Parte mentón -->
-        <path d="M38 82 L38 90 C38 93 41 95 45 95 L78 95 C82 95 85 93 85 90 L85 82 Z" fill="rgba(255,255,255,.7)"/>
-        <!-- Línea decorativa lateral -->
-        <path d="M28 45 C32 35 42 28 55 25" stroke="rgba(255,255,255,.2)" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </div>
+    <div id="pgmask-icon-wrap" style="animation:splashPulse 2s ease-in-out infinite;min-height:4px"></div>
     <div style="text-align:center">
       <div id="splash-nombre" style="font-size:18px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.1em;font-family:sans-serif;opacity:0;animation:splashFadeIn .8s ease .3s forwards">Mi Tienda</div>
+      <div id="splash-sub-txt" style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;opacity:0;animation:splashFadeIn .8s ease .5s forwards"></div>
     </div>
     <div style="display:flex;gap:5px;opacity:0;animation:splashFadeIn .5s ease .8s forwards">
       <div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5);animation:splashDot 1.2s ease-in-out infinite"></div>
@@ -447,19 +430,16 @@ function hideMask(){
   var m=document.getElementById('pgmask');
   if(m){m.classList.add('fade');setTimeout(function(){m.style.display='none';},500);}
 }
-// Actualizar SVG si hay logo configurado
+// Actualizar nombre en splash - NO mostrar ninguna imagen automáticamente
 window.addEventListener('DOMContentLoaded', function(){
   var sn=document.getElementById('splash-nombre');
   if(sn && typeof C !== 'undefined' && C.name) sn.textContent=C.name;
-  if(typeof C !== 'undefined' && C.logo){
-    var custom=document.getElementById('splash-img-custom');
-    var def=document.getElementById('splash-svg-default');
-    if(custom&&def){
-      custom.style.backgroundImage='url('+C.logo+')';
-      custom.style.display='block';
-      def.style.display='none';
-    }
-  }
+  // Forzar todo oculto — solo aplicarSplash() decide qué mostrar
+  var els=['splash-img-custom','splash-svg-default','splash-emoji-default'];
+  els.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){ el.style.display='none'; el.style.backgroundImage='none'; }
+  });
 });
 </script>
 <div id="pts"></div>
@@ -932,7 +912,78 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
             <div class="fg"><label class="fl">T&#237;tulo del cat&#225;logo</label><input class="fi" id="c-cattl" placeholder="Nuestros Productos" oninput="liveC()"></div>
             <div class="fg"><label class="fl">S&#237;mbolo moneda</label><input class="fi" id="c-cur" placeholder="$" oninput="liveC()" maxlength="5" style="max-width:90px"></div>
-          </div>
+
+            <!-- SPLASH SCREEN -->
+            <div style="margin-top:8px;border-top:1px solid rgba(255,255,255,.07);padding-top:14px">
+              <div style="font-size:11px;font-weight:800;color:var(--cp);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">⬛ PANTALLA DE CARGA (Splash)</div>
+              <div style="font-size:12px;color:var(--cmut);margin-bottom:12px">La pantalla negra que aparece al abrir la tienda. Puedes personalizarla con tu imagen o logo.</div>
+
+              <div class="frow">
+                <div class="fg">
+                  <label class="fl">Color de fondo</label>
+                  <div class="csw"><input type="color" id="c-splash-bg" value="#0a0a0f" oninput="aplicarSplash()"><span id="c-splash-bgh">#0a0a0f</span></div>
+                </div>
+                <div class="fg">
+                  <label class="fl">Color del texto</label>
+                  <div class="csw"><input type="color" id="c-splash-txt" value="#ffffff" oninput="aplicarSplash()"><span id="c-splash-txth">#ffffff</span></div>
+                </div>
+              </div>
+
+              <div class="fg">
+                <label class="fl">Imagen de fondo del splash (opcional)</label>
+                <div class="upwrap">
+                  <input class="fi" id="c-splash-img" placeholder="URL o sube imagen" oninput="aplicarSplash()">
+                  <label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upSplashImg(event)"></label>
+                </div>
+                <img id="prev-splash-img" style="display:none;width:100%;max-height:80px;object-fit:cover;border-radius:8px;margin-top:6px" src="" alt="">
+              </div>
+
+              <div class="fg">
+                <label class="fl">Logo personalizado del splash</label>
+                <div class="upwrap">
+                  <input class="fi" id="c-splash-logo" placeholder="URL del logo (o usa el logo principal)" oninput="aplicarSplash()">
+                  <label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upSplashLogo(event)"></label>
+                </div>
+              </div>
+
+              <div class="fg">
+                <label class="fl">Emoji en lugar de logo (opcional)</label>
+                <input class="fi" id="c-splash-emoji" placeholder="Ej: 🛍️ 🏪 ✨" maxlength="4" style="max-width:100px;font-size:24px;text-align:center" oninput="aplicarSplash()">
+              </div>
+
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin-bottom:4px">
+                <input type="checkbox" id="c-splash-show-svg" style="width:15px;height:15px;accent-color:var(--cp)" onchange="aplicarSplash()">
+                Mostrar logo SVG por defecto (el casco)
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
+                <input type="checkbox" id="c-splash-show-name" checked style="width:15px;height:15px;accent-color:var(--cp)" onchange="aplicarSplash()">
+                Mostrar nombre del negocio
+              </label>
+
+              <div class="fg">
+                <label class="fl">Tamaño del logo en el splash</label>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <input type="range" id="c-splash-logo-size" min="16" max="200" value="56" style="flex:1;accent-color:var(--cp)" oninput="document.getElementById('c-splash-logo-size-val').textContent=this.value+'px';aplicarSplash()">
+                  <span id="c-splash-logo-size-val" style="font-size:13px;font-weight:700;color:var(--cp);min-width:40px">56px</span>
+                </div>
+              </div>
+
+              <div class="fg">
+                <label class="fl">Texto debajo del logo</label>
+                <input class="fi" id="c-splash-sub" placeholder="Cargando..." oninput="aplicarSplash()">
+              </div>
+
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+                <button class="btn bsm" onclick="setEstiloSplash('#0a0a0f','#ffffff')" style="background:#0a0a0f;color:#fff;border:1px solid #333;border-radius:8px">⬛ Negro</button>
+                <button class="btn bsm" onclick="setEstiloSplash('#1a0533','#f0a500')" style="background:#1a0533;color:#f0a500;border:1px solid #f0a500;border-radius:8px">🌌 Morado</button>
+                <button class="btn bsm" onclick="setEstiloSplash('#0d1f0d','#68d391')" style="background:#0d1f0d;color:#68d391;border:1px solid #68d391;border-radius:8px">🌿 Verde</button>
+                <button class="btn bsm" onclick="setEstiloSplash('#1a0a00','#ff8c00')" style="background:#1a0a00;color:#ff8c00;border:1px solid #ff8c00;border-radius:8px">🔥 Naranja</button>
+                <button class="btn bsm" onclick="setEstiloSplash('#ffffff','#111111')" style="background:#fff;color:#111;border:1px solid #ddd;border-radius:8px">⬜ Blanco</button>
+              </div>
+
+              <button class="btn bp bsm" onclick="previsualizarSplash()" style="border-radius:8px;margin-top:10px">👁 Previsualizar splash</button>
+            </div>
+          </div><!-- fin identidad .ac -->
 
           <div class="ac">
             <div class="acttl">&#128222; Contacto y Redes</div>
@@ -3169,22 +3220,17 @@ function applyC() {
   document.getElementById('hdr-name').textContent = C.name || 'Mi Tienda';
   document.title = C.name || 'Mi Tienda';
 
-  // ── Actualizar splash con nombre e imagen del negocio ──
+  // ── Actualizar splash con nombre del negocio ──
   var splashNombre = document.getElementById('splash-nombre');
   if (splashNombre) splashNombre.textContent = C.name || 'Mi Tienda';
-  var splashCustom = document.getElementById('splash-img-custom');
-  var splashSvg    = document.getElementById('splash-svg-default');
-  if (C.logo && splashCustom && splashSvg) {
-    splashCustom.style.backgroundImage = 'url(' + C.logo + ')';
-    splashCustom.style.display = 'block';
-    splashSvg.style.display = 'none';
-  } else if (splashCustom && splashSvg) {
-    splashCustom.style.display = 'none';
-    splashSvg.style.display = 'block';
-  }
+  // NO mostrar C.logo automáticamente en el splash
+  // Solo aplicarSplash() controla lo que se ve
+  if (typeof aplicarSplash === 'function') aplicarSplash();
 
   var logo  = document.getElementById('hdr-logo');
   var emoji = document.getElementById('hdr-emoji');
+  // Apply splash
+  if (typeof aplicarSplash === 'function') aplicarSplash();
   if (C.logo) {
     logo.src = C.logo; logo.style.display = 'block'; emoji.style.display = 'none';
   } else {
@@ -6107,6 +6153,15 @@ function marcarCobradoDespachado(id) {
 // ============================================================
 var _scanRemotoActivo = false;
 var _scanRemotoUnsub = null;
+var _audioCtx = null;
+
+// Inicializar AudioContext con primer toque del usuario
+document.addEventListener('click', function initAudio() {
+  if (!_audioCtx) {
+    try { _audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){}
+  }
+  document.removeEventListener('click', initAudio);
+}, { once: true });
 
 function activarEscanerRemoto() {
   // Construir URL del modo scanner
@@ -6261,18 +6316,141 @@ function iniciarModoScannerRemoto() {
   }
 })();
 
+
+// ============================================================
+// SPLASH SCREEN PERSONALIZABLE
+// ============================================================
+function aplicarSplash() {
+  var mask = document.getElementById('pgmask');
+  if (!mask) return;
+  var bg   = (document.getElementById('c-splash-bg')||{}).value   || C.splashBg  || '#0a0a0f';
+  var txt  = (document.getElementById('c-splash-txt')||{}).value  || C.splashTxt || '#ffffff';
+  var img  = (document.getElementById('c-splash-img')||{}).value  || C.splashImg || '';
+  var logo = (document.getElementById('c-splash-logo')||{}).value || C.splashLogo || '';
+  var size = (document.getElementById('c-splash-logo-size')||{}).value || C.splashLogoSize || '56';
+  var sub  = (document.getElementById('c-splash-sub')||{}).value  || C.splashSub || '';
+
+  C.splashBg=bg; C.splashTxt=txt; C.splashImg=img; C.splashLogo=logo; C.splashLogoSize=size; C.splashSub=sub;
+
+  // Fondo
+  if (img) {
+    mask.style.background = 'url('+img+') center/cover no-repeat, '+bg;
+  } else {
+    mask.style.background = bg;
+  }
+
+  // Limpiar icono wrap
+  var wrap = document.getElementById('pgmask-icon-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+
+  var emoji = (document.getElementById('c-splash-emoji')||{}).value || C.splashEmoji || '';
+  C.splashEmoji = emoji;
+
+  if (logo) {
+    // Imagen personalizada
+    var imgDiv = document.createElement('div');
+    imgDiv.style.cssText = 'width:'+size+'px;height:'+size+'px;background:url('+logo+') center/contain no-repeat';
+    wrap.appendChild(imgDiv);
+  } else if (emoji) {
+    // Emoji
+    var emojiDiv = document.createElement('div');
+    emojiDiv.style.cssText = 'font-size:'+size+'px;line-height:1';
+    emojiDiv.textContent = emoji;
+    wrap.appendChild(emojiDiv);
+  }
+  // Si nada → splash limpio sin icono
+
+  // Nombre y subtexto
+  var nmEl = document.getElementById('splash-nombre');
+  var showName = document.getElementById('c-splash-show-name');
+  var showNameVal = !showName || showName.checked;
+  if (nmEl) { nmEl.style.color=txt; nmEl.style.display=showNameVal?'':'none'; }
+  var subTxtEl = document.getElementById('splash-sub-txt');
+  if (subTxtEl) { subTxtEl.textContent = (document.getElementById('c-splash-sub')||{}).value||C.splashSub||''; subTxtEl.style.color=txt; }
+
+  // Preview img
+  var prev = document.getElementById('prev-splash-img');
+  if (prev) { prev.src = img; prev.style.display = img ? 'block' : 'none'; }
+
+  // Hex labels
+  var bgh = document.getElementById('c-splash-bgh'); if(bgh) bgh.textContent=bg;
+  var txth= document.getElementById('c-splash-txth'); if(txth) txth.textContent=txt;
+}
+
+function setEstiloSplash(bg, txt) {
+  var bgEl  = document.getElementById('c-splash-bg');
+  var txtEl = document.getElementById('c-splash-txt');
+  if (bgEl)  bgEl.value  = bg;
+  if (txtEl) txtEl.value = txt;
+  aplicarSplash();
+}
+
+function upSplashImg(ev) {
+  var file = ev.target.files[0]; if (!file) return;
+  var r = new FileReader();
+  r.onload = function(e) {
+    var img = new Image(); img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var max = 1200;
+      var w=img.width, h=img.height;
+      if(w>max||h>max){ if(w>h){h=Math.round(h*max/w);w=max;}else{w=Math.round(w*max/h);h=max;} }
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      var data = canvas.toDataURL('image/jpeg',0.85);
+      C.splashImg = data;
+      var el = document.getElementById('c-splash-img'); if(el) el.value=data;
+      aplicarSplash();
+      toast('✅ Imagen del splash guardada','s');
+    }; img.src=e.target.result;
+  }; r.readAsDataURL(file);
+}
+
+function upSplashLogo(ev) {
+  var file = ev.target.files[0]; if (!file) return;
+  var r = new FileReader();
+  r.onload = function(e) {
+    var img = new Image(); img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var max = 400;
+      var w=img.width, h=img.height;
+      if(w>max||h>max){ if(w>h){h=Math.round(h*max/w);w=max;}else{w=Math.round(w*max/h);h=max;} }
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      var data = canvas.toDataURL('image/png',0.9);
+      C.splashLogo = data;
+      var el = document.getElementById('c-splash-logo'); if(el) el.value=data;
+      aplicarSplash();
+      toast('✅ Logo del splash guardado','s');
+    }; img.src=e.target.result;
+  }; r.readAsDataURL(file);
+}
+
+function previsualizarSplash() {
+  aplicarSplash();
+  var mask = document.getElementById('pgmask');
+  if (!mask) return;
+  mask.style.display = 'flex';
+  mask.style.opacity = '1';
+  mask.classList.remove('fade');
+  setTimeout(function(){ hideMask(); }, 2500);
+  toast('👁 Previsualizando splash...','s');
+}
+
 function sonidoPit() {
   try {
-    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var ctx = _audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (!_audioCtx) _audioCtx = ctx;
+    if (ctx.state === 'suspended') ctx.resume();
     var osc = ctx.createOscillator();
     var gain = ctx.createGain();
     osc.connect(gain); gain.connect(ctx.destination);
     osc.frequency.setValueAtTime(1200, ctx.currentTime);
     osc.frequency.setValueAtTime(900, ctx.currentTime + 0.06);
-    gain.gain.setValueAtTime(0.4, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    gain.gain.setValueAtTime(0.5, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
     osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.15);
+    osc.stop(ctx.currentTime + 0.18);
   } catch(e) {}
 }
 
@@ -9727,10 +9905,57 @@ function cobrarRegistradora() {
     '<div style="font-size:11px;color:var(--cmut);margin-top:3px">Cliente: '+o.name+' · Pago: '+pago+'</div>';
   toast('💳 ¡Cobro! '+(C.cur||'$')+fmt(total),'s');
   lanzarCelebracion();
-  // Actualizar grid para reflejar stock nuevo
   renderRegCatGrid(_regCatActiva);
-  limpiarRegistradora();
   renderOrds(); renderCRM();
+  // Mostrar modal de ticket
+  mostrarTicketModal(o, pago, sub, total);
+}
+
+function mostrarTicketModal(o, pago, sub, total) {
+  var efectivoVal = parseFloat((document.getElementById('reg-efectivo-valor')||{}).value||0);
+  var cambio = pago==='Efectivo' && efectivoVal>total ? efectivoVal-total : 0;
+  var m = document.getElementById('m-ticket-cobro');
+  if (!m) {
+    m = document.createElement('div');
+    m.id = 'm-ticket-cobro';
+    m.style.cssText = 'display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.85);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto';
+    m.onclick = function(e){ if(e.target===m) m.style.display='none'; };
+    document.body.appendChild(m);
+  }
+  var cur = C.cur||'$';
+  var itemsHtml = (o.items||[]).map(function(it){
+    return '<tr><td style="padding:4px 0">'+it.name+'</td><td style="text-align:center;padding:4px 8px">x'+it.qty+'</td><td style="text-align:right;padding:4px 0">'+cur+fmt(it.price*it.qty)+'</td></tr>';
+  }).join('');
+  var descHtml = o.descuento>0 ? '<tr><td colspan="2" style="color:#68d391;padding:4px 0">🎟️ Descuento</td><td style="text-align:right;color:#68d391;padding:4px 0">-'+cur+fmt(o.descuento)+'</td></tr>' : '';
+  var cambioHtml = cambio>0 ? '<div style="margin-top:10px;padding:10px;background:rgba(104,211,145,.12);border:1px solid rgba(104,211,145,.3);border-radius:10px;text-align:center"><div style="font-size:12px;color:var(--cmut)">Recibió: '+cur+fmt(efectivoVal)+'</div><div style="font-size:22px;font-weight:900;color:#68d391">Cambio: '+cur+fmt(cambio)+'</div></div>' : '';
+  m.innerHTML =
+    '<div style="background:var(--ccard,#1a1a2e);border-radius:16px;max-width:380px;width:100%;padding:20px;margin:auto;margin-top:20px;border:1px solid rgba(255,255,255,.1)">' +
+      '<div style="text-align:center;margin-bottom:16px">' +
+        '<div style="font-size:28px;margin-bottom:4px">✅</div>' +
+        '<div style="font-size:20px;font-weight:900;color:#68d391">¡Cobrado!</div>' +
+        '<div style="font-size:13px;color:var(--cmut);margin-top:4px">'+o.id+' · '+o.ts+'</div>' +
+      '</div>' +
+      '<div style="border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:12px 0;margin-bottom:12px">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:13px;color:var(--ctxt,#fff)">'+itemsHtml+descHtml+'</table>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
+        '<span style="font-size:14px;color:var(--cmut)">Método</span>' +
+        '<span style="font-size:14px;font-weight:700">'+pago+'</span>' +
+      '</div>' +
+      (sub!==total?'<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px;color:var(--cmut)">Subtotal</span><span style="font-size:13px">'+cur+fmt(sub)+'</span></div>':'') +
+      '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:2px solid rgba(255,255,255,.1)">' +
+        '<span style="font-size:18px;font-weight:900">TOTAL</span>' +
+        '<span style="font-size:24px;font-weight:900;color:var(--cp,#f0a500)">'+cur+fmt(total)+'</span>' +
+      '</div>' +
+      cambioHtml +
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px">' +
+        '<button onclick="imprimirTicketRegistradora()" style="padding:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-size:12px;cursor:pointer;font-weight:700">🖨️ Ticket</button>' +
+        '<button onclick="enviarWARegistradora()" style="padding:10px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.25);border-radius:10px;color:#25d366;font-size:12px;cursor:pointer;font-weight:700">💬 WA</button>' +
+        '<button onclick="generarFacturaPDF()" style="padding:10px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);border-radius:10px;color:#a5b4fc;font-size:12px;cursor:pointer;font-weight:700">📄 PDF</button>' +
+      '</div>' +
+      '<button onclick="cerrarTicketCobro()" style="width:100%;margin-top:10px;padding:12px;background:var(--cp,#f0a500);color:#000;border:none;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer">✅ Nueva venta</button>' +
+    '</div>';
+  m.style.display = 'flex';
 }
 
 // ── TICKET TÉRMICO (compatible 80mm) ──
