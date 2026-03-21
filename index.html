@@ -481,17 +481,19 @@ window.addEventListener('DOMContentLoaded', function(){
   </div>
 </header>
 
-<!-- BANNER PUBLICITARIO — carrusel de tarjetas horizontales -->
-<div id="banner-pub" style="display:none;position:relative;overflow:hidden;background:#1a1a2e">
-  <!-- Carrusel track -->
-  <div id="banner-pub-track" style="display:flex;gap:0;transition:transform .4s ease;will-change:transform"></div>
-  <!-- Flechas navegación -->
-  <button id="banner-prev" onclick="moverBannerCarrusel(-1)" style="position:absolute;left:6px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;font-size:16px;cursor:pointer;z-index:10;display:none;align-items:center;justify-content:center">‹</button>
-  <button id="banner-next" onclick="moverBannerCarrusel(1)" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;font-size:16px;cursor:pointer;z-index:10;display:none;align-items:center;justify-content:center">›</button>
-  <!-- Cerrar -->
-  <button onclick="cerrarBannerPub()" style="position:absolute;top:6px;right:8px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.4);border:none;color:#fff;font-size:12px;cursor:pointer;z-index:20;display:flex;align-items:center;justify-content:center;line-height:1">✕</button>
-  <!-- Dots -->
-  <div id="banner-pub-dots" style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:10"></div>
+<!-- BANNER PUBLICITARIO — encima del hero, solo si está activo -->
+<div id="banner-pub" style="display:none;cursor:pointer" onclick="abrirBannerPub()">
+  <div id="banner-pub-inner" style="display:flex;align-items:center;gap:10px;padding:10px 16px;position:relative">
+    <div id="banner-pub-img-wrap" style="width:32px;height:32px;border-radius:6px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1)">
+      <span id="banner-pub-ico" style="font-size:18px">📢</span>
+    </div>
+    <div style="flex:1;min-width:0">
+      <div id="banner-pub-titulo" style="font-size:13px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Pauta aquí tu negocio</div>
+      <div id="banner-pub-sub" style="font-size:11px;opacity:.75;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Llega a más clientes</div>
+    </div>
+    <div id="banner-pub-cta" style="padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600;flex-shrink:0;white-space:nowrap">Ver →</div>
+    <button id="banner-pub-close" onclick="event.stopPropagation();cerrarBannerPub()" style="width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.2);border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:inherit">✕</button>
+  </div>
 </div>
 
 <section id="hero" style="position:relative">
@@ -557,7 +559,7 @@ window.addEventListener('DOMContentLoaded', function(){
   <div id="asesor-session-img" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;flex-shrink:0"></div>
   <div style="flex:1">
     <div style="font-size:11px;color:var(--cmut)">Tomando pedidos como:</div>
-    <div style="display:flex;align-items:center;gap:6px"><div id="asesor-session-name" style="font-weight:700;font-size:14px;color:var(--cp)"></div><div id="asesor-session-rol" style="font-size:11px;color:var(--cmut);background:rgba(255,255,255,.06);padding:2px 8px;border-radius:50px"></div></div>
+    <div id="asesor-session-name" style="font-weight:700;font-size:14px;color:var(--cp)"></div>
   </div>
   <div id="asesor-session-mesas" style="font-size:12px;color:var(--cmut)"></div>
   <span id="alerta-represados" style="display:none;background:rgba(229,62,62,.15);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:50px;padding:3px 8px;font-size:11px;font-weight:600"></span>
@@ -791,41 +793,18 @@ window.addEventListener('DOMContentLoaded', function(){
         <div class="nav-logo-ico" id="nav-logo-ico">⚙️</div>
         <div class="nav-logo-txt" id="nav-logo-txt">Panel Admin</div>
       </div>
-
-      <div class="nav-section">📊 General</div>
-      <div class="an active" data-sec="dashboard" onclick="navTo(this);cerrarNav()"><span class="ani">📊</span><span>Dashboard</span></div>
-      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('negocio');cerrarNav()"><span class="ani">🏪</span><span>Mi Negocio</span></div>
-
-      <div class="nav-section">🛍️ Catálogo</div>
-      <div class="an" data-sec="prods" onclick="navTo(this);cerrarNav()"><span class="ani">📦</span><span>Productos</span></div>
-      <div class="an" data-sec="cats" onclick="navTo(this);cerrarNav()"><span class="ani">🏷️</span><span>Categorías</span></div>
-
-      <div class="nav-section">🎨 Apariencia</div>
-      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('banner');cerrarNav()"><span class="ani">🖼️</span><span>Banners</span></div>
-      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('diseno');cerrarNav()"><span class="ani">🎨</span><span>Diseño y Colores</span></div>
-      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('pwa');cerrarNav()"><span class="ani">📲</span><span>App PWA</span></div>
-
-      <div class="nav-section">💳 Pagos</div>
-      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('pagos');cerrarNav()"><span class="ani">💳</span><span>Pagos y WhatsApp</span></div>
-      <div class="an" data-sec="cfg" onclick="navTo(this);cfgSwitchTab('operacion');cerrarNav()"><span class="ani">🔧</span><span>Operación</span></div>
-
-      <div class="nav-section">🛒 Ventas</div>
-      <div class="an" data-sec="orders" onclick="navTo(this);cajaSwitchTab('registradora');cerrarNav()"><span class="ani">🖨️</span><span>Registradora</span></div>
-      <div class="an" data-sec="orders" onclick="navTo(this);cajaSwitchTab('pendientes');cerrarNav()"><span class="ani">⏳</span><span>Pedidos Pendientes</span></div>
-      <div class="an" data-sec="orders" onclick="navTo(this);cajaSwitchTab('domicilios');cerrarNav()"><span class="ani">🛵</span><span>Domicilios</span></div>
-      <div class="an" data-sec="orders" onclick="navTo(this);cajaSwitchTab('tablero');cerrarNav()"><span class="ani">📋</span><span>Tablero del Día</span></div>
-
-      <div class="nav-section">👥 Equipo</div>
-      <div class="an" data-sec="asesores" onclick="navTo(this);cerrarNav()"><span class="ani">➕</span><span>Crear / Editar Roles</span></div>
-      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('asesores');cerrarNav()"><span class="ani">👥</span><span>Ver Personal</span></div>
-      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('turnos');cerrarNav()"><span class="ani">⏰</span><span>Turnos</span></div>
-
-      <div class="nav-section">📈 CRM</div>
-      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('ventas');cerrarNav()"><span class="ani">💰</span><span>Ventas del Día</span></div>
-      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('clientes');cerrarNav()"><span class="ani">🧑‍🤝‍🧑</span><span>Clientes</span></div>
-      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('puntos');cerrarNav()"><span class="ani">📍</span><span>Puntos QR</span></div>
-      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('aliados');cerrarNav()"><span class="ani">🤝</span><span>Aliados</span></div>
-      <div class="an" data-sec="crm" onclick="navTo(this);crmSwitchTab('roles');cerrarNav()"><span class="ani">🔒</span><span>Seguridad</span></div>
+      <div class="nav-section">General</div>
+      <div class="an active" data-sec="cfg" onclick="navTo(this);cerrarNav()"><span class="ani">&#127912;</span><span>Configuraci&#243;n</span></div>
+      <div class="an" data-sec="dashboard" onclick="navTo(this);cerrarNav()"><span class="ani">📊</span><span>Dashboard</span></div>
+      <div class="nav-section">Inventario</div>
+      <div class="an" data-sec="prods" onclick="navTo(this);cerrarNav()"><span class="ani">&#128230;</span><span>Productos</span></div>
+      <div class="an" data-sec="cats" onclick="navTo(this);cerrarNav()"><span class="ani">&#127991;&#65039;</span><span>Categor&#237;as</span></div>
+      <div class="nav-section">Operaci&#243;n</div>
+      <div class="an" data-sec="orders" onclick="navTo(this);cerrarNav()"><span class="ani">&#129534;</span><span>Caja</span></div>
+      <div class="an" data-sec="crm" onclick="navTo(this);cerrarNav()"><span class="ani">&#128202;</span><span>CRM</span></div>
+      <div class="nav-section">Personal</div>
+      <div class="an" data-sec="asesores" onclick="navTo(this);cerrarNav()"><span class="ani">&#128101;</span><span id="nav-asesores-lbl">Personal / Vendedores</span></div>
+      <div class="an" data-sec="vendedores" onclick="navTo(this);cerrarNav()"><span class="ani">&#128694;</span><span>Vendedores Externos</span></div>
     </nav>
     <main id="adm-main">
 
@@ -887,11 +866,10 @@ window.addEventListener('DOMContentLoaded', function(){
         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:12px">
           <button class="btn bsm bp" id="cfgtab-negocio"   onclick="cfgSwitchTab('negocio')">🏪 Negocio</button>
           <button class="btn bsm bo" id="cfgtab-pagos"     onclick="cfgSwitchTab('pagos')">💳 Pagos</button>
-          <button class="btn bsm bo" id="cfgtab-banner"    onclick="cfgSwitchTab('banner')">🖼️ Banners</button>
           <button class="btn bsm bo" id="cfgtab-diseno"    onclick="cfgSwitchTab('diseno')">🎨 Diseño</button>
+          <button class="btn bsm bo" id="cfgtab-banner"    onclick="cfgSwitchTab('banner')">🖼️ Banner</button>
           <button class="btn bsm bo" id="cfgtab-pwa"       onclick="cfgSwitchTab('pwa')">📲 PWA</button>
-          <button class="btn bsm bo" id="cfgtab-operacion" onclick="cfgSwitchTab('operacion')eracion')">🔧 Operación</button>
-        </div>eracion')">🔧 Operación</button>
+          <button class="btn bsm bo" id="cfgtab-operacion" onclick="cfgSwitchTab('operacion')">🔧 Operación</button>
         </div>
 
         <!-- TAB: NEGOCIO -->
@@ -899,7 +877,7 @@ window.addEventListener('DOMContentLoaded', function(){
         <div class="agrid">
 
           <div class="ac">
-            <div id="cfg-blk-identidad" class="ac-inner"><div class="acttl">&#127978; Identidad</div>
+            <div class="acttl">&#127978; Identidad</div>
             <div class="fg"><label class="fl">Nombre de la tienda</label><input class="fi" id="c-name" placeholder="Mi Tienda" oninput="liveC()"></div>
             <div class="fg">
               <label class="fl">Logo (URL o sube foto desde tu celular)</label>
@@ -912,14 +890,47 @@ window.addEventListener('DOMContentLoaded', function(){
             <div class="fg"><label class="fl">Emoji logo (si no hay imagen)</label><input class="fi" id="c-emoji" placeholder="&#128717;" oninput="liveC()" maxlength="4"></div>
             <div class="fg"><label class="fl">Subtítulo del hero</label><input class="fi" id="c-sub" placeholder="Descubre los mejores productos..." oninput="liveC()"></div>
             <div class="fg"><label class="fl">Texto pequeño encima del título (eyebrow)</label><input class="fi" id="c-eyebrow" placeholder="✨ Bienvenido" oninput="liveC()"></div>
-            <div style="font-size:11px;color:var(--cmut);padding:8px;background:rgba(255,255,255,.03);border-radius:8px">
-              ℹ️ Los botones del banner se configuran en la pestaña <b>📢 Banner</b> → sección Botones
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <!-- BOTÓN 1 -->
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                  <span style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase">🔵 Botón Principal</span>
+                  <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--cmut);cursor:pointer">
+                    <input type="checkbox" id="c-btn1show" onchange="liveC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
+                  </label>
+                </div>
+                <div class="fg"><label class="fl">Texto</label><input class="fi" id="c-btn1" placeholder="Ver Catálogo 🛍️" oninput="liveC()"></div>
+                <div class="fg"><label class="fl">Acción al tocarlo</label>
+                  <select class="fi" id="c-btn1action" onchange="liveC();toggleBtnUrl(1)">
+                    <option value="catalog">📋 Ir al catálogo</option>
+                    <option value="cart">🛒 Abrir carrito</option>
+                    <option value="whatsapp">💬 Abrir WhatsApp</option>
+                    <option value="url">🔗 URL personalizada</option>
+                  </select>
+                </div>
+                <div class="fg" id="c-btn1url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn1url" placeholder="https://..." oninput="liveC()"></div>
+              </div>
+              <!-- BOTÓN 2 -->
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                  <span style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase">⚪ Botón Secundario</span>
+                  <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--cmut);cursor:pointer">
+                    <input type="checkbox" id="c-btn2show" onchange="liveC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
+                  </label>
+                </div>
+                <div class="fg"><label class="fl">Texto</label><input class="fi" id="c-btn2" placeholder="Mi Carrito 🛒" oninput="liveC()"></div>
+                <div class="fg"><label class="fl">Acción al tocarlo</label>
+                  <select class="fi" id="c-btn2action" onchange="liveC();toggleBtnUrl(2)">
+                    <option value="catalog">📋 Ir al catálogo</option>
+                    <option value="cart">🛒 Abrir carrito</option>
+                    <option value="whatsapp">💬 Abrir WhatsApp</option>
+                    <option value="url">🔗 URL personalizada</option>
+                  </select>
+                </div>
+                <div class="fg" id="c-btn2url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn2url" placeholder="https://..." oninput="liveC()"></div>
+              </div>
             </div>
-            <div class="fg"><label class="fl">Título del catálogo</label><input class="fi" id="c-cattl" placeholder="Nuestros Productos" oninput="liveC()"></div>
-            <div class="frow">
-              <div class="fg"><label class="fl">Color del título catálogo</label><div class="csw"><input type="color" id="c-cattl-color" value="#f0f0ff" oninput="liveC();updHex()"><span id="c-cattl-colorh">#f0f0ff</span></div></div>
-              <div class="fg"><label class="fl">Tamaño (px)</label><input class="fi" id="c-cattl-size" type="number" min="14" max="48" placeholder="28" style="max-width:90px" oninput="liveC()"></div>
-            </div>
+            <div class="fg"><label class="fl">T&#237;tulo del cat&#225;logo</label><input class="fi" id="c-cattl" placeholder="Nuestros Productos" oninput="liveC()"></div>
             <div class="fg"><label class="fl">S&#237;mbolo moneda</label><input class="fi" id="c-cur" placeholder="$" oninput="liveC()" maxlength="5" style="max-width:90px"></div>
           </div>
 
@@ -927,7 +938,7 @@ window.addEventListener('DOMContentLoaded', function(){
             <div class="acttl">&#128222; Contacto y Redes</div>
             <div class="fg"><label class="fl">WhatsApp principal (con c&#243;digo pa&#237;s)</label><input class="fi" id="c-wa" placeholder="+573001234567" oninput="liveC()"></div>
             <!-- CONFIGURACIÓN PAGOS DIGITALES -->
-            <div class="cfg-zone" id="cfg-zone-pagos">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">💳 PAGOS DIGITALES</div>
               <div class="cfg-zone-body">
                 <div style="font-size:12px;color:var(--cmut);margin-bottom:12px">Configura los métodos de pago digital que acepta tu negocio. Aparecerán en el ticket del cliente.</div>
@@ -1023,7 +1034,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- WHATSAPP MESAS Y DOMICILIOS -->
-            <div class="cfg-zone" id="cfg-zone-wa">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">📱 WHATSAPP MESAS Y DOMICILIOS</div>
               <div class="cfg-zone-body">
                 <div class="fg">
@@ -1041,7 +1052,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- COSTO DE DOMICILIO -->
-            <div class="cfg-zone" id="cfg-zone-envio">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🛵 COSTO DE DOMICILIO</div>
               <div class="cfg-zone-body">
                 <div style="font-size:12px;color:var(--cmut);margin-bottom:10px">El costo de envío se suma automáticamente al total del pedido en domicilios.</div>
@@ -1067,7 +1078,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- PWA BOTÓN FLOTANTE -->
-            <div class="cfg-zone" id="cfg-zone-pwa">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">📲 APP PWA — Botón de descarga</div>
               <div class="cfg-zone-body">
                 <div style="font-size:12px;color:var(--cmut);margin-bottom:10px">Personaliza el botón flotante que aparece en la tienda invitando a los clientes a instalar la app en su celular.</div>
@@ -1158,10 +1169,10 @@ window.addEventListener('DOMContentLoaded', function(){
             <div class="fg"><label class="fl">TikTok</label><input class="fi" id="c-tt" placeholder="@mitienda" oninput="liveC()"></div>
           </div>
 
-          <div class="ac" id="cfg-blk-banners" style="grid-column:1/-1">
+          <div class="ac" style="grid-column:1/-1">
             <div class="acttl">🖼️ Banners — Estático y Animado</div>
 
-            <div class="cfg-zone" id="cfg-zone-banner-static">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🌄 BANNER ESTÁTICO (la imagen grande al inicio)</div>
               <div class="cfg-zone-body">
                 <div class="fg">
@@ -1305,206 +1316,9 @@ window.addEventListener('DOMContentLoaded', function(){
                   </div>
                 </div>
               </div>
-
-                <!-- ── BOTONES DEL HERO ── -->
-                <div style="margin-top:6px;border-top:1px solid rgba(255,255,255,.07);padding-top:14px">
-                  <div style="font-size:11px;font-weight:800;color:var(--cp);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">🔘 BOTONES DEL BANNER</div>
-
-                  <!-- Botón 1 -->
-                  <div style="background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);padding:12px;margin-bottom:10px">
-                    <div style="font-size:12px;font-weight:700;color:var(--ctxt);margin-bottom:10px">Botón principal</div>
-                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:8px">
-                      <input type="checkbox" id="c-btn1show" onchange="liveC();applyC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
-                    </label>
-                    <div class="fg"><label class="fl">Texto</label><input class="fi" id="c-btn1" placeholder="Ver Catálogo 🛍️" oninput="liveC()"></div>
-                    <div class="fg">
-                      <label class="fl">Acción al tocar</label>
-                      <select class="fi" id="c-btn1action" onchange="liveC();toggleBtnUrl(1)">
-                        <option value="catalog">📦 Ver catálogo</option>
-                        <option value="cart">🛒 Abrir carrito</option>
-                        <option value="url">🔗 Abrir URL externa</option>
-                        <option value="whatsapp">💬 WhatsApp directo</option>
-                      </select>
-                    </div>
-                    <div class="fg" id="c-btn1url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn1url" placeholder="https://..." oninput="liveC()"></div>
-                    <div class="frow">
-                      <div class="fg">
-                        <label class="fl">Tamaño</label>
-                        <select class="fi" id="c-btn1size" onchange="liveC();applyC()">
-                          <option value="">Normal</option>
-                          <option value="sm">Pequeño</option>
-                          <option value="lg" selected>Grande</option>
-                          <option value="xl">Muy grande</option>
-                        </select>
-                      </div>
-                      <div class="fg">
-                        <label class="fl">Diseño</label>
-                        <select class="fi" id="c-btn1design" onchange="liveC();applyC()">
-                          <option value="filled">Sólido</option>
-                          <option value="outline">Contorno</option>
-                          <option value="pill">Pill redondeado</option>
-                          <option value="ghost">Fantasma (transparente)</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="frow">
-                      <div class="fg"><label class="fl">Color fondo</label><div class="csw"><input type="color" id="c-cherobtn1bg" value="#f0a500" oninput="liveC();updHex()"><span id="c-cherobtn1bgh">#f0a500</span></div></div>
-                      <div class="fg"><label class="fl">Color texto</label><div class="csw"><input type="color" id="c-cherobtn1txt" value="#000000" oninput="liveC();updHex()"><span id="c-cherobtn1txth">#000000</span></div></div>
-                    </div>
-                  </div>
-
-                  <!-- Botón 2 -->
-                  <div style="background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);padding:12px;margin-bottom:10px">
-                    <div style="font-size:12px;font-weight:700;color:var(--ctxt);margin-bottom:10px">Botón secundario</div>
-                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:8px">
-                      <input type="checkbox" id="c-btn2show" onchange="liveC();applyC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
-                    </label>
-                    <div class="fg"><label class="fl">Texto</label><input class="fi" id="c-btn2" placeholder="Mi Carrito 🛒" oninput="liveC()"></div>
-                    <div class="fg">
-                      <label class="fl">Acción</label>
-                      <select class="fi" id="c-btn2action" onchange="liveC();toggleBtnUrl(2)">
-                        <option value="catalog">📦 Ver catálogo</option>
-                        <option value="cart">🛒 Abrir carrito</option>
-                        <option value="url">🔗 URL externa</option>
-                        <option value="whatsapp">💬 WhatsApp</option>
-                      </select>
-                    </div>
-                    <div class="fg" id="c-btn2url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn2url" placeholder="https://..." oninput="liveC()"></div>
-                    <div class="frow">
-                      <div class="fg">
-                        <label class="fl">Tamaño</label>
-                        <select class="fi" id="c-btn2size" onchange="liveC();applyC()">
-                          <option value="">Normal</option>
-                          <option value="sm">Pequeño</option>
-                          <option value="lg" selected>Grande</option>
-                          <option value="xl">Muy grande</option>
-                        </select>
-                      </div>
-                      <div class="fg">
-                        <label class="fl">Diseño</label>
-                        <select class="fi" id="c-btn2design" onchange="liveC();applyC()">
-                          <option value="filled">Sólido</option>
-                          <option value="outline" selected>Contorno</option>
-                          <option value="pill">Pill</option>
-                          <option value="ghost">Fantasma</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="frow">
-                      <div class="fg"><label class="fl">Color borde/texto</label><div class="csw"><input type="color" id="c-cherobtn2brd" value="#f0a500" oninput="liveC();updHex()"><span id="c-cherobtn2brdh">#f0a500</span></div></div>
-                      <div class="fg"><label class="fl">Color texto btn2</label><div class="csw"><input type="color" id="c-cherobtn2txt" value="#f0a500" oninput="liveC();updHex()"><span id="c-cherobtn2txth">#f0a500</span></div></div>
-                    </div>
-                  </div>
-
-                  <!-- Posición de los botones -->
-                  <div class="frow">
-                    <div class="fg">
-                      <label class="fl">↔️ Posición horizontal</label>
-                      <select class="fi" id="c-btns-pos" onchange="liveC();applyC()">
-                        <option value="left">⬅ Izquierda</option>
-                        <option value="center">⬛ Centro</option>
-                        <option value="right">➡ Derecha</option>
-                      </select>
-                    </div>
-                    <div class="fg">
-                      <label class="fl">↕️ Posición vertical</label>
-                      <select class="fi" id="c-hero-valign" onchange="liveC();applyC()">
-                        <option value="flex-start">⬆ Arriba</option>
-                        <option value="center">⬛ Centro</option>
-                        <option value="flex-end">⬇ Abajo</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            
-
-          <div class="ac" id="cfg-zone-banner-pub" style="margin-bottom:16px">
-            <div class="acttl">💰 Monetización — Banner Publicitario</div>
-            <div style="font-size:13px;color:var(--cmut);margin-bottom:14px">Vende este espacio a un anunciante. Aparece encima del catálogo visible para todos los clientes.</div>
-
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:16px">
-              <input type="checkbox" id="c-pub-activo" style="accent-color:var(--cp);width:16px;height:16px" onchange="aplicarBannerPub()"> Activar banner publicitario
-            </label>
-
-            <div class="agrid" style="margin-bottom:12px">
-              <div class="fg"><label class="fl">Texto principal</label><input class="fi" id="c-pub-titulo" placeholder="Ej: Pinturas El Color" oninput="aplicarBannerPub()"></div>
-              <div class="fg"><label class="fl">Subtexto</label><input class="fi" id="c-pub-sub" placeholder="Ej: 20% dcto en pinturas hoy" oninput="aplicarBannerPub()"></div>
-              <div class="fg"><label class="fl">URL destino (al tocar)</label><input class="fi" id="c-pub-url" placeholder="https://..." oninput="aplicarBannerPub()"></div>
-              <div class="fg"><label class="fl">Ícono / Emoji</label><input class="fi" id="c-pub-ico" placeholder="🎨" maxlength="4" oninput="aplicarBannerPub()" style="max-width:90px"></div>
             </div>
 
-            <!-- Imágenes de las tarjetas -->
-            <div class="fg" style="margin-bottom:12px">
-              <label class="fl">📷 Imágenes de las tarjetas (hasta 6)</label>
-              <div style="font-size:11px;color:var(--cmut);margin-bottom:8px">Cada imagen es una tarjeta en el banner. Sube hasta 6 y el banner las muestra juntas.</div>
-              <label class="upbtn" style="display:inline-flex;margin-bottom:10px">
-                ➕ Subir imágenes
-                <input type="file" accept="image/*" multiple style="display:none" onchange="upBannerPubImgs(event)">
-              </label>
-              <div id="pub-imgs-preview" style="display:flex;flex-wrap:wrap;gap:8px"></div>
-            </div>
-
-            <!-- Colores -->
-            <div class="frow" style="margin-bottom:12px">
-              <div class="fg"><label class="fl">Color fondo</label><div class="csw"><input type="color" id="c-pub-bg" value="#1a1a2e" oninput="aplicarBannerPub();updHex()"><span id="c-pub-bgh">#1a1a2e</span></div></div>
-              <div class="fg"><label class="fl">Color texto</label><div class="csw"><input type="color" id="c-pub-txt" value="#ffffff" oninput="aplicarBannerPub();updHex()"><span id="c-pub-txth">#ffffff</span></div></div>
-              <div class="fg"><label class="fl">Color botón</label><div class="csw"><input type="color" id="c-pub-cta-bg" value="#f0a500" oninput="aplicarBannerPub();updHex()"><span id="c-pub-cta-bgh">#f0a500</span></div></div>
-            </div>
-
-            <div class="fg" style="margin-bottom:12px">
-              <label class="fl">Texto del botón CTA</label>
-              <input class="fi" id="c-pub-cta-txt" placeholder="Ver más →" style="max-width:160px" oninput="aplicarBannerPub()">
-            </div>
-
-            <!-- Estilos rápidos -->
-            <div style="font-size:11px;font-weight:700;color:var(--cp);margin-bottom:8px">🎨 Estilos rápidos</div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
-              <button class="btn bsm" style="background:#1a1a2e;color:#f0a500;border:1px solid rgba(240,165,0,.3);border-radius:8px" onclick="setEstiloPub('#1a1a2e','#f0f0ff','#f0a500')">🌌 Dark</button>
-              <button class="btn bsm" style="background:#fff;color:#111;border:1px solid #ddd;border-radius:8px" onclick="setEstiloPub('#ffffff','#111111','#e53e3e')">⬜ Blanco</button>
-              <button class="btn bsm" style="background:#276749;color:#fff;border-radius:8px" onclick="setEstiloPub('#276749','#ffffff','#68d391')">🌿 Verde</button>
-              <button class="btn bsm" style="background:#e53e3e;color:#fff;border-radius:8px" onclick="setEstiloPub('#e53e3e','#ffffff','#fff')">❤️ Rojo</button>
-              <button class="btn bsm" style="background:#f0a500;color:#000;border-radius:8px" onclick="setEstiloPub('#f0a500','#000000','#1a1a2e')">🟡 Dorado</button>
-            </div>
-
-            <!-- Vista previa -->
-            <div style="font-size:11px;color:var(--cmut);margin-bottom:6px">Vista previa:</div>
-            <div id="pub-preview" style="border-radius:10px;overflow:hidden"></div>
-
-            <div style="font-size:13px;color:var(--cmut);margin-bottom:14px">Vende este espacio a un anunciante. Aparece debajo del header visible para todos los clientes.</div>
-
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:16px">
-              <input type="checkbox" id="c-pub-activo" style="accent-color:var(--cp);width:16px;height:16px" onchange="aplicarBannerPub()"> Activar banner publicitario
-            </label>
-
-            <div class="agrid" style="margin-bottom:16px">
-              <div class="fg"><label class="fl">Texto principal</label><input class="fi" id="c-pub-titulo" placeholder="Ej: Pinturas El Color" oninput="aplicarBannerPub()"></div>
-              <div class="fg"><label class="fl">Subtexto</label><input class="fi" id="c-pub-sub" placeholder="Ej: 20% dcto en pinturas hoy" oninput="aplicarBannerPub()"></div>
-              <div class="fg"><label class="fl">URL destino</label><input class="fi" id="c-pub-url" placeholder="https://..." oninput="aplicarBannerPub()"></div>
-              <div class="fg"><label class="fl">Ícono / Emoji</label><input class="fi" id="c-pub-ico" placeholder="🎨" maxlength="4" oninput="aplicarBannerPub()" style="max-width:90px"></div>
-            </div>
-
-                        <div class="fg" style="margin-bottom:12px">
-              <label class="fl">🗂️ Slots del banner — 6 celdas (imagen o texto)</label>
-              <div style="font-size:11px;color:var(--cmut);margin-bottom:10px">Imágenes = 15% del ancho c/u. Texto = ocupa el resto. Mezcla como quieras.</div>
-              <div id="banner-slots-editor" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
-              <button class="btn bsm bp" onclick="agregarBannerSlot()" style="border-radius:8px">+ Agregar celda</button>
-            </div>
-            <div class="fg" style="margin-bottom:12px">
-              <label class="fl">Texto del botón CTA (global)</label>
-              <input class="fi" id="c-pub-cta-txt" placeholder="Ver →" oninput="C.pubCtaTxt=this.value;aplicarBannerPub()" style="max-width:160px">
-            </div>
-            <div class="fg" style="margin-bottom:12px">
-              <label class="fl">⏱ Auto-scroll (seg, 0 = no)</label>
-              <input class="fi" id="c-pub-intervalo" type="number" min="0" max="30" value="0" placeholder="0" style="max-width:100px" oninput="C.pubIntervalo=parseInt(this.value)||0">
-            </div>
-            <img id="prev-pub-img" style="display:none" src="" alt="">
-            </div>
-        </div>
-
-          
-            <div class="cfg-zone" id="cfg-zone-banner-anim">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">✨ BANNER ANIMADO (la franja de texto en movimiento)</div>
               <div class="cfg-zone-body">
                 <div class="fg">
@@ -1541,14 +1355,14 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
           </div>
 
-          <div class="ac" id="cfg-blk-banners" style="grid-column:1/-1">
+          <div class="ac" style="grid-column:1/-1">
             <div class="acttl">🎨 Colores &amp; Tipografía</div>
             <div style="font-size:12px;color:var(--cmut);margin-bottom:18px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:8px">
               ✏️ Todos los cambios son en tiempo real. Usa las paletas rápidas de abajo para aplicar un tema completo de un toque.
             </div>
 
             <!-- ░░ TIPOGRAFÍA ░░ -->
-            <div class="cfg-zone" id="cfg-zone-tipo">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🔤 TIPOGRAFÍA</div>
               <div class="cfg-zone-body">
                 <div class="fg">
@@ -1578,7 +1392,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ BARRA SUPERIOR ░░ -->
-            <div class="cfg-zone" id="cfg-zone-header">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🔝 BARRA SUPERIOR (donde aparece logo y nombre)</div>
               <div class="cfg-zone-body">
                 <div style="font-size:11px;color:var(--cmut);margin-bottom:2px">Usa dos colores iguales para color sólido, o diferentes para gradiente.</div>
@@ -1599,7 +1413,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ BANNER HERO ░░ -->
-            <div class="cfg-zone" id="cfg-zone-hero">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🖼️ BANNER PRINCIPAL (imagen o gradiente al inicio)</div>
               <div class="cfg-zone-body">
                 <div class="cpair"><label>Color del texto del banner (título y subtítulo)</label><div class="csw"><input type="color" id="c-cbt" oninput="liveC()"><span id="c-cbth">#ffffff</span></div></div>
@@ -1608,7 +1422,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ CATÁLOGO Y PRODUCTOS ░░ -->
-            <div class="cfg-zone" id="cfg-zone-cat">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🛍️ SECCIÓN DE CATÁLOGO (fondo donde aparecen los productos)</div>
               <div class="cfg-zone-body">
                 <div style="font-size:11px;color:var(--cmut);margin-bottom:2px">Puedes usar un solo color (pon el mismo en los dos) o hacer un gradiente con dos colores distintos.</div>
@@ -1631,7 +1445,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ TARJETAS ░░ -->
-            <div class="cfg-zone" id="cfg-zone-cards">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🃏 TARJETAS DE PRODUCTO (cada producto individual)</div>
               <div class="cfg-zone-body">
                 <div style="font-size:11px;color:var(--cmut);margin-bottom:2px">Gradiente propio para cada tarjeta — pon el mismo color en ambos para color sólido.</div>
@@ -1657,7 +1471,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ FONDO GENERAL ░░ -->
-            <div class="cfg-zone" id="cfg-zone-bg">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🌐 FONDO GENERAL DE LA PÁGINA</div>
               <div class="cfg-zone-body">
                 <div style="font-size:11px;color:var(--cmut);margin-bottom:2px">El fondo que se ve detrás de todo el contenido.</div>
@@ -1678,7 +1492,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ PIE DE PÁGINA ░░ -->
-            <div class="cfg-zone" id="cfg-zone-footer">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🔽 PIE DE PÁGINA (footer)</div>
               <div class="cfg-zone-body">
                 <div class="cpair"><label>Fondo del pie de página</label><div class="csw"><input type="color" id="c-cftr" oninput="liveC()"><span id="c-cftrh">#07070f</span></div></div>
@@ -1725,7 +1539,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ RECIBO / TICKET ░░ -->
-            <div class="cfg-zone" id="cfg-zone-ticket">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🧾 RECIBO / TICKET (vista previa del pedido)</div>
               <div class="cfg-zone-body">
                 <div style="font-size:11px;color:var(--cmut);margin-bottom:6px">Configura los colores del recibo que aparece al confirmar un pedido y al despachar desde Caja.</div>
@@ -1753,7 +1567,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ CARRITO Y FORMULARIO ░░ -->
-            <div class="cfg-zone" id="cfg-zone-carrito">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🛒 CARRITO Y FORMULARIO DE PEDIDO</div>
               <div class="cfg-zone-body">
                 <div style="font-size:11px;color:var(--cmut);margin-bottom:6px">Colores del modal del carrito, formulario de datos y pasos de confirmación.</div>
@@ -1779,7 +1593,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ COLOR PRINCIPAL ░░ -->
-            <div class="cfg-zone" id="cfg-zone-color">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">⭐ COLOR PRINCIPAL (botones, bordes, resaltados)</div>
               <div class="cfg-zone-body">
                 <div class="cpair"><label>Color de acento principal</label><div class="csw"><input type="color" id="c-cp" oninput="liveC()"><span id="c-cph">#f0a500</span></div></div>
@@ -1788,7 +1602,7 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
 
             <!-- ░░ PALETAS RÁPIDAS ░░ -->
-            <div class="cfg-zone" id="cfg-zone-paletas">
+            <div class="cfg-zone">
               <div class="cfg-zone-ttl">🎨 PALETAS RÁPIDAS — aplica un tema completo de un toque</div>
               <div class="cfg-zone-body">
                 <div style="display:flex;flex-wrap:wrap;gap:8px;padding-top:4px">
@@ -1811,27 +1625,14 @@ window.addEventListener('DOMContentLoaded', function(){
           <button class="btn bo" onclick="exportC()">&#128228; Exportar</button>
           <label class="btn bo" style="cursor:pointer">&#128229; Importar<input type="file" accept=".json" style="display:none" onchange="importC(event)"></label>
         </div>
-
-          <div class="ac" id="cfg-zone-crm-pin" style="max-width:380px">
-            <div class="acttl">🔑 Cambiar PIN del CRM</div>
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <input class="fi" id="crm-pin-cur" type="password" placeholder="PIN actual" maxlength="6">
-              <input class="fi" id="crm-pin-new" type="password" placeholder="Nuevo PIN" maxlength="6">
-              <button class="btn bp" style="border-radius:10px" onclick="cambiarPinCRM()">💾 Actualizar PIN</button>
-            </div>
-          </div>
-
-                </div><!-- fin cfgpanel-negocio -->
+        </div><!-- fin cfgpanel-negocio -->
       </section>
 
       <!-- PRODUCTS -->
       <section class="asec" id="sec-prods">
         <div class="asttl">Gesti&#243;n de Productos</div>
         <div class="assub">Agrega, edita o elimina productos. Puedes subir fotos desde tu celular.</div>
-        <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
-        <button class="btn bp" onclick="openProdM(null)">+ Agregar Producto</button>
-        <button class="btn bo" onclick="generarTodosQRProductos()" style="border-radius:8px">📲 QR masivos todos los productos</button>
-      </div>
+        <button class="btn bp" style="margin-bottom:18px" onclick="openProdM(null)">+ Agregar Producto</button>
         <div id="prod-list" class="apl"></div>
       </section>
 
@@ -1860,11 +1661,11 @@ window.addEventListener('DOMContentLoaded', function(){
           <button class="btn bsm bo" id="cajatab-registradora" onclick="cajaSwitchTab('registradora')">🏪 Mostrador</button>
           <button class="btn bsm bo" id="cajatab-mesas"    onclick="cajaSwitchTab('mesas')">📍 <span id="caja-mesas-lbl">Puntos</span></button>
           <button class="btn bsm bo" id="cajatab-domicilios" onclick="cajaSwitchTab('domicilios')">🛵 Domicilios</button>
-          <button class="btn bsm bo" id="cajatab-despachados" onclick="cajaSwitchTab('despachados')">🚀 En camino</button>
           <button class="btn bsm bo" id="cajatab-gastos"   onclick="cajaSwitchTab('gastos')">📉 Gastos</button>
           <button class="btn bsm bo" id="cajatab-alertas"  onclick="cajaSwitchTab('alertas')">🔔 Alertas</button>
           <button class="btn bsm bo" id="cajatab-buscar"   onclick="cajaSwitchTab('buscar')">🔍 Buscar</button>
-          <button class="btn bsm bo" id="cajatab-todos"    onclick="cajaSwitchTab('todos')">📋 Todos</button>
+          <button class="btn bsm bo" id="cajatab-despachados" onclick="cajaSwitchTab('despachados')">🚀 En camino</button>
+      <button class="btn bsm bo" id="cajatab-todos"    onclick="cajaSwitchTab('todos')">📋 Todos</button>
         </div>
 
         <!-- TAB: TABLERO -->
@@ -2057,12 +1858,6 @@ window.addEventListener('DOMContentLoaded', function(){
             </div><!-- fin columna derecha -->
           </div><!-- fin grid POS -->
         </div><!-- fin tab registradora -->
-
-        <!-- TAB: EN CAMINO (DESPACHADOS PENDIENTES DE COBRO) -->
-        <div id="cajapanel-despachados" style="display:none">
-          <div style="font-size:13px;color:var(--cmut);margin-bottom:12px">🛵 Pedidos despachados que aún no han confirmado el pago. Marca como <strong>Cobrado</strong> cuando el domiciliario entregue y cobre.</div>
-          <div id="orders-despachados-list"></div>
-        </div>
 
         <!-- TAB: GASTOS DEL DÍA -->
         <div id="cajapanel-gastos" style="display:none">
@@ -2397,12 +2192,6 @@ window.addEventListener('DOMContentLoaded', function(){
                 <div class="acttl">📋 Historial de turnos hoy</div>
                 <div id="turnos-historial" style="font-size:13px;color:var(--cmut)">Sin registro de turnos hoy</div>
               </div>
-              <div class="ac" style="margin-top:14px">
-                <div class="acttl">👥 Turnos del personal</div>
-                <div style="font-size:12px;color:var(--cmut);margin-bottom:10px">Turnos asignados. Para asignar uno nuevo ve a CRM → Vendedores → Turno.</div>
-                <div id="turnos-asesores-lista" style="font-size:13px;color:var(--cmut)">Sin turnos asignados</div>
-                <button class="btn bsm bp" style="margin-top:10px;border-radius:8px" onclick="renderTurnosAsesores()">🔄 Actualizar</button>
-              </div>
             </div>
           </div>
 
@@ -2455,7 +2244,7 @@ window.addEventListener('DOMContentLoaded', function(){
               </div>
 
               <!-- Roles activos -->
-              <div class="ac" id="cfg-blk-banners" style="grid-column:1/-1">
+              <div class="ac" style="grid-column:1/-1">
                 <div class="acttl">👥 Roles del sistema</div>
                 <div style="font-size:12px;color:var(--cmut);margin-bottom:14px">Cada rol tiene acceso a un panel específico. Al crear personal con ese rol, se les asigna automáticamente.</div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
@@ -2527,8 +2316,8 @@ window.addEventListener('DOMContentLoaded', function(){
 
           <!-- QR de Pago -->
           <div class="ac" style="margin-bottom:16px;border:1.5px solid rgba(240,165,0,.3);background:rgba(240,165,0,.04)">
-            <div class="acttl">💳 QRs de Pago — uno por canal</div>
-            <div style="font-size:12px;color:var(--cmut);margin-bottom:14px">Puedes tener un QR diferente para Tienda/Puntos, Domicilios y Eventos masivos. Sube el que corresponde a cada canal.</div>
+            <div class="acttl">💳 QR de Pago — se muestra en el recibo del cliente</div>
+            <div style="font-size:12px;color:var(--cmut);margin-bottom:14px">Este QR aparece en el ticket que ve el cliente al pedir la cuenta o al pagar domicilio.</div>
             <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:14px">
               <div style="flex-shrink:0;text-align:center">
                 <div id="prev-qrpago-wrap" style="width:140px;height:140px;border-radius:12px;border:2px dashed rgba(240,165,0,.4);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03);overflow:hidden">
@@ -2541,12 +2330,6 @@ window.addEventListener('DOMContentLoaded', function(){
                 <div style="font-size:11px;color:var(--cmut);margin-top:6px">Vista previa</div>
               </div>
               <div style="flex:1;min-width:180px;display:flex;flex-direction:column;gap:10px">
-                <div style="display:flex;gap:6px;margin-bottom:8px">
-                  <button class="btn bsm bp" id="qrp-tab-tienda" onclick="switchQRPagoTab('tienda')" style="border-radius:8px">🏪 Tienda</button>
-                  <button class="btn bsm bo" id="qrp-tab-domicilio" onclick="switchQRPagoTab('domicilio')" style="border-radius:8px">🛵 Domicilio</button>
-                  <button class="btn bsm bo" id="qrp-tab-evento" onclick="switchQRPagoTab('evento')" style="border-radius:8px">🎪 Evento</button>
-                </div>
-                <div id="qrp-canal-label" style="font-size:11px;color:var(--cp);font-weight:700;margin-bottom:4px">QR para Tienda / Puntos de venta</div>
                 <div class="fg" style="margin:0">
                   <label class="fl">Subir imagen del QR</label>
                   <div class="upwrap">
@@ -2558,7 +2341,7 @@ window.addEventListener('DOMContentLoaded', function(){
                   <label class="fl">Nombre / titular / banco</label>
                   <input class="fi" id="c-qrnombre" placeholder="Ej: Nequi — Juan Pérez">
                 </div>
-                <button class="btn bp" style="border-radius:10px" onclick="saveQRPago()">💾 Guardar este QR</button>
+                <button class="btn bp" style="border-radius:10px" onclick="saveQRPago()">💾 Guardar QR</button>
               </div>
             </div>
           </div>
@@ -2584,19 +2367,8 @@ window.addEventListener('DOMContentLoaded', function(){
             <div style="padding:14px;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);margin-bottom:14px">
               <div style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase;margin-bottom:10px">➕ Nuevo / Editar</div>
               <div class="fg"><label class="fl">Nombre</label><input class="fi" id="asesor-name" placeholder="Ej: Juan Carlos"></div>
-              <div class="fg"><label class="fl">Foto <span style="color:#fc8181;font-weight:700">* requerida para reconocimiento facial</span></label><div class="upwrap"><input class="fi" id="asesor-img" placeholder="URL o sube foto"><label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upAsesorImg(event)"></label></div><img id="prev-asesor" class="imgprev" style="width:64px;height:64px;border-radius:50%" src="" alt=""></div>
-              <div class="fg">
-            <label class="fl">Rol / Tipo de acceso</label>
-            <select class="fi" id="asesor-tipo" onchange="toggleAsesorTipo()">
-              <option value="ambos">🔄 Vendedor — Puntos y Domicilios</option>
-              <option value="mesa">💰 Cajero/a — Solo Puntos de venta</option>
-              <option value="domicilio">🛵 Domiciliario — Solo Domicilios</option>
-              <option value="cocina">📦 Bodega / Empaque (despacha pedidos)</option>
-              <option value="supervisor">👁️ Supervisor (solo visualiza, no edita)</option>
-              <option value="aliado">🤝 Aliado / Socio</option>
-              <option value="otro">✏️ Cargo personalizado</option>
-            </select>
-          </div>
+              <div class="fg"><label class="fl">Foto (opcional)</label><div class="upwrap"><input class="fi" id="asesor-img" placeholder="URL o sube foto"><label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upAsesorImg(event)"></label></div><img id="prev-asesor" class="imgprev" style="width:64px;height:64px;border-radius:50%" src="" alt=""></div>
+              <div class="fg"><label class="fl">Tipo</label><select class="fi" id="asesor-tipo" onchange="toggleAsesorTipo()"><option value="ambos">🔄 Mesas y Domicilios</option><option value="mesa">🪑 Solo Mesas</option><option value="domicilio">🛵 Solo Domicilios</option><option value="cocina">📦 Bodega / Empaque</option></select></div>
               <div id="asesor-mesas-wrap" class="fg" style="display:none"><label class="fl">Mesas asignadas</label><input class="fi" id="asesor-mesas" placeholder="Ej: 1-5 o 1,3,5"></div>
               <div class="fg"><label class="fl">PIN (4 dígitos)</label><input class="fi" id="asesor-pin" type="password" placeholder="••••" maxlength="4" style="max-width:120px"></div>
               <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:12px"><input type="checkbox" id="asesor-activo-chk" checked style="width:16px;height:16px;accent-color:var(--cp)"> Asesor activo</label>
@@ -2607,11 +2379,28 @@ window.addEventListener('DOMContentLoaded', function(){
           </div>
 
           <!-- MONETIZACIÓN — BANNER PUBLICITARIO -->
+          <div class="ac" style="margin-bottom:16px">
+            <div class="acttl">💰 Monetización — Banner Publicitario</div>
+            <div style="font-size:13px;color:var(--cmut);margin-bottom:14px">Vende este espacio a un anunciante. Aparece debajo del header visible para todos los clientes.</div>
 
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:16px">
+              <input type="checkbox" id="c-pub-activo" style="accent-color:var(--cp);width:16px;height:16px" onchange="aplicarBannerPub()"> Activar banner publicitario
+            </label>
+
+            <div class="agrid" style="margin-bottom:16px">
+              <div class="fg"><label class="fl">Texto principal</label><input class="fi" id="c-pub-titulo" placeholder="Ej: Pinturas El Color" oninput="aplicarBannerPub()"></div>
+              <div class="fg"><label class="fl">Subtexto</label><input class="fi" id="c-pub-sub" placeholder="Ej: 20% dcto en pinturas hoy" oninput="aplicarBannerPub()"></div>
+              <div class="fg"><label class="fl">URL destino</label><input class="fi" id="c-pub-url" placeholder="https://..." oninput="aplicarBannerPub()"></div>
+              <div class="fg"><label class="fl">Ícono / Emoji</label><input class="fi" id="c-pub-ico" placeholder="🎨" maxlength="4" oninput="aplicarBannerPub()" style="max-width:90px"></div>
+            </div>
 
             <div class="fg" style="margin-bottom:12px">
-              <label class="fl">Texto del botón CTA</label>
-              <input class="fi" id="c-pub-cta-txt" placeholder="Ver →" oninput="aplicarBannerPub()" style="max-width:160px">
+              <label class="fl">Imagen del anunciante (logo)</label>
+              <div class="upwrap">
+                <input class="fi" id="c-pub-img-url" placeholder="URL de imagen o sube">
+                <label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upBannerPubImg(event)"></label>
+              </div>
+              <img id="prev-pub-img" style="width:60px;height:60px;border-radius:8px;margin-top:8px;display:none;object-fit:cover" src="" alt="">
             </div>
 
             <div class="frow" style="margin-bottom:12px">
@@ -2665,19 +2454,26 @@ window.addEventListener('DOMContentLoaded', function(){
             </div>
           </div>
           <!-- Cambiar PIN CRM -->
-          
+          <div class="ac" style="max-width:380px">
+            <div class="acttl">🔑 Cambiar PIN del CRM</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <input class="fi" id="crm-pin-cur" type="password" placeholder="PIN actual" maxlength="6">
+              <input class="fi" id="crm-pin-new" type="password" placeholder="Nuevo PIN" maxlength="6">
+              <button class="btn bp" style="border-radius:10px" onclick="cambiarPinCRM()">💾 Actualizar PIN</button>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- ASESORES -->
       <section class="asec" id="sec-asesores">
         <div class="asttl">👥 Personal / Vendedores</div>
-        <div class="assub">Crea el equipo. Roles: Vendedor, Cajero, Domiciliario, Bodega, Supervisor, Aliado. Todos con PIN y panel propio.</div>
+        <div class="assub">Crea el equipo de tu negocio. Cada uno tiene nombre, foto, rol y PIN de acceso propio.</div>
         <div class="ac" style="max-width:480px;margin-bottom:18px">
           <div class="acttl">➕ Nuevo Integrante</div>
           <div class="fg"><label class="fl">Nombre</label><input class="fi" id="asesor-name" placeholder="Ej: Juan Carlos"></div>
           <div class="fg">
-            <label class="fl">Foto <span style="color:#fc8181;font-weight:700">* requerida para reconocimiento facial</span></label>
+            <label class="fl">Foto (opcional)</label>
             <div class="upwrap">
               <input class="fi" id="asesor-img" placeholder="URL o sube foto">
               <label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upAsesorImg(event)"></label>
@@ -2693,11 +2489,7 @@ window.addEventListener('DOMContentLoaded', function(){
               <option value="cocina">📦 Bodega / Empaque</option>
             </select>
           </div>
-          <div class="fg" id="asesor-cargo-wrap">
-            <label class="fl">Nombre del cargo (se muestra en reportes y panel)</label>
-            <div id="asesor-cargo-custom-wrap" style="display:none"><label class="fl">Cargo personalizado</label><input class="fi" id="asesor-cargo-custom" placeholder="Ej: Barista, Técnico, Guía, Diseñador..."></div>
-            <div style="font-size:11px;color:var(--cmut);margin-top:3px">Obligatorio si elegiste "Cargo personalizado"</div>
-          </div>
+          <div class="fg"><label class="fl">Cargo personalizado (opcional)</label><input class="fi" id="asesor-cargo-custom" placeholder="Ej: Asesora, Domiciliario, Cajero..."></div>
           <div id="asesor-mesas-wrap" class="fg" style="display:none">
             <label class="fl" id="asesor-mesas-lbl">Puntos asignados (ej: 1-5 o 1,3,5)</label>
             <input class="fi" id="asesor-mesas" placeholder="Ej: 1-5 o 1,3,5,7">
@@ -2909,7 +2701,7 @@ window.addEventListener('DOMContentLoaded', function(){
             <div class="acttl" id="form-vendedor-ttl">Nuevo Vendedor</div>
             <input type="hidden" id="v-eid">
             <div class="fg">
-              <label class="fl">Foto <span style="color:#fc8181;font-weight:700">* requerida para reconocimiento facial</span></label>
+              <label class="fl">Foto (opcional)</label>
               <div class="upwrap">
                 <input class="fi" id="v-img" placeholder="URL o sube foto">
                 <label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upImgVendedor(event)"></label>
@@ -3393,15 +3185,6 @@ function applyC() {
 
   document.getElementById('hero-title').textContent = C.name || 'Mi Tienda';
   var heroTitle = document.getElementById('hero-title');
-  // Buttons position
-  var heroBtns = document.getElementById('hero-btns');
-  if (heroBtns) {
-    var posMap = {left:'flex-start',center:'center',right:'flex-end'};
-    heroBtns.style.justifyContent = posMap[C.btnsPos||'left'] || 'flex-start';
-  }
-  // Hero vertical align
-  var heroContent = document.querySelector('#hero .hcnt');
-  if (heroContent) heroContent.style.justifyContent = C.heroValign || 'center';
   if (heroTitle) {
     heroTitle.style.display = (C.showtitle === false) ? 'none' : '';
     heroTitle.style.fontSize = C.titlesize || '';
@@ -3414,37 +3197,11 @@ function applyC() {
   var b1w = document.getElementById('hero-btn1-wrap');
   var b1el = document.getElementById('hero-btn1');
   if(b1w) b1w.style.display = (C.btn1show===false) ? 'none' : '';
-  if(b1el) {
-    b1el.textContent = C.btn1 || 'Ver Catálogo 🛍️';
-    // Size classes
-    var b1sz = C.btn1size||'lg';
-    b1el.className = 'btn bp ' + (b1sz==='xl'?'blg':b1sz==='lg'?'blg':b1sz==='sm'?'bsm':'');
-    // Design
-    if (C.btn1design==='outline') b1el.className = b1el.className.replace('bp','bo');
-    // Colors
-    b1el.style.background = ''; b1el.style.color = ''; b1el.style.border = ''; b1el.style.borderRadius = '';
-    if (C.btn1design==='ghost') { b1el.style.background='transparent'; b1el.style.border='2px solid rgba(255,255,255,.5)'; b1el.style.color='#fff'; }
-    else if (C.btn1design==='pill') { b1el.style.borderRadius='50px'; if(C.cherobtn1bg) b1el.style.background=C.cherobtn1bg; if(C.cherobtn1txt) b1el.style.color=C.cherobtn1txt; }
-    else { if(C.cherobtn1bg) b1el.style.background=C.cherobtn1bg; if(C.cherobtn1txt) b1el.style.color=C.cherobtn1txt; }
-    if (b1sz==='xl') { b1el.style.padding='14px 36px'; b1el.style.fontSize='18px'; b1el.style.fontWeight='800'; }
-  }
+  if(b1el) b1el.textContent = C.btn1 || 'Ver Catálogo 🛍️';
   var b2w = document.getElementById('hero-btn2-wrap');
   var b2el = document.getElementById('hero-btn2');
   if(b2w) b2w.style.display = (C.btn2show===false) ? 'none' : '';
-  if(b2el) {
-    b2el.textContent = C.btn2 || 'Mi Carrito 🛒';
-    var b2sz = C.btn2size||'lg';
-    b2el.className = 'btn bo ' + (b2sz==='xl'?'blg':b2sz==='lg'?'blg':b2sz==='sm'?'bsm':'');
-    b2el.style.background=''; b2el.style.color=''; b2el.style.border=''; b2el.style.borderRadius='';
-    if (C.btn2design==='ghost') { b2el.style.background='transparent'; b2el.style.border='2px solid rgba(255,255,255,.4)'; b2el.style.color='#fff'; }
-    else if (C.btn2design==='pill') { b2el.style.borderRadius='50px'; }
-    if (C.cherobtn2brd) b2el.style.borderColor=C.cherobtn2brd;
-    if (C.cherobtn2txt) b2el.style.color=C.cherobtn2txt;
-    if (b2sz==='xl') { b2el.style.padding='14px 36px'; b2el.style.fontSize='18px'; }
-  }
-  // Buttons position
-  var heroBtns = document.getElementById('hero-btns');
-  if(heroBtns) heroBtns.style.justifyContent = {left:'flex-start',center:'center',right:'flex-end'}[C.btnsPos||'left']||'flex-start';
+  if(b2el) b2el.textContent = C.btn2 || 'Mi Carrito 🛒';
 
   var bi   = document.getElementById('hero-bimg');
   var grad = document.getElementById('hero-grad');
@@ -3466,12 +3223,7 @@ function applyC() {
     grad.style.display = 'block';
   }
 
-  var catTtlEl = document.getElementById('cat-ttl');
-  if (catTtlEl) {
-    catTtlEl.textContent = C.cattl || 'Nuestros Productos';
-    catTtlEl.style.color = C.cattlColor || '';
-    catTtlEl.style.fontSize = C.cattlSize ? C.cattlSize+'px' : '';
-  }
+  document.getElementById('cat-ttl').textContent = C.cattl || 'Nuestros Productos';
   document.getElementById('ftr-nm').textContent  = C.name  || 'Mi Tienda';
   document.getElementById('ftr-inf').textContent = 'NIT: ' + (C.nit||'—') + ' | Tel: ' + (C.phone||'—') + ' | WA: ' + (C.wa||'—');
 
@@ -4098,8 +3850,7 @@ function navTo(el) {
   if (sec === 'cfg') cfgSwitchTab('negocio');
   if (sec === 'dashboard') renderDashboard();
   if (sec === 'orders') { renderCajaTablero(); renderAlertasPago(); renderGastosTablero(); }
-  if (sec === 'vendedores') { renderVendedoresList(); }
-  if (sec === 'asesores') { /* asesores still shows its section for quick edit */ }
+  if (sec === 'vendedores') renderVendedoresList();
   if (sec === 'security') setTimeout(generarQRTienda, 300);
   if (sec === 'mesas') {
     var lnkEl = document.getElementById('asesor-link-txt');
@@ -4162,7 +3913,7 @@ function fillForm() {
   if (tfSel) { for(var j=0;j<tfSel.options.length;j++){ if(tfSel.options[j].value===(C.titlefont||'')){tfSel.selectedIndex=j;break;} } }
   var tcEl = document.getElementById('c-titlecolor');
   if (tcEl) tcEl.value = C.titlecolor || '#ffffff';
-  sv('c-cattl',C.cattl); if(document.getElementById('c-cattl-color')){document.getElementById('c-cattl-color').value=C.cattlColor||'#f0f0ff';var ch=document.getElementById('c-cattl-colorh');if(ch)ch.textContent=C.cattlColor||'#f0f0ff';} sv('c-cattl-size',C.cattlSize||28); sv('c-cur',  C.cur);
+  sv('c-cattl',C.cattl); sv('c-cur',  C.cur);
   sv('c-wa', C.wa);
   sv('c-mesa-label', C.mesaLabel||''); sv('c-asesor-label', C.asesorLabel||'');
   if (C.mesaLabel) actualizarLabelsLugar();
@@ -4293,12 +4044,7 @@ function updHex() {
     ['c-cheroeyebrow','c-cheroeyebrowh'],['c-cherosub','c-cherosubh'],
     ['c-fsocbg','c-fsocbgh'],['c-fsocc','c-fsocch'],['c-fsocbrd','c-fsocbrdh'],
     ['c-ovcolor','c-ovcolorh'],
-    ['c-titlecolor','c-titlecolorh'],
-    ['c-cattl-color','c-cattl-colorh'],
-    ['c-cherobtn1bg','c-cherobtn1bgh'],
-    ['c-cherobtn1txt','c-cherobtn1txth'],
-    ['c-cherobtn2brd','c-cherobtn2brdh'],
-    ['c-cherobtn2txt','c-cherobtn2txth']
+    ['c-titlecolor','c-titlecolorh']
   ];
   for (var i = 0; i < pairs.length; i++) {
     var inp = document.getElementById(pairs[i][0]);
@@ -4320,16 +4066,7 @@ function liveC() {
   var tfSel = document.getElementById('c-titlefont');
   C.titlefont = tfSel ? tfSel.value : '';
   C.titlecolor = document.getElementById('c-titlecolor') ? document.getElementById('c-titlecolor').value : '#ffffff';
-  var cb1s=document.getElementById('c-btn1show'); if(cb1s) cb1s.checked=C.btn1show!==false;
-  var cb2s=document.getElementById('c-btn2show'); if(cb2s) cb2s.checked=C.btn2show!==false;
-  var b1sEl=document.getElementById('c-btn1size'); if(b1sEl&&C.btn1size) b1sEl.value=C.btn1size;
-  var b1dEl=document.getElementById('c-btn1design'); if(b1dEl&&C.btn1design) b1dEl.value=C.btn1design;
-  var b2sEl=document.getElementById('c-btn2size'); if(b2sEl&&C.btn2size) b2sEl.value=C.btn2size;
-  var b2dEl=document.getElementById('c-btn2design'); if(b2dEl&&C.btn2design) b2dEl.value=C.btn2design;
-  var bpEl=document.getElementById('c-btns-pos'); if(bpEl&&C.btnsPos) bpEl.value=C.btnsPos;
-  var hvEl=document.getElementById('c-hero-valign'); if(hvEl&&C.heroValign) hvEl.value=C.heroValign;
-  if(document.getElementById('c-cherobtn1bg')&&C.cherobtn1bg){document.getElementById('c-cherobtn1bg').value=C.cherobtn1bg; var h1=document.getElementById('c-cherobtn1bgh');if(h1)h1.textContent=C.cherobtn1bg;}
-  if(document.getElementById('c-cherobtn2brd')&&C.cherobtn2brd){document.getElementById('c-cherobtn2brd').value=C.cherobtn2brd; var h2=document.getElementById('c-cherobtn2brdh');if(h2)h2.textContent=C.cherobtn2brd;}
+  var cb1s=document.getElementById('c-btn1show'); if(cb1s) C.btn1show=cb1s.checked;
   var cb2s=document.getElementById('c-btn2show'); if(cb2s) C.btn2show=cb2s.checked;
   var sa1=document.getElementById('c-btn1action'); if(sa1) C.btn1action=sa1.value;
   var sa2=document.getElementById('c-btn2action'); if(sa2) C.btn2action=sa2.value;
@@ -4339,17 +4076,7 @@ function liveC() {
   C.ctickbg1  = g('c-ctickbg1'); C.ctickbg2 = g('c-ctickbg2');
   C.cticktext = g('c-cticktext');
   var dirEl = document.getElementById('c-ctickgdir');
-  if(dirEl) C.ctickgdir = dirEl.value;   var _cb1=document.getElementById('c-btn1show'); if(_cb1) C.btn1show=_cb1.checked;
-  var _cb2=document.getElementById('c-btn2show'); if(_cb2) C.btn2show=_cb2.checked;
-  C.cattl = g('c-cattl'); C.cattlColor=g('c-cattl-color')||'#f0f0ff'; C.cattlSize=g('c-cattl-size')||'28';
-  var btn1sizeEl=document.getElementById('c-btn1size'); if(btn1sizeEl) C.btn1size=btn1sizeEl.value;
-  var btn1desEl=document.getElementById('c-btn1design'); if(btn1desEl) C.btn1design=btn1desEl.value;
-  var btn2sizeEl=document.getElementById('c-btn2size'); if(btn2sizeEl) C.btn2size=btn2sizeEl.value;
-  var btn2desEl=document.getElementById('c-btn2design'); if(btn2desEl) C.btn2design=btn2desEl.value;
-  var btnsPosEl=document.getElementById('c-btns-pos'); if(btnsPosEl) C.btnsPos=btnsPosEl.value;
-  var heroValEl=document.getElementById('c-hero-valign'); if(heroValEl) C.heroValign=heroValEl.value;
-  C.cherobtn1bg=g('c-cherobtn1bg')||'#f0a500'; C.cherobtn1txt=g('c-cherobtn1txt')||'#000000';
-  C.cherobtn2brd=g('c-cherobtn2brd')||'#f0a500'; C.cherobtn2txt=g('c-cherobtn2txt')||'#f0a500'; C.cur = g('c-cur') || '$';
+  if(dirEl) C.ctickgdir = dirEl.value;   C.cattl = g('c-cattl'); C.cur   = g('c-cur') || '$';
   C.wa    = g('c-wa');
   C.mesaLabel   = g('c-mesa-label')   || 'Mesa';
   C.asesorBarBg = g('c-asesor-bg') || '#1a0a2e';
@@ -4447,7 +4174,7 @@ function liveC() {
   if (pubChk) { C.pubActivo = pubChk.checked; if(C.pubActivo) aplicarBannerPub(); else { var b=document.getElementById('banner-pub'); if(b) b.style.display='none'; } }
 }
 
-function saveC() { liveC(); if(typeof C.pubSlots!=='undefined') {}  saveSt(); toast('✅ Configuración guardada','s'); }
+function saveC() { liveC(); saveSt(); toast('✅ Configuración guardada','s'); }
 
 function exportC() {
   dlFile('tienda-config.json', JSON.stringify({C:C,P:P,CATS:CATS},null,2), 'application/json');
@@ -4564,7 +4291,7 @@ function renderProdList() {
       '<div class="apact">' +
         '<button class="btn bsm bo" data-idx="' + i + '" onclick="openProdM(parseInt(this.dataset.idx))">✏️ Editar</button>' +
         '<button class="btn bsm bd" data-idx="' + i + '" onclick="delProd(parseInt(this.dataset.idx))">🗑</button>' +
-      '<button class="btn bsm bo" style="border-radius:8px" data-idx="'+i+'" onclick="verQRProducto(parseInt(this.dataset.idx))">📲 QR</button>' +
+      '<button class="btn bsm bo" data-idx="' + i + '" onclick="verQRProducto(parseInt(this.dataset.idx))">📲 QR</button>' +
       '</div>' +
     '</div>';
   }
@@ -5405,12 +5132,8 @@ function guardarAsesor() {
 
 function toggleAsesorTipo() {
   var tipo = document.getElementById('asesor-tipo').value;
-  // Mesas: opcionales para todos los tipos
-  var wrapMesas = document.getElementById('asesor-mesas-wrap');
-  if (wrapMesas) wrapMesas.style.display = '';
-  // Cargo personalizado: solo si tipo=otro
-  var wrapCustom = document.getElementById('asesor-cargo-custom-wrap');
-  if (wrapCustom) wrapCustom.style.display = (tipo === 'otro') ? '' : 'none';
+  var wrap = document.getElementById('asesor-mesas-wrap');
+  if (wrap) wrap.style.display = (tipo === 'mesa' || tipo === 'ambos') ? '' : 'none';
 }
 
 // ============================================================
@@ -5422,7 +5145,7 @@ function iniciarModoAsesor() {
   // Mostrar pantalla de login asesor
   var screen = document.getElementById('asesor-login-screen');
   if (!screen) return;
-  var activos = ASESORES.filter(function(a){ return a.activo !== false; });
+  var activos = ASESORES.filter(function(a){ return a.activo !== false && (a.tipo==='mesa'||a.tipo==='ambos'); });
   if (!activos.length) {
     screen.style.display = 'flex';
     document.getElementById('asesor-login-list').innerHTML = '<div style="color:var(--cmut);font-size:13px;padding:20px">No hay asesores activos configurados.<br>El dueño debe crear asesores en el panel admin.</div>';
@@ -5438,7 +5161,7 @@ function iniciarModoAsesor() {
     html += '<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;cursor:pointer;transition:all .2s" data-idx="'+i+'" onclick="selAsesorLogin(parseInt(this.dataset.idx))" onmouseover="this.style.background=\'rgba(240,165,0,.1)\'" onmouseout="this.style.background=\'rgba(255,255,255,.05)\'">' +
       '<div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0">' + imgH + '</div>' +
       '<div style="flex:1;text-align:left"><div style="font-weight:700;font-size:15px">' + tipoL + ' ' + a.nombre + '</div>' +
-      (a.mesas&&a.mesas.length?'<div style="font-size:12px;color:var(--cmut)">Puntos: '+a.mesas.join(', ')+'</div>':'<div style="font-size:11px;color:var(--cmut)">'+(a.cargoCustom||{ambos:'Vendedor',mesa:'Cajero',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',otro:'Personal'}[a.tipo]||a.tipo||'')+'</div>') + '</div>' +
+      (a.mesas&&a.mesas.length?'<div style="font-size:12px;color:var(--cmut)">Mesas: '+a.mesas.join(', ')+'</div>':'') + '</div>' +
       '<div style="color:var(--cp);font-size:18px">→</div>' +
     '</div>';
   }
@@ -5468,89 +5191,56 @@ function volverListaAsesores() {
 }
 
 function loginAsesorSession() {
-  var pin = (document.getElementById('asesor-login-pin') || {}).value || '';
-  if (!pin) { toast('⚠️ Ingresa tu PIN','e'); return; }
-  // Find asesor by PIN
-  var found = null;
-  for (var i = 0; i < ASESORES.length; i++) {
-    var a = ASESORES[i];
-    // Verifica con hashPin (como guarda guardarAsesor)
-    if (a.pin && a.pin === hashPin(pin)) { found = a; break; }
-    // Fallback: pin en texto plano (asesores viejos)
-    if (a.pin && a.pin === pin) { found = a; break; }
-    // Fallback: pinHash con hashP (compatibilidad)
-    if (a.pinHash && a.pinHash === hashP(pin)) { found = a; break; }
-  }
-  if (!found) { toast('❌ PIN incorrecto','e'); return; }
-  // If asesor has photo, do facial recognition check
-  if (found.img && typeof startFacialCheck === 'function') {
-    startFacialCheck(found, function(ok) {
-      if (ok) iniciarSesionAsesor(found);
-      else toast('❌ No coincide el rostro — intenta de nuevo','e');
-    });
-  } else {
-    iniciarSesionAsesor(found);
-  }
-}
-
-function iniciarSesionAsesor(found) {
-  ASESOR_SESSION = found;
-
+  if (_asesorLoginIdx === null) return;
+  var pin = document.getElementById('asesor-login-pin').value.trim();
+  var a = ASESORES[_asesorLoginIdx];
+  // Verificar PIN: hashPin, texto plano, o hashP (compatibilidad)
+  var pinOk = (hashPin(pin) === a.pin) || (pin === a.pin) || (typeof hashP==='function' && hashP(pin) === a.pin);
+  if (!pinOk) { toast('❌ PIN incorrecto','e'); return; }
+  ASESOR_SESSION = { idx: _asesorLoginIdx, nombre: a.nombre, img: a.img, mesas: a.mesas||[], tipo: a.tipo };
+  iniciarSesionAsesor(a);
   // Ocultar pantalla login
-  var screen = document.getElementById('asesor-login-screen');
-  if (screen) screen.style.display = 'none';
-
+  document.getElementById('asesor-login-screen').style.display = 'none';
   // Mostrar barra de sesión
   var bar = document.getElementById('asesor-session-bar');
-  if (bar) bar.style.display = 'flex';
-
-  // Foto y nombre en la barra
+  bar.style.display = 'flex';
   var imgEl = document.getElementById('asesor-session-img');
-  if (imgEl) imgEl.innerHTML = found.img ? '<img src="'+found.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
+  imgEl.innerHTML = a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover">' : '👤';
+  document.getElementById('asesor-session-name').textContent = a.nombre;
+  var mesasStr = (a.mesas&&a.mesas.length) ? 'Mesas: '+a.mesas.join(', ') : '';
+  document.getElementById('asesor-session-mesas').textContent = mesasStr;
+  toast('👋 Bienvenido ' + a.nombre + ' — ya puedes tomar pedidos', 's');
+}
+
+function iniciarSesionAsesor(a) {
+  // Mostrar barra sesión
+  var bar = document.getElementById('asesor-session-bar');
+  if (bar) bar.style.display = 'flex';
+  var imgEl = document.getElementById('asesor-session-img');
+  if (imgEl) imgEl.innerHTML = a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
   var nmEl = document.getElementById('asesor-session-name');
-  if (nmEl) nmEl.textContent = found.nombre + ' — ' + (
-    found.tipo==='mesa'?'Cajero/a':
-    found.tipo==='domicilio'?'Domiciliario':
-    found.tipo==='cocina'?'Bodega/Empaque':
-    found.tipo==='supervisor'?'Supervisor':
-    found.tipo==='aliado'?'Aliado':
-    found.cargoCustom||'Vendedor'
-  );
-
-  // Mostrar turno asignado como alerta
-  var turno = (C.turnosAsesores||[]).find(function(t){ return t.asesor===found.nombre && t.activo; });
+  var rolLabel = {mesa:'Cajero/a',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',ambos:'Vendedor'}[a.tipo] || a.cargoCustom || 'Personal';
+  if (nmEl) nmEl.textContent = a.nombre + ' — ' + rolLabel;
+  // Turno asignado
+  var turno = (C.turnosAsesores||[]).find(function(t){ return t.asesor===a.nombre && t.activo; });
   var mesasEl = document.getElementById('asesor-session-mesas');
-  if (mesasEl) {
-    if (turno) {
-      mesasEl.innerHTML = '<span style="background:rgba(240,165,0,.15);color:#f0a500;border:1px solid rgba(240,165,0,.3);border-radius:50px;padding:3px 10px;font-size:12px;font-weight:700">⏰ Turno: '+turno.inicio+' – '+turno.fin+(turno.notas?' · '+turno.notas:'')+'</span>';
-    } else if (found.mesas && found.mesas.length) {
-      mesasEl.textContent = 'Puntos: ' + found.mesas.join(', ');
-    } else {
-      mesasEl.textContent = '';
-    }
-  }
-
-  // Abrir panel según rol
-  var rol = found.tipo || 'ambos';
-  if (rol === 'cocina') {
-    // Bodega/Empaque — va a pedidos pendientes
-    navTo(document.querySelector('.an[data-sec="orders"]'));
-    setTimeout(function(){ cajaSwitchTab('pendientes'); }, 200);
-  } else if (rol === 'supervisor') {
-    // Supervisor — va al dashboard
-    navTo(document.querySelector('.an[data-sec="dashboard"]'));
-  } else if (rol === 'domicilio') {
-    // Domiciliario — va a domicilios
-    navTo(document.querySelector('.an[data-sec="orders"]'));
-    setTimeout(function(){ cajaSwitchTab('domicilios'); }, 200);
+  if (mesasEl) mesasEl.innerHTML = turno ? '<span style="background:rgba(240,165,0,.15);color:#f0a500;border:1px solid rgba(240,165,0,.3);border-radius:50px;padding:3px 10px;font-size:12px;font-weight:700">⏰ '+turno.inicio+' – '+turno.fin+'</span>' : (a.mesas&&a.mesas.length ? 'Puntos: '+a.mesas.join(', ') : '');
+  // Panel según rol
+  var s = document.querySelector('.an[data-sec="orders"]');
+  if (s) { navTo(s); }
+  if (a.tipo==='cocina') setTimeout(function(){ cajaSwitchTab('pendientes'); },200);
+  else if (a.tipo==='domicilio') setTimeout(function(){ cajaSwitchTab('domicilios'); },200);
+  else if (a.tipo==='supervisor') { var d=document.querySelector('.an[data-sec="dashboard"]'); if(d) navTo(d); }
+  else setTimeout(function(){ cajaSwitchTab('registradora'); },200);
+  // Reconocimiento facial si tiene foto
+  if (a.img && typeof startFacialCheck === 'function') {
+    startFacialCheck(a, function(ok){
+      if (!ok) toast('⚠️ Rostro no verificado — revisa la foto','e');
+      else toast('✅ Bienvenido/a, '+a.nombre,'s');
+    });
   } else {
-    // Vendedor, Cajero, Aliado, Otro — va a registradora
-    navTo(document.querySelector('.an[data-sec="orders"]'));
-    setTimeout(function(){ cajaSwitchTab('registradora'); }, 200);
+    toast('✅ Bienvenido/a, '+a.nombre,'s');
   }
-
-  actualizarBarraAsesor();
-  toast('✅ Bienvenido/a, ' + found.nombre, 's');
 }
 
 
@@ -5667,34 +5357,12 @@ function confirmarAsesor() {
   var pin = document.getElementById('asesor-pin-input').value.trim();
   var a = ASESORES[_asesorSelIdx];
   if (hashPin(pin) !== a.pin) { toast('❌ PIN incorrecto','e'); return; }
-  // Si tiene foto → reconocimiento facial
-  if (a.img && typeof startFacialCheck === 'function') {
-    startFacialCheck(a, function(ok) {
-      if (!ok) { toast('❌ No coincide el rostro','e'); return; }
-      _abrirSesionAsesor(a);
-    });
-  } else {
-    _abrirSesionAsesor(a);
-  }
-}
-
-function _abrirSesionAsesor(a) {
-  ASESOR_ACTIVO = { idx: _asesorSelIdx, nombre: a.nombre, img: a.img, tipo: a.tipo, turno: a.turno };
-  ASESOR_SESSION = a;
+  ASESOR_ACTIVO = { idx: _asesorSelIdx, nombre: a.nombre, img: a.img };
   closeM('m-asesor');
   actualizarBarraAsesor();
-  mostrarAlertaTurnoAsesor(a);
   recordarRolPWA();
   pedirPermisoNotificaciones();
   toast('👋 Bienvenido ' + a.nombre, 's');
-  // Abrir panel según rol
-  var rolPanel = {
-    mesa: 'registradora', ambos: 'registradora',
-    domicilio: 'domicilios', cocina: 'alertas',
-    supervisor: 'tablero', aliado: 'registradora',
-    otro: 'registradora'
-  };
-  cajaSwitchTab(rolPanel[a.tipo||'ambos'] || 'registradora');
 }
 
 function volverSelAsesor() {
@@ -5725,39 +5393,7 @@ function getAsesorDomicilio() {
   return a.nombre;
 }
 
-
-function mostrarAlertaTurnoAsesor(a) {
-  // Buscar turno activo del asesor
-  var turnos = (C.turnosAsesores||[]).filter(function(t){ return t.asesor===a.nombre && t.activo; });
-  var bar = document.getElementById('asesor-session-bar');
-  // Remover alerta previa
-  var prev = document.getElementById('asesor-turno-alerta');
-  if (prev) prev.remove();
-  if (!turnos.length) return;
-  var t = turnos[0];
-  var alerta = document.createElement('div');
-  alerta.id = 'asesor-turno-alerta';
-  alerta.style.cssText = 'width:100%;background:rgba(240,165,0,.12);border-top:1px solid rgba(240,165,0,.25);padding:6px 16px;display:flex;align-items:center;gap:8px;font-size:12px';
-  alerta.innerHTML = '<span style="font-size:14px">⏰</span>' +
-    '<span style="color:#f0a500;font-weight:700">Turno: '+t.inicio+' – '+t.fin+'</span>' +
-    (t.notas ? '<span style="color:var(--cmut)">'+t.notas+'</span>' : '') +
-    '<span style="color:var(--cmut);font-size:11px">'+t.fecha+'</span>';
-  if (bar) bar.appendChild(alerta);
-}
-
 function actualizarBarraAsesor() {
-  // Actualizar barra de sesión activa si hay un asesor logueado
-  var sesBar = document.getElementById('asesor-session-bar');
-  if (ASESOR_SESSION && sesBar) {
-    sesBar.style.display = 'flex';
-    var nameEl = document.getElementById('asesor-session-name');
-    var rolEl  = document.getElementById('asesor-session-rol');
-    var imgEl  = document.getElementById('asesor-session-img');
-    var rolLabels = {ambos:'Vendedor',mesa:'Cajero/a',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',otro:ASESOR_SESSION.cargoCustom||'Otro'};
-    if (nameEl) nameEl.textContent = ASESOR_SESSION.nombre;
-    if (rolEl)  rolEl.textContent  = ASESOR_SESSION.cargoCustom || rolLabels[ASESOR_SESSION.tipo||'ambos'] || '';
-    if (imgEl)  imgEl.innerHTML    = ASESOR_SESSION.img ? '<img src="'+ASESOR_SESSION.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
-  }
   var chips = document.getElementById('asesores-caja-chips');
   if (!chips) return;
   var activos = ASESORES.filter(function(a){ return a.activo !== false; });
@@ -5808,9 +5444,6 @@ function crmLogout() {
   CRM_AUTH = false;
   document.getElementById('crm-lock').style.display = 'block';
   document.getElementById('crm-content').style.display = 'none';
-  var pinEl = document.getElementById('crm-pin-in');
-  if (pinEl) { pinEl.value = ''; setTimeout(function(){ pinEl.focus(); }, 150); }
-  toast('🔒 CRM bloqueado — ingresa tu PIN para volver', 's');
 }
 
 function cambiarPinCRM() {
@@ -5843,12 +5476,8 @@ var _alertaTimer = null;
 function toggleTurno() {
   TURNO_ABIERTO = !TURNO_ABIERTO;
   C.turnoAbierto = TURNO_ABIERTO;
-  if (!C.turnoLogs) C.turnoLogs = [];
-  C.turnoLogs.unshift({ accion:TURNO_ABIERTO?'abrir':'cerrar', ts:new Date().toLocaleString('es-CO'), _ts:Date.now(), quien:ASESOR_SESSION?ASESOR_SESSION.nombre:'Admin' });
-  if (C.turnoLogs.length > 60) C.turnoLogs = C.turnoLogs.slice(0,60);
   saveSt();
   aplicarEstadoTurno();
-  if (typeof renderTurnoCRM==='function') renderTurnoCRM();
   toast(TURNO_ABIERTO ? '✅ Turno abierto' : '🔒 Turno cerrado', TURNO_ABIERTO ? 's' : 'e');
 }
 
@@ -6095,40 +5724,13 @@ function upQRPago(ev) {
   r.readAsDataURL(file);
 }
 
-
-function switchQRPagoTab(canal) {
-  window._qrPagoCanal = canal;
-  ['tienda','domicilio','evento'].forEach(function(t){
-    var btn = document.getElementById('qrp-tab-'+t);
-    if (btn) btn.className = 'btn bsm '+(t===canal?'bp':'bo');
-  });
-  var lbl = document.getElementById('qrp-canal-label');
-  var labels = {tienda:'QR para Tienda / Puntos de venta', domicilio:'QR para Domicilios', evento:'QR para Eventos masivos'};
-  if (lbl) lbl.textContent = labels[canal]||'';
-  // Load saved QR for this canal
-  var saved = (C.qrsPago||{})[canal]||{};
-  var qrEl = document.getElementById('c-qrpago'); if(qrEl) qrEl.value = saved.url||'';
-  var nmEl = document.getElementById('c-qrnombre'); if(nmEl) nmEl.value = saved.nombre||'';
-  // Update preview
-  var prev = document.getElementById('prev-qrpago'); var ph = document.getElementById('prev-qrpago-placeholder');
-  if (prev && saved.url) { prev.src=saved.url; prev.style.display='block'; if(ph)ph.style.display='none'; }
-  else { if(prev) {prev.src='';prev.style.display='none';} if(ph)ph.style.display='block'; }
-}
-
 function saveQRPago() {
-  var canal = window._qrPagoCanal || 'tienda';
-  var urlEl = document.getElementById('c-qrpago');
-  var nmEl  = document.getElementById('c-qrnombre');
-  if (!C.qrsPago) C.qrsPago = {};
-  C.qrsPago[canal] = { url: (urlEl ? urlEl.value : '') || C.pagoQR || '', nombre: nmEl ? nmEl.value : '' };
-  // Keep backwards compat
-  if (canal === 'tienda') { C.qrPago = C.qrsPago.tienda.url; C.qrNombre = C.qrsPago.tienda.nombre; }
-  saveSt();
-  var prev = document.getElementById('prev-qrpago'); var ph = document.getElementById('prev-qrpago-placeholder');
-  if (C.qrsPago[canal].url && prev) { prev.src=C.qrsPago[canal].url; prev.style.display='block'; if(ph)ph.style.display='none'; }
-  toast('✅ QR de pago guardado ('+canal+')','s');
+  var urlEl=document.getElementById('c-qrpago');
+  var nmEl=document.getElementById('c-qrnombre');
+  if(urlEl&&urlEl.value&&!urlEl.value.startsWith('(')) C.qrPago=urlEl.value;
+  if(nmEl) C.qrNombre=nmEl.value;
+  saveSt(); toast('✅ QR de pago guardado','s');
 }
-
 
 function mostrarQRPago() {
   if(!C.qrPago){toast('⚠️ No hay QR configurado','e');return;}
@@ -6410,134 +6012,75 @@ function enviarCalificacion() {
 // CELEBRACIÓN
 // ============================================================
 
-// ============================================================
-// RECONOCIMIENTO FACIAL (compara con foto cargada del asesor)
-// ============================================================
-var _facialCallback = null;
-var _facialAsesor = null;
+function verQRProducto(idx) {
+  var p = P[idx]; if (!p) return;
+  var base = (C.siteUrl||window.location.href.split('?')[0]);
+  var link = base + '?addprod=' + p.id;
+  window._qrProdLink = link; window._qrProdId = p.id; window._qrProdName = p.name;
+  var m = document.getElementById('m-qr'); if (!m) return;
+  var ttl = document.getElementById('qr-title'); if(ttl) ttl.textContent = p.name;
+  var urlTxt = document.getElementById('qr-url-txt'); if(urlTxt) urlTxt.textContent = link;
+  var container = document.getElementById('qr-container'); if (!container) return;
+  var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(link)+'&bgcolor=ffffff&color=000000&margin=10';
+  var div = document.createElement('div'); div.style.textAlign='center';
+  var img = document.createElement('img'); img.src=qrSrc; img.style.cssText='width:200px;height:200px;border-radius:8px;margin-bottom:8px';
+  div.appendChild(img);
+  var info = document.createElement('div'); info.style.cssText='font-size:11px;color:#555;font-weight:700;margin-bottom:4px';
+  info.textContent = p.id + (p.ref?' | '+p.ref:''); div.appendChild(info);
+  var btnRow = document.createElement('div'); btnRow.style.cssText='display:flex;gap:6px;justify-content:center';
+  var btnCopy = document.createElement('button');
+  btnCopy.textContent='📋 Copiar link'; btnCopy.style.cssText='padding:6px 12px;background:#f0a500;color:#000;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer';
+  btnCopy.onclick=function(){ navigator.clipboard&&navigator.clipboard.writeText(window._qrProdLink).then(function(){ btnCopy.textContent='✅ Copiado'; setTimeout(function(){ btnCopy.textContent='📋 Copiar link'; },2000); }); };
+  btnRow.appendChild(btnCopy); div.appendChild(btnRow);
+  container.innerHTML=''; container.appendChild(div);
+  m.style.display='flex';
+}
 
-function startFacialCheck(asesor, callback) {
-  _facialAsesor = asesor;
-  _facialCallback = callback;
-  var modal = document.getElementById('m-facial');
-  if (!modal) {
-    // Create modal dynamically
-    modal = document.createElement('div');
-    modal.id = 'm-facial';
-    modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px';
-    modal.innerHTML =
-      '<div style="text-align:center;color:#fff;font-size:15px;font-weight:700">📷 Verificación facial</div>'+
-      '<div style="font-size:13px;color:rgba(255,255,255,.6);text-align:center;padding:0 20px">Mira a la cámara para confirmar tu identidad</div>'+
-      '<div style="position:relative;width:260px;height:260px;border-radius:50%;overflow:hidden;border:3px solid var(--cp,#f0a500)">'+
-        '<video id="facial-video" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover"></video>'+
-        '<div id="facial-overlay" style="position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .3s"></div>'+
-      '</div>'+
-      '<div id="facial-status" style="font-size:13px;color:rgba(255,255,255,.7)">Iniciando cámara...</div>'+
-      '<div style="display:flex;gap:10px">'+
-        '<button onclick="capturarFacial()" style="padding:10px 24px;background:var(--cp,#f0a500);color:#000;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer">📸 Verificar</button>'+
-        '<button onclick="cancelarFacial()" style="padding:10px 24px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:10px;font-size:14px;cursor:pointer">Cancelar</button>'+
-      '</div>';
-    document.body.appendChild(modal);
-  }
-  modal.style.display = 'flex';
-  // Start camera
-  var video = document.getElementById('facial-video');
-  var status = document.getElementById('facial-status');
-  if (!navigator.mediaDevices) {
-    if (status) status.textContent = '⚠️ Cámara no disponible — ingreso directo';
-    setTimeout(function(){ cancelarFacial(); if(callback) callback(true); }, 1500);
+function generarTodosQRProductos() {
+  if (!P.length) { toast('⚠️ No hay productos','e'); return; }
+  var base = (C.siteUrl||window.location.href.split('?')[0]);
+  var w = window.open('','_blank');
+  var rows = P.map(function(p){
+    var link = base+'?addprod='+p.id;
+    var qr = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+encodeURIComponent(link)+'&bgcolor=ffffff&color=000000&margin=5';
+    return '<div style="display:inline-block;text-align:center;margin:10px;width:160px;vertical-align:top">'+
+      '<img src="'+qr+'" style="width:150px;height:150px"><br>'+
+      '<div style="font-size:11px;font-weight:700;margin-top:4px">'+p.name+'</div>'+
+      '<div style="font-size:10px;color:#666">'+p.id+'</div>'+
+    '</div>';
+  }).join('');
+  w.document.write('<html><body style="font-family:sans-serif;padding:20px"><h2>QR de Productos</h2><div>'+rows+'</div><br><button onclick="window.print()">🖨️ Imprimir</button></body></html>');
+  w.document.close();
+}
+
+
+function renderOrdsDespachados() {
+  var el = document.getElementById('orders-despachados-list'); if (!el) return;
+  var lista = ORD.filter(function(o){ return o.status === 'dispatched'; });
+  if (!lista.length) {
+    el.innerHTML = '<div class="empty"><span class="ei">🚀</span><h3>Sin pedidos en camino</h3><p>Los domicilios despachados aparecen aquí hasta que se marquen como cobrados</p></div>';
     return;
   }
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width:320, height:320 }})
-    .then(function(stream) {
-      window._facialStream = stream;
-      if (video) { video.srcObject = stream; video.play(); }
-      if (status) status.textContent = 'Listo — toca "Verificar" cuando estés listo/a';
-    })
-    .catch(function() {
-      if (status) status.textContent = '⚠️ Sin cámara — acceso concedido por PIN';
-      setTimeout(function(){ cancelarFacial(); if(callback) callback(true); }, 1500);
-    });
+  el.innerHTML = lista.map(function(o) {
+    return '<div class="ocard">'+
+      '<div class="oc-hdr"><span class="oc-id">'+o.id+'</span><span class="oc-ts">'+o.ts+'</span></div>'+
+      '<div class="oc-client">'+o.name+' · '+(o.phone||'')+'</div>'+
+      '<div class="oc-items">'+(o.items||[]).map(function(it){return it.name+' x'+it.qty;}).join(', ')+'</div>'+
+      '<div class="oc-total">'+(C.cur||'$')+fmt(o.total)+'</div>'+
+      '<div style="display:flex;gap:8px;margin-top:10px">'+
+        '<button class="btn bsm bp" data-id="'+o.id+'" onclick="marcarCobradoDespachado(this.dataset.id)">✅ Cobrado</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
 }
 
-function capturarFacial() {
-  var video = document.getElementById('facial-video');
-  var status = document.getElementById('facial-status');
-  var overlay = document.getElementById('facial-overlay');
-  if (!video || !_facialAsesor) return;
-  if (status) status.textContent = 'Analizando...';
-  if (overlay) overlay.style.background = 'rgba(240,165,0,.2)';
-
-  // Capture frame
-  var canvas = document.createElement('canvas');
-  canvas.width = 200; canvas.height = 200;
-  var ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, 200, 200);
-  var capturedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-
-  // Compare with stored photo using pixel similarity
-  var refImg = new Image();
-  refImg.crossOrigin = 'anonymous';
-  refImg.onload = function() {
-    var canvas2 = document.createElement('canvas');
-    canvas2.width = 50; canvas2.height = 50;
-    var ctx2 = canvas2.getContext('2d');
-    ctx2.drawImage(refImg, 0, 0, 50, 50);
-    var refData = ctx2.getImageData(0, 0, 50, 50).data;
-
-    var canvas3 = document.createElement('canvas');
-    canvas3.width = 50; canvas3.height = 50;
-    var ctx3 = canvas3.getContext('2d');
-    var capImg = new Image();
-    capImg.onload = function() {
-      ctx3.drawImage(capImg, 0, 0, 50, 50);
-      var capData = ctx3.getImageData(0, 0, 50, 50).data;
-
-      // Simple pixel difference score
-      var diff = 0;
-      for (var i = 0; i < refData.length; i += 4) {
-        diff += Math.abs(refData[i] - capData[i]);
-        diff += Math.abs(refData[i+1] - capData[i+1]);
-        diff += Math.abs(refData[i+2] - capData[i+2]);
-      }
-      var score = diff / (50 * 50 * 3); // avg diff per channel per pixel
-      var match = score < 80; // threshold — tune as needed
-
-      cerrarFacial();
-      if (match) {
-        toast('✅ Rostro verificado — bienvenido/a!', 's');
-        if (_facialCallback) _facialCallback(true);
-      } else {
-        // Give them benefit of doubt on first fail - ask again or allow PIN fallback
-        if (confirm('⚠️ No se pudo verificar el rostro con certeza.\n\n¿Deseas intentar de nuevo?\n\n(Cancelar = ingresar solo con PIN)')) {
-          startFacialCheck(_facialAsesor, _facialCallback);
-        } else {
-          if (_facialCallback) _facialCallback(true); // fallback: allow with PIN only
-        }
-      }
-    };
-    capImg.src = capturedDataUrl;
-  };
-  refImg.onerror = function() {
-    // Can't load reference image - allow entry
-    cerrarFacial();
-    if (_facialCallback) _facialCallback(true);
-  };
-  refImg.src = _facialAsesor.img;
-}
-
-function cancelarFacial() {
-  cerrarFacial();
-  _facialCallback = null; _facialAsesor = null;
-}
-
-function cerrarFacial() {
-  if (window._facialStream) {
-    window._facialStream.getTracks().forEach(function(t){ t.stop(); });
-    window._facialStream = null;
-  }
-  var m = document.getElementById('m-facial');
-  if (m) m.style.display = 'none';
+function marcarCobradoDespachado(id) {
+  var o = ORD.find(function(x){ return x.id===id; });
+  if (!o) return;
+  o.status = 'paid';
+  saveSt();
+  renderOrdsDespachados();
+  toast('✅ Pedido cobrado','s');
 }
 
 function sonidoPit() {
@@ -6769,22 +6312,26 @@ function editarCliente(wk) {
 }
 
 function generarCampana() {
-  var msg = (document.getElementById('campana-msg')||{}).value || '';
-  if (!msg.trim()) { toast('⚠️ Escribe el mensaje primero','e'); return; }
-  var clientes = Object.values(CUS).filter(function(c){ return c.wa; });
-  if (!clientes.length) { toast('⚠️ No hay clientes con WhatsApp registrado','e'); return; }
-  var el = document.getElementById('campana-lista'); if (!el) return;
-  el.innerHTML = clientes.map(function(c) {
-    var wa = c.wa.replace(/[^0-9]/g,'');
-    var link = 'https://wa.me/'+wa+'?text='+encodeURIComponent(msg.replace(/{nombre}/g, c.name||'cliente'));
-    return '<div style="display:flex;align-items:center;gap:10px;padding:8px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:6px">'+
-      '<div style="flex:1"><div style="font-size:13px;font-weight:600">'+c.name+'</div><div style="font-size:11px;color:var(--cmut)">'+c.wa+'</div></div>'+
-      '<a href="'+link+'" target="_blank" style="background:#25d366;color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;flex-shrink:0">📲 Enviar</a>'+
-    '</div>';
-  }).join('');
-  toast('✅ '+clientes.length+' links generados — toca cada uno para enviar','s');
+  var msg = document.getElementById('campana-msg').value.trim();
+  if (!msg) { toast('⚠️ Escribe un mensaje de campaña','e'); return; }
+  var cl = Object.values(CUS);
+  if (!cl.length) { toast('⚠️ No hay clientes registrados aún','e'); return; }
+  var html = ''; var count = 0;
+  for (var i = 0; i < cl.length; i++) {
+    var c = cl[i];
+    var wk = c.wa.replace(/[^0-9]/g,'');
+    if (!wk) continue;
+    count++;
+    var link = 'https://wa.me/' + wk + '?text=' + encodeURIComponent(msg);
+    html += '<a href="' + link + '" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.25);border-radius:10px;text-decoration:none">' +
+      '<span style="font-size:18px">💬</span>' +
+      '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--ctxt)">' + c.name + '</div>' +
+      '<div style="font-size:11px;color:var(--cmut)">' + c.wa + '</div></div>' +
+      '<span style="font-size:12px;color:#25d366;font-weight:700">Enviar →</span></a>';
+  }
+  document.getElementById('campana-lista').innerHTML = html || '<div style="color:var(--cmut);font-size:13px">Sin clientes con WhatsApp</div>';
+  toast('✅ ' + count + ' links generados','s');
 }
-
 
 function renderPedidosAsesor() {
   if (!ASESOR_SESSION) return;
@@ -7643,230 +7190,116 @@ function aplicarBannerPub() {
   var banner = document.getElementById('banner-pub');
   if (!banner) return;
   var activo = document.getElementById('c-pub-activo');
-  if (!activo || !activo.checked) {
-    banner.style.display = 'none';
-    if (typeof renderPubPreview === 'function') renderPubPreview();
-    return;
-  }
+  if (!activo || !activo.checked) { banner.style.display = 'none'; renderPubPreview(); return; }
 
-  var bg    = (document.getElementById('c-pub-bg')||{}).value    || C.pubBg    || '#1a1a2e';
-  var txt   = (document.getElementById('c-pub-txt')||{}).value   || C.pubTxt   || '#ffffff';
-  var ctaBg = (document.getElementById('c-pub-cta-bg')||{}).value|| C.pubCtaBg || '#f0a500';
-  var borde = (document.getElementById('c-pub-borde')||{}).value || C.pubBorde || 'none';
+  var titulo  = (document.getElementById('c-pub-titulo')||{}).value || 'Pauta aquí tu negocio';
+  var sub     = (document.getElementById('c-pub-sub')||{}).value || 'Llega a más clientes';
+  var bg      = (document.getElementById('c-pub-bg')||{}).value || '#1a1a2e';
+  var txt     = (document.getElementById('c-pub-txt')||{}).value || '#f0f0ff';
+  var ctaBg   = (document.getElementById('c-pub-cta-bg')||{}).value || '#f0a500';
+  var ico     = (document.getElementById('c-pub-ico')||{}).value || '📢';
+  var size    = ((document.getElementById('c-pub-size')||{}).value) || 'md';
+  var borde   = ((document.getElementById('c-pub-borde')||{}).value) || 'none';
+  var diseno  = ((document.getElementById('c-pub-diseno')||{}).value) || 'clasico';
+  var img     = C.pubImg || '';
 
-  C.pubBg=bg; C.pubTxt=txt; C.pubCtaBg=ctaBg; C.pubBorde=borde; C.pubActivo=true;
-
-  // Slots — array de {tipo:'img'|'texto'|'mixto', img:'', titulo:'', sub:'', url:'', bg:''}
-  var slots = C.pubSlots && C.pubSlots.length ? C.pubSlots : [];
-  if (!slots.length) {
-    // Fallback: usar pubImgs/pubTitulo legacy
-    var legacyImgs = C.pubImgs && C.pubImgs.length ? C.pubImgs : (C.pubImg ? [C.pubImg] : []);
-    slots = legacyImgs.map(function(img){ return {tipo:'img',img:img,titulo:C.pubTitulo||'',sub:C.pubSub||'',url:C.pubUrl||'',bg:bg}; });
-    if (!slots.length) slots = [{tipo:'texto',img:'',titulo:C.pubTitulo||'Pauta aquí',sub:C.pubSub||'',url:C.pubUrl||'',bg:bg}];
-  }
-
-  // Banner styles
   banner.style.background = bg;
   banner.style.color = txt;
-  banner.style.position = 'relative';
-  banner.style.overflow = 'hidden';
-  banner.style.border=''; banner.style.borderBottom=''; banner.style.borderLeft='';
-  if(borde==='bottom') banner.style.borderBottom='3px solid '+ctaBg;
-  else if(borde==='full') banner.style.border='2px solid '+ctaBg;
-  else if(borde==='left') banner.style.borderLeft='5px solid '+ctaBg;
+  banner.style.border = '';
+  banner.style.borderBottom = '';
+  banner.style.borderLeft = '';
+  if (borde === 'bottom')    banner.style.borderBottom = '3px solid ' + ctaBg;
+  else if (borde === 'full') banner.style.border = '2px solid ' + ctaBg;
+  else if (borde === 'left') banner.style.borderLeft = '5px solid ' + ctaBg;
 
-  // Build track
-  var track = document.getElementById('banner-pub-track');
-  var btnPrev = document.getElementById('banner-prev');
-  var btnNext = document.getElementById('banner-next');
-  var dotsEl  = document.getElementById('banner-pub-dots');
-  if (!track) return;
+  var imgHtml = img
+    ? '<img src="'+img+'" style="object-fit:cover;border-radius:8px;border:2px solid rgba(255,255,255,.15)">'
+    : '<span style="font-size:28px;line-height:1">'+ico+'</span>';
 
-  track.innerHTML = '';
-  // Track is a flex row — each slot is 1/6 of width (≈15%)
-  // Banner height fixed
-  var H = '80px';
-  banner.style.minHeight = H;
-  track.style.cssText = 'display:flex;width:100%;height:'+H+';overflow:hidden';
-
-  slots.forEach(function(slot, si) {
-    var cell = document.createElement('div');
-    var slotBg = slot.bg || bg;
-    var hasImg = slot.img && slot.tipo !== 'texto';
-    var hasText = slot.tipo !== 'img';
-
-    // Width: image slots = 15%, text slots = fill remaining
-    // Count img vs text slots
-    var imgCount  = slots.filter(function(s){ return s.tipo==='img'; }).length;
-    var textCount = slots.filter(function(s){ return s.tipo!=='img'; }).length;
-    var imgPct = 15; // each image slot = 15%
-    var textPct = textCount > 0 ? Math.max(10, (100 - imgCount*imgPct) / Math.max(1,textCount)) : 0;
-    var pct = slot.tipo==='img' ? imgPct : (slot.tipo==='texto' ? textPct : imgPct+4);
-
-    cell.style.cssText = 'flex:0 0 '+pct+'%;width:'+pct+'%;height:100%;position:relative;overflow:hidden;cursor:'+(slot.url?'pointer':'default')+';transition:flex .2s';
-    cell.style.background = hasImg ? 'url("'+slot.img+'") center/cover no-repeat' : slotBg;
-
-    if (slot.url) {
-      (function(u){ cell.onclick = function(){ window.open(u,'_blank'); }; })(slot.url);
-    }
-
-    // Separator line between cells
-    if (si > 0) cell.style.borderLeft = '1px solid rgba(255,255,255,.08)';
-
-    // Overlay for readability
-    if (hasImg && hasText) {
-      var ov = document.createElement('div');
-      ov.style.cssText = 'position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.65) 100%);pointer-events:none';
-      cell.appendChild(ov);
-    }
-
-    // Text content
-    if (hasText && (slot.titulo || slot.sub)) {
-      var textDiv = document.createElement('div');
-      var ts = hasImg ? 'text-shadow:0 1px 3px rgba(0,0,0,.8);' : '';
-      textDiv.style.cssText = 'position:absolute;bottom:0;left:0;right:0;padding:5px 7px;z-index:2';
-      textDiv.innerHTML =
-        (slot.titulo ? '<div style="font-size:11px;font-weight:700;color:'+txt+';'+ts+'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3">'+slot.titulo+'</div>' : '') +
-        (slot.sub    ? '<div style="font-size:10px;color:'+txt+';opacity:.85;'+ts+'white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+slot.sub+'</div>' : '');
-      cell.appendChild(textDiv);
-    }
-
-    // If tipo=texto and no img, center the text
-    if (slot.tipo === 'texto') {
-      cell.style.display = 'flex';
-      cell.style.flexDirection = 'column';
-      cell.style.alignItems = 'center';
-      cell.style.justifyContent = 'center';
-      cell.style.padding = '8px';
-      cell.style.textAlign = 'center';
-      if (textDiv) { textDiv.style.position='relative'; textDiv.style.padding='0'; }
-    }
-
-    track.appendChild(cell);
-  });
-
-  if(btnPrev) btnPrev.style.display='none';
-  if(btnNext) btnNext.style.display='none';
-  if(dotsEl)  dotsEl.style.display='none';
-
-  // Auto-scroll si está configurado
-  clearInterval(banner._scrollInterval);
-
-  // Horario
-  var ahora = new Date();
-  var horaActual = ahora.getHours()*60+ahora.getMinutes();
-  if (C.pubHoraDesde && C.pubHoraHasta) {
-    var pD=C.pubHoraDesde.split(':'); var pH=C.pubHoraHasta.split(':');
-    if (horaActual < parseInt(pD[0])*60+parseInt(pD[1]) || horaActual > parseInt(pH[0])*60+parseInt(pH[1])) {
-      banner.style.display='none'; return;
-    }
-  }
-
-  banner.style.display = 'block';
-  renderBannerSlotsEditor();
-  if (typeof renderPubPreview === 'function') renderPubPreview();
-}
-
-// ── EDITOR DE SLOTS ──
-function renderBannerSlotsEditor() {
-  var el = document.getElementById('banner-slots-editor'); if (!el) return;
-  if (!C.pubSlots) C.pubSlots = [];
-  if (!C.pubSlots.length) {
-    el.innerHTML = '<div style="font-size:12px;color:var(--cmut);padding:8px">Sin celdas aún — toca "+ Agregar celda"</div>';
-    return;
-  }
-  el.innerHTML = '';
-  C.pubSlots.forEach(function(slot, i) {
-    var div = document.createElement('div');
-    div.style.cssText = 'background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:10px;display:flex;gap:10px;align-items:center';
-
-    // Preview thumb
-    var thumb = document.createElement('div');
-    thumb.style.cssText = 'width:48px;height:48px;border-radius:8px;flex-shrink:0;overflow:hidden;background:'+(slot.img?'':slot.bg||'#1a1a2e');
-    if (slot.img) {
-      var im = document.createElement('img');
-      im.src=slot.img; im.style.cssText='width:100%;height:100%;object-fit:cover';
-      thumb.appendChild(im);
-    } else {
-      thumb.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:18px">Aa</div>';
-    }
-    div.appendChild(thumb);
-
-    // Info
-    var info = document.createElement('div');
-    info.style.cssText = 'flex:1;min-width:0';
-    info.innerHTML =
-      '<div style="font-size:12px;font-weight:700;color:var(--ctxt);margin-bottom:2px">' +
-        (slot.tipo==='img'?'🖼️ Imagen':slot.tipo==='texto'?'📝 Texto':'🖼️📝 Mixto') +
-        (slot.titulo ? ' — '+slot.titulo : '') +
-      '</div>' +
-      '<div style="font-size:11px;color:var(--cmut)">'+(slot.img?'Con imagen ✅':'Sin imagen')+(slot.url?' · '+slot.url.slice(0,25)+'…':'')+'</div>';
-    div.appendChild(info);
-
-    // Buttons
-    var btns = document.createElement('div');
-    btns.style.cssText = 'display:flex;gap:4px;flex-shrink:0';
-    var btnEdit = document.createElement('button');
-    btnEdit.className='btn bsm bo'; btnEdit.textContent='✏️';
-    btnEdit.style.borderRadius='7px';
-    btnEdit.dataset.i = i;
-    btnEdit.onclick = function(){ editarBannerSlot(parseInt(this.dataset.i)); };
-    var btnDel = document.createElement('button');
-    btnDel.className='btn bsm bd'; btnDel.textContent='🗑';
-    btnDel.style.borderRadius='7px';
-    btnDel.dataset.i = i;
-    btnDel.onclick = function(){ C.pubSlots.splice(parseInt(this.dataset.i),1); saveSt(); aplicarBannerPub(); };
-    btns.appendChild(btnEdit); btns.appendChild(btnDel);
-    div.appendChild(btns);
-    el.appendChild(div);
-  });
-}
-
-function agregarBannerSlot() {
-  if (!C.pubSlots) C.pubSlots = [];
-  C.pubSlots.push({tipo:'texto', img:'', titulo:'Nuevo slot', sub:'', url:'', bg:C.pubBg||'#1a1a2e'});
-  saveSt(); aplicarBannerPub();
-  editarBannerSlot(C.pubSlots.length-1);
-}
-
-function editarBannerSlot(idx) {
-  var slot = (C.pubSlots||[])[idx]; if (!slot) return;
-  var tipo  = prompt('Tipo (img / texto / mixto):', slot.tipo||'texto'); if(!tipo) return;
-  var tit   = prompt('Título:', slot.titulo||'');
-  var sub   = prompt('Subtexto:', slot.sub||'');
-  var url   = prompt('Link al hacer clic (opcional):', slot.url||'');
-  var bg    = prompt('Color de fondo (hex, ej #1a1a2e):', slot.bg||C.pubBg||'#1a1a2e');
-  slot.tipo  = tipo.trim()||'texto';
-  slot.titulo= tit||'';
-  slot.sub   = sub||'';
-  slot.url   = url||'';
-  slot.bg    = bg||C.pubBg||'#1a1a2e';
-
-  if (tipo==='img'||tipo==='mixto') {
-    var fileInput = document.createElement('input');
-    fileInput.type='file'; fileInput.accept='image/*';
-    fileInput.onchange = function(ev) {
-      var file=ev.target.files[0]; if(!file) return;
-      var r=new FileReader();
-      r.onload=function(e){
-        var im=new Image(); im.onload=function(){
-          var canvas=document.createElement('canvas');
-          var max=600; var ratio=Math.min(max/im.width,max/im.height,1);
-          canvas.width=Math.round(im.width*ratio); canvas.height=Math.round(im.height*ratio);
-          canvas.getContext('2d').drawImage(im,0,0,canvas.width,canvas.height);
-          slot.img=canvas.toDataURL('image/jpeg',0.82);
-          saveSt(); aplicarBannerPub();
-          toast('✅ Celda actualizada','s');
-        }; im.src=e.target.result;
-      }; r.readAsDataURL(file);
-    };
-    document.body.appendChild(fileInput); fileInput.click(); document.body.removeChild(fileInput);
+  if (size === 'lg') {
+    // MODO GRANDE — layout centrado tipo tarjeta publicitaria de impacto
+    banner.style.cursor = 'default';
+    banner.onclick = null;
+    banner.innerHTML =
+      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 20px;text-align:center;gap:12px">' +
+        '<div style="width:72px;height:72px;border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12);flex-shrink:0">' + imgHtml + '</div>' +
+        '<div>' +
+          '<div style="font-size:20px;font-weight:900;color:'+txt+';letter-spacing:-.02em;line-height:1.15;margin-bottom:5px">'+titulo+'</div>' +
+          '<div style="font-size:14px;color:'+txt+';opacity:.8;line-height:1.4">'+sub+'</div>' +
+        '</div>' +
+      '</div>';
+  } else if (size === 'sm') {
+    // MODO PEQUEÑO — solo texto, sin imagen ni botón
+    banner.style.cursor = 'pointer';
+    banner.onclick = abrirBannerPub;
+    banner.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 16px">' +
+        '<span style="font-size:14px">'+ico+'</span>' +
+        '<span style="font-size:13px;font-weight:600;color:'+txt+'">'+titulo+'</span>' +
+      '</div>';
   } else {
-    saveSt(); aplicarBannerPub();
-    toast('✅ Celda actualizada','s');
+    // MODO MEDIANO — franja completa con imagen + texto + botón
+    banner.style.cursor = 'pointer';
+    banner.onclick = abrirBannerPub;
+    banner.innerHTML =
+      '<div style="display:flex;align-items:center;gap:12px;padding:11px 16px">' +
+        '<div style="width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1)">' + imgHtml + '</div>' +
+        '<div style="flex:1;min-width:0">' +
+          '<div style="font-size:14px;font-weight:700;color:'+txt+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+titulo+'</div>' +
+          '<div style="font-size:12px;color:'+txt+';opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sub+'</div>' +
+        '</div>' +
+        '<div onclick="event.stopPropagation();abrirBannerPub()" style="background:'+ctaBg+';border-radius:50px;padding:6px 14px;font-size:12px;font-weight:700;flex-shrink:0;color:'+(txt==='#ffffff'||txt==='#f0f0ff'?'#000':'#fff')+';cursor:pointer;white-space:nowrap">Ver →</div>' +
+        '<button onclick="event.stopPropagation();cerrarBannerPub()" style="width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.2);border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+txt+'">✕</button>' +
+      '</div>';
   }
-}
 
+  // Aplicar diseño
+  banner.className = '';
+  banner.style.borderRadius = '';
+  banner.style.margin = '';
+  if (diseno === 'neon') {
+    banner.classList.add('diseno-neon');
+    banner.style.setProperty('--pub-color', ctaBg);
+    banner.style.border = '1.5px solid ' + ctaBg;
+  } else if (diseno === 'centrado') {
+    banner.classList.add('diseno-centrado');
+  } else if (diseno === 'pill') {
+    banner.classList.add('diseno-pill');
+  } else if (diseno === 'hero') {
+    banner.classList.add('diseno-hero');
+    if (img) banner.style.background = 'linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('+img+') center/cover';
+  }
+  // Tamaño grande
+  if (size === 'lg') {
+    if (inner) inner.style.padding = '16px';
+    var imgWrapLg = document.getElementById('banner-pub-img-wrap');
+    if (imgWrapLg) { imgWrapLg.style.width='56px'; imgWrapLg.style.height='56px'; imgWrapLg.style.borderRadius='10px'; imgWrapLg.style.flexShrink='0'; }
+    var tituloLg = document.getElementById('banner-pub-titulo');
+    if (tituloLg) { tituloLg.style.fontSize='17px'; tituloLg.style.fontWeight='800'; tituloLg.style.lineHeight='1.2'; }
+    var subLg = document.getElementById('banner-pub-sub');
+    if (subLg) { subLg.style.fontSize='13px'; subLg.style.opacity='.9'; }
+    var ctaElLg = document.getElementById('banner-pub-cta');
+    if (ctaElLg) { ctaElLg.style.display='none'; }
+    var closeElLg = document.getElementById('banner-pub-close');
+    if (closeElLg) { closeElLg.style.display='none'; }
+  } else {
+    if (inner) inner.style.padding = size==='sm' ? '7px 16px' : '10px 16px';
+    var imgWrapN = document.getElementById('banner-pub-img-wrap');
+    if (imgWrapN) { imgWrapN.style.width='32px'; imgWrapN.style.height='32px'; imgWrapN.style.borderRadius='6px'; }
+    var tituloN = document.getElementById('banner-pub-titulo');
+    if (tituloN) { tituloN.style.fontSize='13px'; tituloN.style.fontWeight='600'; }
+    var ctaElN = document.getElementById('banner-pub-cta');
+    if (ctaElN) ctaElN.style.display = '';
+    var closeElN = document.getElementById('banner-pub-close');
+    if (closeElN) closeElN.style.display = '';
+  }
+  C.pubDiseno = diseno;
+  banner.style.display = 'block';
+  C.pubActivo = true;
+  C.pubTitulo = titulo; C.pubSub = sub; C.pubBg = bg; C.pubTxt = txt;
+  C.pubCtaBg = ctaBg; C.pubIco = ico; C.pubSize = size; C.pubBorde = borde;
+  renderPubPreview();
+}
 
 function abrirBannerPub() {
   var url = C.pubUrl || (document.getElementById('c-pub-url')||{}).value || '';
@@ -7879,50 +7312,15 @@ function cerrarBannerPub() {
 }
 
 function upBannerPubImg(ev) {
-  upBannerPubImgs(ev);
-}
-
-function upBannerPubImgs(ev) {
-  var files = Array.from(ev.target.files||[]); if (!files.length) return;
-  if (!C.pubImgs) C.pubImgs = [];
-  var loaded = 0;
-  files.forEach(function(file) {
-    var r = new FileReader();
-    r.onload = function(e) {
-      var img = new Image(); img.onload = function() {
-        var canvas = document.createElement('canvas');
-        var max = 800; var ratio = Math.min(max/img.width, max/img.height, 1);
-        canvas.width = Math.round(img.width*ratio); canvas.height = Math.round(img.height*ratio);
-        canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-        C.pubImgs.push(canvas.toDataURL('image/jpeg',0.82));
-        loaded++;
-        if (loaded === files.length) {
-          C.pubImg = C.pubImgs[0];
-          renderPubImgsPreview();
-          aplicarBannerPub();
-          saveSt();
-          toast('✅ '+C.pubImgs.length+' imagen(es) del banner guardadas','s');
-        }
-      }; img.src = e.target.result;
-    }; r.readAsDataURL(file);
-  });
-}
-
-function renderPubImgsPreview() {
-  var el = document.getElementById('pub-imgs-preview'); if (!el) return;
-  var imgs = C.pubImgs||[];
-  if (!imgs.length) { el.innerHTML=''; return; }
-  el.innerHTML = imgs.map(function(src,i){
-    return '<div style="position:relative;display:inline-block">'+
-      '<img src="'+src+'" style="width:56px;height:56px;border-radius:8px;object-fit:cover;border:2px solid rgba(255,255,255,.15)">'+
-      '<button onclick="eliminarPubImg('+i+')" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;background:#e53e3e;color:#fff;border:none;border-radius:50%;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">✕</button>'+
-    '</div>';
-  }).join('');
-}
-
-function eliminarPubImg(idx) {
-  if (C.pubImgs) { C.pubImgs.splice(idx,1); C.pubImg=C.pubImgs[0]||''; }
-  renderPubImgsPreview(); aplicarBannerPub(); saveSt();
+  var file = ev.target.files[0]; if (!file) return;
+  var r = new FileReader();
+  r.onload = function(e) {
+    C.pubImg = e.target.result;
+    var prev = document.getElementById('prev-pub-img');
+    if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; }
+    aplicarBannerPub();
+  };
+  r.readAsDataURL(file);
 }
 
 function setEstiloPub(bg, txt, ctaBg) {
@@ -7968,7 +7366,6 @@ function initBannerPub() {
   });
   var chk = document.getElementById('c-pub-activo');
   if (chk) chk.checked = true;
-  if (typeof renderPubImgsPreview === 'function') renderPubImgsPreview();
   var sizeEl = document.getElementById('c-pub-size');
   if (sizeEl && C.pubSize) sizeEl.value = C.pubSize;
   var bordeEl = document.getElementById('c-pub-borde');
@@ -7979,13 +7376,6 @@ function initBannerPub() {
     var prev = document.getElementById('prev-pub-img');
     if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; }
   }
-  // Load pubImgs preview
-  if (typeof renderPubImgsPreview === 'function') renderPubImgsPreview();
-  if (typeof renderBannerSlotsEditor === 'function') renderBannerSlotsEditor();
-  var intEl = document.getElementById('c-pub-intervalo');
-  if (intEl && C.pubIntervalo) intEl.value = C.pubIntervalo;
-  var ctaTxtEl = document.getElementById('c-pub-cta-txt');
-  if (ctaTxtEl && C.pubCtaTxt) ctaTxtEl.value = C.pubCtaTxt;
   aplicarBannerPub();
 }
 
@@ -8492,7 +7882,7 @@ var _cajaTab = 'tablero';
 function cajaSwitchTab(tab) {
   setTimeout(guardarSesionActual, 100);
   _cajaTab = tab;
-  var tabs = ['tablero','pendientes','registradora','mesas','domicilios','despachados','gastos','alertas','buscar','todos'];
+  var tabs = ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','todos'];
   tabs.forEach(function(t) {
     var btn = document.getElementById('cajatab-'+t);
     var pan = document.getElementById('cajapanel-'+t);
@@ -8504,7 +7894,6 @@ function cajaSwitchTab(tab) {
   if (tab==='registradora'){ renderRegCatGrid(_regCatActiva||'Todos'); renderRegItems(); actualizarTotalesReg(); buscarProductoRegistradora(''); }
   if (tab==='mesas')       renderOrdsPorTipo('mesa');
   if (tab==='domicilios')  renderOrdsPorTipo('domicilio');
-  if (tab==='despachados') renderOrdsDespachados();
   if (tab==='gastos')      renderGastos();
   if (tab==='alertas')     { renderAlertasCocinaEnCaja(); renderMensajesCaja(); }
   if (tab==='todos')       renderOrds();
@@ -8517,20 +7906,6 @@ function renderOrdsPendientes() {
   if (!list.length) { el.innerHTML='<div class="empty"><span class="ei">✅</span><h3>Sin pendientes</h3><p>Todo al día</p></div>'; return; }
   list.sort(function(a,b){ return (a._ts||0)-(b._ts||0); });
   el.innerHTML = list.map(function(o){ return buildOrdCard(o); }).join('');
-}
-
-function renderOrdsDespachados() {
-  var el = document.getElementById('orders-despachados-list'); if (!el) return;
-  var list = ORD.filter(function(o){ return o.status==='dispatched'; });
-  list.sort(function(a,b){ return (b._ts||0)-(a._ts||0); });
-  if (!list.length) {
-    el.innerHTML='<div class="empty"><span class="ei">🛵</span><h3>Sin pedidos en camino</h3><p>Los despachados aparecen aquí hasta que se confirma el pago</p></div>';
-    return;
-  }
-  el.innerHTML = list.map(function(o){ return buildOrdCard(o); }).join('');
-  // Update badge
-  var btn = document.getElementById('cajatab-despachados');
-  if (btn && list.length > 0) btn.style.background = 'rgba(99,179,237,.15)';
 }
 
 function renderOrdsPorTipo(tipo) {
@@ -8977,50 +8352,35 @@ function renderCRMVentas() {
 }
 
 function renderCRMAsesores() {
-  var el = document.getElementById('crm-asesores-lista');
-  if (!el) return;
-  if (!ASESORES.length) {
-    el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--cmut)"><div style="font-size:32px;margin-bottom:8px">&#128101;</div><div>Sin personal configurado</div></div>';
-    return;
-  }
-  var rolColors = {ambos:'#68d391',mesa:'#63b3ed',domicilio:'#a78bfa',cocina:'#fb923c',supervisor:'#f472b6',aliado:'#fbbf24',otro:'#94a3b8'};
-  var rolLabels = {ambos:'Vendedor',mesa:'Cajero/a',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',otro:'Personalizado'};
-  var ahora = new Date();
-  var rows = '';
-  for (var i = 0; i < ASESORES.length; i++) {
-    var a = ASESORES[i];
-    var tipo = a.tipo || 'ambos';
-    var color = rolColors[tipo] || '#94a3b8';
-    var label = a.cargoCustom || rolLabels[tipo] || tipo;
-    var ordA = ORD.filter(function(o){
-      var d = new Date(o._ts||0);
-      return (o.tomadoby===a.nombre||o.asesorCobro===a.nombre) &&
-        d.getDate()===ahora.getDate()&&d.getMonth()===ahora.getMonth()&&d.getFullYear()===ahora.getFullYear();
-    });
-    var ventasA = ordA.reduce(function(s,o){return s+(o.total||0);},0);
-    var turnoActivo = (C.turnosAsesores||[]).some(function(t){return t.asesor===a.nombre&&t.activo;});
-    var cur = C.cur||'$';
-    rows += '<div style="background:var(--ccard);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px;margin-bottom:10px">';
-    rows += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">';
-    rows += '<div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;flex-shrink:0">' + (a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover">' : '👤') + '</div>';
-    rows += '<div style="flex:1">';
-    rows += '<div style="font-weight:700;font-size:15px">' + escH(a.nombre) + '</div>';
-    rows += '<span style="background:'+color+'22;color:'+color+';border:1px solid '+color+'44;border-radius:50px;padding:2px 8px;font-size:11px;font-weight:700">' + label + '</span>';
-    if (turnoActivo) rows += '<span style="background:rgba(56,161,105,.15);color:#68d391;border:1px solid rgba(56,161,105,.3);border-radius:50px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:4px">&#9203; En turno</span>';
-    rows += '</div>';
-    rows += '<div style="text-align:right">';
-    rows += '<div style="font-size:13px;font-weight:700;color:var(--cp)">' + cur + fmt(ventasA) + '</div>';
-    rows += '<div style="font-size:11px;color:var(--cmut)">' + ordA.length + ' pedidos hoy</div>';
-    rows += '</div></div>';
-    rows += '<div style="display:flex;gap:6px;flex-wrap:wrap">';
-    rows += '<button class="btn bsm bo" data-i="' + i + '" onclick="asignarTurnoAsesor(parseInt(this.dataset.i))" style="border-radius:7px">&#9203; Turno</button>';
-    rows += '<button class="btn bsm bo" data-i="' + i + '" onclick="editarAsesorCRM(parseInt(this.dataset.i))" style="border-radius:7px">&#9998; Editar</button>';
-    rows += '<button class="btn bsm" style="background:rgba(229,62,62,.1);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:7px" data-i="' + i + '" onclick="delAsesorCRM(parseInt(this.dataset.i))">&#128465;</button>';
-    rows += '</div></div>';
-  }
-  el.innerHTML = rows;
+  var reportEl = document.getElementById('crm-asesores-report');
+  if (!reportEl) return;
+  if (!ASESORES.length) { reportEl.innerHTML='<div style="color:var(--cmut);font-size:13px">Sin asesores configurados</div>'; return; }
+  var hoy = new Date();
+  var rhtml = ASESORES.map(function(ase) {
+    var pedidosAse = ORD.filter(function(o){ return o.asesorAsignado===ase.nombre||o.asesorDespacho===ase.nombre||o.asesorCobro===ase.nombre; });
+    var cobradosAse = ORD.filter(function(o){ return o.asesorCobro===ase.nombre&&o.status==='paid'; });
+    var hoyAse = cobradosAse.filter(function(o){ if(!o._ts)return false; var d=new Date(o._ts); return d.getDate()===hoy.getDate()&&d.getMonth()===hoy.getMonth()&&d.getFullYear()===hoy.getFullYear(); });
+    var totalAse = cobradosAse.reduce(function(s,o){return s+(o.total||0);},0);
+    var totalHoy = hoyAse.reduce(function(s,o){return s+(o.total||0);},0);
+    var propinasAse = cobradosAse.reduce(function(s,o){return s+(o.propina||0);},0);
+    var propinasHoyAse = hoyAse.reduce(function(s,o){return s+(o.propina||0);},0);
+    var tipoL = ase.tipo==='mesa'?'🪑':ase.tipo==='domicilio'?'🛵':ase.tipo==='cocina'?'📦':'🔄';
+    var imgH = ase.img?'<img src="'+ase.img+'" style="width:100%;height:100%;object-fit:cover">':'👤';
+    return '<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:12px;margin-bottom:8px">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
+        '<div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0">'+imgH+'</div>' +
+        '<div style="flex:1"><div style="font-weight:700">'+tipoL+' '+ase.nombre+'</div>' +
+        '<div style="font-size:11px;color:var(--cmut)">'+pedidosAse.length+' pedidos totales</div></div>' +
+        '<div style="text-align:right"><div style="font-weight:700;color:var(--cp)">'+(C.cur||'$')+fmt(totalAse)+'</div><div style="font-size:11px;color:var(--cmut)">total cobrado</div></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;font-size:12px;background:rgba(255,255,255,.03);border-radius:8px;padding:8px;flex-wrap:wrap">' +
+        '<div style="flex:1"><div style="color:var(--cmut)">Cobrados</div><div style="font-weight:700">'+cobradosAse.length+'</div></div>' +
+        '<div style="flex:1"><div style="color:var(--cmut)">Hoy</div><div style="font-weight:700;color:#68d391">'+hoyAse.length+' · '+(C.cur||'$')+fmt(totalHoy)+'</div></div>' +
+        (propinasAse>0?'<div style="flex:1"><div style="color:var(--cp);font-weight:600">💰 Propinas</div><div style="font-weight:700;color:var(--cp)">'+(C.cur||'$')+fmt(propinasAse)+'</div>'+(propinasHoyAse>0?'<div style="font-size:10px;color:var(--cmut)">Hoy: '+(C.cur||'$')+fmt(propinasHoyAse)+'</div>':'')+'</div>':'') +
+      '</div></div>';
+  }).join('');
+  reportEl.innerHTML = rhtml || '<div style="color:var(--cmut);font-size:13px">Sin actividad aún</div>';
 }
-
 
 function renderCRMClientes() {
   var cl = Object.values(CUS);
@@ -9210,20 +8570,23 @@ function exportExcel() {
 
 // ── TAREA 31 — Campaña WA masiva ──
 function enviarCampanaTodos() {
-  var msg = (document.getElementById('campana-msg')||{}).value || '';
+  var msg = (document.getElementById('campana-msg')||{}).value||'';
   if (!msg.trim()) { toast('⚠️ Escribe el mensaje primero','e'); return; }
-  var clientes = Object.values(CUS).filter(function(c){ return c.wa; });
-  if (!clientes.length) { toast('⚠️ No hay clientes con WhatsApp','e'); return; }
-  if (!confirm('¿Abrir WhatsApp para '+clientes.length+' clientes? Se abrirá una pestaña por cada uno.')) return;
-  clientes.forEach(function(c, i) {
-    var wa = c.wa.replace(/[^0-9]/g,'');
-    var texto = msg.replace(/{nombre}/g, c.name||'cliente');
-    setTimeout(function(){ window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(texto),'_blank'); }, i*800);
+  var cl = Object.values(CUS).filter(function(c){ return c.wa && c.wa.replace(/[^0-9]/g,'').length >= 8; });
+  if (!cl.length) { toast('⚠️ Sin clientes con WhatsApp','e'); return; }
+  if (!confirm('¿Abrir WhatsApp para los '+cl.length+' clientes? Se abrirá uno a uno.')) return;
+  var delay = 0;
+  cl.forEach(function(c) {
+    var wk = c.wa.replace(/[^0-9]/g,'');
+    setTimeout(function(){
+      window.open('https://wa.me/'+wk+'?text='+encodeURIComponent(msg),'_blank');
+    }, delay);
+    delay += 1500;
   });
-  toast('📲 Enviando a '+clientes.length+' clientes...','s');
+  toast('📲 Abriendo '+cl.length+' conversaciones...','s');
 }
 
-
+// ── TAREA 32 — Dashboard: asesores activos hoy ──
 function renderDashboardAsesores() {
   var el = document.getElementById('dash-asesores');
   if (!el) return;
@@ -9319,62 +8682,80 @@ function aplicarEstiloMesaBanner() {
 
 // ── SUBMENÚ CONFIGURACIÓN ──
 function cfgSwitchTab(tab) {
-  ['negocio','pagos','diseno','banner','pwa','operacion'].forEach(function(t){
-    var b=document.getElementById('cfgtab-'+t);
-    if(b) b.className='btn bsm '+(t===tab?'bp':'bo');
+  var tabs = ['negocio','pagos','diseno','banner','pwa','operacion'];
+  tabs.forEach(function(t) {
+    var btn = document.getElementById('cfgtab-'+t);
+    if (btn) btn.className = 'btn bsm ' + (t===tab?'bp':'bo');
   });
 
-  // Ocultar TODOS los .ac dentro de cfgpanel-negocio
-  var neg = document.getElementById('cfgpanel-negocio');
-  if (!neg) return;
-  neg.querySelectorAll('.ac').forEach(function(ac){ ac.style.display='none'; });
+  // Ocultar todo el agrid primero
+  var agrid = document.querySelector('#sec-cfg .agrid');
+  if (!agrid) return;
+  var acs = agrid.querySelectorAll(':scope > .ac');
 
-  // Mostrar según tab
+  // Identificar bloques por sus títulos
+  // ac[0] = Identidad (Negocio)
+  // ac[1] = Contacto y Redes (Pagos, WhatsApp, PWA)
+  // ac[2] = Banners (Banner)
+  // ac[3] = Colores & Tipografía (Diseño)
+
+  // Ocultar todos
+  acs.forEach(function(ac){ ac.style.display='none'; });
+
   if (tab === 'negocio') {
-    var el = document.getElementById('cfg-blk-identidad');
-    if (el) el.style.display = '';
-
+    // Identidad
+    if (acs[0]) acs[0].style.display='';
   } else if (tab === 'pagos') {
-    // Mostrar el .ac de Contacto y solo las zonas de pagos/wa/envio
-    ['cfg-zone-pagos','cfg-zone-wa','cfg-zone-envio'].forEach(function(id){
-      var e=document.getElementById(id); if(e){ e.style.display=''; mostrarPadreAc(e); }
-    });
-
-  } else if (tab === 'pwa') {
-    var e=document.getElementById('cfg-zone-pwa');
-    if(e){ e.style.display=''; mostrarPadreAc(e); }
-
-  } else if (tab === 'banner') {
-    var b=document.getElementById('cfg-blk-banners');
-    if(b) b.style.display='';
-    var a=document.getElementById('cfg-zone-banner-anim');
-    if(a){ a.style.display=''; mostrarPadreAc(a); }
-
-  } else if (tab === 'diseno') {
-    ['cfg-zone-tipo','cfg-zone-header','cfg-zone-hero','cfg-zone-cat','cfg-zone-cards',
-     'cfg-zone-bg','cfg-zone-footer','cfg-zone-ticket','cfg-zone-carrito',
-     'cfg-zone-color','cfg-zone-paletas'].forEach(function(id){
-      var e=document.getElementById(id); if(e){ e.style.display=''; mostrarPadreAc(e); }
-    });
-
-  } else if (tab === 'operacion') {
-    ['cfg-zone-wa','cfg-zone-envio'].forEach(function(id){
-      var e=document.getElementById(id); if(e){ e.style.display=''; mostrarPadreAc(e); }
-    });
-    var p=document.getElementById('cfg-zone-crm-pin');
-    if(p){ p.style.display=''; mostrarPadreAc(p); }
-  }
-}
-
-function mostrarPadreAc(el) {
-  // Sube en el DOM hasta encontrar el .ac padre y lo hace visible
-  var node = el.parentElement;
-  while (node) {
-    if (node.classList && node.classList.contains('ac')) {
-      node.style.display = '';
-      return;
+    // Contacto — mostrar solo pagos y WhatsApp
+    if (acs[1]) {
+      acs[1].style.display='';
+      // Ocultar PWA dentro de este bloque
+      var cfgZones = acs[1].querySelectorAll('.cfg-zone');
+      cfgZones.forEach(function(z){
+        var ttl = z.querySelector('.cfg-zone-ttl');
+        if (ttl) {
+          var esPWA = ttl.textContent.indexOf('PWA') !== -1;
+          z.style.display = esPWA ? 'none' : '';
+        }
+      });
     }
-    node = node.parentElement;
+  } else if (tab === 'pwa') {
+    // Solo la sección PWA
+    if (acs[1]) {
+      acs[1].style.display='';
+      var cfgZones = acs[1].querySelectorAll('.cfg-zone');
+      cfgZones.forEach(function(z){
+        var ttl = z.querySelector('.cfg-zone-ttl');
+        if (ttl) {
+          var esPWA = ttl.textContent.indexOf('PWA') !== -1;
+          var esWA  = ttl.textContent.indexOf('WHATSAPP') !== -1;
+          var esPago = ttl.textContent.indexOf('PAGO') !== -1;
+          z.style.display = (esPWA) ? '' : 'none';
+        }
+      });
+      // Ocultar campo WA principal
+      var waField = acs[1].querySelector('.fg');
+      // Solo mostrar la cfg-zone PWA
+    }
+  } else if (tab === 'banner') {
+    if (acs[2]) acs[2].style.display='';
+  } else if (tab === 'diseno') {
+    if (acs[3]) acs[3].style.display='';
+  } else if (tab === 'operacion') {
+    // Guardar todo + contacto básico (WA)
+    if (acs[1]) {
+      acs[1].style.display='';
+      var cfgZones = acs[1].querySelectorAll('.cfg-zone');
+      cfgZones.forEach(function(z){
+        var ttl = z.querySelector('.cfg-zone-ttl');
+        if (ttl) {
+          var esWA = ttl.textContent.indexOf('WHATSAPP') !== -1;
+          var esPago = ttl.textContent.indexOf('PAGO') !== -1;
+          var esPWA = ttl.textContent.indexOf('PWA') !== -1;
+          z.style.display = (esWA) ? '' : 'none';
+        }
+      });
+    }
   }
 }
 
@@ -9579,147 +8960,6 @@ function verHistorialCliente() {
 }
 
 // ============================================================
-// TURNOS DE ASESORES
-// ============================================================
-function asignarTurnoAsesor(idx) {
-  var a = ASESORES[idx]; if (!a) return;
-  var horaI = prompt('Hora inicio del turno de '+a.nombre+' (ej: 08:00):', '');
-  if (!horaI) return;
-  var horaF = prompt('Hora fin del turno (ej: 16:00):', '');
-  if (!horaF) return;
-  var notas = prompt('Notas / días (opcional):', '') || '';
-  if (!C.turnosAsesores) C.turnosAsesores = [];
-  C.turnosAsesores.push({
-    asesor: a.nombre,
-    inicio: horaI,
-    fin: horaF,
-    notas: notas,
-    fecha: new Date().toLocaleDateString('es-CO'),
-    _ts: Date.now(),
-    activo: true
-  });
-  saveSt();
-  renderCRMAsesores();
-  toast('✅ Turno asignado a '+a.nombre+': '+horaI+' – '+horaF,'s');
-}
-
-function verHistorialAsesor(nombre) {
-  var ordA = ORD.filter(function(o){ return o.tomadoby===nombre||o.asesorCobro===nombre; });
-  var total = ordA.reduce(function(s,o){return s+(o.total||0);},0);
-  alert('📋 Historial — '+nombre+'\n\nPedidos totales: '+ordA.length+'\nVentas totales: '+(C.cur||'$')+fmt(total)+'\n\nÚltimos pedidos:\n'+ordA.slice(0,5).map(function(o){return '• '+o.id+' — '+(C.cur||'$')+fmt(o.total)+' ('+o.ts+')'}).join('\n'));
-}
-
-function editarAsesorCRM(idx) {
-  var a = ASESORES[idx]; if (!a) return;
-  // Navigate to asesores section and pre-fill
-  var navEl = document.querySelector('.an[data-sec="asesores"]');
-  if (navEl) { navEl.click(); setTimeout(function(){ openAsesorEdit(idx); }, 300); }
-}
-
-function delAsesorCRM(idx) {
-  var a = ASESORES[idx]; if (!a) return;
-  if (!confirm('¿Eliminar a '+a.nombre+'?')) return;
-  ASESORES.splice(idx, 1); saveSt();
-  renderCRMAsesores(); renderAsesoresList();
-  toast('🗑 '+a.nombre+' eliminado','s');
-}
-
-// ============================================================
-// QR DE PRODUCTOS — Individuales y Masivos
-// ============================================================
-function verQRProducto(idx) {
-  var p = P[idx]; if (!p) return;
-  var base = getBaseUrl();
-  var link = base + '?addprod=' + p.id;
-  window._qrProdLink = link;
-  window._qrProdId   = p.id;
-  window._qrProdName = p.name;
-  var m = document.getElementById('m-qr'); if (!m) return;
-  var ttl = document.getElementById('qr-title');
-  var urlTxt = document.getElementById('qr-url-txt');
-  if (ttl) ttl.textContent = p.name;
-  if (urlTxt) urlTxt.textContent = link;
-  var container = document.getElementById('qr-container');
-  if (!container) return;
-  var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(link) + '&bgcolor=ffffff&color=000000&margin=10';
-  var div = document.createElement('div');
-  div.style.cssText = 'text-align:center';
-
-  var img = document.createElement('img');
-  img.src = qrSrc;
-  img.style.cssText = 'width:200px;height:200px;border-radius:8px;margin-bottom:8px';
-  div.appendChild(img);
-
-  var info = document.createElement('div');
-  info.style.cssText = 'font-size:11px;color:#555;font-weight:700;margin-bottom:4px';
-  info.textContent = p.id + (p.ref ? ' | ' + p.ref : '');
-  div.appendChild(info);
-
-  var nm = document.createElement('div');
-  nm.style.cssText = 'font-size:11px;color:#888;margin-bottom:10px';
-  nm.textContent = p.name;
-  div.appendChild(nm);
-
-  var btnRow = document.createElement('div');
-  btnRow.style.cssText = 'display:flex;gap:6px;justify-content:center;flex-wrap:wrap';
-
-  var btnCopy = document.createElement('button');
-  btnCopy.textContent = '📋 Copiar link';
-  btnCopy.style.cssText = 'padding:6px 12px;background:#f0a500;color:#000;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer';
-  btnCopy.onclick = function() {
-    navigator.clipboard && navigator.clipboard.writeText(window._qrProdLink).then(function(){
-      btnCopy.textContent = '✅ Copiado'; setTimeout(function(){ btnCopy.textContent = '📋 Copiar link'; }, 2000);
-    });
-  };
-  btnRow.appendChild(btnCopy);
-
-  var btnDl = document.createElement('button');
-  btnDl.textContent = '💾 Descargar QR';
-  btnDl.style.cssText = 'padding:6px 12px;background:#22c55e;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer';
-  btnDl.onclick = function() { descargarQRProducto(window._qrProdId, window._qrProdName, window._qrProdLink); };
-  btnRow.appendChild(btnDl);
-
-  div.appendChild(btnRow);
-  container.innerHTML = '';
-  container.appendChild(div);
-  m.style.display = 'flex';
-}
-
-
-function descargarQRProducto(id, name, link) {
-  var url = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(link) + '&bgcolor=ffffff&color=000000&margin=10';
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = 'QR-' + id + '-' + (name||'producto').replace(/[^a-zA-Z0-9]/g,'-') + '.png';
-  a.target = '_blank';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-}
-
-
-function generarTodosQRProductos() {
-  var base = getBaseUrl();
-  var win = window.open('','_blank'); if (!win) return;
-  var rows = P.map(function(p) {
-    var link = base+'?addprod='+p.id;
-    var qr = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(link)+'&bgcolor=ffffff&color=000000&margin=8&qzone=1';
-    return '<div style="display:inline-flex;flex-direction:column;align-items:center;width:220px;margin:10px;padding:14px;border:1px solid #e5e7eb;border-radius:10px;background:#fff">'+
-      '<img src="'+qr+'" style="width:140px;height:140px;border-radius:6px">'+
-      '<div style="font-size:11px;font-weight:700;color:#111;margin-top:8px;text-align:center">'+p.name+'</div>'+
-      '<div style="font-size:10px;color:#888;margin-top:2px">ID: '+p.id+(p.ref?' · '+p.ref:'')+'</div>'+
-      '<div style="font-size:9px;color:#aaa;margin-top:2px;word-break:break-all;text-align:center">'+link+'</div>'+
-    '</div>';
-  }).join('');
-  win.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>QRs de Productos — '+(C.name||'Tienda')+'</title>'+
-    '<style>body{font-family:Arial,sans-serif;padding:20px;background:#f9fafb}.header{text-align:center;margin-bottom:20px}.wrap{display:flex;flex-wrap:wrap;justify-content:center}.btn{margin:20px auto;display:block;padding:12px 28px;background:#f0a500;color:#000;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer}@media print{.btn{display:none}}</style>'+
-    '</head><body>'+
-    '<div class="header"><h2>📦 QR de Productos — '+(C.name||'Tienda')+'</h2><p style="color:#888">'+P.length+' productos · Escanea cada QR para agregar a la caja</p></div>'+
-    '<div class="wrap">'+rows+'</div>'+
-    '<button class="btn" onclick="window.print()">🖨️ Imprimir todos</button>'+
-    '</body></html>');
-  win.document.close();
-}
-
-// ============================================================
 // CRM — PUNTOS QR / NFC
 // ============================================================
 function renderPuntosCRM() {
@@ -9839,9 +9079,6 @@ function renderTurnoCRM() {
   }
   // Historial
   var hist = document.getElementById('turnos-historial');
-  // Asesor turnos
-  var atEl = document.getElementById('turnos-asesores-lista');
-  if (atEl) renderTurnosAsesores();
   if (hist) {
     var hoy = new Date().toDateString();
     var logs = (C.turnoLogs||[]).filter(function(l){return new Date(l._ts).toDateString()===hoy;});
@@ -9857,43 +9094,6 @@ function guardarHorarioTurno() {
   C.turnoHorario=horario;
   saveSt(); toast('✅ Horario guardado','s');
 }
-
-function renderTurnosAsesores() {
-  var el = document.getElementById('turnos-asesores-lista'); if (!el) return;
-  var turnos = C.turnosAsesores || [];
-  if (!turnos.length) { el.innerHTML='<div style="color:var(--cmut)">Sin turnos asignados. Ve a CRM → Vendedores para asignar.</div>'; return; }
-  el.innerHTML = turnos.map(function(t, i) {
-    return '<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px">'+
-      '<div>'+
-        '<div style="font-weight:600;font-size:13px">'+t.asesor+'</div>'+
-        '<div style="font-size:11px;color:var(--cmut)">⏰ '+t.inicio+' – '+t.fin+(t.notas?' · '+t.notas:'')+'</div>'+
-        '<div style="font-size:10px;color:var(--cmut)">'+t.fecha+'</div>'+
-      '</div>'+
-      '<div style="display:flex;gap:6px;align-items:center">'+
-        '<label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px">'+
-          '<input type="checkbox" '+(t.activo?'checked':'')+' onchange="toggleTurnoAsesor('+i+',this.checked)" style="accent-color:var(--cp)"> Activo'+
-        '</label>'+
-        '<button onclick="eliminarTurnoAsesor('+i+')" style="background:rgba(229,62,62,.1);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer">🗑</button>'+
-      '</div>'+
-    '</div>';
-  }).join('');
-}
-
-function toggleTurnoAsesor(idx, activo) {
-  if (C.turnosAsesores && C.turnosAsesores[idx]) {
-    C.turnosAsesores[idx].activo = activo;
-    saveSt(); toast(activo?'✅ Turno activado':'⏸ Turno desactivado','s');
-  }
-}
-
-function eliminarTurnoAsesor(idx) {
-  if (confirm('¿Eliminar este turno?')) {
-    (C.turnosAsesores||[]).splice(idx,1);
-    saveSt(); renderTurnosAsesores(); renderCRMAsesores();
-    toast('🗑 Turno eliminado','s');
-  }
-}
-
 
 // ============================================================
 // CRM — ROLES / SEGURIDAD
@@ -10177,6 +9377,7 @@ function buscarProductoRegistradora(texto) {
 // ── AGREGAR PRODUCTO ──
 function agregarProductoReg(prod) {
   if (!prod) return;
+  // Verificar stock
   if (prod.agotado || (prod.stock!=null && prod.stock<=0)) {
     toast('🔴 '+prod.name+' está agotado','e'); return;
   }
@@ -10190,6 +9391,7 @@ function agregarProductoReg(prod) {
   else { _regItems.push({ id:prod.id, name:prod.name, price:prod.price, emoji:prod.emoji||'📦', img:prod.img||'', qty:1, ref:prod.ref||'' }); }
   renderRegItems();
   actualizarTotalesReg();
+  // Feedback visual en el grid
   var card = document.querySelector('[data-pid="'+prod.id+'"]');
   if (card) { card.style.background='rgba(240,165,0,.2)'; card.style.borderColor='var(--cp)'; setTimeout(function(){ card.style.background='rgba(255,255,255,.04)'; card.style.borderColor='rgba(255,255,255,.08)'; },300); }
   if (typeof sonidoPit === 'function') sonidoPit();
