@@ -557,7 +557,7 @@ window.addEventListener('DOMContentLoaded', function(){
   <div id="asesor-session-img" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;flex-shrink:0"></div>
   <div style="flex:1">
     <div style="font-size:11px;color:var(--cmut)">Tomando pedidos como:</div>
-    <div id="asesor-session-name" style="font-weight:700;font-size:14px;color:var(--cp)"></div>
+    <div style="display:flex;align-items:center;gap:6px"><div id="asesor-session-name" style="font-weight:700;font-size:14px;color:var(--cp)"></div><div id="asesor-session-rol" style="font-size:11px;color:var(--cmut);background:rgba(255,255,255,.06);padding:2px 8px;border-radius:50px"></div></div>
   </div>
   <div id="asesor-session-mesas" style="font-size:12px;color:var(--cmut)"></div>
   <span id="alerta-represados" style="display:none;background:rgba(229,62,62,.15);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:50px;padding:3px 8px;font-size:11px;font-weight:600"></span>
@@ -887,45 +887,8 @@ window.addEventListener('DOMContentLoaded', function(){
             <div class="fg"><label class="fl">Emoji logo (si no hay imagen)</label><input class="fi" id="c-emoji" placeholder="&#128717;" oninput="liveC()" maxlength="4"></div>
             <div class="fg"><label class="fl">Subtítulo del hero</label><input class="fi" id="c-sub" placeholder="Descubre los mejores productos..." oninput="liveC()"></div>
             <div class="fg"><label class="fl">Texto pequeño encima del título (eyebrow)</label><input class="fi" id="c-eyebrow" placeholder="✨ Bienvenido" oninput="liveC()"></div>
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <!-- BOTÓN 1 -->
-              <div style="border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                  <span style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase">🔵 Botón Principal</span>
-                  <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--cmut);cursor:pointer">
-                    <input type="checkbox" id="c-btn1show" onchange="liveC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
-                  </label>
-                </div>
-                <div class="fg"><label class="fl">Texto</label><input class="fi" id="c-btn1" placeholder="Ver Catálogo 🛍️" oninput="liveC()"></div>
-                <div class="fg"><label class="fl">Acción al tocarlo</label>
-                  <select class="fi" id="c-btn1action" onchange="liveC();toggleBtnUrl(1)">
-                    <option value="catalog">📋 Ir al catálogo</option>
-                    <option value="cart">🛒 Abrir carrito</option>
-                    <option value="whatsapp">💬 Abrir WhatsApp</option>
-                    <option value="url">🔗 URL personalizada</option>
-                  </select>
-                </div>
-                <div class="fg" id="c-btn1url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn1url" placeholder="https://..." oninput="liveC()"></div>
-              </div>
-              <!-- BOTÓN 2 -->
-              <div style="border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                  <span style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase">⚪ Botón Secundario</span>
-                  <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--cmut);cursor:pointer">
-                    <input type="checkbox" id="c-btn2show" onchange="liveC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
-                  </label>
-                </div>
-                <div class="fg"><label class="fl">Texto</label><input class="fi" id="c-btn2" placeholder="Mi Carrito 🛒" oninput="liveC()"></div>
-                <div class="fg"><label class="fl">Acción al tocarlo</label>
-                  <select class="fi" id="c-btn2action" onchange="liveC();toggleBtnUrl(2)">
-                    <option value="catalog">📋 Ir al catálogo</option>
-                    <option value="cart">🛒 Abrir carrito</option>
-                    <option value="whatsapp">💬 Abrir WhatsApp</option>
-                    <option value="url">🔗 URL personalizada</option>
-                  </select>
-                </div>
-                <div class="fg" id="c-btn2url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn2url" placeholder="https://..." oninput="liveC()"></div>
-              </div>
+            <div style="font-size:11px;color:var(--cmut);padding:8px;background:rgba(255,255,255,.03);border-radius:8px">
+              ℹ️ Los botones del banner se configuran en la pestaña <b>📢 Banner</b> → sección Botones
             </div>
             <div class="fg"><label class="fl">Título del catálogo</label><input class="fi" id="c-cattl" placeholder="Nuestros Productos" oninput="liveC()"></div>
             <div class="frow">
@@ -1326,7 +1289,7 @@ window.addEventListener('DOMContentLoaded', function(){
                   <div style="background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);padding:12px;margin-bottom:10px">
                     <div style="font-size:12px;font-weight:700;color:var(--ctxt);margin-bottom:10px">Botón principal</div>
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:8px">
-                      <input type="checkbox" id="c-btn1show" onchange="liveC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
+                      <input type="checkbox" id="c-btn1show" onchange="liveC();applyC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
                     </label>
                     <div class="fg"><label class="fl">Texto</label><input class="fi" id="c-btn1" placeholder="Ver Catálogo 🛍️" oninput="liveC()"></div>
                     <div class="fg">
@@ -1342,7 +1305,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     <div class="frow">
                       <div class="fg">
                         <label class="fl">Tamaño</label>
-                        <select class="fi" id="c-btn1size" onchange="liveC()">
+                        <select class="fi" id="c-btn1size" onchange="liveC();applyC()">
                           <option value="">Normal</option>
                           <option value="sm">Pequeño</option>
                           <option value="lg" selected>Grande</option>
@@ -1351,7 +1314,7 @@ window.addEventListener('DOMContentLoaded', function(){
                       </div>
                       <div class="fg">
                         <label class="fl">Diseño</label>
-                        <select class="fi" id="c-btn1design" onchange="liveC()">
+                        <select class="fi" id="c-btn1design" onchange="liveC();applyC()">
                           <option value="filled">Sólido</option>
                           <option value="outline">Contorno</option>
                           <option value="pill">Pill redondeado</option>
@@ -1369,7 +1332,7 @@ window.addEventListener('DOMContentLoaded', function(){
                   <div style="background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);padding:12px;margin-bottom:10px">
                     <div style="font-size:12px;font-weight:700;color:var(--ctxt);margin-bottom:10px">Botón secundario</div>
                     <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:8px">
-                      <input type="checkbox" id="c-btn2show" onchange="liveC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
+                      <input type="checkbox" id="c-btn2show" onchange="liveC();applyC()" style="width:16px;height:16px;accent-color:var(--cp)"> Visible
                     </label>
                     <div class="fg"><label class="fl">Texto</label><input class="fi" id="c-btn2" placeholder="Mi Carrito 🛒" oninput="liveC()"></div>
                     <div class="fg">
@@ -1385,7 +1348,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     <div class="frow">
                       <div class="fg">
                         <label class="fl">Tamaño</label>
-                        <select class="fi" id="c-btn2size" onchange="liveC()">
+                        <select class="fi" id="c-btn2size" onchange="liveC();applyC()">
                           <option value="">Normal</option>
                           <option value="sm">Pequeño</option>
                           <option value="lg" selected>Grande</option>
@@ -1394,7 +1357,7 @@ window.addEventListener('DOMContentLoaded', function(){
                       </div>
                       <div class="fg">
                         <label class="fl">Diseño</label>
-                        <select class="fi" id="c-btn2design" onchange="liveC()">
+                        <select class="fi" id="c-btn2design" onchange="liveC();applyC()">
                           <option value="filled">Sólido</option>
                           <option value="outline" selected>Contorno</option>
                           <option value="pill">Pill</option>
@@ -1409,23 +1372,23 @@ window.addEventListener('DOMContentLoaded', function(){
                   </div>
 
                   <!-- Posición de los botones -->
-                  <div class="fg">
-                    <label class="fl">📍 Posición de los botones</label>
-                    <select class="fi" id="c-btns-pos" onchange="liveC()" style="max-width:240px">
-                      <option value="left">⬅ Izquierda (por defecto)</option>
-                      <option value="center">⬛ Centrado</option>
-                      <option value="right">➡ Derecha</option>
-                    </select>
-                  </div>
-
-                  <!-- Alineación del contenido hero -->
-                  <div class="fg">
-                    <label class="fl">↕️ Posición vertical del contenido</label>
-                    <select class="fi" id="c-hero-valign" onchange="liveC()" style="max-width:240px">
-                      <option value="center">Centro</option>
-                      <option value="flex-end">Abajo</option>
-                      <option value="flex-start">Arriba</option>
-                    </select>
+                  <div class="frow">
+                    <div class="fg">
+                      <label class="fl">↔️ Posición horizontal</label>
+                      <select class="fi" id="c-btns-pos" onchange="liveC();applyC()">
+                        <option value="left">⬅ Izquierda</option>
+                        <option value="center">⬛ Centro</option>
+                        <option value="right">➡ Derecha</option>
+                      </select>
+                    </div>
+                    <div class="fg">
+                      <label class="fl">↕️ Posición vertical</label>
+                      <select class="fi" id="c-hero-valign" onchange="liveC();applyC()">
+                        <option value="flex-start">⬆ Arriba</option>
+                        <option value="center">⬛ Centro</option>
+                        <option value="flex-end">⬇ Abajo</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -2545,7 +2508,7 @@ window.addEventListener('DOMContentLoaded', function(){
             <div style="padding:14px;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);margin-bottom:14px">
               <div style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase;margin-bottom:10px">➕ Nuevo / Editar</div>
               <div class="fg"><label class="fl">Nombre</label><input class="fi" id="asesor-name" placeholder="Ej: Juan Carlos"></div>
-              <div class="fg"><label class="fl">Foto (opcional)</label><div class="upwrap"><input class="fi" id="asesor-img" placeholder="URL o sube foto"><label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upAsesorImg(event)"></label></div><img id="prev-asesor" class="imgprev" style="width:64px;height:64px;border-radius:50%" src="" alt=""></div>
+              <div class="fg"><label class="fl">Foto <span style="color:#fc8181;font-weight:700">* requerida para reconocimiento facial</span></label><div class="upwrap"><input class="fi" id="asesor-img" placeholder="URL o sube foto"><label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upAsesorImg(event)"></label></div><img id="prev-asesor" class="imgprev" style="width:64px;height:64px;border-radius:50%" src="" alt=""></div>
               <div class="fg">
             <label class="fl">Rol / Tipo de acceso</label>
             <select class="fi" id="asesor-tipo" onchange="toggleAsesorTipo()">
@@ -2638,7 +2601,7 @@ window.addEventListener('DOMContentLoaded', function(){
           <div class="acttl">➕ Nuevo Integrante</div>
           <div class="fg"><label class="fl">Nombre</label><input class="fi" id="asesor-name" placeholder="Ej: Juan Carlos"></div>
           <div class="fg">
-            <label class="fl">Foto (opcional)</label>
+            <label class="fl">Foto <span style="color:#fc8181;font-weight:700">* requerida para reconocimiento facial</span></label>
             <div class="upwrap">
               <input class="fi" id="asesor-img" placeholder="URL o sube foto">
               <label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upAsesorImg(event)"></label>
@@ -2656,7 +2619,7 @@ window.addEventListener('DOMContentLoaded', function(){
           </div>
           <div class="fg" id="asesor-cargo-wrap">
             <label class="fl">Nombre del cargo (se muestra en reportes y panel)</label>
-            <input class="fi" id="asesor-cargo-custom" placeholder="Ej: Barista, Técnico, Guía, Diseñador...">
+            <div id="asesor-cargo-custom-wrap" style="display:none"><label class="fl">Cargo personalizado</label><input class="fi" id="asesor-cargo-custom" placeholder="Ej: Barista, Técnico, Guía, Diseñador..."></div>
             <div style="font-size:11px;color:var(--cmut);margin-top:3px">Obligatorio si elegiste "Cargo personalizado"</div>
           </div>
           <div id="asesor-mesas-wrap" class="fg" style="display:none">
@@ -2870,7 +2833,7 @@ window.addEventListener('DOMContentLoaded', function(){
             <div class="acttl" id="form-vendedor-ttl">Nuevo Vendedor</div>
             <input type="hidden" id="v-eid">
             <div class="fg">
-              <label class="fl">Foto (opcional)</label>
+              <label class="fl">Foto <span style="color:#fc8181;font-weight:700">* requerida para reconocimiento facial</span></label>
               <div class="upwrap">
                 <input class="fi" id="v-img" placeholder="URL o sube foto">
                 <label class="upbtn">📷 Subir<input type="file" accept="image/*" style="display:none" onchange="upImgVendedor(event)"></label>
@@ -4300,7 +4263,9 @@ function liveC() {
   C.ctickbg1  = g('c-ctickbg1'); C.ctickbg2 = g('c-ctickbg2');
   C.cticktext = g('c-cticktext');
   var dirEl = document.getElementById('c-ctickgdir');
-  if(dirEl) C.ctickgdir = dirEl.value;   C.cattl = g('c-cattl'); C.cattlColor=g('c-cattl-color')||'#f0f0ff'; C.cattlSize=g('c-cattl-size')||'28';
+  if(dirEl) C.ctickgdir = dirEl.value;   var _cb1=document.getElementById('c-btn1show'); if(_cb1) C.btn1show=_cb1.checked;
+  var _cb2=document.getElementById('c-btn2show'); if(_cb2) C.btn2show=_cb2.checked;
+  C.cattl = g('c-cattl'); C.cattlColor=g('c-cattl-color')||'#f0f0ff'; C.cattlSize=g('c-cattl-size')||'28';
   var btn1sizeEl=document.getElementById('c-btn1size'); if(btn1sizeEl) C.btn1size=btn1sizeEl.value;
   var btn1desEl=document.getElementById('c-btn1design'); if(btn1desEl) C.btn1design=btn1desEl.value;
   var btn2sizeEl=document.getElementById('c-btn2size'); if(btn2sizeEl) C.btn2size=btn2sizeEl.value;
@@ -5364,8 +5329,12 @@ function guardarAsesor() {
 
 function toggleAsesorTipo() {
   var tipo = document.getElementById('asesor-tipo').value;
-  var wrap = document.getElementById('asesor-mesas-wrap');
-  if (wrap) wrap.style.display = (tipo === 'mesa' || tipo === 'ambos') ? '' : 'none';
+  // Mesas: opcionales para todos los tipos
+  var wrapMesas = document.getElementById('asesor-mesas-wrap');
+  if (wrapMesas) wrapMesas.style.display = '';
+  // Cargo personalizado: solo si tipo=otro
+  var wrapCustom = document.getElementById('asesor-cargo-custom-wrap');
+  if (wrapCustom) wrapCustom.style.display = (tipo === 'otro') ? '' : 'none';
 }
 
 // ============================================================
@@ -5377,7 +5346,7 @@ function iniciarModoAsesor() {
   // Mostrar pantalla de login asesor
   var screen = document.getElementById('asesor-login-screen');
   if (!screen) return;
-  var activos = ASESORES.filter(function(a){ return a.activo !== false && (a.tipo==='mesa'||a.tipo==='ambos'); });
+  var activos = ASESORES.filter(function(a){ return a.activo !== false; });
   if (!activos.length) {
     screen.style.display = 'flex';
     document.getElementById('asesor-login-list').innerHTML = '<div style="color:var(--cmut);font-size:13px;padding:20px">No hay asesores activos configurados.<br>El dueño debe crear asesores en el panel admin.</div>';
@@ -5393,7 +5362,7 @@ function iniciarModoAsesor() {
     html += '<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;cursor:pointer;transition:all .2s" data-idx="'+i+'" onclick="selAsesorLogin(parseInt(this.dataset.idx))" onmouseover="this.style.background=\'rgba(240,165,0,.1)\'" onmouseout="this.style.background=\'rgba(255,255,255,.05)\'">' +
       '<div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0">' + imgH + '</div>' +
       '<div style="flex:1;text-align:left"><div style="font-weight:700;font-size:15px">' + tipoL + ' ' + a.nombre + '</div>' +
-      (a.mesas&&a.mesas.length?'<div style="font-size:12px;color:var(--cmut)">Mesas: '+a.mesas.join(', ')+'</div>':'') + '</div>' +
+      (a.mesas&&a.mesas.length?'<div style="font-size:12px;color:var(--cmut)">Puntos: '+a.mesas.join(', ')+'</div>':'<div style="font-size:11px;color:var(--cmut)">'+(a.cargoCustom||{ambos:'Vendedor',mesa:'Cajero',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',otro:'Personal'}[a.tipo]||a.tipo||'')+'</div>') + '</div>' +
       '<div style="color:var(--cp);font-size:18px">→</div>' +
     '</div>';
   }
@@ -5423,7 +5392,7 @@ function volverListaAsesores() {
 }
 
 function loginAsesorSession() {
-  var pin = (document.getElementById('asesor-pin-in') || {}).value || '';
+  var pin = (document.getElementById('asesor-login-pin') || {}).value || '';
   if (!pin) { toast('⚠️ Ingresa tu PIN','e'); return; }
   // Find asesor by PIN
   var found = null;
@@ -5621,12 +5590,34 @@ function confirmarAsesor() {
   var pin = document.getElementById('asesor-pin-input').value.trim();
   var a = ASESORES[_asesorSelIdx];
   if (hashPin(pin) !== a.pin) { toast('❌ PIN incorrecto','e'); return; }
-  ASESOR_ACTIVO = { idx: _asesorSelIdx, nombre: a.nombre, img: a.img };
+  // Si tiene foto → reconocimiento facial
+  if (a.img && typeof startFacialCheck === 'function') {
+    startFacialCheck(a, function(ok) {
+      if (!ok) { toast('❌ No coincide el rostro','e'); return; }
+      _abrirSesionAsesor(a);
+    });
+  } else {
+    _abrirSesionAsesor(a);
+  }
+}
+
+function _abrirSesionAsesor(a) {
+  ASESOR_ACTIVO = { idx: _asesorSelIdx, nombre: a.nombre, img: a.img, tipo: a.tipo, turno: a.turno };
+  ASESOR_SESSION = a;
   closeM('m-asesor');
   actualizarBarraAsesor();
+  mostrarAlertaTurnoAsesor(a);
   recordarRolPWA();
   pedirPermisoNotificaciones();
   toast('👋 Bienvenido ' + a.nombre, 's');
+  // Abrir panel según rol
+  var rolPanel = {
+    mesa: 'registradora', ambos: 'registradora',
+    domicilio: 'domicilios', cocina: 'alertas',
+    supervisor: 'tablero', aliado: 'registradora',
+    otro: 'registradora'
+  };
+  cajaSwitchTab(rolPanel[a.tipo||'ambos'] || 'registradora');
 }
 
 function volverSelAsesor() {
@@ -5657,7 +5648,39 @@ function getAsesorDomicilio() {
   return a.nombre;
 }
 
+
+function mostrarAlertaTurnoAsesor(a) {
+  // Buscar turno activo del asesor
+  var turnos = (C.turnosAsesores||[]).filter(function(t){ return t.asesor===a.nombre && t.activo; });
+  var bar = document.getElementById('asesor-session-bar');
+  // Remover alerta previa
+  var prev = document.getElementById('asesor-turno-alerta');
+  if (prev) prev.remove();
+  if (!turnos.length) return;
+  var t = turnos[0];
+  var alerta = document.createElement('div');
+  alerta.id = 'asesor-turno-alerta';
+  alerta.style.cssText = 'width:100%;background:rgba(240,165,0,.12);border-top:1px solid rgba(240,165,0,.25);padding:6px 16px;display:flex;align-items:center;gap:8px;font-size:12px';
+  alerta.innerHTML = '<span style="font-size:14px">⏰</span>' +
+    '<span style="color:#f0a500;font-weight:700">Turno: '+t.inicio+' – '+t.fin+'</span>' +
+    (t.notas ? '<span style="color:var(--cmut)">'+t.notas+'</span>' : '') +
+    '<span style="color:var(--cmut);font-size:11px">'+t.fecha+'</span>';
+  if (bar) bar.appendChild(alerta);
+}
+
 function actualizarBarraAsesor() {
+  // Actualizar barra de sesión activa si hay un asesor logueado
+  var sesBar = document.getElementById('asesor-session-bar');
+  if (ASESOR_SESSION && sesBar) {
+    sesBar.style.display = 'flex';
+    var nameEl = document.getElementById('asesor-session-name');
+    var rolEl  = document.getElementById('asesor-session-rol');
+    var imgEl  = document.getElementById('asesor-session-img');
+    var rolLabels = {ambos:'Vendedor',mesa:'Cajero/a',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',otro:ASESOR_SESSION.cargoCustom||'Otro'};
+    if (nameEl) nameEl.textContent = ASESOR_SESSION.nombre;
+    if (rolEl)  rolEl.textContent  = ASESOR_SESSION.cargoCustom || rolLabels[ASESOR_SESSION.tipo||'ambos'] || '';
+    if (imgEl)  imgEl.innerHTML    = ASESOR_SESSION.img ? '<img src="'+ASESOR_SESSION.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
+  }
   var chips = document.getElementById('asesores-caja-chips');
   if (!chips) return;
   var activos = ASESORES.filter(function(a){ return a.activo !== false; });
