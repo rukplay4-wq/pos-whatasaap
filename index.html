@@ -1591,7 +1591,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
             <!-- ░░ RECIBO / TICKET ░░ -->
             <div class="cfg-zone">
-              <div class="cfg-zone-ttl">🧾 RECIBO / TICKET (vista previa del pedido)</div>
+              <div class="cfg-zone-ttl">🧾 TICKET DE REGISTRADORA</div>
               <div class="cfg-zone-body">
                 <div style="font-size:11px;color:var(--cmut);margin-bottom:6px">Configura los colores del recibo que aparece al confirmar un pedido y al despachar desde Caja.</div>
                 <div class="frow">
@@ -1709,7 +1709,7 @@ window.addEventListener('DOMContentLoaded', function(){
         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:12px">
           <button class="btn bsm bp" id="cajatab-tablero"  onclick="cajaSwitchTab('tablero')">📊 Tablero</button>
           <button class="btn bsm bo" id="cajatab-pendientes" onclick="cajaSwitchTab('pendientes')" style="position:relative">⏳ Pendientes<span id="caja-pago-badge" style="display:none;position:absolute;top:-6px;right:-6px;background:#68d391;color:#000;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700;align-items:center;justify-content:center">0</span></button>
-          <button class="btn bsm bo" id="cajatab-registradora" onclick="cajaSwitchTab('registradora')">🏪 Mostrador</button>
+          <button class="btn bsm bo" id="cajatab-registradora" onclick="cajaSwitchTab('registradora')">🖨️ Registradora</button>
           <button class="btn bsm bo" id="cajatab-mesas"    onclick="cajaSwitchTab('mesas')">📍 <span id="caja-mesas-lbl">Puntos</span></button>
           <button class="btn bsm bo" id="cajatab-domicilios" onclick="cajaSwitchTab('domicilios')">🛵 Domicilios</button>
           <button class="btn bsm bo" id="cajatab-gastos"   onclick="cajaSwitchTab('gastos')">📉 Gastos</button>
@@ -4056,6 +4056,10 @@ function fillForm() {
   sv('c-cmodtxt',C.cmodtxt||'#f0f0ff'); sv('c-cmodlbl',C.cmodlbl||'#8888aa');
   sv('c-cmodinptxt', C.cmodinptxt||C.cmodtxt||'#f0f0ff');
   sv('c-ctickbg1', C.ctickbg1||'#f0a500'); sv('c-ctickbg2', C.ctickbg2||'#ff6b00');
+  if(document.getElementById('c-ticket-modal-bg'))    document.getElementById('c-ticket-modal-bg').value    = C.ticketModalBg   ||'#f0a500';
+  if(document.getElementById('c-ticket-modal-txt'))   document.getElementById('c-ticket-modal-txt').value   = C.ticketModalTxt  ||'#000000';
+  if(document.getElementById('c-ticket-modal-body'))  document.getElementById('c-ticket-modal-body').value  = C.ticketModalBody ||'#ffffff';
+  if(document.getElementById('c-ticket-modal-body-txt')) document.getElementById('c-ticket-modal-body-txt').value = C.ticketModalBodyTxt||'#111111';
   sv('c-cticktext', C.cticktext||'#000000');
   sv('c-eyebrow',   C.eyebrow||'✨ Bienvenido');
   sv('c-cheroeyebrow', C.cheroeyebrow||'#f0a500');
@@ -4141,7 +4145,11 @@ function liveC() {
   C.ctickbg1  = g('c-ctickbg1'); C.ctickbg2 = g('c-ctickbg2');
   C.cticktext = g('c-cticktext');
   var dirEl = document.getElementById('c-ctickgdir');
-  if(dirEl) C.ctickgdir = dirEl.value;   C.cattl = g('c-cattl'); C.cur   = g('c-cur') || '$';
+  if(dirEl) C.ctickgdir = dirEl.value;   C.cattl = g('c-cattl');
+  C.ticketModalBg   = g('c-ticket-modal-bg')   || '#f0a500';
+  C.ticketModalTxt  = g('c-ticket-modal-txt')  || '#000000';
+  C.ticketModalBody = g('c-ticket-modal-body') || '#ffffff';
+  C.ticketModalBodyTxt = g('c-ticket-modal-body-txt') || '#111111'; C.cur   = g('c-cur') || '$';
   C.wa    = g('c-wa');
   C.mesaLabel   = g('c-mesa-label')   || 'Mesa';
   C.asesorBarBg = g('c-asesor-bg') || '#1a0a2e';
@@ -9933,7 +9941,41 @@ function cobrarRegistradora() {
   mostrarTicketModal(o, pago, sub, total);
 }
 
+
+function setTicketModal(hdrBg, hdrTxt, bodyBg, bodyTxt) {
+  var ids = {'c-ticket-modal-bg':hdrBg,'c-ticket-modal-txt':hdrTxt,'c-ticket-modal-body':bodyBg,'c-ticket-modal-body-txt':bodyTxt};
+  Object.keys(ids).forEach(function(id){
+    var el=document.getElementById(id); if(el) el.value=ids[id];
+    var hex=document.getElementById(id+'h'); if(hex) hex.textContent=ids[id];
+  });
+  liveC();
+}
+function cerrarTicketCobro() {
+  var m = document.getElementById('m-ticket-cobro');
+  if (m) m.style.display = 'none';
+  limpiarRegistradora();
+}
+
+
+function setTicketModal(hdrBg, hdrTxt, bodyBg, bodyTxt) {
+  var ids = {'c-ticket-modal-bg':hdrBg,'c-ticket-modal-txt':hdrTxt,'c-ticket-modal-body':bodyBg,'c-ticket-modal-body-txt':bodyTxt};
+  Object.keys(ids).forEach(function(id){
+    var el=document.getElementById(id); if(el) el.value=ids[id];
+    var hex=document.getElementById(id+'h'); if(hex) hex.textContent=ids[id];
+  });
+  liveC();
+}
+function cerrarTicketCobro() {
+  var m = document.getElementById('m-ticket-cobro');
+  if (m) m.style.display = 'none';
+  limpiarRegistradora();
+}
+
 function mostrarTicketModal(o, pago, sub, total) {
+  var hdrBg  = (document.getElementById('c-ticket-modal-bg')||{}).value    || C.ticketModalBg    || '#f0a500';
+  var hdrTxt = (document.getElementById('c-ticket-modal-txt')||{}).value   || C.ticketModalTxt   || '#000000';
+  var bodyBg = (document.getElementById('c-ticket-modal-body')||{}).value  || C.ticketModalBody  || '#ffffff';
+  var bodyTxt= (document.getElementById('c-ticket-modal-body-txt')||{}).value||C.ticketModalBodyTxt||'#111111';
   var efectivoVal = parseFloat((document.getElementById('reg-efectivo-valor')||{}).value||0);
   var cambio = pago==='Efectivo' && efectivoVal>total ? efectivoVal-total : 0;
   var m = document.getElementById('m-ticket-cobro');
