@@ -1858,6 +1858,7 @@ window.addEventListener('DOMContentLoaded', function(){
               <div style="padding:12px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.25);border-radius:12px">
                 <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--cmut);margin-bottom:3px"><span>Subtotal</span><span id="reg-subtotal">$0</span></div>
                 <div id="reg-descuento-wrap" style="display:none;justify-content:space-between;font-size:12px;color:#68d391;margin-bottom:3px"><span>🎟️ Dcto</span><span id="reg-descuento-monto">-$0</span></div>
+                <div id="reg-iva-wrap" style="display:none;justify-content:space-between;font-size:12px;color:#63b3ed;margin-bottom:3px"><span>🧾 IVA</span><span id="reg-iva-monto">+$0</span></div>
                 <div style="display:flex;justify-content:space-between;font-size:26px;font-weight:900;color:var(--cp);padding-top:6px;border-top:1px solid rgba(255,255,255,.08)"><span>TOTAL</span><span id="reg-total">$0</span></div>
               </div>
 
@@ -1869,6 +1870,17 @@ window.addEventListener('DOMContentLoaded', function(){
               <div id="reg-cupon-msg" style="font-size:11px;margin-top:-4px"></div>
 
               <!-- Método pago -->
+              <!-- IVA opcional -->
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
+                  <input type="checkbox" id="reg-iva-activo" style="accent-color:var(--cp)" onchange="actualizarTotalesReg()"> Incluir IVA
+                </label>
+                <select id="reg-iva-pct" onchange="actualizarTotalesReg()" style="font-size:12px;padding:2px 6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:6px;color:var(--ctxt)">
+                  <option value="19">19%</option>
+                  <option value="5">5%</option>
+                  <option value="0">0%</option>
+                </select>
+              </div>
               <select class="fi" id="reg-pago" onchange="mostrarEfectivoReg()" style="font-size:13px">
                 <option value="">💳 Método de pago...</option>
                 <option value="Efectivo">💵 Efectivo</option>
@@ -3223,8 +3235,6 @@ function applyC() {
   // ── Actualizar splash con nombre del negocio ──
   var splashNombre = document.getElementById('splash-nombre');
   if (splashNombre) splashNombre.textContent = C.name || 'Mi Tienda';
-  // NO mostrar C.logo automáticamente en el splash
-  // Solo aplicarSplash() controla lo que se ve
   if (typeof aplicarSplash === 'function') aplicarSplash();
 
   var logo  = document.getElementById('hdr-logo');
@@ -6347,10 +6357,11 @@ function aplicarSplash() {
   var emoji = (document.getElementById('c-splash-emoji')||{}).value || C.splashEmoji || '';
   C.splashEmoji = emoji;
 
-  if (logo) {
-    // Imagen personalizada
-    var imgDiv = document.createElement('div');
-    imgDiv.style.cssText = 'width:'+size+'px;height:'+size+'px;background:url('+logo+') center/contain no-repeat';
+  var effectiveLogo = logo || C.logo || '';
+  if (effectiveLogo) {
+    var imgDiv = document.createElement('img');
+    imgDiv.src = effectiveLogo;
+    imgDiv.style.cssText = 'width:'+size+'px;height:'+size+'px;object-fit:contain;border-radius:8px';
     wrap.appendChild(imgDiv);
   } else if (emoji) {
     // Emoji
@@ -6439,18 +6450,21 @@ function previsualizarSplash() {
 
 function sonidoPit() {
   try {
-    var ctx = _audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    if (!_audioCtx) _audioCtx = ctx;
-    if (ctx.state === 'suspended') ctx.resume();
-    var osc = ctx.createOscillator();
-    var gain = ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.frequency.setValueAtTime(1200, ctx.currentTime);
-    osc.frequency.setValueAtTime(900, ctx.currentTime + 0.06);
-    gain.gain.setValueAtTime(0.5, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.18);
+    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var ctx = _audioCtx;
+    var resume = ctx.state === 'suspended' ? ctx.resume() : Promise.resolve();
+    resume.then(function(){
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(1400, ctx.currentTime);
+      osc.frequency.setValueAtTime(1000, ctx.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.6, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.2);
+    });
   } catch(e) {}
 }
 
@@ -9803,9 +9817,16 @@ function actualizarTotalesReg() {
   } else {
     var dw2=document.getElementById('reg-descuento-wrap'); if(dw2) dw2.style.display='none';
   }
+  // IVA opcional
+  var ivaChk = document.getElementById('reg-iva-activo');
+  var ivaPct = parseFloat((document.getElementById('reg-iva-pct')||{}).value||19);
+  var iva = (ivaChk&&ivaChk.checked) ? Math.round(total*(ivaPct/100)) : 0;
+  var totalConIva = total + iva;
+  var ivaWrap=document.getElementById('reg-iva-wrap'); if(ivaWrap) ivaWrap.style.display=iva>0?'flex':'none';
+  var ivaEl=document.getElementById('reg-iva-monto'); if(ivaEl) ivaEl.textContent='+'+(C.cur||'$')+fmt(iva)+' ('+ivaPct+'%)';
   var subEl=document.getElementById('reg-subtotal'); var totEl=document.getElementById('reg-total');
   if (subEl) subEl.textContent=(C.cur||'$')+fmt(sub);
-  if (totEl) totEl.textContent=(C.cur||'$')+fmt(total);
+  if (totEl) totEl.textContent=(C.cur||'$')+fmt(totalConIva);
   calcularCambio();
 }
 
@@ -9817,7 +9838,8 @@ function mostrarEfectivoReg() {
 
 function calcularCambio() {
   var totalStr=(document.getElementById('reg-total')||{}).textContent||'0';
-  var total=parseFloat(totalStr.replace(/[^0-9.]/g,''))||0;
+  // Formato colombiano: $1.234.567 -> quitar todo menos dígitos
+  var total=parseFloat(totalStr.replace(/[^0-9]/g,''))||0;
   var recibio=parseFloat((document.getElementById('reg-efectivo-valor')||{}).value||0);
   var cambio=Math.max(0,recibio-total);
   var el=document.getElementById('reg-cambio');
@@ -9932,20 +9954,20 @@ function mostrarTicketModal(o, pago, sub, total) {
     '<div style="background:var(--ccard,#1a1a2e);border-radius:16px;max-width:380px;width:100%;padding:20px;margin:auto;margin-top:20px;border:1px solid rgba(255,255,255,.1)">' +
       '<div style="text-align:center;margin-bottom:16px">' +
         '<div style="font-size:28px;margin-bottom:4px">✅</div>' +
-        '<div style="font-size:20px;font-weight:900;color:#68d391">¡Cobrado!</div>' +
-        '<div style="font-size:13px;color:var(--cmut);margin-top:4px">'+o.id+' · '+o.ts+'</div>' +
+        '<div style="font-size:20px;font-weight:900;color:#16a34a">¡Cobrado!</div>' +
+        '<div style="font-size:12px;color:#666;margin-top:4px">'+o.id+' · '+o.ts+'</div>' +
       '</div>' +
       '<div style="border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:12px 0;margin-bottom:12px">' +
-        '<table style="width:100%;border-collapse:collapse;font-size:13px;color:var(--ctxt,#fff)">'+itemsHtml+descHtml+'</table>' +
+        '<table style="width:100%;border-collapse:collapse;font-size:13px;color:#111">'+itemsHtml+descHtml+'</table>' +
       '</div>' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
-        '<span style="font-size:14px;color:var(--cmut)">Método</span>' +
+        '<span style="font-size:14px;color:#555">Método de pago</span>' +
         '<span style="font-size:14px;font-weight:700">'+pago+'</span>' +
       '</div>' +
       (sub!==total?'<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px;color:var(--cmut)">Subtotal</span><span style="font-size:13px">'+cur+fmt(sub)+'</span></div>':'') +
-      '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:2px solid rgba(255,255,255,.1)">' +
-        '<span style="font-size:18px;font-weight:900">TOTAL</span>' +
-        '<span style="font-size:24px;font-weight:900;color:var(--cp,#f0a500)">'+cur+fmt(total)+'</span>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:2px dashed #ddd">'+
+        '<span style="font-size:18px;font-weight:900;color:#111">TOTAL</span>' +
+        '<span style="font-size:24px;font-weight:900;color:#f0a500">'+cur+fmt(total)+'</span>' +
       '</div>' +
       cambioHtml +
       '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px">' +
