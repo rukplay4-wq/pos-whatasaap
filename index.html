@@ -285,7 +285,12 @@ select.fi option{background:#111122}
 @keyframes scanLine{0%{top:0}50%{top:calc(100% - 2px)}100%{top:0}}
 /* POS responsive */
 @media(max-width:900px){
-  @media(max-width:860px){#pos-grid{grid-template-columns:1fr!important}}
+  @media(max-width:860px){
+    #pos-grid{grid-template-columns:1fr!important}
+    #pos-grid>div:first-child{order:2}
+    #pos-grid>div:nth-child(2){order:1}
+    #pos-grid>div:last-child{order:3;position:static!important}
+  }
   @media(min-width:861px){#pos-grid{grid-template-columns:220px 1fr 280px}}
 }
 
@@ -910,7 +915,24 @@ window.addEventListener('DOMContentLoaded', function(){
                 <div class="fg" id="c-btn2url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn2url" placeholder="https://..." oninput="liveC()"></div>
               </div>
             </div>
-            <div class="fg"><label class="fl">T&#237;tulo del cat&#225;logo</label><input class="fi" id="c-cattl" placeholder="Nuestros Productos" oninput="liveC()"></div>
+
+            <!-- 9 POSICIONES BOTONES -->
+            <div class="fg">
+              <label class="fl">📍 Posición de los botones en el banner</label>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:180px;margin-top:6px">
+                <button onclick="setBtnPos('flex-start','flex-start')" id="bpos-tl" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-size:18px">↖</button>
+                <button onclick="setBtnPos('center','flex-start')" id="bpos-tc" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-size:18px">⬆</button>
+                <button onclick="setBtnPos('flex-end','flex-start')" id="bpos-tr" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-size:18px">↗</button>
+                <button onclick="setBtnPos('flex-start','center')" id="bpos-ml" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-size:18px">⬅</button>
+                <button onclick="setBtnPos('center','center')" id="bpos-mc" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:var(--cp);cursor:pointer;font-size:18px">⬛</button>
+                <button onclick="setBtnPos('flex-end','center')" id="bpos-mr" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-size:18px">➡</button>
+                <button onclick="setBtnPos('flex-start','flex-end')" id="bpos-bl" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-size:18px">↙</button>
+                <button onclick="setBtnPos('center','flex-end')" id="bpos-bc" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-size:18px">⬇</button>
+                <button onclick="setBtnPos('flex-end','flex-end')" id="bpos-br" style="padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);cursor:pointer;font-size:18px">↘</button>
+              </div>
+              <input type="hidden" id="c-btns-pos" value="flex-start">
+              <input type="hidden" id="c-hero-valign" value="center">
+            </div><input class="fi" id="c-cattl" placeholder="Nuestros Productos" oninput="liveC()"></div>
             <div class="fg"><label class="fl">S&#237;mbolo moneda</label><input class="fi" id="c-cur" placeholder="$" oninput="liveC()" maxlength="5" style="max-width:90px"></div>
 
             <!-- SPLASH SCREEN -->
@@ -969,7 +991,12 @@ window.addEventListener('DOMContentLoaded', function(){
               </div>
 
               <div class="fg">
-                <label class="fl">Texto debajo del logo</label>
+                <label class="fl">Nombre en el splash</label>
+                <input class="fi" id="c-splash-nombre" placeholder="Nombre del negocio" oninput="aplicarSplash()">
+                <div style="font-size:11px;color:var(--cmut);margin-top:3px">Vacío = usa el nombre del negocio</div>
+              </div>
+              <div class="fg">
+                <label class="fl">Texto debajo del nombre</label>
                 <input class="fi" id="c-splash-sub" placeholder="Cargando..." oninput="aplicarSplash()">
               </div>
 
@@ -4359,7 +4386,7 @@ function renderProdList() {
       '<div class="apth">' + imgH + '</div>' +
       '<div class="apinf">' +
         '<div class="apnm">' + p.name + '</div>' +
-        '<div class="apmeta">' + (p.cat||'Sin cat.') + ' · ' + (C.cur||'$') + fmt(p.price) + ' · Stock: ' + (p.stock!=null?p.stock:'∞') + '</div>' +
+        '<div class="apmeta">' + (p.cat||'Sin cat.') + ' · ' + (C.cur||'$') + fmt(p.price) + ' · Stock: ' + (p.stock!=null?p.stock:'∞') + (p.sku?' · #'+p.sku:'') + '</div>' +
       '</div>' +
       '<div class="apact">' +
         '<button class="btn bsm bo" data-idx="' + i + '" onclick="openProdM(parseInt(this.dataset.idx))">✏️ Editar</button>' +
@@ -4448,6 +4475,7 @@ function saveProd() {
 
   var prod = {
     id:    isEdit && P[idx] ? P[idx].id : ('p' + Date.now()),
+    sku:   isEdit && P[idx] && P[idx].sku ? P[idx].sku : String(P.length + 1).padStart(4,'0'),
     name:  name,
     price: price,
     desc:  document.getElementById('p-desc').value.trim(),
@@ -6382,9 +6410,11 @@ function aplicarSplash() {
 
   // Nombre y subtexto
   var nmEl = document.getElementById('splash-nombre');
+  var splashNombreCustom = (document.getElementById('c-splash-nombre')||{}).value || C.splashNombre || '';
   var showName = document.getElementById('c-splash-show-name');
   var showNameVal = !showName || showName.checked;
-  if (nmEl) { nmEl.style.color=txt; nmEl.style.display=showNameVal?'':'none'; }
+  if (nmEl) { nmEl.textContent = splashNombreCustom || C.name || 'Mi Tienda'; nmEl.style.color=txt; nmEl.style.display=showNameVal?'':'none'; }
+  C.splashNombre = splashNombreCustom;
   var subTxtEl = document.getElementById('splash-sub-txt');
   if (subTxtEl) { subTxtEl.textContent = (document.getElementById('c-splash-sub')||{}).value||C.splashSub||''; subTxtEl.style.color=txt; }
 
@@ -6550,6 +6580,20 @@ function cancelarFacial() { cerrarFacial(); _facialCallback=null; _facialAsesor=
 function cerrarFacial() {
   if (window._facialStream) { window._facialStream.getTracks().forEach(function(t){t.stop();}); window._facialStream=null; }
   var m = document.getElementById('m-facial'); if(m) m.style.display='none';
+}
+
+
+function setBtnPos(h, v) {
+  C.btnsPos = h; C.heroValign = v;
+  var hidH = document.getElementById('c-btns-pos'); if(hidH) hidH.value = h;
+  var hidV = document.getElementById('c-hero-valign'); if(hidV) hidV.value = v;
+  // Highlight selected button
+  var map = {'flex-start,flex-start':'tl','center,flex-start':'tc','flex-end,flex-start':'tr','flex-start,center':'ml','center,center':'mc','flex-end,center':'mr','flex-start,flex-end':'bl','center,flex-end':'bc','flex-end,flex-end':'br'};
+  Object.keys(map).forEach(function(k){
+    var btn = document.getElementById('bpos-'+map[k]);
+    if(btn) btn.style.background = k === h+','+v ? 'var(--cp)' : 'rgba(255,255,255,.05)';
+  });
+  applyC();
 }
 
 function sonidoPit() {
@@ -9766,7 +9810,8 @@ function procesarCodigoEscaneado(codigo) {
   var prodId = codigo;
   if (codigo.indexOf('addprod=') !== -1) prodId = codigo.split('addprod=')[1];
   else if (codigo.indexOf('?p=') !== -1) prodId = codigo.split('?p=')[1].split('&')[0];
-  var prod = P.find(function(p){ return p.id === prodId || p.ref === prodId || p.sku === prodId; });
+  var prodId2 = prodId.replace(/^0+/,''); // strip leading zeros
+  var prod = P.find(function(p){ return p.id===prodId || p.ref===prodId || p.sku===prodId || p.sku===prodId2 || String(p.sku)===prodId2; });
   var fb = document.getElementById('scan-feedback');
   if (prod) {
     agregarProductoReg(prod);
