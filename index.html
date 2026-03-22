@@ -468,40 +468,57 @@ function startFacialCheck(asesor, callback) {
 }
 
 function capturarFacial() {
-  var video=document.getElementById('facial-video'); var status=document.getElementById('facial-status');
+  var video=document.getElementById('facial-video');
+  var status=document.getElementById('facial-status');
   if(!video||!_facialAsesor) return;
   if(status) status.textContent='Analizando...';
-  // Captura a mayor resolución para mejor comparación
-  var canvas=document.createElement('canvas'); canvas.width=200; canvas.height=200;
-  canvas.getContext('2d').drawImage(video,0,0,200,200);
-  var captured=canvas.toDataURL('image/jpeg',0.9);
-  var refImg=new Image(); refImg.crossOrigin='anonymous';
+
+  // Capturar frame de la cámara
+  var canvas=document.createElement('canvas'); canvas.width=120; canvas.height=120;
+  canvas.getContext('2d').drawImage(video,0,0,120,120);
+  var captured=canvas.toDataURL('image/jpeg',0.85);
+
+  // Cargar imagen de referencia del asesor
+  var refImg=new Image();
   refImg.onload=function(){
-    // Normalizar ambas imágenes al mismo tamaño 80x80
-    var SZ=80;
+    var SZ=60;
+    // Redimensionar referencia
     var c2=document.createElement('canvas'); c2.width=SZ; c2.height=SZ;
     c2.getContext('2d').drawImage(refImg,0,0,SZ,SZ);
     var refData=c2.getContext('2d').getImageData(0,0,SZ,SZ).data;
-    var capImg=new Image(); capImg.onload=function(){
+    // Redimensionar captura
+    var capImg=new Image();
+    capImg.onload=function(){
       var c3=document.createElement('canvas'); c3.width=SZ; c3.height=SZ;
       c3.getContext('2d').drawImage(capImg,0,0,SZ,SZ);
       var capData=c3.getContext('2d').getImageData(0,0,SZ,SZ).data;
+      // Comparar píxel a píxel
       var diff=0;
-      for(var i=0;i<refData.length;i+=4){ diff+=Math.abs(refData[i]-capData[i])+Math.abs(refData[i+1]-capData[i+1])+Math.abs(refData[i+2]-capData[i+2]); }
+      for(var i=0;i<refData.length;i+=4){
+        diff+=Math.abs(refData[i]  -capData[i]  )
+             +Math.abs(refData[i+1]-capData[i+1])
+             +Math.abs(refData[i+2]-capData[i+2]);
+      }
+      var promedio=diff/(SZ*SZ*3);
       cerrarFacial();
-      var promedio = diff/(80*80*3);
-      if(promedio < 120){
-        if(status) status.textContent='✅ Verificado';
+      if(promedio<75){
+        // Misma persona
         if(_facialCallback) _facialCallback(true);
       } else {
-        if(status) status.textContent='❌ No coincide ('+Math.round(promedio)+')';
-        var intentar = confirm('Verificación fallida.\n\nConsejos:\n• Asegúrate de tener buena iluminación\n• Mira directo a la cámara\n• Usa la misma foto con la que te registraste\n\n¿Intentar de nuevo?');
-        if(intentar) startFacialCheck(_facialAsesor,_facialCallback);
-        else { if(_facialCallback) _facialCallback(true); }
+        // Cara diferente — NO dejar pasar
+        var reintentar=confirm('Verificación fallida.\n\nAsegúrate de:\n• Tener buena iluminación frontal\n• Mirar directo a la cámara\n\n¿Intentar de nuevo?');
+        if(reintentar) startFacialCheck(_facialAsesor,_facialCallback);
+        else { if(_facialCallback) _facialCallback(false); } // false = acceso denegado
       }
-    }; capImg.src=captured;
+    };
+    capImg.src=captured;
   };
-  refImg.onerror=function(){ cerrarFacial(); if(_facialCallback) _facialCallback(true); };
+  refImg.onerror=function(){
+    // Error al cargar imagen de referencia — DENEGAR acceso, no permitirlo
+    cerrarFacial();
+    toast('⚠️ No se pudo cargar la foto del asesor. Verifica que tenga foto registrada.','e');
+    if(_facialCallback) _facialCallback(false);
+  };
   refImg.src=_facialAsesor.img;
 }
 function cancelarFacial() { cerrarFacial(); _facialCallback=null; _facialAsesor=null; }
@@ -5675,31 +5692,90 @@ function loginAsesorSession() {
 }
 
 function iniciarSesionAsesor(a) {
-  // Mostrar barra sesión
+  // ── Barra de sesión ──
   var bar = document.getElementById('asesor-session-bar');
   if (bar) bar.style.display = 'flex';
   var imgEl = document.getElementById('asesor-session-img');
   if (imgEl) imgEl.innerHTML = a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
   var nmEl = document.getElementById('asesor-session-name');
-  var rolLabel = {mesa:'Cajero/a',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',ambos:'Vendedor',cajero_fisico:'Caja Física',cajero_domicilio:'Caja Domicilios',cajero_evento:'Caja Eventos',cajero_todo:'Caja General'}[a.tipo] || a.cargoCustom || 'Personal';
+  var rolLabels = {
+    cajero_fisico:'🏪 Caja Registradora', cajero_domicilio:'🛵 Caja Domicilios',
+    cajero_evento:'🎪 Caja Eventos',       cajero_todo:'⚡ Caja General',
+    cocina:'📦 Bodega / Empaque',          domicilio:'🛵 Domiciliario',
+    supervisor:'👁️ Supervisor',            aliado:'🤝 Aliado',
+    mesa:'🪑 Cajero/a',                    ambos:'🔄 Vendedor General'
+  };
+  var rolLabel = rolLabels[a.tipo] || a.cargoCustom || 'Personal';
   if (nmEl) nmEl.textContent = a.nombre + ' — ' + rolLabel;
-  // Turno asignado
-  var turno = (C.turnosAsesores||[]).find(function(t){ return t.asesor===a.nombre && t.activo; });
   var mesasEl = document.getElementById('asesor-session-mesas');
-  if (mesasEl) mesasEl.innerHTML = turno ? '<span style="background:rgba(240,165,0,.15);color:#f0a500;border:1px solid rgba(240,165,0,.3);border-radius:50px;padding:3px 10px;font-size:12px;font-weight:700">⏰ '+turno.inicio+' – '+turno.fin+'</span>' : (a.mesas&&a.mesas.length ? 'Puntos: '+a.mesas.join(', ') : '');
-  // Panel según rol
-  var s = document.querySelector('.an[data-sec="orders"]');
-  if (s) { navTo(s); }
-  if (a.tipo==='cocina') setTimeout(function(){ cajaSwitchTab('pendientes'); },200);
-  else if (a.tipo==='domicilio') setTimeout(function(){ cajaSwitchTab('domicilios'); },200);
-  else if (a.tipo==='supervisor') { var d=document.querySelector('.an[data-sec="dashboard"]'); if(d) navTo(d); }
-  else if (a.tipo==='cajero_fisico'||a.tipo==='cajero_todo'||a.tipo==='cajero_evento') setTimeout(function(){ cajaSwitchTab('registradora'); },200);
-  else if (a.tipo==='cajero_domicilio') setTimeout(function(){ cajaSwitchTab('domicilios'); },200);
-  else setTimeout(function(){ cajaSwitchTab('registradora'); },200);
+  if (mesasEl) mesasEl.textContent = a.mesas&&a.mesas.length ? 'Puntos: '+a.mesas.join(', ') : '';
+
+  // ── Definir qué ve cada rol ──
+  // Nav sections visibles por rol
+  var navVisible = {
+    cajero_fisico:   ['orders'],
+    cajero_domicilio:['orders'],
+    cajero_evento:   ['orders'],
+    cajero_todo:     ['orders'],
+    cocina:          ['orders'],
+    domicilio:       ['orders'],
+    mesa:            ['orders'],
+    ambos:           ['orders'],
+    aliado:          ['orders'],
+    supervisor:      ['dashboard','crm','orders']
+  };
+  // Tabs de caja visibles por rol
+  var tabsVisible = {
+    cajero_fisico:   ['tablero','pendientes','registradora','gastos','alertas','buscar'],
+    cajero_domicilio:['pendientes','domicilios','despachados','alertas'],
+    cajero_evento:   ['tablero','pendientes','registradora','gastos'],
+    cajero_todo:     ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'],
+    cocina:          ['pendientes','alertas'],
+    domicilio:       ['domicilios','despachados','pendientes'],
+    mesa:            ['tablero','pendientes','mesas','registradora','gastos','alertas'],
+    ambos:           ['tablero','pendientes','mesas','domicilios','registradora','gastos','alertas','buscar','todos'],
+    aliado:          ['tablero','pendientes'],
+    supervisor:      ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos']
+  };
+  // Tab inicial por rol
+  var tabInicial = {
+    cajero_fisico:'registradora', cajero_domicilio:'domicilios',
+    cajero_evento:'registradora', cajero_todo:'registradora',
+    cocina:'pendientes', domicilio:'domicilios',
+    mesa:'mesas', ambos:'tablero',
+    aliado:'tablero', supervisor:'dashboard'
+  };
+
+  var secsPermitidas = navVisible[a.tipo] || ['orders'];
+  var tabsPermitidas = tabsVisible[a.tipo] || ['tablero','pendientes','registradora'];
+  var tabIni         = tabInicial[a.tipo]  || 'registradora';
+
+  // Ocultar secciones del nav no permitidas
+  document.querySelectorAll('#adm-nav .an[data-sec]').forEach(function(el){
+    el.style.display = secsPermitidas.indexOf(el.getAttribute('data-sec')) !== -1 ? '' : 'none';
+  });
+
+  // Ocultar tabs de caja no permitidas
+  var allTabs = ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'];
+  allTabs.forEach(function(t){
+    var btn = document.getElementById('cajatab-'+t);
+    if (btn) btn.style.display = tabsPermitidas.indexOf(t) !== -1 ? '' : 'none';
+  });
+
+  // Navegar a la sección correcta
+  if (a.tipo === 'supervisor') {
+    var d = document.querySelector('.an[data-sec="dashboard"]');
+    if (d) navTo(d);
+  } else {
+    var s = document.querySelector('.an[data-sec="orders"]');
+    if (s) navTo(s);
+    setTimeout(function(){ cajaSwitchTab(tabIni); }, 200);
+  }
+
   // Reconocimiento facial si tiene foto
   if (a.img && typeof startFacialCheck === 'function') {
     startFacialCheck(a, function(ok){
-      if (!ok) toast('⚠️ Rostro no verificado — revisa la foto','e');
+      if (!ok) toast('⚠️ Verificación facial fallida','e');
       else toast('✅ Bienvenido/a, '+a.nombre,'s');
     });
   } else {
@@ -5707,10 +5783,19 @@ function iniciarSesionAsesor(a) {
   }
 }
 
+// Restaurar nav al cerrar sesión
+function _restaurarNav() {
+  document.querySelectorAll('#adm-nav .an[data-sec]').forEach(function(el){ el.style.display=''; });
+  var allTabs = ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'];
+  allTabs.forEach(function(t){ var btn=document.getElementById('cajatab-'+t); if(btn) btn.style.display=''; });
+}
+
 
 function cerrarSesionAsesor() {
   ASESOR_SESSION = null;
-  document.getElementById('asesor-session-bar').style.display = 'none';
+  _restaurarNav();
+  var bar = document.getElementById('asesor-session-bar');
+  if (bar) bar.style.display = 'none';
   iniciarModoAsesor();
 }
 
