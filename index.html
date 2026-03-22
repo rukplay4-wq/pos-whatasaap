@@ -468,58 +468,76 @@ function startFacialCheck(asesor, callback) {
 }
 
 function capturarFacial() {
-  var video=document.getElementById('facial-video');
-  var status=document.getElementById('facial-status');
-  if(!video||!_facialAsesor) return;
-  if(status) status.textContent='Analizando...';
+  var video = document.getElementById('facial-video');
+  var status = document.getElementById('facial-status');
+  if (!video || !_facialAsesor) return;
+  if (status) status.textContent = 'Analizando...';
 
-  // Capturar frame de la cámara
-  var canvas=document.createElement('canvas'); canvas.width=120; canvas.height=120;
-  canvas.getContext('2d').drawImage(video,0,0,120,120);
-  var captured=canvas.toDataURL('image/jpeg',0.85);
+  var SZ = 80;
+  var ZONAS = 4; // 4x4 = 16 zonas
+  var UMBRAL = 28; // diferencia máxima permitida por zona (más estricto)
 
-  // Cargar imagen de referencia del asesor
-  var refImg=new Image();
-  refImg.onload=function(){
-    var SZ=60;
-    // Redimensionar referencia
-    var c2=document.createElement('canvas'); c2.width=SZ; c2.height=SZ;
-    c2.getContext('2d').drawImage(refImg,0,0,SZ,SZ);
-    var refData=c2.getContext('2d').getImageData(0,0,SZ,SZ).data;
-    // Redimensionar captura
-    var capImg=new Image();
-    capImg.onload=function(){
-      var c3=document.createElement('canvas'); c3.width=SZ; c3.height=SZ;
-      c3.getContext('2d').drawImage(capImg,0,0,SZ,SZ);
-      var capData=c3.getContext('2d').getImageData(0,0,SZ,SZ).data;
-      // Comparar píxel a píxel
-      var diff=0;
-      for(var i=0;i<refData.length;i+=4){
-        diff+=Math.abs(refData[i]  -capData[i]  )
-             +Math.abs(refData[i+1]-capData[i+1])
-             +Math.abs(refData[i+2]-capData[i+2]);
+  function histZonas(data, w) {
+    var tam = w / ZONAS;
+    var result = [];
+    for (var zy = 0; zy < ZONAS; zy++) {
+      for (var zx = 0; zx < ZONAS; zx++) {
+        var sum = 0, count = 0;
+        for (var py = Math.floor(zy*tam); py < Math.floor((zy+1)*tam); py++) {
+          for (var px = Math.floor(zx*tam); px < Math.floor((zx+1)*tam); px++) {
+            var idx = (py*w + px)*4;
+            // Luminosidad percibida
+            sum += 0.299*data[idx] + 0.587*data[idx+1] + 0.114*data[idx+2];
+            count++;
+          }
+        }
+        result.push(sum/count);
       }
-      var promedio=diff/(SZ*SZ*3);
+    }
+    return result;
+  }
+
+  var canvas = document.createElement('canvas'); canvas.width=SZ; canvas.height=SZ;
+  canvas.getContext('2d').drawImage(video, 0, 0, SZ, SZ);
+  var captured = canvas.toDataURL('image/jpeg', 0.9);
+
+  var refImg = new Image();
+  refImg.crossOrigin = 'anonymous';
+  refImg.onload = function() {
+    var c2 = document.createElement('canvas'); c2.width=SZ; c2.height=SZ;
+    c2.getContext('2d').drawImage(refImg, 0, 0, SZ, SZ);
+    var refData = c2.getContext('2d').getImageData(0,0,SZ,SZ).data;
+    var refHist = histZonas(refData, SZ);
+
+    var capImg = new Image();
+    capImg.onload = function() {
+      var c3 = document.createElement('canvas'); c3.width=SZ; c3.height=SZ;
+      c3.getContext('2d').drawImage(capImg, 0, 0, SZ, SZ);
+      var capData = c3.getContext('2d').getImageData(0,0,SZ,SZ).data;
+      var capHist = histZonas(capData, SZ);
+
+      // Diferencia promedio entre histogramas de zonas
+      var totalDiff = 0;
+      for (var i=0; i<refHist.length; i++) totalDiff += Math.abs(refHist[i]-capHist[i]);
+      var score = totalDiff / refHist.length;
+
       cerrarFacial();
-      if(promedio<75){
-        // Misma persona
-        if(_facialCallback) _facialCallback(true);
+      if (score < UMBRAL) {
+        if (_facialCallback) _facialCallback(true);
       } else {
-        // Cara diferente — NO dejar pasar
-        var reintentar=confirm('Verificación fallida.\n\nAsegúrate de:\n• Tener buena iluminación frontal\n• Mirar directo a la cámara\n\n¿Intentar de nuevo?');
-        if(reintentar) startFacialCheck(_facialAsesor,_facialCallback);
-        else { if(_facialCallback) _facialCallback(false); } // false = acceso denegado
+        var reintentar = confirm('⚠️ Rostro no reconocido.\n\nAsegúrate de:\n• Buena iluminación frontal\n• Mirar directo a la cámara\n• Ser la misma persona de la foto registrada\n\n¿Intentar de nuevo?');
+        if (reintentar) startFacialCheck(_facialAsesor, _facialCallback);
+        else { if (_facialCallback) _facialCallback(false); }
       }
     };
-    capImg.src=captured;
+    capImg.src = captured;
   };
-  refImg.onerror=function(){
-    // Error al cargar imagen de referencia — DENEGAR acceso, no permitirlo
+  refImg.onerror = function() {
     cerrarFacial();
     toast('⚠️ No se pudo cargar la foto del asesor. Verifica que tenga foto registrada.','e');
-    if(_facialCallback) _facialCallback(false);
+    if (_facialCallback) _facialCallback(false);
   };
-  refImg.src=_facialAsesor.img;
+  refImg.src = _facialAsesor.img;
 }
 function cancelarFacial() { cerrarFacial(); _facialCallback=null; _facialAsesor=null; }
 function cerrarFacial() {
@@ -5698,203 +5716,95 @@ function loginAsesorSession() {
 }
 
 function iniciarSesionAsesor(a) {
-  // ── Barra de sesión ──
-  var bar = document.getElementById('asesor-session-bar');
-  if (bar) bar.style.display = 'flex';
-  var imgEl = document.getElementById('asesor-session-img');
-  if (imgEl) imgEl.innerHTML = a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
-  var nmEl = document.getElementById('asesor-session-name');
-  var rolLabels = {
+
+  // Roles y sus tabs/destino
+  var ROLES = {
+    // rol:  { tabs permitidas,                                           tab inicial,    nav }
+    cajero_fisico:   { tabs:['pendientes','registradora','gastos','alertas','buscar'],    ini:'registradora', nav:'orders' },
+    cajero_domicilio:{ tabs:['pendientes','domicilios','despachados','alertas'],          ini:'domicilios',   nav:'orders' },
+    cajero_evento:   { tabs:['pendientes','registradora','gastos'],                       ini:'registradora', nav:'orders' },
+    cajero_todo:     { tabs:['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'], ini:'registradora', nav:'orders' },
+    mesa:            { tabs:['pendientes','mesas','alertas'],                             ini:'mesas',        nav:'orders' },
+    ambos:           { tabs:['pendientes','mesas','domicilios','alertas','buscar'],       ini:'pendientes',   nav:'orders' },
+    aliado:          { tabs:['tablero','pendientes'],                                     ini:'tablero',      nav:'orders' },
+    supervisor:      { tabs:['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'], ini:'tablero', nav:'dashboard' },
+    cocina:          { tabs:['pendientes','alertas'],                                     ini:'pendientes',   nav:'orders' },
+    domicilio:       { tabs:['domicilios','despachados','pendientes'],                    ini:'domicilios',   nav:'orders' }
+  };
+
+  var LABELS = {
     cajero_fisico:'🏪 Caja Registradora', cajero_domicilio:'🛵 Caja Domicilios',
     cajero_evento:'🎪 Caja Eventos',       cajero_todo:'⚡ Caja General',
-    cocina:'📦 Bodega / Empaque',          domicilio:'🛵 Domiciliario',
+    cocina:'📦 Bodega / Alistamiento',     domicilio:'🛵 Domiciliario',
     supervisor:'👁️ Supervisor',            aliado:'🤝 Aliado',
-    mesa:'🪑 Cajero/a',                    ambos:'🔄 Vendedor General'
-  };
-  var rolLabel = rolLabels[a.tipo] || a.cargoCustom || 'Personal';
-  if (nmEl) nmEl.textContent = a.nombre + ' — ' + rolLabel;
-  var mesasEl = document.getElementById('asesor-session-mesas');
-  if (mesasEl) mesasEl.textContent = a.mesas&&a.mesas.length ? 'Puntos: '+a.mesas.join(', ') : '';
-
-  // ── Definir qué ve cada rol ──
-  // Nav sections visibles por rol
-  var navVisible = {
-    cajero_fisico:   ['orders'],
-    cajero_domicilio:['orders'],
-    cajero_evento:   ['orders'],
-    cajero_todo:     ['orders'],
-    cocina:          ['orders'],
-    domicilio:       ['orders'],
-    mesa:            ['orders'],
-    ambos:           ['orders'],
-    aliado:          ['orders'],
-    supervisor:      ['dashboard','crm','orders']
-  };
-  // Tabs de caja visibles por rol
-  var tabsVisible = {
-    cajero_fisico:   ['tablero','pendientes','registradora','gastos','alertas','buscar'],
-    cajero_domicilio:['pendientes','domicilios','despachados','alertas'],
-    cajero_evento:   ['tablero','pendientes','registradora','gastos'],
-    cajero_todo:     ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'],
-    cocina:          ['pendientes','alertas'],
-    domicilio:       ['domicilios','despachados','pendientes'],
-    mesa:            ['tablero','pendientes','mesas','registradora','gastos','alertas'],
-    ambos:           ['tablero','pendientes','mesas','domicilios','registradora','gastos','alertas','buscar','todos'],
-    aliado:          ['tablero','pendientes'],
-    supervisor:      ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos']
-  };
-  // Tab inicial por rol
-  var tabInicial = {
-    cajero_fisico:'registradora', cajero_domicilio:'domicilios',
-    cajero_evento:'registradora', cajero_todo:'registradora',
-    cocina:'pendientes', domicilio:'domicilios',
-    mesa:'mesas', ambos:'tablero',
-    aliado:'tablero', supervisor:'dashboard'
+    mesa:'🪑 Cajero Mesas',               ambos:'🔄 Vendedor General'
   };
 
-  var secsPermitidas = navVisible[a.tipo] || ['orders'];
-  var tabsPermitidas = tabsVisible[a.tipo] || ['tablero','pendientes','registradora'];
-  var tabIni         = tabInicial[a.tipo]  || 'registradora';
-
-  // Ocultar secciones del nav no permitidas
-  document.querySelectorAll('#adm-nav .an[data-sec]').forEach(function(el){
-    el.style.display = secsPermitidas.indexOf(el.getAttribute('data-sec')) !== -1 ? '' : 'none';
-  });
-
-  // Ocultar tabs de caja no permitidas
-  var allTabs = ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'];
-  allTabs.forEach(function(t){
-    var btn = document.getElementById('cajatab-'+t);
-    if (btn) btn.style.display = tabsPermitidas.indexOf(t) !== -1 ? '' : 'none';
-  });
-
-  // ── Función interna: aplica panel y tabs SOLO si verificación OK ──
-  function _aplicarPanelYNavegar() {
-
-    // Roles con panel exclusivo (sin panel admin)
-    if (a.tipo === 'cocina') {
-      var adm = document.getElementById('adm');
-      if (adm) adm.style.display = 'none';
-      var cocinaPan = document.getElementById('cocina-panel');
-      if (cocinaPan) {
-        cocinaPan.style.display = 'block';
-        var titCocina = document.getElementById('cocina-panel-titulo');
-        if (titCocina) titCocina.textContent = '📦 Bodega / Alistamiento — ' + a.nombre;
-      }
-      renderPanelCocina();
-      toast('✅ Bienvenido/a, ' + a.nombre + ' — Bodega', 's');
-      return;
-    }
-
-    if (a.tipo === 'domicilio') {
-      var adm2 = document.getElementById('adm');
-      if (adm2) adm2.style.display = 'none';
-      // Crear panel domiciliario si no existe
-      var domPan = document.getElementById('domiciliario-panel');
-      if (!domPan) {
-        domPan = document.createElement('div');
-        domPan.id = 'domiciliario-panel';
-        domPan.style.cssText = 'min-height:100vh;background:#07070f;padding:16px';
-        domPan.innerHTML =
-          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">' +
-            '<div id="domi-panel-titulo" style="font-size:18px;font-weight:700;color:var(--cp)">🛵 Panel Domiciliario</div>' +
-            '<button onclick="cerrarSesionAsesor()" style="background:rgba(229,62,62,.1);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer">🚪 Salir</button>' +
-          '</div>' +
-          '<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">' +
-            '<button class="btn bsm bp" id="domitab-pendientes" onclick="domiSwitchTab(\'pendientes\')">⏳ Por despachar</button>' +
-            '<button class="btn bsm bo" id="domitab-despachados" onclick="domiSwitchTab(\'despachados\')">🚀 En camino</button>' +
-          '</div>' +
-          '<div id="domi-panel-pendientes"><div id="domi-lista-pendientes"></div></div>' +
-          '<div id="domi-panel-despachados" style="display:none"><div id="domi-lista-despachados"></div></div>';
-        document.body.appendChild(domPan);
-      }
-      domPan.style.display = 'block';
-      var titDomi = document.getElementById('domi-panel-titulo');
-      if (titDomi) titDomi.textContent = '🛵 ' + a.nombre + ' — Domiciliario';
-      domiSwitchTab('pendientes');
-      toast('✅ Bienvenido/a, ' + a.nombre + ' — Domiciliario', 's');
-      return;
-    }
-
-    // Roles que usan el panel admin (cajeros, mesa, supervisor, etc.)
-    var adm3 = document.getElementById('adm');
-    if (adm3) adm3.style.display = '';
-
-    // Tabs visibles por rol
-    var tabsVisible = {
-      cajero_fisico:   ['tablero','pendientes','registradora','gastos','alertas','buscar'],
-      cajero_domicilio:['pendientes','domicilios','despachados','alertas'],
-      cajero_evento:   ['tablero','pendientes','registradora','gastos'],
-      cajero_todo:     ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'],
-      mesa:            ['tablero','pendientes','mesas','alertas'],
-      ambos:           ['tablero','pendientes','mesas','domicilios','alertas','buscar','todos'],
-      aliado:          ['tablero','pendientes'],
-      supervisor:      ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos']
-    };
-    var navVisible = {
-      cajero_fisico:'orders', cajero_domicilio:'orders', cajero_evento:'orders',
-      cajero_todo:'orders', mesa:'orders', ambos:'orders', aliado:'orders',
-      supervisor:'dashboard'
-    };
-    var tabInicial2 = {
-      cajero_fisico:'registradora', cajero_domicilio:'domicilios',
-      cajero_evento:'registradora', cajero_todo:'registradora',
-      mesa:'mesas', ambos:'tablero', aliado:'tablero', supervisor:'tablero'
-    };
-
-    var tabsPermitidas = tabsVisible[a.tipo] || ['tablero','pendientes'];
-    var secNav = navVisible[a.tipo] || 'orders';
-    var tabIni2 = tabInicial2[a.tipo] || 'pendientes';
-
-    // Filtrar nav sections
-    document.querySelectorAll('#adm-nav .an[data-sec]').forEach(function(el){
-      var sec = el.getAttribute('data-sec');
-      var permitida = (secNav === 'dashboard' && (sec === 'dashboard' || sec === 'crm' || sec === 'orders'))
-        || sec === secNav;
-      el.style.display = permitida ? '' : 'none';
-    });
-
-    // Filtrar tabs de caja
+  function _aplicar() {
+    var cfg = ROLES[a.tipo] || { tabs:['pendientes','registradora'], ini:'registradora', nav:'orders' };
+    var label = LABELS[a.tipo] || a.cargoCustom || 'Personal';
     var allTabs = ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'];
+
+    // Abrir panel admin
+    var adm = document.getElementById('adm');
+    if (adm) adm.classList.add('show');
+
+    // Barra de sesión
+    var bar = document.getElementById('asesor-session-bar');
+    if (bar) bar.style.display = 'flex';
+    var imgEl = document.getElementById('asesor-session-img');
+    if (imgEl) imgEl.innerHTML = a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
+    var nmEl = document.getElementById('asesor-session-name');
+    if (nmEl) nmEl.textContent = a.nombre + ' — ' + label;
+    var mesasEl = document.getElementById('asesor-session-mesas');
+    if (mesasEl) mesasEl.textContent = a.mesas&&a.mesas.length ? 'Puntos: '+a.mesas.join(', ') : '';
+
+    // Mostrar solo las tabs del rol, ocultar el resto
     allTabs.forEach(function(t){
       var btn = document.getElementById('cajatab-'+t);
-      if (btn) btn.style.display = tabsPermitidas.indexOf(t) !== -1 ? '' : 'none';
+      if (btn) btn.style.display = cfg.tabs.indexOf(t) !== -1 ? '' : 'none';
     });
 
-    // Navegar
-    if (secNav === 'dashboard') {
-      var d2 = document.querySelector('.an[data-sec="dashboard"]');
-      if (d2) navTo(d2);
-    } else {
-      var s2 = document.querySelector('.an[data-sec="orders"]');
-      if (s2) navTo(s2);
-      setTimeout(function(){ cajaSwitchTab(tabIni2); }, 200);
-    }
-    toast('✅ Bienvenido/a, '+a.nombre,'s');
+    // Mostrar solo la sección de nav del rol
+    document.querySelectorAll('#adm-nav .an[data-sec]').forEach(function(el){
+      var sec = el.getAttribute('data-sec');
+      var ok = cfg.nav === 'dashboard'
+        ? (sec==='dashboard'||sec==='crm'||sec==='orders')
+        : sec === 'orders';
+      el.style.display = ok ? '' : 'none';
+    });
+
+    // Navegar directo al panel y tab del rol
+    var navEl = document.querySelector('.an[data-sec="'+cfg.nav+'"]');
+    if (navEl) navTo(navEl);
+    cajaSwitchTab(cfg.ini);
+
+    toast('✅ ' + a.nombre + ' — ' + label, 's');
   }
 
-  // ── Verificación facial PRIMERO — panel solo si pasa ──
+  // Facial PRIMERO si tiene foto, sino entra directo con PIN
   if (a.img && typeof startFacialCheck === 'function') {
     startFacialCheck(a, function(ok){
       if (ok) {
-        _aplicarPanelYNavegar();
+        _aplicar();
       } else {
         ASESOR_SESSION = null;
-        toast('❌ Acceso denegado — verificación facial fallida','e');
-        var screen = document.getElementById('asesor-login-screen');
-        if (screen) {
-          var list = document.getElementById('asesor-login-list');
-          var pinWrap = document.getElementById('asesor-pin-login-wrap');
-          if (list) { list.style.display = 'flex'; list.style.flexDirection = 'column'; }
-          if (pinWrap) pinWrap.style.display = 'none';
-          screen.style.display = 'flex';
+        toast('❌ Acceso denegado — rostro no reconocido', 'e');
+        var sc = document.getElementById('asesor-login-screen');
+        if (sc) {
+          var li = document.getElementById('asesor-login-list');
+          var pw = document.getElementById('asesor-pin-login-wrap');
+          if (li) { li.style.display='flex'; li.style.flexDirection='column'; }
+          if (pw) pw.style.display = 'none';
+          sc.style.display = 'flex';
         }
       }
     });
   } else {
-    _aplicarPanelYNavegar();
+    _aplicar();
   }
 }
+
 
 // Restaurar nav al cerrar sesión
 function _restaurarNav() {
@@ -5914,7 +5824,7 @@ function cerrarSesionAsesor() {
   if (domPan) domPan.style.display = 'none';
   // Restaurar admin
   var adm = document.getElementById('adm');
-  if (adm) adm.style.display = '';
+  if (adm) adm.classList.remove('show');
   var bar = document.getElementById('asesor-session-bar');
   if (bar) bar.style.display = 'none';
   iniciarModoAsesor();
@@ -7184,43 +7094,68 @@ function capturarFacial() {
   var status = document.getElementById('facial-status');
   if (!video || !_facialAsesor) return;
   if (status) status.textContent = 'Analizando...';
-  var canvas = document.createElement('canvas');
-  canvas.width = 100; canvas.height = 100;
-  canvas.getContext('2d').drawImage(video, 0, 0, 100, 100);
-  var captured = canvas.toDataURL('image/jpeg', 0.8);
+
+  var SZ = 80;
+  var ZONAS = 4;
+  var UMBRAL = 28;
+
+  function histZonas(data, w) {
+    var tam = w / ZONAS;
+    var result = [];
+    for (var zy = 0; zy < ZONAS; zy++) {
+      for (var zx = 0; zx < ZONAS; zx++) {
+        var sum = 0, count = 0;
+        for (var py = Math.floor(zy*tam); py < Math.floor((zy+1)*tam); py++) {
+          for (var px = Math.floor(zx*tam); px < Math.floor((zx+1)*tam); px++) {
+            var ii = (py*w + px)*4;
+            sum += 0.299*data[ii] + 0.587*data[ii+1] + 0.114*data[ii+2];
+            count++;
+          }
+        }
+        result.push(sum/count);
+      }
+    }
+    return result;
+  }
+
+  var canvas = document.createElement('canvas'); canvas.width=SZ; canvas.height=SZ;
+  canvas.getContext('2d').drawImage(video, 0, 0, SZ, SZ);
+  var captured = canvas.toDataURL('image/jpeg', 0.9);
+
   var refImg = new Image();
   refImg.crossOrigin = 'anonymous';
   refImg.onload = function() {
-    var c2 = document.createElement('canvas'); c2.width=50; c2.height=50;
-    c2.getContext('2d').drawImage(refImg, 0, 0, 50, 50);
-    var refData = c2.getContext('2d').getImageData(0,0,50,50).data;
+    var c2 = document.createElement('canvas'); c2.width=SZ; c2.height=SZ;
+    c2.getContext('2d').drawImage(refImg, 0, 0, SZ, SZ);
+    var refData = c2.getContext('2d').getImageData(0,0,SZ,SZ).data;
+    var refHist = histZonas(refData, SZ);
     var capImg = new Image();
     capImg.onload = function() {
-      var c3 = document.createElement('canvas'); c3.width=50; c3.height=50;
-      c3.getContext('2d').drawImage(capImg, 0, 0, 50, 50);
-      var capData = c3.getContext('2d').getImageData(0,0,50,50).data;
-      var diff = 0;
-      for (var i=0; i<refData.length; i+=4) {
-        diff += Math.abs(refData[i]-capData[i]) + Math.abs(refData[i+1]-capData[i+1]) + Math.abs(refData[i+2]-capData[i+2]);
-      }
-      var score = diff / (50*50*3);
+      var c3 = document.createElement('canvas'); c3.width=SZ; c3.height=SZ;
+      c3.getContext('2d').drawImage(capImg, 0, 0, SZ, SZ);
+      var capData = c3.getContext('2d').getImageData(0,0,SZ,SZ).data;
+      var capHist = histZonas(capData, SZ);
+      var totalDiff = 0;
+      for (var i=0; i<refHist.length; i++) totalDiff += Math.abs(refHist[i]-capHist[i]);
+      var score = totalDiff / refHist.length;
       cerrarFacial();
-      if (score < 80) {
+      if (score < UMBRAL) {
         if (_facialCallback) _facialCallback(true);
       } else {
-        if (confirm('⚠️ No se pudo verificar el rostro.\n¿Intentar de nuevo?')) {
-          startFacialCheck(_facialAsesor, _facialCallback);
-        } else {
-          if (_facialCallback) _facialCallback(false);
-        }
+        var reintentar = confirm('⚠️ Rostro no reconocido.\n\nAsegúrate de:\n• Buena iluminación frontal\n• Mirar directo a la cámara\n• Ser la misma persona de la foto\n\n¿Intentar de nuevo?');
+        if (reintentar) startFacialCheck(_facialAsesor, _facialCallback);
+        else { if (_facialCallback) _facialCallback(false); }
       }
     };
     capImg.src = captured;
   };
-  refImg.onerror = function() { cerrarFacial(); toast('⚠️ No se pudo verificar la identidad. Verifica que el asesor tenga foto registrada.','e'); if(_facialCallback) _facialCallback(false); };
+  refImg.onerror = function() {
+    cerrarFacial();
+    toast('⚠️ No se pudo cargar la foto del asesor.','e');
+    if (_facialCallback) _facialCallback(false);
+  };
   refImg.src = _facialAsesor.img;
 }
-
 function cancelarFacial() { cerrarFacial(); _facialCallback=null; _facialAsesor=null; }
 
 function cerrarFacial() {
