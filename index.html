@@ -475,7 +475,7 @@ function capturarFacial() {
 
   var SZ = 80;
   var ZONAS = 4; // 4x4 = 16 zonas
-  var UMBRAL = 28; // diferencia máxima permitida por zona (más estricto)
+  var UMBRAL = 55; // umbral tolerante a diferencias de iluminación
 
   function histZonas(data, w) {
     var tam = w / ZONAS;
@@ -486,7 +486,6 @@ function capturarFacial() {
         for (var py = Math.floor(zy*tam); py < Math.floor((zy+1)*tam); py++) {
           for (var px = Math.floor(zx*tam); px < Math.floor((zx+1)*tam); px++) {
             var idx = (py*w + px)*4;
-            // Luminosidad percibida
             sum += 0.299*data[idx] + 0.587*data[idx+1] + 0.114*data[idx+2];
             count++;
           }
@@ -495,6 +494,14 @@ function capturarFacial() {
       }
     }
     return result;
+  }
+
+  // Normalizar histograma para compensar diferencias de iluminación
+  function normalizar(hist) {
+    var min = Math.min.apply(null, hist);
+    var max = Math.max.apply(null, hist);
+    var rng = max - min || 1;
+    return hist.map(function(v){ return (v - min) / rng * 100; });
   }
 
   var canvas = document.createElement('canvas'); canvas.width=SZ; canvas.height=SZ;
@@ -516,10 +523,12 @@ function capturarFacial() {
       var capData = c3.getContext('2d').getImageData(0,0,SZ,SZ).data;
       var capHist = histZonas(capData, SZ);
 
-      // Diferencia promedio entre histogramas de zonas
+      // Normalizar ambos histogramas antes de comparar (compensa iluminación)
+      var refNorm = normalizar(refHist);
+      var capNorm = normalizar(capHist);
       var totalDiff = 0;
-      for (var i=0; i<refHist.length; i++) totalDiff += Math.abs(refHist[i]-capHist[i]);
-      var score = totalDiff / refHist.length;
+      for (var i=0; i<refNorm.length; i++) totalDiff += Math.abs(refNorm[i]-capNorm[i]);
+      var score = totalDiff / refNorm.length;
 
       cerrarFacial();
       if (score < UMBRAL) {
@@ -5589,7 +5598,10 @@ function guardarAsesor() {
   var imgVal = document.getElementById('asesor-img').value;
   var editIdx = document.getElementById('asesor-edit-idx').value;
   if (!nombre) { toast('⚠️ Ingresa el nombre del asesor','e'); return; }
-  if (!pin || pin.length < 4) { toast('⚠️ El PIN debe tener 4 dígitos','e'); return; }
+  var esEdicion = editIdx !== '';
+  // Al crear: PIN obligatorio. Al editar: solo si escribe uno nuevo
+  if (!esEdicion && (!pin || pin.length < 4)) { toast('⚠️ El PIN debe tener 4 dígitos','e'); return; }
+  if (esEdicion && pin && pin.length > 0 && pin.length < 4) { toast('⚠️ El PIN nuevo debe tener al menos 4 dígitos','e'); return; }
   var finalImg = _asesorImg || (imgVal && !imgVal.startsWith('(') ? imgVal : '');
   var tipo = document.getElementById('asesor-tipo').value || 'ambos';
   var mesasVal = document.getElementById('asesor-mesas').value.trim();
@@ -5615,8 +5627,10 @@ function guardarAsesor() {
     permisos.descuentos  = document.getElementById('perm-descuentos')   ? document.getElementById('perm-descuentos').checked   : false;
     permisos.anular      = document.getElementById('perm-anular')       ? document.getElementById('perm-anular').checked       : false;
   }
-  var asesor = { nombre: nombre, img: finalImg, pin: hashPin(pin), tipo: tipo, mesas: mesasArr, activo: activo, permisos: permisos };
-  if (editIdx !== '') {
+  // PIN: si es edición y no escribió nuevo, conservar el existente
+  var pinFinal = (esEdicion && !pin) ? ASESORES[parseInt(editIdx)].pin : hashPin(pin);
+  var asesor = { nombre: nombre, img: finalImg, pin: pinFinal, tipo: tipo, mesas: mesasArr, activo: activo, permisos: permisos };
+  if (esEdicion) {
     ASESORES[parseInt(editIdx)] = asesor;
     toast('✅ Asesor actualizado','s');
   } else {
