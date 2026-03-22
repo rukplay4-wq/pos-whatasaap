@@ -5588,7 +5588,8 @@ function iniciarModoAsesor() {
   // Mostrar pantalla de login asesor
   var screen = document.getElementById('asesor-login-screen');
   if (!screen) return;
-  var activos = ASESORES.filter(function(a){ return a.activo !== false && (a.tipo==='mesa'||a.tipo==='ambos'); });
+  var tiposValidos = ['mesa','ambos','cajero_fisico','cajero_domicilio','cajero_evento','cajero_todo','domicilio','cocina','supervisor'];
+  var activos = ASESORES.filter(function(a){ return a.activo !== false && tiposValidos.indexOf(a.tipo) !== -1; });
   if (!activos.length) {
     screen.style.display = 'flex';
     document.getElementById('asesor-login-list').innerHTML = '<div style="color:var(--cmut);font-size:13px;padding:20px">No hay asesores activos configurados.<br>El dueño debe crear asesores en el panel admin.</div>';
@@ -5600,7 +5601,11 @@ function iniciarModoAsesor() {
     var a = ASESORES[i];
     if (a.activo === false) continue;
     var imgH = a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
-    var tipoL = a.tipo==='domicilio' ? '🛵' : '🪑';
+    var iconoTipo = {
+      'cajero_fisico':'🏪','cajero_domicilio':'🛵','cajero_evento':'🎪','cajero_todo':'⚡',
+      'domicilio':'🛵','cocina':'📦','supervisor':'👁️','aliado':'🤝','ambos':'🔄','mesa':'🪑'
+    };
+    var tipoL = iconoTipo[a.tipo] || '👤';
     html += '<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;cursor:pointer;transition:all .2s" data-idx="'+i+'" onclick="selAsesorLogin(parseInt(this.dataset.idx))" onmouseover="this.style.background=\'rgba(240,165,0,.1)\'" onmouseout="this.style.background=\'rgba(255,255,255,.05)\'">' +
       '<div style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0">' + imgH + '</div>' +
       '<div style="flex:1;text-align:left"><div style="font-weight:700;font-size:15px">' + tipoL + ' ' + a.nombre + '</div>' +
@@ -5662,7 +5667,7 @@ function iniciarSesionAsesor(a) {
   var imgEl = document.getElementById('asesor-session-img');
   if (imgEl) imgEl.innerHTML = a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">' : '👤';
   var nmEl = document.getElementById('asesor-session-name');
-  var rolLabel = {mesa:'Cajero/a',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',ambos:'Vendedor'}[a.tipo] || a.cargoCustom || 'Personal';
+  var rolLabel = {mesa:'Cajero/a',domicilio:'Domiciliario',cocina:'Bodega',supervisor:'Supervisor',aliado:'Aliado',ambos:'Vendedor',cajero_fisico:'Caja Física',cajero_domicilio:'Caja Domicilios',cajero_evento:'Caja Eventos',cajero_todo:'Caja General'}[a.tipo] || a.cargoCustom || 'Personal';
   if (nmEl) nmEl.textContent = a.nombre + ' — ' + rolLabel;
   // Turno asignado
   var turno = (C.turnosAsesores||[]).find(function(t){ return t.asesor===a.nombre && t.activo; });
@@ -5674,6 +5679,8 @@ function iniciarSesionAsesor(a) {
   if (a.tipo==='cocina') setTimeout(function(){ cajaSwitchTab('pendientes'); },200);
   else if (a.tipo==='domicilio') setTimeout(function(){ cajaSwitchTab('domicilios'); },200);
   else if (a.tipo==='supervisor') { var d=document.querySelector('.an[data-sec="dashboard"]'); if(d) navTo(d); }
+  else if (a.tipo==='cajero_fisico'||a.tipo==='cajero_todo'||a.tipo==='cajero_evento') setTimeout(function(){ cajaSwitchTab('registradora'); },200);
+  else if (a.tipo==='cajero_domicilio') setTimeout(function(){ cajaSwitchTab('domicilios'); },200);
   else setTimeout(function(){ cajaSwitchTab('registradora'); },200);
   // Reconocimiento facial si tiene foto
   if (a.img && typeof startFacialCheck === 'function') {
