@@ -3526,7 +3526,13 @@ var ASESOR_SESSION = null;
 var ASESORES = st && st.ASESORES ? st.ASESORES : [];
 var ASESOR_ACTIVO = null;
 var CRM_AUTH = false;
-var CART = [];
+var CART = (function(){
+  try {
+    var sk = 'cart_cliente';
+    var saved = localStorage.getItem(sk);
+    return saved ? JSON.parse(saved) : [];
+  } catch(e) { return []; }
+})();
 var CS   = 1;
 var OF   = 'all';
 var ACAT = 'Todos';
@@ -3897,12 +3903,17 @@ function cartTot() {
   return t;
 }
 
+function saveCart() {
+  try { localStorage.setItem('cart_cliente', JSON.stringify(CART)); } catch(e) {}
+}
+
 function updCartN() {
   var n = 0;
   for (var i = 0; i < CART.length; i++) n += CART[i].qty;
   var b = document.getElementById('cart-n');
   if (n > 0) { b.textContent = n; b.classList.remove('hidden'); }
   else        { b.classList.add('hidden'); }
+  saveCart();
 }
 
 function openCart() { renderCartB(); document.getElementById('m-cart').classList.remove('hidden'); }
@@ -7392,9 +7403,72 @@ function saveCelebConfig() {
 // ============================================================
 function registrarSW() {
   if(!('serviceWorker' in navigator)) return;
-  var sw="var C='pclik-v1';self.addEventListener('install',function(){self.skipWaiting();});self.addEventListener('activate',function(e){self.clients.claim();});self.addEventListener('fetch',function(e){if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).catch(function(){return caches.match(e.request);}));});";
-  var blob=new Blob([sw],{type:'text/javascript'});
-  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(function(){});
+  // Service Worker que cachea todo al instalar y sirve desde cache si no hay internet
+  var sw = `
+    var CACHE = 'comerciocol-v2';
+    var URL_PRINCIPAL = location.href;
+
+    self.addEventListener('install', function(e) {
+      self.skipWaiting();
+      e.waitUntil(
+        caches.open(CACHE).then(function(cache) {
+          // Cachear la página principal al instalar
+          return fetch(self.location.href.replace('sw-inline.js','').split('?')[0])
+            .then(function(r){ return cache.put(new Request('/'), r); })
+            .catch(function(){});
+        })
+      );
+    });
+
+    self.addEventListener('activate', function(e) {
+      self.clients.claim();
+      // Limpiar caches viejos
+      e.waitUntil(
+        caches.keys().then(function(keys) {
+          return Promise.all(keys.filter(function(k){ return k !== CACHE; }).map(function(k){ return caches.delete(k); }));
+        })
+      );
+    });
+
+    self.addEventListener('fetch', function(e) {
+      if (e.request.method !== 'GET') return;
+      e.respondWith(
+        caches.open(CACHE).then(function(cache) {
+          return fetch(e.request)
+            .then(function(response) {
+              // Cachear respuesta exitosa
+              if (response && response.status === 200) {
+                cache.put(e.request, response.clone());
+              }
+              return response;
+            })
+            .catch(function() {
+              // Sin internet — servir desde cache
+              return cache.match(e.request).then(function(cached) {
+                return cached || cache.match('/') || new Response(
+                  '<h2 style="font-family:sans-serif;text-align:center;padding:40px;color:#f0a500">Sin conexión — abre la app cuando tengas internet para actualizarla</h2>',
+                  { headers: { 'Content-Type': 'text/html' } }
+                );
+              });
+            });
+        })
+      );
+    });
+  `;
+  var blob = new Blob([sw], {type:'text/javascript'});
+  var url = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(url).then(function(reg) {
+    // Forzar actualización del cache con la URL actual
+    reg.addEventListener('updatefound', function() {});
+    // Cachear la página actual inmediatamente
+    if ('caches' in window) {
+      caches.open('comerciocol-v2').then(function(cache) {
+        cache.put(window.location.href, new Response(document.documentElement.outerHTML, {
+          headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        }));
+      });
+    }
+  }).catch(function(){});
 }
 
 window.addEventListener('beforeinstallprompt',function(e){
