@@ -474,8 +474,10 @@ function capturarFacial() {
   if (status) status.textContent = 'Analizando...';
 
   var SZ = 80;
-  var ZONAS = 4; // 4x4 = 16 zonas
-  var UMBRAL = 55; // umbral tolerante a diferencias de iluminación
+  var ZONAS = 4;
+  var UMBRAL = 75;
+
+  if (!window._facialIntentos) window._facialIntentos = 0;
 
   function histZonas(data, w) {
     var tam = w / ZONAS;
@@ -485,8 +487,8 @@ function capturarFacial() {
         var sum = 0, count = 0;
         for (var py = Math.floor(zy*tam); py < Math.floor((zy+1)*tam); py++) {
           for (var px = Math.floor(zx*tam); px < Math.floor((zx+1)*tam); px++) {
-            var idx = (py*w + px)*4;
-            sum += 0.299*data[idx] + 0.587*data[idx+1] + 0.114*data[idx+2];
+            var ii = (py*w + px)*4;
+            sum += 0.299*data[ii] + 0.587*data[ii+1] + 0.114*data[ii+2];
             count++;
           }
         }
@@ -496,7 +498,6 @@ function capturarFacial() {
     return result;
   }
 
-  // Normalizar histograma para compensar diferencias de iluminación
   function normalizar(hist) {
     var min = Math.min.apply(null, hist);
     var max = Math.max.apply(null, hist);
@@ -513,37 +514,58 @@ function capturarFacial() {
   refImg.onload = function() {
     var c2 = document.createElement('canvas'); c2.width=SZ; c2.height=SZ;
     c2.getContext('2d').drawImage(refImg, 0, 0, SZ, SZ);
-    var refData = c2.getContext('2d').getImageData(0,0,SZ,SZ).data;
-    var refHist = histZonas(refData, SZ);
+    var refHist = normalizar(histZonas(c2.getContext('2d').getImageData(0,0,SZ,SZ).data, SZ));
 
     var capImg = new Image();
     capImg.onload = function() {
       var c3 = document.createElement('canvas'); c3.width=SZ; c3.height=SZ;
       c3.getContext('2d').drawImage(capImg, 0, 0, SZ, SZ);
-      var capData = c3.getContext('2d').getImageData(0,0,SZ,SZ).data;
-      var capHist = histZonas(capData, SZ);
+      var capHist = normalizar(histZonas(c3.getContext('2d').getImageData(0,0,SZ,SZ).data, SZ));
 
-      // Normalizar ambos histogramas antes de comparar (compensa iluminación)
-      var refNorm = normalizar(refHist);
-      var capNorm = normalizar(capHist);
       var totalDiff = 0;
-      for (var i=0; i<refNorm.length; i++) totalDiff += Math.abs(refNorm[i]-capNorm[i]);
-      var score = totalDiff / refNorm.length;
+      for (var i=0; i<refHist.length; i++) totalDiff += Math.abs(refHist[i]-capHist[i]);
+      var score = totalDiff / refHist.length;
 
       cerrarFacial();
+
       if (score < UMBRAL) {
+        window._facialIntentos = 0;
         if (_facialCallback) _facialCallback(true);
       } else {
-        var reintentar = confirm('⚠️ Rostro no reconocido.\n\nAsegúrate de:\n• Buena iluminación frontal\n• Mirar directo a la cámara\n• Ser la misma persona de la foto registrada\n\n¿Intentar de nuevo?');
-        if (reintentar) startFacialCheck(_facialAsesor, _facialCallback);
-        else { if (_facialCallback) _facialCallback(false); }
+        window._facialIntentos++;
+        if (window._facialIntentos >= 3) {
+          // Al 3er intento fallido — pedir PIN directamente
+          window._facialIntentos = 0;
+          cerrarFacial();
+          // Mostrar campo PIN de verificación
+          var pinVal = prompt('⚠️ Verificación facial fallida 3 veces.\nIngresa tu PIN para continuar:');
+          if (pinVal !== null && pinVal.trim() !== '') {
+            var a = _facialAsesor;
+            var pinOk = (hashPin(pinVal.trim()) === a.pin) || (pinVal.trim() === a.pin);
+            if (pinOk) {
+              if (_facialCallback) _facialCallback(true);
+            } else {
+              toast('❌ PIN incorrecto — acceso denegado', 'e');
+              if (_facialCallback) _facialCallback(false);
+            }
+          } else {
+            if (_facialCallback) _facialCallback(false);
+          }
+        } else {
+          var restantes = 3 - window._facialIntentos;
+          var reintentar = confirm('⚠️ Rostro no reconocido. Intento ' + window._facialIntentos + '/3.\n' +
+            '(' + restantes + ' intento(s) antes de pedir PIN)\n\n' +
+            'Asegúrate de:\n• Buena iluminación frontal\n• Mirar directo a la cámara\n\n¿Intentar de nuevo?');
+          if (reintentar) startFacialCheck(_facialAsesor, _facialCallback);
+          else { window._facialIntentos = 0; if (_facialCallback) _facialCallback(false); }
+        }
       }
     };
     capImg.src = captured;
   };
   refImg.onerror = function() {
     cerrarFacial();
-    toast('⚠️ No se pudo cargar la foto del asesor. Verifica que tenga foto registrada.','e');
+    toast('⚠️ No se pudo cargar la foto del asesor.','e');
     if (_facialCallback) _facialCallback(false);
   };
   refImg.src = _facialAsesor.img;
@@ -7111,7 +7133,9 @@ function capturarFacial() {
 
   var SZ = 80;
   var ZONAS = 4;
-  var UMBRAL = 28;
+  var UMBRAL = 75;
+
+  if (!window._facialIntentos) window._facialIntentos = 0;
 
   function histZonas(data, w) {
     var tam = w / ZONAS;
@@ -7132,6 +7156,13 @@ function capturarFacial() {
     return result;
   }
 
+  function normalizar(hist) {
+    var min = Math.min.apply(null, hist);
+    var max = Math.max.apply(null, hist);
+    var rng = max - min || 1;
+    return hist.map(function(v){ return (v - min) / rng * 100; });
+  }
+
   var canvas = document.createElement('canvas'); canvas.width=SZ; canvas.height=SZ;
   canvas.getContext('2d').drawImage(video, 0, 0, SZ, SZ);
   var captured = canvas.toDataURL('image/jpeg', 0.9);
@@ -7141,24 +7172,51 @@ function capturarFacial() {
   refImg.onload = function() {
     var c2 = document.createElement('canvas'); c2.width=SZ; c2.height=SZ;
     c2.getContext('2d').drawImage(refImg, 0, 0, SZ, SZ);
-    var refData = c2.getContext('2d').getImageData(0,0,SZ,SZ).data;
-    var refHist = histZonas(refData, SZ);
+    var refHist = normalizar(histZonas(c2.getContext('2d').getImageData(0,0,SZ,SZ).data, SZ));
+
     var capImg = new Image();
     capImg.onload = function() {
       var c3 = document.createElement('canvas'); c3.width=SZ; c3.height=SZ;
       c3.getContext('2d').drawImage(capImg, 0, 0, SZ, SZ);
-      var capData = c3.getContext('2d').getImageData(0,0,SZ,SZ).data;
-      var capHist = histZonas(capData, SZ);
+      var capHist = normalizar(histZonas(c3.getContext('2d').getImageData(0,0,SZ,SZ).data, SZ));
+
       var totalDiff = 0;
       for (var i=0; i<refHist.length; i++) totalDiff += Math.abs(refHist[i]-capHist[i]);
       var score = totalDiff / refHist.length;
+
       cerrarFacial();
+
       if (score < UMBRAL) {
+        window._facialIntentos = 0;
         if (_facialCallback) _facialCallback(true);
       } else {
-        var reintentar = confirm('⚠️ Rostro no reconocido.\n\nAsegúrate de:\n• Buena iluminación frontal\n• Mirar directo a la cámara\n• Ser la misma persona de la foto\n\n¿Intentar de nuevo?');
-        if (reintentar) startFacialCheck(_facialAsesor, _facialCallback);
-        else { if (_facialCallback) _facialCallback(false); }
+        window._facialIntentos++;
+        if (window._facialIntentos >= 3) {
+          // Al 3er intento fallido — pedir PIN directamente
+          window._facialIntentos = 0;
+          cerrarFacial();
+          // Mostrar campo PIN de verificación
+          var pinVal = prompt('⚠️ Verificación facial fallida 3 veces.\nIngresa tu PIN para continuar:');
+          if (pinVal !== null && pinVal.trim() !== '') {
+            var a = _facialAsesor;
+            var pinOk = (hashPin(pinVal.trim()) === a.pin) || (pinVal.trim() === a.pin);
+            if (pinOk) {
+              if (_facialCallback) _facialCallback(true);
+            } else {
+              toast('❌ PIN incorrecto — acceso denegado', 'e');
+              if (_facialCallback) _facialCallback(false);
+            }
+          } else {
+            if (_facialCallback) _facialCallback(false);
+          }
+        } else {
+          var restantes = 3 - window._facialIntentos;
+          var reintentar = confirm('⚠️ Rostro no reconocido. Intento ' + window._facialIntentos + '/3.\n' +
+            '(' + restantes + ' intento(s) antes de pedir PIN)\n\n' +
+            'Asegúrate de:\n• Buena iluminación frontal\n• Mirar directo a la cámara\n\n¿Intentar de nuevo?');
+          if (reintentar) startFacialCheck(_facialAsesor, _facialCallback);
+          else { window._facialIntentos = 0; if (_facialCallback) _facialCallback(false); }
+        }
       }
     };
     capImg.src = captured;
