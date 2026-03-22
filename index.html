@@ -471,23 +471,34 @@ function capturarFacial() {
   var video=document.getElementById('facial-video'); var status=document.getElementById('facial-status');
   if(!video||!_facialAsesor) return;
   if(status) status.textContent='Analizando...';
-  var canvas=document.createElement('canvas'); canvas.width=100; canvas.height=100;
-  canvas.getContext('2d').drawImage(video,0,0,100,100);
-  var captured=canvas.toDataURL('image/jpeg',0.8);
+  // Captura a mayor resolución para mejor comparación
+  var canvas=document.createElement('canvas'); canvas.width=200; canvas.height=200;
+  canvas.getContext('2d').drawImage(video,0,0,200,200);
+  var captured=canvas.toDataURL('image/jpeg',0.9);
   var refImg=new Image(); refImg.crossOrigin='anonymous';
   refImg.onload=function(){
-    var c2=document.createElement('canvas'); c2.width=50; c2.height=50;
-    c2.getContext('2d').drawImage(refImg,0,0,50,50);
-    var refData=c2.getContext('2d').getImageData(0,0,50,50).data;
+    // Normalizar ambas imágenes al mismo tamaño 80x80
+    var SZ=80;
+    var c2=document.createElement('canvas'); c2.width=SZ; c2.height=SZ;
+    c2.getContext('2d').drawImage(refImg,0,0,SZ,SZ);
+    var refData=c2.getContext('2d').getImageData(0,0,SZ,SZ).data;
     var capImg=new Image(); capImg.onload=function(){
-      var c3=document.createElement('canvas'); c3.width=50; c3.height=50;
-      c3.getContext('2d').drawImage(capImg,0,0,50,50);
-      var capData=c3.getContext('2d').getImageData(0,0,50,50).data;
+      var c3=document.createElement('canvas'); c3.width=SZ; c3.height=SZ;
+      c3.getContext('2d').drawImage(capImg,0,0,SZ,SZ);
+      var capData=c3.getContext('2d').getImageData(0,0,SZ,SZ).data;
       var diff=0;
       for(var i=0;i<refData.length;i+=4){ diff+=Math.abs(refData[i]-capData[i])+Math.abs(refData[i+1]-capData[i+1])+Math.abs(refData[i+2]-capData[i+2]); }
       cerrarFacial();
-      if(diff/(50*50*3)<80){ if(_facialCallback) _facialCallback(true); }
-      else { if(confirm('No se pudo verificar. ¿Intentar de nuevo?')) startFacialCheck(_facialAsesor,_facialCallback); else { if(_facialCallback) _facialCallback(true); } }
+      var promedio = diff/(80*80*3);
+      if(promedio < 120){
+        if(status) status.textContent='✅ Verificado';
+        if(_facialCallback) _facialCallback(true);
+      } else {
+        if(status) status.textContent='❌ No coincide ('+Math.round(promedio)+')';
+        var intentar = confirm('Verificación fallida.\n\nConsejos:\n• Asegúrate de tener buena iluminación\n• Mira directo a la cámara\n• Usa la misma foto con la que te registraste\n\n¿Intentar de nuevo?');
+        if(intentar) startFacialCheck(_facialAsesor,_facialCallback);
+        else { if(_facialCallback) _facialCallback(true); }
+      }
     }; capImg.src=captured;
   };
   refImg.onerror=function(){ cerrarFacial(); if(_facialCallback) _facialCallback(true); };
@@ -1029,8 +1040,7 @@ function setBtnPos(justify, valign) {
       <div class="an" data-sec="orders" onclick="navTo(this);cerrarNav()"><span class="ani">&#129534;</span><span>Caja</span></div>
       <div class="an" data-sec="crm" onclick="navTo(this);cerrarNav()"><span class="ani">&#128202;</span><span>CRM</span></div>
       <div class="nav-section">Personal</div>
-      <div class="an" data-sec="asesores" onclick="navTo(this);cerrarNav()"><span class="ani">&#128101;</span><span id="nav-asesores-lbl">Personal / Vendedores</span></div>
-      <div class="an" data-sec="vendedores" onclick="navTo(this);cerrarNav()"><span class="ani">&#128694;</span><span>Vendedores Externos</span></div>
+
     </nav>
     <main id="adm-main">
 
@@ -5554,7 +5564,17 @@ function guardarAsesor() {
     }
   }
   var activo = (document.getElementById('asesor-activo-chk') ? document.getElementById('asesor-activo-chk').checked : true);
-  var asesor = { nombre: nombre, img: finalImg, pin: hashPin(pin), tipo: tipo, mesas: mesasArr, activo: activo };
+  // Leer permisos si es cajero
+  var permisos = {};
+  if (tipo.indexOf('cajero') === 0) {
+    permisos.cajaFisica  = document.getElementById('perm-caja-fisica')  ? document.getElementById('perm-caja-fisica').checked  : false;
+    permisos.domicilios  = document.getElementById('perm-domicilios')   ? document.getElementById('perm-domicilios').checked   : false;
+    permisos.eventos     = document.getElementById('perm-eventos')      ? document.getElementById('perm-eventos').checked      : false;
+    permisos.reportes    = document.getElementById('perm-reportes')     ? document.getElementById('perm-reportes').checked     : false;
+    permisos.descuentos  = document.getElementById('perm-descuentos')   ? document.getElementById('perm-descuentos').checked   : false;
+    permisos.anular      = document.getElementById('perm-anular')       ? document.getElementById('perm-anular').checked       : false;
+  }
+  var asesor = { nombre: nombre, img: finalImg, pin: hashPin(pin), tipo: tipo, mesas: mesasArr, activo: activo, permisos: permisos };
   if (editIdx !== '') {
     ASESORES[parseInt(editIdx)] = asesor;
     toast('✅ Asesor actualizado','s');
@@ -5575,8 +5595,12 @@ function guardarAsesor() {
 
 function toggleAsesorTipo() {
   var tipo = document.getElementById('asesor-tipo').value;
-  var wrap = document.getElementById('asesor-mesas-wrap');
-  if (wrap) wrap.style.display = (tipo === 'mesa' || tipo === 'ambos') ? '' : 'none';
+  var mwrap = document.getElementById('asesor-mesas-wrap');
+  var pwrap = document.getElementById('asesor-permisos-wrap');
+  // Mesas solo para mesa/ambos
+  if (mwrap) mwrap.style.display = (tipo === 'mesa' || tipo === 'ambos') ? '' : 'none';
+  // Permisos solo para cajeros
+  if (pwrap) pwrap.style.display = (tipo.indexOf('cajero') === 0) ? '' : 'none';
 }
 
 // ============================================================
@@ -5642,22 +5666,12 @@ function loginAsesorSession() {
   if (_asesorLoginIdx === null) return;
   var pin = document.getElementById('asesor-login-pin').value.trim();
   var a = ASESORES[_asesorLoginIdx];
-  // Verificar PIN: hashPin, texto plano, o hashP (compatibilidad)
   var pinOk = (hashPin(pin) === a.pin) || (pin === a.pin) || (typeof hashP==='function' && hashP(pin) === a.pin);
   if (!pinOk) { toast('❌ PIN incorrecto','e'); return; }
-  ASESOR_SESSION = { idx: _asesorLoginIdx, nombre: a.nombre, img: a.img, mesas: a.mesas||[], tipo: a.tipo };
+  ASESOR_SESSION = { idx: _asesorLoginIdx, nombre: a.nombre, img: a.img, mesas: a.mesas||[], tipo: a.tipo, permisos: a.permisos||{} };
+  var screen = document.getElementById('asesor-login-screen');
+  if (screen) screen.style.display = 'none';
   iniciarSesionAsesor(a);
-  // Ocultar pantalla login
-  document.getElementById('asesor-login-screen').style.display = 'none';
-  // Mostrar barra de sesión
-  var bar = document.getElementById('asesor-session-bar');
-  bar.style.display = 'flex';
-  var imgEl = document.getElementById('asesor-session-img');
-  imgEl.innerHTML = a.img ? '<img src="'+a.img+'" style="width:100%;height:100%;object-fit:cover">' : '👤';
-  document.getElementById('asesor-session-name').textContent = a.nombre;
-  var mesasStr = (a.mesas&&a.mesas.length) ? 'Mesas: '+a.mesas.join(', ') : '';
-  document.getElementById('asesor-session-mesas').textContent = mesasStr;
-  toast('👋 Bienvenido ' + a.nombre + ' — ya puedes tomar pedidos', 's');
 }
 
 function iniciarSesionAsesor(a) {
