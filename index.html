@@ -3564,6 +3564,13 @@ window.addEventListener('DOMContentLoaded', function() {
     if (mn) mn.textContent = (C.mesaLabel||'Mesa') + ' ' + MESA_NUM;
   }
   applyC(); renderCat(); renderTicker(); renderProdList(); renderCatList(); renderOrds(); renderCRM();
+  // Ocultar PWA si ya está instalada
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    var fabEl = document.getElementById('pwa-fab');
+    if (fabEl) fabEl.style.display = 'none';
+    var btnEl = document.getElementById('pwa-install-btn');
+    if (btnEl) btnEl.style.display = 'none';
+  }
   if(db){ initFirebase(); }
   setTimeout(initExtras, 100);
 });
@@ -7424,10 +7431,13 @@ function instalarPWA() {
   if(!_deferredPrompt){toast('Menú del navegador → "Añadir a pantalla de inicio"','s');return;}
   _deferredPrompt.prompt();
   _deferredPrompt.userChoice.then(function(r){
-    if(r.outcome==='accepted'){ toast('✅ App instalada','s'); ocultarFabPWA(); }
     _deferredPrompt=null;
     var btn=document.getElementById('pwa-install-btn');
     if(btn) btn.style.display='none';
+    var fab=document.getElementById('pwa-fab');
+    if(fab) fab.style.display='none';
+    ocultarFabPWA();
+    if(r.outcome==='accepted'){ toast('✅ App instalada — ya puedes abrirla desde tu pantalla de inicio','s'); }
   });
 }
 
@@ -8356,7 +8366,9 @@ function aplicarPWAFab() {
   }
 
   btn.innerHTML = innerHtml;
-  btn.style.display = C.pwaActivo ? 'block' : 'none';
+  // No mostrar si ya está instalada como app
+  var yaInstalada = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  btn.style.display = (C.pwaActivo && !yaInstalada) ? 'block' : 'none';
   renderPWAPreview();
 }
 
