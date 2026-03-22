@@ -2277,6 +2277,12 @@ function setBtnPos(justify, valign) {
           </div>
         </div>
 
+        <!-- TAB: DESPACHADOS -->
+        <div id="cajapanel-despachados" style="display:none">
+          <div style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase;margin-bottom:12px">🚀 Pedidos en camino / despachados</div>
+          <div id="orders-despachados-list"></div>
+        </div>
+
         <!-- TAB: TODOS -->
         <div id="cajapanel-todos" style="display:none">
           <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
@@ -5762,24 +5768,131 @@ function iniciarSesionAsesor(a) {
     if (btn) btn.style.display = tabsPermitidas.indexOf(t) !== -1 ? '' : 'none';
   });
 
-  // Navegar a la sección correcta
-  if (a.tipo === 'supervisor') {
-    var d = document.querySelector('.an[data-sec="dashboard"]');
-    if (d) navTo(d);
-  } else {
-    var s = document.querySelector('.an[data-sec="orders"]');
-    if (s) navTo(s);
-    setTimeout(function(){ cajaSwitchTab(tabIni); }, 200);
+  // ── Función interna: aplica panel y tabs SOLO si verificación OK ──
+  function _aplicarPanelYNavegar() {
+
+    // Roles con panel exclusivo (sin panel admin)
+    if (a.tipo === 'cocina') {
+      var adm = document.getElementById('adm');
+      if (adm) adm.style.display = 'none';
+      var cocinaPan = document.getElementById('cocina-panel');
+      if (cocinaPan) {
+        cocinaPan.style.display = 'block';
+        var titCocina = document.getElementById('cocina-panel-titulo');
+        if (titCocina) titCocina.textContent = '📦 Bodega / Alistamiento — ' + a.nombre;
+      }
+      renderPanelCocina();
+      toast('✅ Bienvenido/a, ' + a.nombre + ' — Bodega', 's');
+      return;
+    }
+
+    if (a.tipo === 'domicilio') {
+      var adm2 = document.getElementById('adm');
+      if (adm2) adm2.style.display = 'none';
+      // Crear panel domiciliario si no existe
+      var domPan = document.getElementById('domiciliario-panel');
+      if (!domPan) {
+        domPan = document.createElement('div');
+        domPan.id = 'domiciliario-panel';
+        domPan.style.cssText = 'min-height:100vh;background:#07070f;padding:16px';
+        domPan.innerHTML =
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">' +
+            '<div id="domi-panel-titulo" style="font-size:18px;font-weight:700;color:var(--cp)">🛵 Panel Domiciliario</div>' +
+            '<button onclick="cerrarSesionAsesor()" style="background:rgba(229,62,62,.1);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer">🚪 Salir</button>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">' +
+            '<button class="btn bsm bp" id="domitab-pendientes" onclick="domiSwitchTab(\'pendientes\')">⏳ Por despachar</button>' +
+            '<button class="btn bsm bo" id="domitab-despachados" onclick="domiSwitchTab(\'despachados\')">🚀 En camino</button>' +
+          '</div>' +
+          '<div id="domi-panel-pendientes"><div id="domi-lista-pendientes"></div></div>' +
+          '<div id="domi-panel-despachados" style="display:none"><div id="domi-lista-despachados"></div></div>';
+        document.body.appendChild(domPan);
+      }
+      domPan.style.display = 'block';
+      var titDomi = document.getElementById('domi-panel-titulo');
+      if (titDomi) titDomi.textContent = '🛵 ' + a.nombre + ' — Domiciliario';
+      domiSwitchTab('pendientes');
+      toast('✅ Bienvenido/a, ' + a.nombre + ' — Domiciliario', 's');
+      return;
+    }
+
+    // Roles que usan el panel admin (cajeros, mesa, supervisor, etc.)
+    var adm3 = document.getElementById('adm');
+    if (adm3) adm3.style.display = '';
+
+    // Tabs visibles por rol
+    var tabsVisible = {
+      cajero_fisico:   ['tablero','pendientes','registradora','gastos','alertas','buscar'],
+      cajero_domicilio:['pendientes','domicilios','despachados','alertas'],
+      cajero_evento:   ['tablero','pendientes','registradora','gastos'],
+      cajero_todo:     ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'],
+      mesa:            ['tablero','pendientes','mesas','alertas'],
+      ambos:           ['tablero','pendientes','mesas','domicilios','alertas','buscar','todos'],
+      aliado:          ['tablero','pendientes'],
+      supervisor:      ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos']
+    };
+    var navVisible = {
+      cajero_fisico:'orders', cajero_domicilio:'orders', cajero_evento:'orders',
+      cajero_todo:'orders', mesa:'orders', ambos:'orders', aliado:'orders',
+      supervisor:'dashboard'
+    };
+    var tabInicial2 = {
+      cajero_fisico:'registradora', cajero_domicilio:'domicilios',
+      cajero_evento:'registradora', cajero_todo:'registradora',
+      mesa:'mesas', ambos:'tablero', aliado:'tablero', supervisor:'tablero'
+    };
+
+    var tabsPermitidas = tabsVisible[a.tipo] || ['tablero','pendientes'];
+    var secNav = navVisible[a.tipo] || 'orders';
+    var tabIni2 = tabInicial2[a.tipo] || 'pendientes';
+
+    // Filtrar nav sections
+    document.querySelectorAll('#adm-nav .an[data-sec]').forEach(function(el){
+      var sec = el.getAttribute('data-sec');
+      var permitida = (secNav === 'dashboard' && (sec === 'dashboard' || sec === 'crm' || sec === 'orders'))
+        || sec === secNav;
+      el.style.display = permitida ? '' : 'none';
+    });
+
+    // Filtrar tabs de caja
+    var allTabs = ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'];
+    allTabs.forEach(function(t){
+      var btn = document.getElementById('cajatab-'+t);
+      if (btn) btn.style.display = tabsPermitidas.indexOf(t) !== -1 ? '' : 'none';
+    });
+
+    // Navegar
+    if (secNav === 'dashboard') {
+      var d2 = document.querySelector('.an[data-sec="dashboard"]');
+      if (d2) navTo(d2);
+    } else {
+      var s2 = document.querySelector('.an[data-sec="orders"]');
+      if (s2) navTo(s2);
+      setTimeout(function(){ cajaSwitchTab(tabIni2); }, 200);
+    }
+    toast('✅ Bienvenido/a, '+a.nombre,'s');
   }
 
-  // Reconocimiento facial si tiene foto
+  // ── Verificación facial PRIMERO — panel solo si pasa ──
   if (a.img && typeof startFacialCheck === 'function') {
     startFacialCheck(a, function(ok){
-      if (!ok) toast('⚠️ Verificación facial fallida','e');
-      else toast('✅ Bienvenido/a, '+a.nombre,'s');
+      if (ok) {
+        _aplicarPanelYNavegar();
+      } else {
+        ASESOR_SESSION = null;
+        toast('❌ Acceso denegado — verificación facial fallida','e');
+        var screen = document.getElementById('asesor-login-screen');
+        if (screen) {
+          var list = document.getElementById('asesor-login-list');
+          var pinWrap = document.getElementById('asesor-pin-login-wrap');
+          if (list) { list.style.display = 'flex'; list.style.flexDirection = 'column'; }
+          if (pinWrap) pinWrap.style.display = 'none';
+          screen.style.display = 'flex';
+        }
+      }
     });
   } else {
-    toast('✅ Bienvenido/a, '+a.nombre,'s');
+    _aplicarPanelYNavegar();
   }
 }
 
@@ -5794,9 +5907,91 @@ function _restaurarNav() {
 function cerrarSesionAsesor() {
   ASESOR_SESSION = null;
   _restaurarNav();
+  // Ocultar paneles exclusivos de rol
+  var cocinaPan = document.getElementById('cocina-panel');
+  if (cocinaPan) cocinaPan.style.display = 'none';
+  var domPan = document.getElementById('domiciliario-panel');
+  if (domPan) domPan.style.display = 'none';
+  // Restaurar admin
+  var adm = document.getElementById('adm');
+  if (adm) adm.style.display = '';
   var bar = document.getElementById('asesor-session-bar');
   if (bar) bar.style.display = 'none';
   iniciarModoAsesor();
+}
+
+// ── Panel Domiciliario ──
+function domiSwitchTab(tab) {
+  ['pendientes','despachados'].forEach(function(t){
+    var btn = document.getElementById('domitab-'+t);
+    var pan = document.getElementById('domi-panel-'+t);
+    if (btn) btn.className = 'btn bsm ' + (t===tab?'bp':'bo');
+    if (pan) pan.style.display = t===tab?'':'none';
+  });
+  if (tab==='pendientes') renderDomiPendientes();
+  if (tab==='despachados') renderDomiDespachados();
+}
+
+function renderDomiPendientes() {
+  var el = document.getElementById('domi-lista-pendientes'); if (!el) return;
+  var list = ORD.filter(function(o){
+    return (o.status==='pending'||o.status==='ready') && (o.modo==='domicilio'||(o.modo!=='mesa'&&o.modo!=='mostrador'));
+  });
+  list.sort(function(a,b){ return (a._ts||0)-(b._ts||0); });
+  if (!list.length) { el.innerHTML='<div style="text-align:center;padding:32px;color:var(--cmut)">🛵 Sin pedidos de domicilio pendientes</div>'; return; }
+  el.innerHTML = list.map(function(o){ return buildDomiCard(o,false); }).join('');
+}
+
+function renderDomiDespachados() {
+  var el = document.getElementById('domi-lista-despachados'); if (!el) return;
+  var list = ORD.filter(function(o){
+    return o.status==='dispatched' && (o.modo==='domicilio'||(o.modo!=='mesa'&&o.modo!=='mostrador'));
+  });
+  list.sort(function(a,b){ return (b._ts||0)-(a._ts||0); });
+  if (!list.length) { el.innerHTML='<div style="text-align:center;padding:32px;color:var(--cmut)">🚀 Sin pedidos en camino</div>'; return; }
+  el.innerHTML = list.map(function(o){ return buildDomiCard(o,true); }).join('');
+}
+
+function buildDomiCard(o, despachado) {
+  var ahora = Date.now();
+  var mins = o._ts ? Math.floor((ahora-o._ts)/60000) : 0;
+  var urgente = !despachado && mins >= 20;
+  var borde = despachado?'rgba(99,179,237,.4)':urgente?'rgba(229,62,62,.5)':'rgba(240,165,0,.3)';
+  var fondo = despachado?'rgba(99,179,237,.06)':urgente?'rgba(229,62,62,.07)':'rgba(240,165,0,.05)';
+  var badge = despachado
+    ? '<span style="background:rgba(99,179,237,.2);color:#63b3ed;border:1px solid rgba(99,179,237,.4);border-radius:50px;padding:2px 10px;font-size:12px;font-weight:700">🚀 En camino</span>'
+    : o.status==='ready'
+      ? '<span style="background:rgba(251,146,60,.2);color:#fb923c;border:1px solid rgba(251,146,60,.4);border-radius:50px;padding:2px 10px;font-size:12px;font-weight:700">📦 Listo para despachar</span>'
+      : '<span style="background:rgba(240,165,0,.15);color:#f0a500;border:1px solid rgba(240,165,0,.3);border-radius:50px;padding:2px 10px;font-size:12px;font-weight:700">⏳ Preparando</span>';
+  var items = (o.items||[]).map(function(it){
+    return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)">' +
+      '<span style="font-size:14px;font-weight:600">'+it.name+'</span>' +
+      '<span style="font-size:16px;font-weight:800;color:var(--cp);background:rgba(240,165,0,.1);border-radius:6px;padding:1px 10px">x'+it.qty+'</span>' +
+      '</div>'+(it.notas?'<div style="font-size:12px;color:#f0a500;padding:2px 0 4px">📝 '+it.notas+'</div>':'');
+  }).join('');
+  var dir = o.direccion?'<div style="font-size:13px;color:var(--cmut);margin-top:6px">📍 '+o.direccion+'</div>':'';
+  var tel = o.telefono?'<a href="tel:'+o.telefono+'" style="font-size:13px;color:#68d391;margin-top:4px;display:block">📞 '+o.telefono+'</a>':'';
+  var btn = despachado?'':'<button onclick="domiDespachar(\"'+o.id+'\")" style="width:100%;margin-top:12px;background:var(--cp);color:#000;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:700;cursor:pointer">🛵 Marcar como despachado</button>';
+  return '<div style="background:'+fondo+';border:1px solid '+borde+';border-radius:14px;padding:14px;margin-bottom:12px">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">' +
+      '<div style="font-size:14px;font-weight:700">'+(o.cliente||'Domicilio')+'</div>' +
+      '<div style="display:flex;gap:6px;align-items:center"><span style="font-size:11px;color:var(--cmut)">'+mins+' min</span>'+badge+'</div>' +
+    '</div>' +
+    '<div style="margin-bottom:8px">'+items+'</div>' +
+    dir+tel+btn+
+  '</div>';
+}
+
+function domiDespachar(oid) {
+  var o = null;
+  for (var i=0;i<ORD.length;i++) { if(ORD[i].id===oid){o=ORD[i];break;} }
+  if (!o) return;
+  o.status='dispatched';
+  o.dispTs=new Date().toLocaleString('es-CO');
+  o.asesorDespacho=ASESOR_SESSION?ASESOR_SESSION.nombre:'Domiciliario';
+  saveSt();
+  renderDomiPendientes();
+  toast('🛵 Pedido despachado — '+(o.cliente||'Domicilio'),'s');
 }
 
 function generarLinkAsesor(idx) {
@@ -7016,13 +7211,13 @@ function capturarFacial() {
         if (confirm('⚠️ No se pudo verificar el rostro.\n¿Intentar de nuevo?')) {
           startFacialCheck(_facialAsesor, _facialCallback);
         } else {
-          if (_facialCallback) _facialCallback(true);
+          if (_facialCallback) _facialCallback(false);
         }
       }
     };
     capImg.src = captured;
   };
-  refImg.onerror = function() { cerrarFacial(); if(_facialCallback) _facialCallback(true); };
+  refImg.onerror = function() { cerrarFacial(); toast('⚠️ No se pudo verificar la identidad. Verifica que el asesor tenga foto registrada.','e'); if(_facialCallback) _facialCallback(false); };
   refImg.src = _facialAsesor.img;
 }
 
@@ -8839,7 +9034,7 @@ var _cajaTab = 'tablero';
 function cajaSwitchTab(tab) {
   setTimeout(guardarSesionActual, 100);
   _cajaTab = tab;
-  var tabs = ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','todos'];
+  var tabs = ['tablero','pendientes','registradora','mesas','domicilios','gastos','alertas','buscar','despachados','todos'];
   tabs.forEach(function(t) {
     var btn = document.getElementById('cajatab-'+t);
     var pan = document.getElementById('cajapanel-'+t);
@@ -8853,6 +9048,7 @@ function cajaSwitchTab(tab) {
   if (tab==='domicilios')  renderOrdsPorTipo('domicilio');
   if (tab==='gastos')      renderGastos();
   if (tab==='alertas')     { renderAlertasCocinaEnCaja(); renderMensajesCaja(); }
+  if (tab==='despachados') { var ed=document.getElementById('orders-despachados-list'); if(ed){ var ld=ORD.filter(function(o){return o.status==='dispatched';}); ld.sort(function(a,b){return (b._ts||0)-(a._ts||0);}); ed.innerHTML=ld.length?ld.map(function(o){return buildOrdCard(o);}).join(''):'<div class="empty"><span class="ei">🚀</span><h3>Sin pedidos despachados</h3></div>'; } }
   if (tab==='todos')       renderOrds();
 }
 
@@ -11061,7 +11257,7 @@ window.addEventListener('DOMContentLoaded', function() {
 <!-- PANEL COCINA -->
 <div id="cocina-panel" style="display:none;background:#07070f;min-height:100vh;padding:16px">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-    <div style="font-size:18px;font-weight:700;color:var(--cp)">📦 Panel Bodega / Empaque</div>
+    <div id="cocina-panel-titulo" style="font-size:18px;font-weight:700;color:var(--cp)">📦 Bodega / Alistamiento de Pedidos</div>
     <button onclick="cerrarSesionAsesor()" style="background:rgba(229,62,62,.1);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer">🚪 Salir</button>
   </div>
 
