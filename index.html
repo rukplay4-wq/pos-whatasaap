@@ -850,7 +850,13 @@ function setBtnPos(justify, valign) {
         <div id="asesor-login-sel-img" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;flex-shrink:0"></div>
         <div id="asesor-login-sel-name" style="font-weight:700;font-size:16px"></div>
       </div>
-      <input class="fi" id="asesor-login-pin" type="password" placeholder="••••" maxlength="4" style="text-align:center;font-size:28px;letter-spacing:10px" onkeydown="if(event.key==='Enter')loginAsesorSession()">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <input class="fi" id="asesor-login-pin" type="tel" inputmode="numeric" placeholder="PIN" maxlength="6" autocomplete="off"
+          style="text-align:center;font-size:22px;letter-spacing:8px;-webkit-text-security:disc;background:rgba(255,255,255,.08);border:2px solid rgba(240,165,0,.4);color:#f0f0ff;caret-color:#f0a500;border-radius:14px;padding:14px"
+          oninput="actualizarPuntosPIN(this.value)"
+          onkeydown="if(event.key==='Enter')loginAsesorSession()">
+        <div id="pin-puntos" style="display:flex;gap:10px;height:14px;align-items:center"></div>
+      </div>
       <button class="btn bp w100" style="border-radius:12px;padding:14px" onclick="loginAsesorSession()">✅ Entrar a la Tienda</button>
       <button class="btn bo w100" style="border-radius:12px" onclick="volverListaAsesores()">← Volver</button>
     </div>
@@ -959,7 +965,7 @@ function setBtnPos(justify, valign) {
   <div style="max-width:1200px;margin:0 auto 16px;padding:0 12px">
     <div style="position:relative">
       <input id="cat-search" type="text" placeholder="🔍 Buscar producto..." oninput="buscarEnCatalogo(this.value)"
-        style="width:100%;box-sizing:border-box;padding:12px 16px 12px 42px;border-radius:50px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:var(--ctxt);font-size:14px;font-family:var(--fbody);outline:none">
+        style="width:100%;box-sizing:border-box;padding:12px 16px 12px 42px;border-radius:50px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.09);color:#f0f0ff;font-size:14px;font-family:var(--fbody);outline:none;-webkit-text-fill-color:#f0f0ff;caret-color:#f0a500">
       <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none">🔍</span>
       <button id="cat-search-clear" onclick="limpiarBusqueda()" style="display:none;position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--cmut);font-size:18px;cursor:pointer">✕</button>
     </div>
@@ -1443,6 +1449,9 @@ function setBtnPos(justify, valign) {
                 <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
                   <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px">
                     <input type="checkbox" id="c-pwa-activo" style="accent-color:var(--cp);width:16px;height:16px" onchange="liveC()"> Mostrar botón de descarga en la tienda
+                  </label>
+                  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px">
+                    <input type="checkbox" id="c-badge-mas-vendido" style="accent-color:var(--cp);width:16px;height:16px" onchange="liveC()" checked> 🔥 Mostrar badge "+Pedido" en el producto más vendido
                   </label>
                   <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px">
                     <input type="checkbox" id="c-pwa-cerrar" style="accent-color:var(--cp);width:16px;height:16px" onchange="liveC()"> Mostrar botón ✕ para cerrar
@@ -3002,6 +3011,15 @@ function setBtnPos(justify, valign) {
           <div class="frow">
             <div class="fg"><label class="fl">Fondo barra vendedor/personal</label><div class="csw"><input type="color" id="c-asesor-bg" value="#1a0a2e" oninput="liveC();updHex()"><span id="c-asesor-bgh">#1a0a2e</span></div></div>
             <div class="fg"><label class="fl">Fondo barra bodega/empaque</label><div class="csw"><input type="color" id="c-cocina-bg" value="#07070f" oninput="liveC();updHex()"><span id="c-cocina-bgh">#07070f</span></div></div>
+            <div style="font-size:12px;font-weight:700;color:var(--cp);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px">🔔 Alertas / Notificaciones</div>
+            <div class="frow">
+              <div class="fg"><label class="fl">Fondo alerta</label><div class="csw"><input type="color" id="c-alerta-bg" value="#1a0a00" oninput="liveC();updHex()"><span id="c-alerta-bgh">#1a0a00</span></div></div>
+              <div class="fg"><label class="fl">Texto alerta</label><div class="csw"><input type="color" id="c-alerta-txt" value="#fb923c" oninput="liveC();updHex()"><span id="c-alerta-txth">#fb923c</span></div></div>
+            </div>
+            <div class="frow">
+              <div class="fg"><label class="fl">Borde alerta</label><div class="csw"><input type="color" id="c-alerta-brd" value="#fb923c" oninput="liveC();updHex()"><span id="c-alerta-brdh">#fb923c</span></div></div>
+              <div class="fg"><label class="fl">Botón alerta</label><div class="csw"><input type="color" id="c-alerta-btn" value="#f0a500" oninput="liveC();updHex()"><span id="c-alerta-btnh">#f0a500</span></div></div>
+            </div>
             <div class="fg"><label class="fl">Fondo banner de punto de venta</label><div class="csw"><input type="color" id="c-mesabanner-bg1" value="#16a34a" oninput="liveC();updHex()"><span id="c-mesabanner-bg1h">#16a34a</span></div></div>
             <div class="fg"><label class="fl">Color texto banner punto</label><div class="csw"><input type="color" id="c-mesabanner-txt" value="#ffffff" oninput="liveC();updHex()"><span id="c-mesabanner-txth">#ffffff</span></div></div>
           </div>
@@ -3786,15 +3804,15 @@ function renderCat() {
         '<div class="pph" style="display:none">' + (p.emoji||'📦') + '</div>'
       : '<div class="pph">' + (p.emoji||'📦') + '</div>';
     var badges = '';
-    if (p.id===masVendidoId) badges += '<span style="background:rgba(229,62,62,.2);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px">🔥 +Pedido</span>';
+    if (p.id===masVendidoId && C.badgeMasVendido!==false) badges += '<span style="background:#e53e3e;color:#fff;border-radius:50px;padding:2px 9px;font-size:10px;font-weight:800;margin-right:3px;box-shadow:0 2px 8px rgba(229,62,62,.5);animation:pulse 1.5s infinite">🔥 +Pedido</span>';
     if (p.nuevo)     badges += '<span style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px">✨ Nuevo</span>';
     if (p.oferta)    badges += '<span style="background:rgba(229,62,62,.15);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px">🏷️ Oferta</span>';
     if (p.destacado) badges += '<span style="background:rgba(240,165,0,.15);color:#f0a500;border:1px solid rgba(240,165,0,.3);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px">⭐ Destacado</span>';
     if (p.popular||p.recom)   badges += '<span style="background:rgba(251,146,60,.15);color:#fb923c;border:1px solid rgba(251,146,60,.3);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px">🔥 Popular</span>';
     if (p.limitado)  badges += '<span style="background:rgba(139,92,246,.15);color:#c4b5fd;border:1px solid rgba(139,92,246,.3);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px">⏰ Limitado</span>';
     if (p.envioGratis) badges += '<span style="background:rgba(56,161,105,.15);color:#68d391;border:1px solid rgba(56,161,105,.3);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px">🚀 Envío gratis</span>';
-    if (p.stock!=null && p.stock>0 && p.stock<=3) badges += '<span style="background:rgba(229,62,62,.15);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px;animation:pulse 1s infinite">🔴 ¡Quedan '+p.stock+'!</span>';
-    else if (p.stock!=null && p.stock>0 && p.stock<=10) badges += '<span style="background:rgba(240,165,0,.1);color:#f0a500;border:1px solid rgba(240,165,0,.2);border-radius:50px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:3px">⚠️ Solo '+p.stock+'</span>';
+    if (p.stock!=null && p.stock>0 && p.stock<=3) badges += '<span style="background:#c53030;color:#fff;border-radius:50px;padding:2px 9px;font-size:10px;font-weight:800;margin-right:3px;box-shadow:0 2px 8px rgba(197,48,48,.6);animation:pulse 1s infinite">🔴 ¡Quedan '+p.stock+'!</span>';
+    else if (p.stock!=null && p.stock>0 && p.stock<=10) badges += '<span style="background:#b7791f;color:#fff;border-radius:50px;padding:2px 9px;font-size:10px;font-weight:800;margin-right:3px;box-shadow:0 2px 6px rgba(183,121,31,.4)">⚠️ Solo '+p.stock+'</span>';
     if (p.picante) badges += '<span style="background:rgba(229,62,62,.1);color:#fc8181;border-radius:50px;padding:1px 6px;font-size:10px;margin-right:2px">🌶️</span>';
     if (p.vegetal) badges += '<span style="background:rgba(56,161,105,.1);color:#68d391;border-radius:50px;padding:1px 6px;font-size:10px;margin-right:2px">🌿</span>';
     var tiempoH = p.tiempo ? '<div style="font-size:11px;color:var(--cmut)">⏱ ~'+p.tiempo+' min</div>' : '';
@@ -4414,6 +4432,12 @@ function fillForm() {
   actualizarModoBanner();
   if(document.getElementById('c-asesor-bg')) document.getElementById('c-asesor-bg').value=C.asesorBarBg||'#1a0a2e';
   if(document.getElementById('c-cocina-bg')) document.getElementById('c-cocina-bg').value=C.cocinaBarBg||'#07070f';
+  if(document.getElementById('c-alerta-bg'))  document.getElementById('c-alerta-bg').value =C.alertaBg ||'#1a0a00';
+  if(document.getElementById('c-alerta-txt')) document.getElementById('c-alerta-txt').value=C.alertaTxt||'#fb923c';
+  if(document.getElementById('c-alerta-brd')) document.getElementById('c-alerta-brd').value=C.alertaBrd||'#fb923c';
+  if(document.getElementById('c-alerta-btn')) document.getElementById('c-alerta-btn').value=C.alertaBtn||'#f0a500';
+  var bmv = document.getElementById('c-badge-mas-vendido');
+  if (bmv) bmv.checked = C.badgeMasVendido !== false;
   if(document.getElementById('c-mesabanner-bg1')) document.getElementById('c-mesabanner-bg1').value=C.mesaBannerBg||'#16a34a';
   if(document.getElementById('c-mesabanner-txt')) document.getElementById('c-mesabanner-txt').value=C.mesaBannerTxt||'#ffffff';
   sv('c-mesa-msg', C.mesaMsg||'');
@@ -4604,6 +4628,12 @@ function liveC() {
   C.mesaLabel   = g('c-mesa-label')   || 'Mesa';
   C.asesorBarBg = g('c-asesor-bg') || '#1a0a2e';
   C.cocinaBarBg = g('c-cocina-bg') || '#07070f';
+  C.alertaBg   = g('c-alerta-bg')  || '#1a0a00';
+  C.alertaTxt  = g('c-alerta-txt') || '#fb923c';
+  C.alertaBrd  = g('c-alerta-brd') || '#fb923c';
+  C.alertaBtn  = g('c-alerta-btn') || '#f0a500';
+  var badgeChk = document.getElementById('c-badge-mas-vendido');
+  C.badgeMasVendido = badgeChk ? badgeChk.checked : true;
   C.mesaBannerBg = g('c-mesabanner-bg1') || '#16a34a';
   C.mesaBannerTxt = g('c-mesabanner-txt') || '#ffffff';
   C.mesaMsg = g('c-mesa-msg') || '';
@@ -5737,6 +5767,21 @@ function volverListaAsesores() {
   document.getElementById('asesor-login-list').style.flexDirection = 'column';
   document.getElementById('asesor-pin-login-wrap').style.display = 'none';
   _asesorLoginIdx = null;
+}
+
+function actualizarPuntosPIN(val) {
+  var cont = document.getElementById('pin-puntos');
+  if (!cont) return;
+  var max = 6;
+  var html = '';
+  for (var i = 0; i < max; i++) {
+    var lleno = i < val.length;
+    html += '<div style="width:12px;height:12px;border-radius:50%;background:' +
+      (lleno ? '#f0a500' : 'rgba(255,255,255,.2)') +
+      ';transition:background .15s;border:2px solid ' +
+      (lleno ? '#f0a500' : 'rgba(255,255,255,.3)') + '"></div>';
+  }
+  cont.innerHTML = html;
 }
 
 function loginAsesorSession() {
@@ -7347,10 +7392,33 @@ function registrarSW() {
 
 window.addEventListener('beforeinstallprompt',function(e){
   e.preventDefault(); _deferredPrompt=e;
+  // Solo mostrar si NO está instalada como PWA
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) return;
   var btn=document.getElementById('pwa-install-btn');
   if(btn) btn.style.display='flex';
   if(C.pwaActivo) aplicarPWAFab();
 });
+
+window.addEventListener('appinstalled', function() {
+  _deferredPrompt = null;
+  var fab = document.getElementById('pwa-fab');
+  if (fab) fab.style.display = 'none';
+  var btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = 'none';
+  ocultarFabPWA();
+});
+
+// Ocultar FAB si ya está instalada al cargar
+(function() {
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+    document.addEventListener('DOMContentLoaded', function() {
+      var fab = document.getElementById('pwa-fab');
+      if (fab) fab.style.display = 'none';
+      var btn = document.getElementById('pwa-install-btn');
+      if (btn) btn.style.display = 'none';
+    });
+  }
+})();
 
 function instalarPWA() {
   if(!_deferredPrompt){toast('Menú del navegador → "Añadir a pantalla de inicio"','s');return;}
@@ -8835,6 +8903,21 @@ function aplicarColoresBarras() {
   if (asesorBar) asesorBar.style.background = C.asesorBarBg || '#1a0a2e';
   var cocinaPanel = document.getElementById('cocina-panel');
   if (cocinaPanel) cocinaPanel.style.background = C.cocinaBarBg || '#07070f';
+  // Aplicar colores de alertas
+  var bg  = C.alertaBg  || '#1a0a00';
+  var txt = C.alertaTxt || '#fb923c';
+  var brd = C.alertaBrd || '#fb923c';
+  var btn = C.alertaBtn || '#f0a500';
+  document.querySelectorAll('.alerta-card').forEach(function(el){
+    el.style.background   = bg;
+    el.style.color        = txt;
+    el.style.borderColor  = brd;
+  });
+  document.querySelectorAll('.alerta-btn-accion').forEach(function(el){
+    el.style.background = btn;
+  });
+  var alertaPanel = document.getElementById('cocina-alertas-panel');
+  if (alertaPanel) alertaPanel.style.borderColor = brd;
   // El banner de mesa lo maneja aplicarEstiloMesaBanner para no duplicar lógica
   aplicarEstiloMesaBanner();
 }
