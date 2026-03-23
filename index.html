@@ -812,7 +812,7 @@ function setBtnPos(justify, valign) {
     <p id="hero-sub">Descubre los mejores productos al mejor precio</p>
     <div id="hero-btns" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:4px">
       <span id="hero-btn1-wrap"><button class="btn bp blg" id="hero-btn1" onclick="heroBtnClick(1)">Ver Catálogo 🛍️</button></span>
-      <span id="hero-btn2-wrap"><button class="btn bo blg" id="hero-btn2" onclick="heroBtnClick(2)">Mi Carrito 🛒</button></span>
+      <span id="hero-btn2-wrap" style="display:none"><button class="btn bo blg" id="hero-btn2" onclick="heroBtnClick(2)">Mi Carrito 🛒</button></span>
     </div>
   </div>
   <!-- BOTÓN PWA dentro del hero — parte inferior -->
@@ -822,6 +822,18 @@ function setBtnPos(justify, valign) {
       <span id="pwa-btn-label" style="font-size:12px;font-weight:600;color:#fff;white-space:nowrap">Instalar App</span>
       <button onclick="instalarPWA()" id="pwa-install-action" style="padding:4px 10px;border-radius:50px;font-size:11px;font-weight:600;cursor:pointer;border:none;white-space:nowrap">Instalar</button>
       <button onclick="ocultarFabPWA()" style="width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0">✕</button>
+    </div>
+  </div>
+
+  <!-- BURBUJA FLOTANTE: Nombre del negocio + Botón secundario -->
+  <div id="hero-float-bubble" style="display:none;position:absolute;z-index:10;animation:fabIn .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:auto">
+      <!-- Nombre del negocio encima -->
+      <div id="hero-bubble-name" style="font-size:12px;font-weight:700;color:#fff;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.7);letter-spacing:.04em;padding:0 4px"></div>
+      <!-- Burbuja botón secundario — misma estética que PWA -->
+      <div id="hero-btn2-bubble" style="display:flex;align-items:center;gap:8px;padding:7px 16px;border-radius:50px;backdrop-filter:blur(8px);background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.15);cursor:pointer" onclick="heroBtnClick(2)">
+        <span id="hero-btn2-bubble-txt" style="font-size:12px;font-weight:600;color:#fff;white-space:nowrap">Mi Carrito 🛒</span>
+      </div>
     </div>
   </div>
 </section>
@@ -3419,6 +3431,24 @@ function stripBase64(obj, cb) {
       compressImg(o.C.bimg, 800, 0.6, function(r){ o.C.bimg = r; done(); });
     });
   }
+  // Comprimir bannerImgs para evitar INVALID_ARGUMENT en Firebase
+  if (o.C && o.C.bannerImgs && o.C.bannerImgs.length) {
+    for (var bi = 0; bi < o.C.bannerImgs.length; bi++) {
+      (function(idx) {
+        var item = o.C.bannerImgs[idx];
+        var src = typeof item === 'string' ? item : (item && item.src);
+        if (src && src.startsWith('data:')) {
+          tasks.push(function(done) {
+            compressImg(src, 600, 0.55, function(r) {
+              if (typeof o.C.bannerImgs[idx] === 'string') { o.C.bannerImgs[idx] = r; }
+              else { o.C.bannerImgs[idx] = Object.assign({}, o.C.bannerImgs[idx], {src: r}); }
+              done();
+            });
+          });
+        }
+      })(bi);
+    }
+  }
   if (o.P) {
     for (var i = 0; i < o.P.length; i++) {
       (function(idx) {
@@ -3677,7 +3707,6 @@ function applyC() {
   document.getElementById('hero-title').textContent = C.name || 'Mi Tienda';
   var heroTitle = document.getElementById('hero-title');
   if (heroTitle) {
-    heroTitle.style.display = (C.showtitle === false) ? 'none' : '';
     heroTitle.style.fontSize = C.titlesize || '';
     heroTitle.style.fontFamily = C.titlefont || '';
     heroTitle.style.color = C.titlecolor || '';
@@ -3689,10 +3718,43 @@ function applyC() {
   var b1el = document.getElementById('hero-btn1');
   if(b1w) b1w.style.display = (C.btn1show===false) ? 'none' : '';
   if(b1el) b1el.textContent = C.btn1 || 'Ver Catálogo 🛍️';
-  var b2w = document.getElementById('hero-btn2-wrap');
+  // btn2 vive ahora en la burbuja flotante — actualizar texto
   var b2el = document.getElementById('hero-btn2');
-  if(b2w) b2w.style.display = (C.btn2show===false) ? 'none' : '';
   if(b2el) b2el.textContent = C.btn2 || 'Mi Carrito 🛒';
+  var b2bbl = document.getElementById('hero-btn2-bubble-txt');
+  if(b2bbl) b2bbl.textContent = C.btn2 || 'Mi Carrito 🛒';
+
+  // ── Burbuja flotante (nombre + btn2) ──
+  var bubble = document.getElementById('hero-float-bubble');
+  var bubbleName = document.getElementById('hero-bubble-name');
+  var bubbleBtn  = document.getElementById('hero-btn2-bubble');
+  var showBubble = (C.btn2show !== false) || (C.showtitle !== false);
+  if (bubbleName) {
+    bubbleName.textContent = (C.showtitle !== false) ? (C.name || 'Mi Tienda') : '';
+    bubbleName.style.display = (C.showtitle !== false) ? '' : 'none';
+  }
+  if (bubbleBtn) {
+    bubbleBtn.style.display = (C.btn2show !== false) ? '' : 'none';
+  }
+  if (bubble) {
+    if (!showBubble) {
+      bubble.style.display = 'none';
+    } else {
+      bubble.style.display = 'block';
+      var jp2 = C.btnsPos   || 'center';
+      var va2 = C.heroValign || 'center';
+      // Horizontal
+      if (jp2 === 'flex-start')  { bubble.style.left = '16px'; bubble.style.right = ''; bubble.style.transform = ''; }
+      else if (jp2 === 'flex-end') { bubble.style.right = '16px'; bubble.style.left = ''; bubble.style.transform = ''; }
+      else { bubble.style.left = '50%'; bubble.style.right = ''; bubble.style.transform = 'translateX(-50%)'; }
+      // Vertical
+      if (va2 === 'flex-start') { bubble.style.top = '16px'; bubble.style.bottom = ''; }
+      else if (va2 === 'flex-end') { bubble.style.bottom = '16px'; bubble.style.top = ''; }
+      else { bubble.style.bottom = '16px'; bubble.style.top = ''; }
+      // Alinear texto del nombre según posición horizontal
+      if (bubbleName) bubbleName.style.textAlign = jp2 === 'flex-start' ? 'left' : jp2 === 'flex-end' ? 'right' : 'center';
+    }
+  }
 
   // ── Posición botones y alineación del hero ──
   var heroEl   = document.getElementById('hero');
