@@ -100,7 +100,7 @@ select.fi option{background:#111122}
 #hero{position:relative;overflow:hidden;min-height:400px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
 #hero-bg{position:absolute;inset:0;z-index:0}
 #hero-grad{position:absolute;inset:0;background:linear-gradient(135deg,var(--cb1),var(--cb2));transition:opacity .3s}
-#hero-bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#hero-bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:none}
 #hero-ov{position:absolute;inset:0;background:transparent;transition:background .3s}
 .hcont{position:relative;z-index:1;max-width:680px}
 .heyebrow{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cheroeyebrow);margin-bottom:11px}
@@ -807,8 +807,8 @@ function setBtnPos(justify, valign) {
   </div>
   <div class="hglow"></div>
   <div class="hcont">
-    <div class="heyebrow" id="hero-eyebrow">&#10024; Bienvenido</div>
-    <h1 id="hero-title">Mi Tienda</h1>
+    <div class="heyebrow" id="hero-eyebrow" style="display:none">&#10024; Bienvenido</div>
+    <h1 id="hero-title" style="display:none">Mi Tienda</h1>
     <p id="hero-sub">Descubre los mejores productos al mejor precio</p>
     <div id="hero-btns" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:4px">
       <span id="hero-btn1-wrap"><button class="btn bp blg" id="hero-btn1" onclick="heroBtnClick(1)">Ver Catálogo 🛍️</button></span>
@@ -976,7 +976,7 @@ function setBtnPos(justify, valign) {
   </div>
   <div style="max-width:1200px;margin:0 auto 16px;padding:0 12px">
     <div style="position:relative">
-      <input id="cat-search" type="text" placeholder="🔍 Buscar producto..." oninput="buscarEnCatalogo(this.value)"
+      <input id="cat-search" type="text" placeholder="Buscar producto..." oninput="buscarEnCatalogo(this.value)"
         style="width:100%;box-sizing:border-box;padding:12px 16px 12px 42px;border-radius:50px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.09);color:#f0f0ff;font-size:14px;font-family:var(--fbody);outline:none;-webkit-text-fill-color:#f0f0ff;caret-color:#f0a500">
       <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none">🔍</span>
       <button id="cat-search-clear" onclick="limpiarBusqueda()" style="display:none;position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--cmut);font-size:18px;cursor:pointer">✕</button>
@@ -3665,7 +3665,7 @@ function applyC() {
   s.setProperty('--cheroeyebrow', C.cheroeyebrow || '#f0a500');
   s.setProperty('--cherosub',     C.cherosub     || 'rgba(220,220,255,0.85)');
   var ey = document.getElementById('hero-eyebrow');
-  if(ey) ey.textContent = C.eyebrow || '✨ Bienvenido';
+  if(ey){ ey.textContent = C.eyebrow || '✨ Bienvenido'; ey.style.display='none'; }
   s.setProperty('--spd',   (C.spd  || 30) + 's');
   s.setProperty('--tktbg',    C.tktbg    || '#ffffff');
   s.setProperty('--tktbg2',   C.tktbg2   || '#f5f0e8');
@@ -3710,10 +3710,11 @@ function applyC() {
     heroTitle.style.fontSize = C.titlesize || '';
     heroTitle.style.fontFamily = C.titlefont || '';
     heroTitle.style.color = C.titlecolor || '';
+    heroTitle.style.display = 'none';
   }
   document.getElementById('hero-sub').textContent   = C.sub  || '';
   var eyel = document.getElementById('hero-eyebrow');
-  if(eyel) eyel.textContent = C.eyebrow || '✨ Bienvenido';
+  if(eyel){ eyel.textContent = C.eyebrow || '✨ Bienvenido'; eyel.style.display='none'; }
   var b1w = document.getElementById('hero-btn1-wrap');
   var b1el = document.getElementById('hero-btn1');
   if(b1w) b1w.style.display = (C.btn1show===false) ? 'none' : '';
@@ -8564,18 +8565,20 @@ function renderPWAPreview() {
 function aplicarBannerPub() {
   var banner = document.getElementById('banner-pub');
   if (!banner) return;
-  var activo = document.getElementById('c-pub-activo');
-  if (!activo || !activo.checked) { banner.style.display = 'none'; renderPubPreview(); return; }
+  // Leer del formulario si está disponible, sino usar C (config guardada)
+  var activoEl = document.getElementById('c-pub-activo');
+  var estaActivo = activoEl ? activoEl.checked : !!C.pubActivo;
+  if (!estaActivo) { banner.style.display = 'none'; if(typeof renderPubPreview==='function') renderPubPreview(); return; }
 
-  var titulo  = (document.getElementById('c-pub-titulo')||{}).value || 'Pauta aquí tu negocio';
-  var sub     = (document.getElementById('c-pub-sub')||{}).value || 'Llega a más clientes';
-  var bg      = (document.getElementById('c-pub-bg')||{}).value || '#1a1a2e';
-  var txt     = (document.getElementById('c-pub-txt')||{}).value || '#f0f0ff';
-  var ctaBg   = (document.getElementById('c-pub-cta-bg')||{}).value || '#f0a500';
-  var ico     = (document.getElementById('c-pub-ico')||{}).value || '📢';
-  var size    = ((document.getElementById('c-pub-size')||{}).value) || 'md';
-  var borde   = ((document.getElementById('c-pub-borde')||{}).value) || 'none';
-  var diseno  = ((document.getElementById('c-pub-diseno')||{}).value) || 'clasico';
+  var titulo  = (document.getElementById('c-pub-titulo')||{}).value || C.pubTitulo || 'Pauta aquí tu negocio';
+  var sub     = (document.getElementById('c-pub-sub')||{}).value || C.pubSub || 'Llega a más clientes';
+  var bg      = (document.getElementById('c-pub-bg')||{}).value || C.pubBg || '#1a1a2e';
+  var txt     = (document.getElementById('c-pub-txt')||{}).value || C.pubTxt || '#f0f0ff';
+  var ctaBg   = (document.getElementById('c-pub-cta-bg')||{}).value || C.pubCtaBg || '#f0a500';
+  var ico     = (document.getElementById('c-pub-ico')||{}).value || C.pubIco || '📢';
+  var size    = ((document.getElementById('c-pub-size')||{}).value) || C.pubSize || 'md';
+  var borde   = ((document.getElementById('c-pub-borde')||{}).value) || C.pubBorde || 'none';
+  var diseno  = ((document.getElementById('c-pub-diseno')||{}).value) || C.pubDiseno || 'clasico';
   var img     = C.pubImg || '';
 
   banner.style.background = bg;
