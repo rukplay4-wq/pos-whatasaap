@@ -17,7 +17,6 @@
 <link id="gfonts" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&family=Raleway:wght@400;600;700;800&family=Oswald:wght@400;600;700&family=Lato:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --adm-bg:#0a0a14;--adm-nav:#0d0d1a;--adm-card:#141428;--adm-txt:#f0f0ff;--adm-mut:#8888aa;--adm-brd:rgba(255,255,255,0.07);--adm-inp:rgba(255,255,255,0.07);--adm-inpbrd:rgba(255,255,255,0.12);--adm-acc:#f0a500;--adm-lbl:rgba(255,255,255,0.25);
   --cp:#f0a500;--cbg:#0a0a0f;--ccat:#0d0d1a;--ccard:#141428;
   --ctxt:#f0f0ff;--cmut:#8888aa;--cb1:#1a0533;--cb2:#0a1a3a;
   --cbt:#ffffff;--chdr:#0d0d1a;--chtxt:#f0f0ff;--spd:30s;
@@ -63,14 +62,7 @@ button{cursor:pointer;border:none}
 #adm .fi{color:#f0f0ff!important;background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.12)!important}
 #adm .fi::placeholder{color:rgba(255,255,255,.35)!important}
 #adm label,#adm .fl,#adm .assub,#adm .asttl,#adm .an,#adm p,#adm span:not(.badge):not(.mttl):not(.cp){color:inherit}
-#adm-main,#adm-nav,#adm .ac,#adm .cfg-zone,#adm .cfg-zone-body{color:var(--adm-txt,#f0f0ff)}
-#adm-main{background:var(--adm-bg,#0a0a14)}
-#adm .ac,#adm .cfg-zone{background:var(--adm-card,#141428);border-color:var(--adm-brd,rgba(255,255,255,.07))}
-#adm-nav{background:var(--adm-nav,#0a0a15)}
-#adm-nav .nav-section{color:var(--adm-lbl,rgba(255,255,255,.25))}
-#adm .fi{background:var(--adm-inp,rgba(255,255,255,.07))!important;border-color:var(--adm-inpbrd,rgba(255,255,255,.12))!important;color:var(--adm-txt,#f0f0ff)!important}
-#adm .asttl,#adm .acttl{color:var(--adm-txt,#f0f0ff)}
-#adm .assub,#adm .fl{color:var(--adm-mut,#8888aa)}
+#adm-main,#adm-nav,#adm .ac,#adm .cfg-zone,#adm .cfg-zone-body{color:#f0f0ff}
 .fi:focus{border-color:var(--cp);outline:none}
 .fi::placeholder{color:var(--cmut)}
 select.fi option{background:#111122}
@@ -105,10 +97,10 @@ select.fi option{background:#111122}
 #admbtn:hover{background:rgba(255,255,255,.13)}
 
 /* HERO */
-#hero{position:relative;overflow:hidden;min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
+#hero{position:relative;overflow:hidden;min-height:420px;height:55vw;max-height:640px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
 #hero-bg{position:absolute;inset:0;z-index:0}
 #hero-grad{position:absolute;inset:0;background:linear-gradient(135deg,var(--cb1),var(--cb2));transition:opacity .3s}
-#hero-bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:none}
+#hero-bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;display:none}
 #hero-ov{position:absolute;inset:0;background:transparent;transition:background .3s}
 .hcont{position:relative;z-index:1;max-width:680px}
 .heyebrow{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cheroeyebrow);margin-bottom:11px}
@@ -365,7 +357,7 @@ select.fi option{background:#111122}
 
 /* ── RESPONSIVE DESKTOP ── */
 @media(min-width:1024px){
-  #hero{min-height:92vh;padding:80px 40px}
+  #hero{min-height:480px;height:45vw;max-height:640px;padding:80px 40px}
   .hcont{max-width:800px}
   #hero-title{font-size:clamp(3rem,5vw,5rem)}
   #catalog{padding:56px 40px}
@@ -381,12 +373,13 @@ select.fi option{background:#111122}
   #sftr{padding:48px 40px 24px}
 }
 @media(min-width:1440px){
+  #hero{min-height:500px;height:40vw;max-height:680px}
   #pgrid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
   #hero-title{font-size:clamp(4rem,5vw,6rem)}
   #adm-main{padding:32px 48px}
 }
 @media(max-width:660px){
-  #hero{min-height:60vh!important}
+  #hero{min-height:320px!important;height:75vw!important;max-height:480px!important}
   #adm-nav{position:fixed;top:0;bottom:0;left:0;width:260px;flex-direction:column;overflow-y:auto;border-right:1px solid rgba(255,255,255,.08);border-top:none;padding:0 9px 12px;z-index:1001;gap:2px;transform:translateX(-100%)}
   #adm-nav.open{transform:translateX(0)}
   .an{flex-direction:row;gap:10px;padding:10px 12px;font-size:13px;min-width:unset;text-align:left}
@@ -1133,8 +1126,6 @@ function setBtnPos(justify, valign) {
       <div class="an" data-sec="orders" onclick="navTo(this);cerrarNav()"><span class="ani">&#129534;</span><span>Caja</span></div>
       <div class="an" data-sec="crm" onclick="navTo(this);cerrarNav()"><span class="ani">&#128202;</span><span>CRM</span></div>
       <div class="nav-section">Personal</div>
-      <div class="nav-section">Diseño</div>
-      <div class="an" data-sec="identidades" onclick="navTo(this);cerrarNav()"><span class="ani">&#127912;</span><span>Identidades</span></div>
 
     </nav>
     <main id="adm-main">
@@ -3229,11 +3220,6 @@ function setBtnPos(justify, valign) {
         </div>
       </section>
 
-      <section class="asec" id="sec-identidades">
-        <div class="asttl">&#127912; Identidades Visuales</div>
-        <div class="assub">Aplica una identidad completa. Todo cambia: tienda, panel y modales. Puedes ajustar cualquier detalle desde Configuraci&#243;n despu&#233;s.</div>
-        <div id="identidades-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:20px"></div>
-      </section>
     </main>
   </div>
 </div>
@@ -3627,598 +3613,6 @@ window.addEventListener('DOMContentLoaded', function() {
   setTimeout(initExtras, 100);
 });
 
-
-// ============================================================
-// SISTEMA DE IDENTIDADES VISUALES v3
-// ============================================================
-var IDENTIDADES = [
-  { id:'original', grupo:'⭐ Original', nombre:'Original',
-    desc:'Tu diseño original exacto. Oscuro con acento dorado.',
-    preview:{ bg:'#0a0a0f', card:'#141428', card2:'#1a0533', accent:'#f0a500', txt:'#f0f0ff' },
-    tokens:{ cp:'#f0a500', cbg:'#0a0a0f', ccat:'#0d0d1a', ccard:'#141428', ctxt:'#f0f0ff', cmut:'#8888aa', cbt:'#ffffff',
-      b1:'#1a0533', b2:'#0a1a3a', cbgg1:'#0a0a0f', cbgg2:'#0a0a0f', cbgdir:'180deg',
-      ccatg1:'#0d0d1a', ccatg2:'#0d0d1a', ccatgdir:'180deg', ccardg1:'#141428', ccardg2:'#141428',
-      ccardbrd:'rgba(255,255,255,0.07)', ccardrad:'16px', cdesc:'#8888aa',
-      chdr:'#0d0d1a', chdr2:'#0d0d1a', chdrdir:'90deg', chtxt:'#f0f0ff',
-      cftr:'#07070f', cftxt:'#8888aa', ctabc:'#f0a500', cprice:'#f0a500',
-      ctickbg1:'#f5c518', ctickbg2:'#f0a500', cticktext:'#1a1000', ctickgdir:'90deg',
-      tktbg:'#ffffff', tktbg2:'#f5f0e8', tkttxt:'#111111', tktmut:'#555555', tktbrd:'#cccccc', tktaccent:'#f0a500',
-      cmodbg:'#141428', cmodhdr:'#0d0d1e', cmodtxt:'#f0f0ff', cmodinp:'rgba(255,255,255,0.06)',
-      cmodinpbrd:'rgba(255,255,255,0.09)', cmodlbl:'#8888aa', cmodbtn:'rgba(255,255,255,0.05)',
-      cheroeyebrow:'#f0a500', cherosub:'rgba(220,220,255,0.85)',
-      fsocbg:'rgba(255,255,255,0.13)', fsocbrd:'rgba(255,255,255,0.30)', fsocc:'#e0e0f0', fsocrad:'50px',
-      fhead:'Playfair Display', fbody:'DM Sans', ovcolor:'#000000', ovopacity:0,
-      splashBg:'#0a0a0f', splashTxt:'#FFCC00', splashNombreTxt:'#FFCC00',
-      _admBg:'#0a0a14', _admNav:'#0d0d1a', _admCard:'#141428', _admTxt:'#f0f0ff', _admMut:'#8888aa',
-      _admBrd:'rgba(255,255,255,0.07)', _admInp:'rgba(255,255,255,0.07)', _admInpBrd:'rgba(255,255,255,0.12)',
-      _admActive:'rgba(240,165,0,0.12)', _admActiveTxt:'#f0a500', _isLight:false }
-  },
-  { id:'blanco-azul-pastel', grupo:'🤍 Blanco & Azul', nombre:'Azul Pastel',
-    desc:'Blanco fresco con azul cielo. Tarjetas con gradiente helado.',
-    preview:{ bg:'#f0f6ff', card:'#dbeafe', card2:'#bfdbfe', accent:'#3b82f6', txt:'#1e3a5f' },
-    tokens:{ cp:'#3b82f6', cbg:'#f0f6ff', ccat:'#e8f3ff', ccard:'#dbeafe', ctxt:'#1e3a5f', cmut:'#4a6fa5', cbt:'#1e3a5f',
-      b1:'#bfdbfe', b2:'#dbeafe', cbgg1:'#f0f6ff', cbgg2:'#e4f0ff', cbgdir:'160deg',
-      ccatg1:'#e8f3ff', ccatg2:'#dbeafe', ccatgdir:'180deg', ccardg1:'#dbeafe', ccardg2:'#bfdbfe',
-      ccardbrd:'rgba(59,130,246,0.25)', ccardrad:'16px', cdesc:'#4a6fa5',
-      chdr:'#ffffff', chdr2:'#f0f6ff', chdrdir:'90deg', chtxt:'#1e3a5f',
-      cftr:'#1e3a5f', cftxt:'#93c5fd', ctabc:'#3b82f6', cprice:'#1d4ed8',
-      ctickbg1:'#3b82f6', ctickbg2:'#60a5fa', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#f0f6ff', tktbg2:'#dbeafe', tkttxt:'#1e3a5f', tktmut:'#4a6fa5', tktbrd:'rgba(59,130,246,0.3)', tktaccent:'#3b82f6',
-      cmodbg:'#f0f6ff', cmodhdr:'#dbeafe', cmodtxt:'#1e3a5f', cmodinp:'rgba(59,130,246,0.08)',
-      cmodinpbrd:'rgba(59,130,246,0.25)', cmodlbl:'#4a6fa5', cmodbtn:'rgba(59,130,246,0.08)',
-      cheroeyebrow:'#3b82f6', cherosub:'rgba(30,58,95,0.85)',
-      fsocbg:'rgba(59,130,246,0.12)', fsocbrd:'rgba(59,130,246,0.35)', fsocc:'#1e3a5f', fsocrad:'50px',
-      fhead:'Poppins', fbody:'DM Sans', ovcolor:'#000000', ovopacity:20,
-      splashBg:'#1e3a5f', splashTxt:'#60a5fa', splashNombreTxt:'#60a5fa',
-      _admBg:'#f0f6ff', _admNav:'#1e3a5f', _admCard:'#dbeafe', _admTxt:'#1e3a5f', _admMut:'#4a6fa5',
-      _admBrd:'rgba(59,130,246,0.20)', _admInp:'rgba(59,130,246,0.06)', _admInpBrd:'rgba(59,130,246,0.22)',
-      _admActive:'rgba(59,130,246,0.15)', _admActiveTxt:'#1d4ed8', _isLight:true }
-  },
-  { id:'blanco-azul-marino', grupo:'🤍 Blanco & Azul', nombre:'Azul Marino',
-    desc:'Blanco limpio con header azul marino profundo.',
-    preview:{ bg:'#ffffff', card:'#e2edff', card2:'#c7d9ff', accent:'#1d4ed8', txt:'#0f172a' },
-    tokens:{ cp:'#1d4ed8', cbg:'#ffffff', ccat:'#eff6ff', ccard:'#e2edff', ctxt:'#0f172a', cmut:'#475569', cbt:'#ffffff',
-      b1:'#dbeafe', b2:'#eff6ff', cbgg1:'#ffffff', cbgg2:'#f4f8ff', cbgdir:'180deg',
-      ccatg1:'#eff6ff', ccatg2:'#e2edff', ccatgdir:'180deg', ccardg1:'#e2edff', ccardg2:'#c7d9ff',
-      ccardbrd:'rgba(29,78,216,0.22)', ccardrad:'14px', cdesc:'#475569',
-      chdr:'#1d4ed8', chdr2:'#1e40af', chdrdir:'90deg', chtxt:'#ffffff',
-      cftr:'#0f172a', cftxt:'#93c5fd', ctabc:'#1d4ed8', cprice:'#1d4ed8',
-      ctickbg1:'#1d4ed8', ctickbg2:'#2563eb', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#ffffff', tktbg2:'#e2edff', tkttxt:'#0f172a', tktmut:'#475569', tktbrd:'rgba(29,78,216,0.3)', tktaccent:'#1d4ed8',
-      cmodbg:'#f8faff', cmodhdr:'#e2edff', cmodtxt:'#0f172a', cmodinp:'rgba(29,78,216,0.06)',
-      cmodinpbrd:'rgba(29,78,216,0.22)', cmodlbl:'#475569', cmodbtn:'rgba(29,78,216,0.07)',
-      cheroeyebrow:'#60a5fa', cherosub:'rgba(255,255,255,0.90)',
-      fsocbg:'rgba(29,78,216,0.10)', fsocbrd:'rgba(29,78,216,0.30)', fsocc:'#0f172a', fsocrad:'50px',
-      fhead:'Montserrat', fbody:'Roboto', ovcolor:'#000000', ovopacity:25,
-      splashBg:'#1d4ed8', splashTxt:'#ffffff', splashNombreTxt:'#ffffff',
-      _admBg:'#f8faff', _admNav:'#1d4ed8', _admCard:'#e2edff', _admTxt:'#0f172a', _admMut:'#475569',
-      _admBrd:'rgba(29,78,216,0.18)', _admInp:'rgba(29,78,216,0.05)', _admInpBrd:'rgba(29,78,216,0.20)',
-      _admActive:'rgba(29,78,216,0.12)', _admActiveTxt:'#1d4ed8', _isLight:true }
-  },
-  { id:'blanco-verde-agua', grupo:'🤍 Blanco & Azul', nombre:'Verde Agua',
-    desc:'Blanco con menta y verde esmeralda agua.',
-    preview:{ bg:'#f0fdf9', card:'#ccfbf1', card2:'#99f6e4', accent:'#0d9488', txt:'#134e4a' },
-    tokens:{ cp:'#0d9488', cbg:'#f0fdf9', ccat:'#e0fdf4', ccard:'#ccfbf1', ctxt:'#134e4a', cmut:'#2d7a6f', cbt:'#134e4a',
-      b1:'#99f6e4', b2:'#ccfbf1', cbgg1:'#f0fdf9', cbgg2:'#e6fdf6', cbgdir:'160deg',
-      ccatg1:'#e0fdf4', ccatg2:'#ccfbf1', ccatgdir:'180deg', ccardg1:'#ccfbf1', ccardg2:'#99f6e4',
-      ccardbrd:'rgba(13,148,136,0.25)', ccardrad:'16px', cdesc:'#2d7a6f',
-      chdr:'#0d9488', chdr2:'#0f766e', chdrdir:'90deg', chtxt:'#ffffff',
-      cftr:'#134e4a', cftxt:'#5eead4', ctabc:'#0d9488', cprice:'#0f766e',
-      ctickbg1:'#0d9488', ctickbg2:'#14b8a6', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#f0fdf9', tktbg2:'#ccfbf1', tkttxt:'#134e4a', tktmut:'#2d7a6f', tktbrd:'rgba(13,148,136,0.3)', tktaccent:'#0d9488',
-      cmodbg:'#f0fdf9', cmodhdr:'#ccfbf1', cmodtxt:'#134e4a', cmodinp:'rgba(13,148,136,0.08)',
-      cmodinpbrd:'rgba(13,148,136,0.25)', cmodlbl:'#2d7a6f', cmodbtn:'rgba(13,148,136,0.08)',
-      cheroeyebrow:'#5eead4', cherosub:'rgba(255,255,255,0.90)',
-      fsocbg:'rgba(13,148,136,0.12)', fsocbrd:'rgba(13,148,136,0.35)', fsocc:'#134e4a', fsocrad:'50px',
-      fhead:'Poppins', fbody:'Lato', ovcolor:'#000000', ovopacity:20,
-      splashBg:'#0d9488', splashTxt:'#ffffff', splashNombreTxt:'#ffffff',
-      _admBg:'#f0fdf9', _admNav:'#0d9488', _admCard:'#ccfbf1', _admTxt:'#134e4a', _admMut:'#2d7a6f',
-      _admBrd:'rgba(13,148,136,0.20)', _admInp:'rgba(13,148,136,0.06)', _admInpBrd:'rgba(13,148,136,0.22)',
-      _admActive:'rgba(13,148,136,0.15)', _admActiveTxt:'#0d9488', _isLight:true }
-  },
-  { id:'purpura-electrico', grupo:'🟣 Púrpura Neon', nombre:'Eléctrico',
-    desc:'Negro profundo con violeta eléctrico. Intenso y moderno.',
-    preview:{ bg:'#0d0014', card:'#1a0033', card2:'#220044', accent:'#a855f7', txt:'#f0e8ff' },
-    tokens:{ cp:'#a855f7', cbg:'#0d0014', ccat:'#130020', ccard:'#1a0033', ctxt:'#f0e8ff', cmut:'#9d7ccc', cbt:'#ffffff',
-      b1:'#2d0060', b2:'#1a0033', cbgg1:'#0d0014', cbgg2:'#130020', cbgdir:'135deg',
-      ccatg1:'#130020', ccatg2:'#1a0033', ccatgdir:'180deg', ccardg1:'#1a0033', ccardg2:'#220044',
-      ccardbrd:'rgba(168,85,247,0.30)', ccardrad:'16px', cdesc:'#9d7ccc',
-      chdr:'#130020', chdr2:'#0d0014', chdrdir:'90deg', chtxt:'#f0e8ff',
-      cftr:'#0a0010', cftxt:'#c084fc', ctabc:'#a855f7', cprice:'#c084fc',
-      ctickbg1:'#7c3aed', ctickbg2:'#a855f7', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#1a0033', tktbg2:'#220044', tkttxt:'#f0e8ff', tktmut:'#9d7ccc', tktbrd:'rgba(168,85,247,0.3)', tktaccent:'#a855f7',
-      cmodbg:'#130020', cmodhdr:'#0d0014', cmodtxt:'#f0e8ff', cmodinp:'rgba(168,85,247,0.10)',
-      cmodinpbrd:'rgba(168,85,247,0.30)', cmodlbl:'#9d7ccc', cmodbtn:'rgba(168,85,247,0.10)',
-      cheroeyebrow:'#a855f7', cherosub:'rgba(240,232,255,0.90)',
-      fsocbg:'rgba(168,85,247,0.15)', fsocbrd:'rgba(168,85,247,0.40)', fsocc:'#f0e8ff', fsocrad:'50px',
-      fhead:'Playfair Display', fbody:'DM Sans', ovcolor:'#0d0014', ovopacity:40,
-      splashBg:'#0d0014', splashTxt:'#a855f7', splashNombreTxt:'#a855f7',
-      _admBg:'#0d0014', _admNav:'#130020', _admCard:'#1a0033', _admTxt:'#f0e8ff', _admMut:'#9d7ccc',
-      _admBrd:'rgba(168,85,247,0.25)', _admInp:'rgba(168,85,247,0.10)', _admInpBrd:'rgba(168,85,247,0.30)',
-      _admActive:'rgba(168,85,247,0.18)', _admActiveTxt:'#c084fc', _isLight:false }
-  },
-  { id:'purpura-magenta', grupo:'🟣 Púrpura Neon', nombre:'Magenta',
-    desc:'Oscuro con magenta vibrante y fucsia.',
-    preview:{ bg:'#0f0018', card:'#1e0035', card2:'#2a0048', accent:'#e040fb', txt:'#fce4ff' },
-    tokens:{ cp:'#e040fb', cbg:'#0f0018', ccat:'#180028', ccard:'#1e0035', ctxt:'#fce4ff', cmut:'#c080d8', cbt:'#ffffff',
-      b1:'#3a0050', b2:'#1e0035', cbgg1:'#0f0018', cbgg2:'#180028', cbgdir:'135deg',
-      ccatg1:'#180028', ccatg2:'#1e0035', ccatgdir:'180deg', ccardg1:'#1e0035', ccardg2:'#2a0048',
-      ccardbrd:'rgba(224,64,251,0.30)', ccardrad:'16px', cdesc:'#c080d8',
-      chdr:'#180028', chdr2:'#0f0018', chdrdir:'90deg', chtxt:'#fce4ff',
-      cftr:'#0a0012', cftxt:'#f0abfc', ctabc:'#e040fb', cprice:'#f48eff',
-      ctickbg1:'#ab00d6', ctickbg2:'#e040fb', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#1e0035', tktbg2:'#2a0048', tkttxt:'#fce4ff', tktmut:'#c080d8', tktbrd:'rgba(224,64,251,0.3)', tktaccent:'#e040fb',
-      cmodbg:'#180028', cmodhdr:'#0f0018', cmodtxt:'#fce4ff', cmodinp:'rgba(224,64,251,0.10)',
-      cmodinpbrd:'rgba(224,64,251,0.30)', cmodlbl:'#c080d8', cmodbtn:'rgba(224,64,251,0.10)',
-      cheroeyebrow:'#e040fb', cherosub:'rgba(252,228,255,0.90)',
-      fsocbg:'rgba(224,64,251,0.15)', fsocbrd:'rgba(224,64,251,0.40)', fsocc:'#fce4ff', fsocrad:'50px',
-      fhead:'Poppins', fbody:'DM Sans', ovcolor:'#0f0018', ovopacity:40,
-      splashBg:'#0f0018', splashTxt:'#e040fb', splashNombreTxt:'#e040fb',
-      _admBg:'#0f0018', _admNav:'#180028', _admCard:'#1e0035', _admTxt:'#fce4ff', _admMut:'#c080d8',
-      _admBrd:'rgba(224,64,251,0.25)', _admInp:'rgba(224,64,251,0.10)', _admInpBrd:'rgba(224,64,251,0.30)',
-      _admActive:'rgba(224,64,251,0.18)', _admActiveTxt:'#f48eff', _isLight:false }
-  },
-  { id:'purpura-lavanda', grupo:'🟣 Púrpura Neon', nombre:'Lavanda',
-    desc:'Oscuro suave con lavanda y lila. Sofisticado.',
-    preview:{ bg:'#12101f', card:'#1e1b35', card2:'#26224a', accent:'#8b5cf6', txt:'#e8e0ff' },
-    tokens:{ cp:'#8b5cf6', cbg:'#12101f', ccat:'#1a1730', ccard:'#1e1b35', ctxt:'#e8e0ff', cmut:'#9080bb', cbt:'#ffffff',
-      b1:'#2e2660', b2:'#1e1b35', cbgg1:'#12101f', cbgg2:'#1a1730', cbgdir:'160deg',
-      ccatg1:'#1a1730', ccatg2:'#1e1b35', ccatgdir:'180deg', ccardg1:'#1e1b35', ccardg2:'#26224a',
-      ccardbrd:'rgba(139,92,246,0.28)', ccardrad:'18px', cdesc:'#9080bb',
-      chdr:'#1a1730', chdr2:'#12101f', chdrdir:'90deg', chtxt:'#e8e0ff',
-      cftr:'#0e0c1a', cftxt:'#a78bfa', ctabc:'#8b5cf6', cprice:'#a78bfa',
-      ctickbg1:'#6d28d9', ctickbg2:'#8b5cf6', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#1e1b35', tktbg2:'#26224a', tkttxt:'#e8e0ff', tktmut:'#9080bb', tktbrd:'rgba(139,92,246,0.3)', tktaccent:'#8b5cf6',
-      cmodbg:'#1a1730', cmodhdr:'#12101f', cmodtxt:'#e8e0ff', cmodinp:'rgba(139,92,246,0.10)',
-      cmodinpbrd:'rgba(139,92,246,0.28)', cmodlbl:'#9080bb', cmodbtn:'rgba(139,92,246,0.10)',
-      cheroeyebrow:'#8b5cf6', cherosub:'rgba(232,224,255,0.90)',
-      fsocbg:'rgba(139,92,246,0.15)', fsocbrd:'rgba(139,92,246,0.40)', fsocc:'#e8e0ff', fsocrad:'50px',
-      fhead:'Raleway', fbody:'DM Sans', ovcolor:'#12101f', ovopacity:40,
-      splashBg:'#12101f', splashTxt:'#8b5cf6', splashNombreTxt:'#8b5cf6',
-      _admBg:'#12101f', _admNav:'#1a1730', _admCard:'#1e1b35', _admTxt:'#e8e0ff', _admMut:'#9080bb',
-      _admBrd:'rgba(139,92,246,0.25)', _admInp:'rgba(139,92,246,0.10)', _admInpBrd:'rgba(139,92,246,0.28)',
-      _admActive:'rgba(139,92,246,0.18)', _admActiveTxt:'#a78bfa', _isLight:false }
-  },
-  { id:'esmeralda-dorado', grupo:'🟢 Esmeralda', nombre:'Dorado',
-    desc:'Verde esmeralda profundo con acentos dorados.',
-    preview:{ bg:'#050f0a', card:'#0a1f14', card2:'#0d2a18', accent:'#d4af37', txt:'#e8f5e9' },
-    tokens:{ cp:'#d4af37', cbg:'#050f0a', ccat:'#081508', ccard:'#0a1f14', ctxt:'#e8f5e9', cmut:'#6b9f72', cbt:'#ffffff',
-      b1:'#0a2a10', b2:'#051808', cbgg1:'#050f0a', cbgg2:'#081508', cbgdir:'160deg',
-      ccatg1:'#081508', ccatg2:'#0a1f14', ccatgdir:'180deg', ccardg1:'#0a1f14', ccardg2:'#0d2a18',
-      ccardbrd:'rgba(212,175,55,0.30)', ccardrad:'16px', cdesc:'#6b9f72',
-      chdr:'#081508', chdr2:'#050f0a', chdrdir:'90deg', chtxt:'#e8f5e9',
-      cftr:'#030a05', cftxt:'#d4af37', ctabc:'#d4af37', cprice:'#d4af37',
-      ctickbg1:'#d4af37', ctickbg2:'#b8960c', cticktext:'#050f0a', ctickgdir:'90deg',
-      tktbg:'#0a1f14', tktbg2:'#0d2a18', tkttxt:'#e8f5e9', tktmut:'#6b9f72', tktbrd:'rgba(212,175,55,0.3)', tktaccent:'#d4af37',
-      cmodbg:'#0a1f14', cmodhdr:'#081508', cmodtxt:'#e8f5e9', cmodinp:'rgba(212,175,55,0.10)',
-      cmodinpbrd:'rgba(212,175,55,0.30)', cmodlbl:'#6b9f72', cmodbtn:'rgba(212,175,55,0.10)',
-      cheroeyebrow:'#d4af37', cherosub:'rgba(232,245,233,0.90)',
-      fsocbg:'rgba(212,175,55,0.15)', fsocbrd:'rgba(212,175,55,0.40)', fsocc:'#e8f5e9', fsocrad:'50px',
-      fhead:'Playfair Display', fbody:'Lato', ovcolor:'#050f0a', ovopacity:45,
-      splashBg:'#050f0a', splashTxt:'#d4af37', splashNombreTxt:'#d4af37',
-      _admBg:'#050f0a', _admNav:'#081508', _admCard:'#0a1f14', _admTxt:'#e8f5e9', _admMut:'#6b9f72',
-      _admBrd:'rgba(212,175,55,0.25)', _admInp:'rgba(212,175,55,0.08)', _admInpBrd:'rgba(212,175,55,0.28)',
-      _admActive:'rgba(212,175,55,0.15)', _admActiveTxt:'#d4af37', _isLight:false }
-  },
-  { id:'esmeralda-neon', grupo:'🟢 Esmeralda', nombre:'Neon',
-    desc:'Negro con verde esmeralda neón. Moderno y tech.',
-    preview:{ bg:'#030d08', card:'#071a0e', card2:'#092516', accent:'#10b981', txt:'#d1fae5' },
-    tokens:{ cp:'#10b981', cbg:'#030d08', ccat:'#051209', ccard:'#071a0e', ctxt:'#d1fae5', cmut:'#5ab07e', cbt:'#ffffff',
-      b1:'#064423', b2:'#071a0e', cbgg1:'#030d08', cbgg2:'#051209', cbgdir:'160deg',
-      ccatg1:'#051209', ccatg2:'#071a0e', ccatgdir:'180deg', ccardg1:'#071a0e', ccardg2:'#092516',
-      ccardbrd:'rgba(16,185,129,0.30)', ccardrad:'16px', cdesc:'#5ab07e',
-      chdr:'#051209', chdr2:'#030d08', chdrdir:'90deg', chtxt:'#d1fae5',
-      cftr:'#020908', cftxt:'#34d399', ctabc:'#10b981', cprice:'#34d399',
-      ctickbg1:'#059669', ctickbg2:'#10b981', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#071a0e', tktbg2:'#092516', tkttxt:'#d1fae5', tktmut:'#5ab07e', tktbrd:'rgba(16,185,129,0.3)', tktaccent:'#10b981',
-      cmodbg:'#071a0e', cmodhdr:'#051209', cmodtxt:'#d1fae5', cmodinp:'rgba(16,185,129,0.10)',
-      cmodinpbrd:'rgba(16,185,129,0.30)', cmodlbl:'#5ab07e', cmodbtn:'rgba(16,185,129,0.10)',
-      cheroeyebrow:'#10b981', cherosub:'rgba(209,250,229,0.90)',
-      fsocbg:'rgba(16,185,129,0.15)', fsocbrd:'rgba(16,185,129,0.40)', fsocc:'#d1fae5', fsocrad:'50px',
-      fhead:'Montserrat', fbody:'DM Sans', ovcolor:'#030d08', ovopacity:45,
-      splashBg:'#030d08', splashTxt:'#10b981', splashNombreTxt:'#10b981',
-      _admBg:'#030d08', _admNav:'#051209', _admCard:'#071a0e', _admTxt:'#d1fae5', _admMut:'#5ab07e',
-      _admBrd:'rgba(16,185,129,0.25)', _admInp:'rgba(16,185,129,0.08)', _admInpBrd:'rgba(16,185,129,0.28)',
-      _admActive:'rgba(16,185,129,0.18)', _admActiveTxt:'#34d399', _isLight:false }
-  },
-  { id:'esmeralda-bosque', grupo:'🟢 Esmeralda', nombre:'Bosque',
-    desc:'Verde bosque profundo. Natural, orgánico y cálido.',
-    preview:{ bg:'#0a1408', card:'#162010', card2:'#1e2e18', accent:'#4ade80', txt:'#dcfce7' },
-    tokens:{ cp:'#4ade80', cbg:'#0a1408', ccat:'#101c0d', ccard:'#162010', ctxt:'#dcfce7', cmut:'#71a06a', cbt:'#ffffff',
-      b1:'#1a3318', b2:'#162010', cbgg1:'#0a1408', cbgg2:'#101c0d', cbgdir:'160deg',
-      ccatg1:'#101c0d', ccatg2:'#162010', ccatgdir:'180deg', ccardg1:'#162010', ccardg2:'#1e2e18',
-      ccardbrd:'rgba(74,222,128,0.25)', ccardrad:'14px', cdesc:'#71a06a',
-      chdr:'#101c0d', chdr2:'#0a1408', chdrdir:'90deg', chtxt:'#dcfce7',
-      cftr:'#070e06', cftxt:'#4ade80', ctabc:'#4ade80', cprice:'#4ade80',
-      ctickbg1:'#16a34a', ctickbg2:'#4ade80', cticktext:'#0a1408', ctickgdir:'90deg',
-      tktbg:'#162010', tktbg2:'#1e2e18', tkttxt:'#dcfce7', tktmut:'#71a06a', tktbrd:'rgba(74,222,128,0.25)', tktaccent:'#4ade80',
-      cmodbg:'#162010', cmodhdr:'#101c0d', cmodtxt:'#dcfce7', cmodinp:'rgba(74,222,128,0.10)',
-      cmodinpbrd:'rgba(74,222,128,0.25)', cmodlbl:'#71a06a', cmodbtn:'rgba(74,222,128,0.10)',
-      cheroeyebrow:'#4ade80', cherosub:'rgba(220,252,231,0.90)',
-      fsocbg:'rgba(74,222,128,0.15)', fsocbrd:'rgba(74,222,128,0.35)', fsocc:'#dcfce7', fsocrad:'50px',
-      fhead:'Raleway', fbody:'Lato', ovcolor:'#0a1408', ovopacity:45,
-      splashBg:'#0a1408', splashTxt:'#4ade80', splashNombreTxt:'#4ade80',
-      _admBg:'#0a1408', _admNav:'#101c0d', _admCard:'#162010', _admTxt:'#dcfce7', _admMut:'#71a06a',
-      _admBrd:'rgba(74,222,128,0.22)', _admInp:'rgba(74,222,128,0.08)', _admInpBrd:'rgba(74,222,128,0.25)',
-      _admActive:'rgba(74,222,128,0.15)', _admActiveTxt:'#4ade80', _isLight:false }
-  },
-  { id:'oceano-profundo', grupo:'🔵 Azul Océano', nombre:'Profundo',
-    desc:'Azules abisales con cyan eléctrico.',
-    preview:{ bg:'#020b18', card:'#051428', card2:'#071c38', accent:'#06b6d4', txt:'#e0f7ff' },
-    tokens:{ cp:'#06b6d4', cbg:'#020b18', ccat:'#041020', ccard:'#051428', ctxt:'#e0f7ff', cmut:'#5b8faa', cbt:'#ffffff',
-      b1:'#0a2a4a', b2:'#051428', cbgg1:'#020b18', cbgg2:'#041020', cbgdir:'160deg',
-      ccatg1:'#041020', ccatg2:'#051428', ccatgdir:'180deg', ccardg1:'#051428', ccardg2:'#071c38',
-      ccardbrd:'rgba(6,182,212,0.30)', ccardrad:'16px', cdesc:'#5b8faa',
-      chdr:'#041020', chdr2:'#020b18', chdrdir:'90deg', chtxt:'#e0f7ff',
-      cftr:'#020810', cftxt:'#22d3ee', ctabc:'#06b6d4', cprice:'#22d3ee',
-      ctickbg1:'#0891b2', ctickbg2:'#06b6d4', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#051428', tktbg2:'#071c38', tkttxt:'#e0f7ff', tktmut:'#5b8faa', tktbrd:'rgba(6,182,212,0.3)', tktaccent:'#06b6d4',
-      cmodbg:'#051428', cmodhdr:'#041020', cmodtxt:'#e0f7ff', cmodinp:'rgba(6,182,212,0.10)',
-      cmodinpbrd:'rgba(6,182,212,0.30)', cmodlbl:'#5b8faa', cmodbtn:'rgba(6,182,212,0.10)',
-      cheroeyebrow:'#06b6d4', cherosub:'rgba(224,247,255,0.90)',
-      fsocbg:'rgba(6,182,212,0.15)', fsocbrd:'rgba(6,182,212,0.40)', fsocc:'#e0f7ff', fsocrad:'50px',
-      fhead:'Montserrat', fbody:'Roboto', ovcolor:'#020b18', ovopacity:45,
-      splashBg:'#020b18', splashTxt:'#06b6d4', splashNombreTxt:'#06b6d4',
-      _admBg:'#020b18', _admNav:'#041020', _admCard:'#051428', _admTxt:'#e0f7ff', _admMut:'#5b8faa',
-      _admBrd:'rgba(6,182,212,0.25)', _admInp:'rgba(6,182,212,0.08)', _admInpBrd:'rgba(6,182,212,0.28)',
-      _admActive:'rgba(6,182,212,0.18)', _admActiveTxt:'#22d3ee', _isLight:false }
-  },
-  { id:'oceano-mediodia', grupo:'🔵 Azul Océano', nombre:'Mediodía',
-    desc:'Índigo profundo con azul brillante.',
-    preview:{ bg:'#06082a', card:'#0c1050', card2:'#101560', accent:'#4f8fff', txt:'#e8eeff' },
-    tokens:{ cp:'#4f8fff', cbg:'#06082a', ccat:'#080c3a', ccard:'#0c1050', ctxt:'#e8eeff', cmut:'#7080cc', cbt:'#ffffff',
-      b1:'#1a2070', b2:'#0c1050', cbgg1:'#06082a', cbgg2:'#080c3a', cbgdir:'160deg',
-      ccatg1:'#080c3a', ccatg2:'#0c1050', ccatgdir:'180deg', ccardg1:'#0c1050', ccardg2:'#101560',
-      ccardbrd:'rgba(79,143,255,0.30)', ccardrad:'16px', cdesc:'#7080cc',
-      chdr:'#080c3a', chdr2:'#06082a', chdrdir:'90deg', chtxt:'#e8eeff',
-      cftr:'#040618', cftxt:'#7ab0ff', ctabc:'#4f8fff', cprice:'#7ab0ff',
-      ctickbg1:'#2563eb', ctickbg2:'#4f8fff', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#0c1050', tktbg2:'#101560', tkttxt:'#e8eeff', tktmut:'#7080cc', tktbrd:'rgba(79,143,255,0.3)', tktaccent:'#4f8fff',
-      cmodbg:'#0c1050', cmodhdr:'#080c3a', cmodtxt:'#e8eeff', cmodinp:'rgba(79,143,255,0.10)',
-      cmodinpbrd:'rgba(79,143,255,0.30)', cmodlbl:'#7080cc', cmodbtn:'rgba(79,143,255,0.10)',
-      cheroeyebrow:'#4f8fff', cherosub:'rgba(232,238,255,0.90)',
-      fsocbg:'rgba(79,143,255,0.15)', fsocbrd:'rgba(79,143,255,0.40)', fsocc:'#e8eeff', fsocrad:'50px',
-      fhead:'Poppins', fbody:'DM Sans', ovcolor:'#06082a', ovopacity:45,
-      splashBg:'#06082a', splashTxt:'#4f8fff', splashNombreTxt:'#4f8fff',
-      _admBg:'#06082a', _admNav:'#080c3a', _admCard:'#0c1050', _admTxt:'#e8eeff', _admMut:'#7080cc',
-      _admBrd:'rgba(79,143,255,0.25)', _admInp:'rgba(79,143,255,0.08)', _admInpBrd:'rgba(79,143,255,0.28)',
-      _admActive:'rgba(79,143,255,0.18)', _admActiveTxt:'#7ab0ff', _isLight:false }
-  },
-  { id:'oceano-glacial', grupo:'🔵 Azul Océano', nombre:'Glacial',
-    desc:'Azul hielo y blanco glacial. Limpio y premium.',
-    preview:{ bg:'#0a1628', card:'#12203e', card2:'#172848', accent:'#38bdf8', txt:'#f0f9ff' },
-    tokens:{ cp:'#38bdf8', cbg:'#0a1628', ccat:'#0e1c35', ccard:'#12203e', ctxt:'#f0f9ff', cmut:'#6890b8', cbt:'#ffffff',
-      b1:'#1e3a5f', b2:'#12203e', cbgg1:'#0a1628', cbgg2:'#0e1c35', cbgdir:'160deg',
-      ccatg1:'#0e1c35', ccatg2:'#12203e', ccatgdir:'180deg', ccardg1:'#12203e', ccardg2:'#172848',
-      ccardbrd:'rgba(56,189,248,0.28)', ccardrad:'16px', cdesc:'#6890b8',
-      chdr:'#0e1c35', chdr2:'#0a1628', chdrdir:'90deg', chtxt:'#f0f9ff',
-      cftr:'#07101e', cftxt:'#7dd3fc', ctabc:'#38bdf8', cprice:'#7dd3fc',
-      ctickbg1:'#0284c7', ctickbg2:'#38bdf8', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#12203e', tktbg2:'#172848', tkttxt:'#f0f9ff', tktmut:'#6890b8', tktbrd:'rgba(56,189,248,0.3)', tktaccent:'#38bdf8',
-      cmodbg:'#12203e', cmodhdr:'#0e1c35', cmodtxt:'#f0f9ff', cmodinp:'rgba(56,189,248,0.10)',
-      cmodinpbrd:'rgba(56,189,248,0.28)', cmodlbl:'#6890b8', cmodbtn:'rgba(56,189,248,0.10)',
-      cheroeyebrow:'#38bdf8', cherosub:'rgba(240,249,255,0.90)',
-      fsocbg:'rgba(56,189,248,0.15)', fsocbrd:'rgba(56,189,248,0.40)', fsocc:'#f0f9ff', fsocrad:'50px',
-      fhead:'Raleway', fbody:'Roboto', ovcolor:'#0a1628', ovopacity:45,
-      splashBg:'#0a1628', splashTxt:'#38bdf8', splashNombreTxt:'#38bdf8',
-      _admBg:'#0a1628', _admNav:'#0e1c35', _admCard:'#12203e', _admTxt:'#f0f9ff', _admMut:'#6890b8',
-      _admBrd:'rgba(56,189,248,0.25)', _admInp:'rgba(56,189,248,0.08)', _admInpBrd:'rgba(56,189,248,0.28)',
-      _admActive:'rgba(56,189,248,0.18)', _admActiveTxt:'#7dd3fc', _isLight:false }
-  },
-  { id:'rojo-fuego', grupo:'🔴 Rojo Pasión', nombre:'Fuego',
-    desc:'Negro con rojo fuego y naranja. Energético.',
-    preview:{ bg:'#0f0500', card:'#200800', card2:'#2d0c00', accent:'#ef4444', txt:'#fff0ee' },
-    tokens:{ cp:'#ef4444', cbg:'#0f0500', ccat:'#1a0800', ccard:'#200800', ctxt:'#fff0ee', cmut:'#cc8070', cbt:'#ffffff',
-      b1:'#3a0a00', b2:'#200800', cbgg1:'#0f0500', cbgg2:'#1a0800', cbgdir:'160deg',
-      ccatg1:'#1a0800', ccatg2:'#200800', ccatgdir:'180deg', ccardg1:'#200800', ccardg2:'#2d0c00',
-      ccardbrd:'rgba(239,68,68,0.30)', ccardrad:'16px', cdesc:'#cc8070',
-      chdr:'#1a0800', chdr2:'#0f0500', chdrdir:'90deg', chtxt:'#fff0ee',
-      cftr:'#0a0300', cftxt:'#f87171', ctabc:'#ef4444', cprice:'#f87171',
-      ctickbg1:'#dc2626', ctickbg2:'#ef4444', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#200800', tktbg2:'#2d0c00', tkttxt:'#fff0ee', tktmut:'#cc8070', tktbrd:'rgba(239,68,68,0.3)', tktaccent:'#ef4444',
-      cmodbg:'#200800', cmodhdr:'#1a0800', cmodtxt:'#fff0ee', cmodinp:'rgba(239,68,68,0.10)',
-      cmodinpbrd:'rgba(239,68,68,0.30)', cmodlbl:'#cc8070', cmodbtn:'rgba(239,68,68,0.10)',
-      cheroeyebrow:'#ef4444', cherosub:'rgba(255,240,238,0.90)',
-      fsocbg:'rgba(239,68,68,0.15)', fsocbrd:'rgba(239,68,68,0.40)', fsocc:'#fff0ee', fsocrad:'50px',
-      fhead:'Oswald', fbody:'Lato', ovcolor:'#0f0500', ovopacity:45,
-      splashBg:'#0f0500', splashTxt:'#ef4444', splashNombreTxt:'#ef4444',
-      _admBg:'#0f0500', _admNav:'#1a0800', _admCard:'#200800', _admTxt:'#fff0ee', _admMut:'#cc8070',
-      _admBrd:'rgba(239,68,68,0.25)', _admInp:'rgba(239,68,68,0.08)', _admInpBrd:'rgba(239,68,68,0.28)',
-      _admActive:'rgba(239,68,68,0.18)', _admActiveTxt:'#f87171', _isLight:false }
-  },
-  { id:'rojo-sangre', grupo:'🔴 Rojo Pasión', nombre:'Sangre',
-    desc:'Oscuro con rojo vino. Dramático y poderoso.',
-    preview:{ bg:'#0c0008', card:'#1a0012', card2:'#22001a', accent:'#be123c', txt:'#ffe4ec' },
-    tokens:{ cp:'#be123c', cbg:'#0c0008', ccat:'#140010', ccard:'#1a0012', ctxt:'#ffe4ec', cmut:'#bb8898', cbt:'#ffffff',
-      b1:'#3b0022', b2:'#1a0012', cbgg1:'#0c0008', cbgg2:'#140010', cbgdir:'160deg',
-      ccatg1:'#140010', ccatg2:'#1a0012', ccatgdir:'180deg', ccardg1:'#1a0012', ccardg2:'#22001a',
-      ccardbrd:'rgba(190,18,60,0.30)', ccardrad:'16px', cdesc:'#bb8898',
-      chdr:'#140010', chdr2:'#0c0008', chdrdir:'90deg', chtxt:'#ffe4ec',
-      cftr:'#080006', cftxt:'#f43f5e', ctabc:'#be123c', cprice:'#f43f5e',
-      ctickbg1:'#9f1239', ctickbg2:'#be123c', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#1a0012', tktbg2:'#22001a', tkttxt:'#ffe4ec', tktmut:'#bb8898', tktbrd:'rgba(190,18,60,0.3)', tktaccent:'#be123c',
-      cmodbg:'#1a0012', cmodhdr:'#140010', cmodtxt:'#ffe4ec', cmodinp:'rgba(190,18,60,0.10)',
-      cmodinpbrd:'rgba(190,18,60,0.30)', cmodlbl:'#bb8898', cmodbtn:'rgba(190,18,60,0.10)',
-      cheroeyebrow:'#be123c', cherosub:'rgba(255,228,236,0.90)',
-      fsocbg:'rgba(190,18,60,0.15)', fsocbrd:'rgba(190,18,60,0.40)', fsocc:'#ffe4ec', fsocrad:'50px',
-      fhead:'Playfair Display', fbody:'DM Sans', ovcolor:'#0c0008', ovopacity:45,
-      splashBg:'#0c0008', splashTxt:'#be123c', splashNombreTxt:'#be123c',
-      _admBg:'#0c0008', _admNav:'#140010', _admCard:'#1a0012', _admTxt:'#ffe4ec', _admMut:'#bb8898',
-      _admBrd:'rgba(190,18,60,0.25)', _admInp:'rgba(190,18,60,0.08)', _admInpBrd:'rgba(190,18,60,0.28)',
-      _admActive:'rgba(190,18,60,0.18)', _admActiveTxt:'#f43f5e', _isLight:false }
-  },
-  { id:'rojo-naranja', grupo:'🔴 Rojo Pasión', nombre:'Volcán',
-    desc:'Negro con naranja volcánico y ámbar.',
-    preview:{ bg:'#100800', card:'#1e1000', card2:'#2a1800', accent:'#f97316', txt:'#fff7ed' },
-    tokens:{ cp:'#f97316', cbg:'#100800', ccat:'#1a1000', ccard:'#1e1000', ctxt:'#fff7ed', cmut:'#cc9060', cbt:'#ffffff',
-      b1:'#3a1a00', b2:'#1e1000', cbgg1:'#100800', cbgg2:'#1a1000', cbgdir:'160deg',
-      ccatg1:'#1a1000', ccatg2:'#1e1000', ccatgdir:'180deg', ccardg1:'#1e1000', ccardg2:'#2a1800',
-      ccardbrd:'rgba(249,115,22,0.30)', ccardrad:'16px', cdesc:'#cc9060',
-      chdr:'#1a1000', chdr2:'#100800', chdrdir:'90deg', chtxt:'#fff7ed',
-      cftr:'#0a0600', cftxt:'#fb923c', ctabc:'#f97316', cprice:'#fb923c',
-      ctickbg1:'#ea580c', ctickbg2:'#f97316', cticktext:'#ffffff', ctickgdir:'90deg',
-      tktbg:'#1e1000', tktbg2:'#2a1800', tkttxt:'#fff7ed', tktmut:'#cc9060', tktbrd:'rgba(249,115,22,0.3)', tktaccent:'#f97316',
-      cmodbg:'#1e1000', cmodhdr:'#1a1000', cmodtxt:'#fff7ed', cmodinp:'rgba(249,115,22,0.10)',
-      cmodinpbrd:'rgba(249,115,22,0.30)', cmodlbl:'#cc9060', cmodbtn:'rgba(249,115,22,0.10)',
-      cheroeyebrow:'#f97316', cherosub:'rgba(255,247,237,0.90)',
-      fsocbg:'rgba(249,115,22,0.15)', fsocbrd:'rgba(249,115,22,0.40)', fsocc:'#fff7ed', fsocrad:'50px',
-      fhead:'Oswald', fbody:'Roboto', ovcolor:'#100800', ovopacity:45,
-      splashBg:'#100800', splashTxt:'#f97316', splashNombreTxt:'#f97316',
-      _admBg:'#100800', _admNav:'#1a1000', _admCard:'#1e1000', _admTxt:'#fff7ed', _admMut:'#cc9060',
-      _admBrd:'rgba(249,115,22,0.25)', _admInp:'rgba(249,115,22,0.08)', _admInpBrd:'rgba(249,115,22,0.28)',
-      _admActive:'rgba(249,115,22,0.18)', _admActiveTxt:'#fb923c', _isLight:false }
-  },
-  { id:'cafe-espresso', grupo:'🟤 Café Cálido', nombre:'Espresso',
-    desc:'Marrón espresso con crema dorada. Ideal para comida.',
-    preview:{ bg:'#0f0800', card:'#1e1200', card2:'#281800', accent:'#d97706', txt:'#fef3c7' },
-    tokens:{ cp:'#d97706', cbg:'#0f0800', ccat:'#1a1000', ccard:'#1e1200', ctxt:'#fef3c7', cmut:'#b09060', cbt:'#ffffff',
-      b1:'#3a2200', b2:'#1e1200', cbgg1:'#0f0800', cbgg2:'#1a1000', cbgdir:'160deg',
-      ccatg1:'#1a1000', ccatg2:'#1e1200', ccatgdir:'180deg', ccardg1:'#1e1200', ccardg2:'#281800',
-      ccardbrd:'rgba(217,119,6,0.30)', ccardrad:'14px', cdesc:'#b09060',
-      chdr:'#1a1000', chdr2:'#0f0800', chdrdir:'90deg', chtxt:'#fef3c7',
-      cftr:'#0a0600', cftxt:'#fbbf24', ctabc:'#d97706', cprice:'#f59e0b',
-      ctickbg1:'#b45309', ctickbg2:'#d97706', cticktext:'#fef3c7', ctickgdir:'90deg',
-      tktbg:'#1e1200', tktbg2:'#281800', tkttxt:'#fef3c7', tktmut:'#b09060', tktbrd:'rgba(217,119,6,0.3)', tktaccent:'#d97706',
-      cmodbg:'#1e1200', cmodhdr:'#1a1000', cmodtxt:'#fef3c7', cmodinp:'rgba(217,119,6,0.10)',
-      cmodinpbrd:'rgba(217,119,6,0.30)', cmodlbl:'#b09060', cmodbtn:'rgba(217,119,6,0.10)',
-      cheroeyebrow:'#d97706', cherosub:'rgba(254,243,199,0.90)',
-      fsocbg:'rgba(217,119,6,0.15)', fsocbrd:'rgba(217,119,6,0.40)', fsocc:'#fef3c7', fsocrad:'50px',
-      fhead:'Playfair Display', fbody:'Lato', ovcolor:'#0f0800', ovopacity:45,
-      splashBg:'#0f0800', splashTxt:'#d97706', splashNombreTxt:'#d97706',
-      _admBg:'#0f0800', _admNav:'#1a1000', _admCard:'#1e1200', _admTxt:'#fef3c7', _admMut:'#b09060',
-      _admBrd:'rgba(217,119,6,0.25)', _admInp:'rgba(217,119,6,0.08)', _admInpBrd:'rgba(217,119,6,0.28)',
-      _admActive:'rgba(217,119,6,0.18)', _admActiveTxt:'#f59e0b', _isLight:false }
-  },
-  { id:'cafe-canela', grupo:'🟤 Café Cálido', nombre:'Canela',
-    desc:'Tonos canela y terracota oscuro. Acogedor y artesanal.',
-    preview:{ bg:'#140c08', card:'#241408', card2:'#301a0a', accent:'#c2692a', txt:'#fdebd0' },
-    tokens:{ cp:'#c2692a', cbg:'#140c08', ccat:'#1e1208', ccard:'#241408', ctxt:'#fdebd0', cmut:'#aa8060', cbt:'#ffffff',
-      b1:'#3d1e08', b2:'#241408', cbgg1:'#140c08', cbgg2:'#1e1208', cbgdir:'160deg',
-      ccatg1:'#1e1208', ccatg2:'#241408', ccatgdir:'180deg', ccardg1:'#241408', ccardg2:'#301a0a',
-      ccardbrd:'rgba(194,105,42,0.30)', ccardrad:'14px', cdesc:'#aa8060',
-      chdr:'#1e1208', chdr2:'#140c08', chdrdir:'90deg', chtxt:'#fdebd0',
-      cftr:'#0e0906', cftxt:'#e0945a', ctabc:'#c2692a', cprice:'#e07a3a',
-      ctickbg1:'#a0521a', ctickbg2:'#c2692a', cticktext:'#fdebd0', ctickgdir:'90deg',
-      tktbg:'#241408', tktbg2:'#301a0a', tkttxt:'#fdebd0', tktmut:'#aa8060', tktbrd:'rgba(194,105,42,0.3)', tktaccent:'#c2692a',
-      cmodbg:'#241408', cmodhdr:'#1e1208', cmodtxt:'#fdebd0', cmodinp:'rgba(194,105,42,0.10)',
-      cmodinpbrd:'rgba(194,105,42,0.30)', cmodlbl:'#aa8060', cmodbtn:'rgba(194,105,42,0.10)',
-      cheroeyebrow:'#c2692a', cherosub:'rgba(253,235,208,0.90)',
-      fsocbg:'rgba(194,105,42,0.15)', fsocbrd:'rgba(194,105,42,0.40)', fsocc:'#fdebd0', fsocrad:'50px',
-      fhead:'Raleway', fbody:'Lato', ovcolor:'#140c08', ovopacity:45,
-      splashBg:'#140c08', splashTxt:'#c2692a', splashNombreTxt:'#c2692a',
-      _admBg:'#140c08', _admNav:'#1e1208', _admCard:'#241408', _admTxt:'#fdebd0', _admMut:'#aa8060',
-      _admBrd:'rgba(194,105,42,0.25)', _admInp:'rgba(194,105,42,0.08)', _admInpBrd:'rgba(194,105,42,0.28)',
-      _admActive:'rgba(194,105,42,0.18)', _admActiveTxt:'#e07a3a', _isLight:false }
-  },
-  { id:'cafe-latte', grupo:'🟤 Café Cálido', nombre:'Latte',
-    desc:'Crema y beige cálido con texto oscuro. Minimalista.',
-    preview:{ bg:'#faf4ec', card:'#f0e6d0', card2:'#e8d8b8', accent:'#92400e', txt:'#3b2008' },
-    tokens:{ cp:'#92400e', cbg:'#faf4ec', ccat:'#f5ead8', ccard:'#f0e6d0', ctxt:'#3b2008', cmut:'#7a6050', cbt:'#3b2008',
-      b1:'#e8d5b0', b2:'#f0e6d0', cbgg1:'#faf4ec', cbgg2:'#f5ead8', cbgdir:'180deg',
-      ccatg1:'#f5ead8', ccatg2:'#f0e6d0', ccatgdir:'180deg', ccardg1:'#f0e6d0', ccardg2:'#e8d8b8',
-      ccardbrd:'rgba(146,64,14,0.22)', ccardrad:'14px', cdesc:'#7a6050',
-      chdr:'#3b2008', chdr2:'#5a3010', chdrdir:'90deg', chtxt:'#faf4ec',
-      cftr:'#3b2008', cftxt:'#d4a574', ctabc:'#92400e', cprice:'#92400e',
-      ctickbg1:'#92400e', ctickbg2:'#b45309', cticktext:'#faf4ec', ctickgdir:'90deg',
-      tktbg:'#faf4ec', tktbg2:'#f0e6d0', tkttxt:'#3b2008', tktmut:'#7a6050', tktbrd:'rgba(146,64,14,0.22)', tktaccent:'#92400e',
-      cmodbg:'#faf4ec', cmodhdr:'#f0e6d0', cmodtxt:'#3b2008', cmodinp:'rgba(146,64,14,0.08)',
-      cmodinpbrd:'rgba(146,64,14,0.22)', cmodlbl:'#7a6050', cmodbtn:'rgba(146,64,14,0.07)',
-      cheroeyebrow:'#92400e', cherosub:'rgba(59,32,8,0.85)',
-      fsocbg:'rgba(146,64,14,0.10)', fsocbrd:'rgba(146,64,14,0.28)', fsocc:'#3b2008', fsocrad:'50px',
-      fhead:'Playfair Display', fbody:'Lato', ovcolor:'#000000', ovopacity:20,
-      splashBg:'#3b2008', splashTxt:'#d4a574', splashNombreTxt:'#d4a574',
-      _admBg:'#faf4ec', _admNav:'#3b2008', _admCard:'#f0e6d0', _admTxt:'#3b2008', _admMut:'#7a6050',
-      _admBrd:'rgba(146,64,14,0.18)', _admInp:'rgba(146,64,14,0.06)', _admInpBrd:'rgba(146,64,14,0.20)',
-      _admActive:'rgba(146,64,14,0.12)', _admActiveTxt:'#92400e', _isLight:true }
-  },
-  { id:'negro-clasico', grupo:'⬛ Negro Puro', nombre:'Clásico',
-    desc:'Negro absoluto con blanco. Ultra minimalista.',
-    preview:{ bg:'#000000', card:'#111111', card2:'#1a1a1a', accent:'#ffffff', txt:'#f0f0f0' },
-    tokens:{ cp:'#ffffff', cbg:'#000000', ccat:'#0a0a0a', ccard:'#111111', ctxt:'#f0f0f0', cmut:'#888888', cbt:'#000000',
-      b1:'#111111', b2:'#0a0a0a', cbgg1:'#000000', cbgg2:'#050505', cbgdir:'180deg',
-      ccatg1:'#0a0a0a', ccatg2:'#111111', ccatgdir:'180deg', ccardg1:'#111111', ccardg2:'#1a1a1a',
-      ccardbrd:'rgba(255,255,255,0.12)', ccardrad:'12px', cdesc:'#888888',
-      chdr:'#000000', chdr2:'#0a0a0a', chdrdir:'90deg', chtxt:'#f0f0f0',
-      cftr:'#000000', cftxt:'#666666', ctabc:'#ffffff', cprice:'#ffffff',
-      ctickbg1:'#222222', ctickbg2:'#333333', cticktext:'#f0f0f0', ctickgdir:'90deg',
-      tktbg:'#111111', tktbg2:'#1a1a1a', tkttxt:'#f0f0f0', tktmut:'#888888', tktbrd:'rgba(255,255,255,0.12)', tktaccent:'#ffffff',
-      cmodbg:'#111111', cmodhdr:'#0a0a0a', cmodtxt:'#f0f0f0', cmodinp:'rgba(255,255,255,0.06)',
-      cmodinpbrd:'rgba(255,255,255,0.14)', cmodlbl:'#888888', cmodbtn:'rgba(255,255,255,0.06)',
-      cheroeyebrow:'#ffffff', cherosub:'rgba(240,240,240,0.85)',
-      fsocbg:'rgba(255,255,255,0.08)', fsocbrd:'rgba(255,255,255,0.18)', fsocc:'#f0f0f0', fsocrad:'50px',
-      fhead:'Montserrat', fbody:'Roboto', ovcolor:'#000000', ovopacity:50,
-      splashBg:'#000000', splashTxt:'#ffffff', splashNombreTxt:'#ffffff',
-      _admBg:'#000000', _admNav:'#0a0a0a', _admCard:'#111111', _admTxt:'#f0f0f0', _admMut:'#888888',
-      _admBrd:'rgba(255,255,255,0.10)', _admInp:'rgba(255,255,255,0.06)', _admInpBrd:'rgba(255,255,255,0.14)',
-      _admActive:'rgba(255,255,255,0.08)', _admActiveTxt:'#ffffff', _isLight:false }
-  },
-  { id:'negro-plata', grupo:'⬛ Negro Puro', nombre:'Plata',
-    desc:'Negro con acento plateado metalizado.',
-    preview:{ bg:'#080808', card:'#141414', card2:'#1e1e1e', accent:'#c0c0c0', txt:'#e8e8e8' },
-    tokens:{ cp:'#c0c0c0', cbg:'#080808', ccat:'#0e0e0e', ccard:'#141414', ctxt:'#e8e8e8', cmut:'#808080', cbt:'#ffffff',
-      b1:'#1a1a1a', b2:'#141414', cbgg1:'#080808', cbgg2:'#0e0e0e', cbgdir:'180deg',
-      ccatg1:'#0e0e0e', ccatg2:'#141414', ccatgdir:'180deg', ccardg1:'#141414', ccardg2:'#1e1e1e',
-      ccardbrd:'rgba(192,192,192,0.18)', ccardrad:'12px', cdesc:'#808080',
-      chdr:'#0e0e0e', chdr2:'#080808', chdrdir:'90deg', chtxt:'#e8e8e8',
-      cftr:'#050505', cftxt:'#707070', ctabc:'#c0c0c0', cprice:'#d8d8d8',
-      ctickbg1:'#606060', ctickbg2:'#909090', cticktext:'#f0f0f0', ctickgdir:'90deg',
-      tktbg:'#141414', tktbg2:'#1e1e1e', tkttxt:'#e8e8e8', tktmut:'#808080', tktbrd:'rgba(192,192,192,0.18)', tktaccent:'#c0c0c0',
-      cmodbg:'#141414', cmodhdr:'#0e0e0e', cmodtxt:'#e8e8e8', cmodinp:'rgba(192,192,192,0.07)',
-      cmodinpbrd:'rgba(192,192,192,0.18)', cmodlbl:'#808080', cmodbtn:'rgba(192,192,192,0.07)',
-      cheroeyebrow:'#c0c0c0', cherosub:'rgba(232,232,232,0.85)',
-      fsocbg:'rgba(192,192,192,0.10)', fsocbrd:'rgba(192,192,192,0.22)', fsocc:'#e8e8e8', fsocrad:'50px',
-      fhead:'Raleway', fbody:'Lato', ovcolor:'#080808', ovopacity:50,
-      splashBg:'#080808', splashTxt:'#c0c0c0', splashNombreTxt:'#c0c0c0',
-      _admBg:'#080808', _admNav:'#0e0e0e', _admCard:'#141414', _admTxt:'#e8e8e8', _admMut:'#808080',
-      _admBrd:'rgba(192,192,192,0.14)', _admInp:'rgba(192,192,192,0.06)', _admInpBrd:'rgba(192,192,192,0.16)',
-      _admActive:'rgba(192,192,192,0.10)', _admActiveTxt:'#d8d8d8', _isLight:false }
-  },
-  { id:'negro-dorado', grupo:'⬛ Negro Puro', nombre:'Dorado Luxury',
-    desc:'Negro con detalles dorados. Máximo lujo.',
-    preview:{ bg:'#05050a', card:'#100f00', card2:'#181600', accent:'#d4af37', txt:'#fff8dc' },
-    tokens:{ cp:'#d4af37', cbg:'#05050a', ccat:'#0a0900', ccard:'#100f00', ctxt:'#fff8dc', cmut:'#9a8040', cbt:'#000000',
-      b1:'#1a1600', b2:'#100f00', cbgg1:'#05050a', cbgg2:'#0a0900', cbgdir:'180deg',
-      ccatg1:'#0a0900', ccatg2:'#100f00', ccatgdir:'180deg', ccardg1:'#100f00', ccardg2:'#181600',
-      ccardbrd:'rgba(212,175,55,0.28)', ccardrad:'12px', cdesc:'#9a8040',
-      chdr:'#0a0900', chdr2:'#05050a', chdrdir:'90deg', chtxt:'#fff8dc',
-      cftr:'#030305', cftxt:'#b8960c', ctabc:'#d4af37', cprice:'#d4af37',
-      ctickbg1:'#b8960c', ctickbg2:'#d4af37', cticktext:'#05050a', ctickgdir:'90deg',
-      tktbg:'#100f00', tktbg2:'#181600', tkttxt:'#fff8dc', tktmut:'#9a8040', tktbrd:'rgba(212,175,55,0.28)', tktaccent:'#d4af37',
-      cmodbg:'#100f00', cmodhdr:'#0a0900', cmodtxt:'#fff8dc', cmodinp:'rgba(212,175,55,0.08)',
-      cmodinpbrd:'rgba(212,175,55,0.25)', cmodlbl:'#9a8040', cmodbtn:'rgba(212,175,55,0.08)',
-      cheroeyebrow:'#d4af37', cherosub:'rgba(255,248,220,0.90)',
-      fsocbg:'rgba(212,175,55,0.14)', fsocbrd:'rgba(212,175,55,0.32)', fsocc:'#fff8dc', fsocrad:'50px',
-      fhead:'Playfair Display', fbody:'Montserrat', ovcolor:'#05050a', ovopacity:50,
-      splashBg:'#05050a', splashTxt:'#d4af37', splashNombreTxt:'#d4af37',
-      _admBg:'#05050a', _admNav:'#0a0900', _admCard:'#100f00', _admTxt:'#fff8dc', _admMut:'#9a8040',
-      _admBrd:'rgba(212,175,55,0.22)', _admInp:'rgba(212,175,55,0.07)', _admInpBrd:'rgba(212,175,55,0.24)',
-      _admActive:'rgba(212,175,55,0.15)', _admActiveTxt:'#d4af37', _isLight:false }
-  }
-];
-
-function renderIdentidades() {
-  var grid = document.getElementById('identidades-grid');
-  if (!grid) return;
-  var grupos = {};
-  IDENTIDADES.forEach(function(t){ if(!grupos[t.grupo]) grupos[t.grupo]=[]; grupos[t.grupo].push(t); });
-  var html = '';
-  Object.keys(grupos).forEach(function(g) {
-    html += '<div style="grid-column:1/-1;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--cmut);padding:6px 2px 8px;border-bottom:1px solid rgba(128,128,128,.15);margin-top:8px">'+g+'</div>';
-    grupos[g].forEach(function(t) {
-      var active = (C._identidad === t.id);
-      var p = t.preview;
-      var brdCol = active ? p.accent : 'rgba(128,128,128,0.2)';
-      var glow   = active ? ';box-shadow:0 0 0 3px '+p.accent+'44' : '';
-      html +=
-        '<div onclick="aplicarIdentidad(\''+t.id+'\')" style="cursor:pointer;border-radius:16px;overflow:hidden;border:2px solid '+brdCol+glow+';transition:all .2s">' +
-        '<div style="height:82px;background:linear-gradient(135deg,'+p.bg+' 0%,'+p.card2+' 100%);padding:10px 12px;display:flex;flex-direction:column;justify-content:space-between">' +
-          '<div style="display:flex;align-items:center;gap:8px">' +
-            '<div style="width:24px;height:7px;border-radius:4px;background:'+p.accent+'"></div>' +
-            '<div style="flex:1;height:5px;border-radius:3px;background:'+p.txt+';opacity:.15"></div>' +
-            (active ? '<div style="font-size:9px;font-weight:800;background:'+p.accent+';color:'+p.bg+';border-radius:20px;padding:2px 8px;white-space:nowrap">ACTIVO</div>' : '') +
-          '</div>' +
-          '<div style="display:flex;gap:5px">' +
-            '<div style="flex:1;height:38px;border-radius:8px;background:linear-gradient(160deg,'+p.card+','+p.card2+');border:1px solid '+p.accent+'44;display:flex;flex-direction:column;justify-content:flex-end;padding:5px 7px;gap:3px">' +
-              '<div style="width:65%;height:3px;border-radius:2px;background:'+p.txt+';opacity:.6"></div>' +
-              '<div style="width:45%;height:5px;border-radius:2px;background:'+p.accent+'"></div>' +
-            '</div>' +
-            '<div style="flex:1;height:38px;border-radius:8px;background:linear-gradient(160deg,'+p.card+','+p.card2+');border:1px solid '+p.accent+'44;display:flex;flex-direction:column;justify-content:flex-end;padding:5px 7px;gap:3px">' +
-              '<div style="width:55%;height:3px;border-radius:2px;background:'+p.txt+';opacity:.6"></div>' +
-              '<div style="width:38%;height:5px;border-radius:2px;background:'+p.accent+'"></div>' +
-            '</div>' +
-            '<div style="flex:1;height:38px;border-radius:8px;background:linear-gradient(160deg,'+p.card+','+p.card2+');border:1px solid '+p.accent+'44;display:flex;flex-direction:column;justify-content:flex-end;padding:5px 7px;gap:3px">' +
-              '<div style="width:70%;height:3px;border-radius:2px;background:'+p.txt+';opacity:.6"></div>' +
-              '<div style="width:42%;height:5px;border-radius:2px;background:'+p.accent+'"></div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div style="padding:9px 12px 7px;background:'+p.bg+';border-top:1px solid '+p.accent+'22">' +
-          '<div style="font-size:13px;font-weight:800;color:'+p.txt+';margin-bottom:2px">'+t.nombre+'</div>' +
-          '<div style="font-size:11px;line-height:1.4;color:'+p.txt+';opacity:.7">'+t.desc+'</div>' +
-        '</div>' +
-        '<div style="display:flex;gap:5px;padding:7px 12px 9px;background:'+p.bg+';align-items:center">' +
-          '<div style="width:11px;height:11px;border-radius:50%;background:'+p.bg+';border:1.5px solid '+p.txt+';opacity:.5"></div>' +
-          '<div style="width:11px;height:11px;border-radius:50%;background:'+p.card+'"></div>' +
-          '<div style="width:11px;height:11px;border-radius:50%;background:'+p.card2+'"></div>' +
-          '<div style="width:11px;height:11px;border-radius:50%;background:'+p.accent+'"></div>' +
-          '<div style="margin-left:auto;font-size:10px;font-weight:700;background:'+p.accent+'22;color:'+p.accent+';border-radius:20px;padding:2px 8px">'+t.grupo.split(' ')[0]+'</div>' +
-        '</div>' +
-        '</div>';
-    });
-  });
-  grid.innerHTML = html;
-}
-
-function aplicarIdentidad(id) {
-  var tema = IDENTIDADES.find(function(t){ return t.id === id; });
-  if (!tema) return;
-  var tk = tema.tokens;
-  var campos = ['cp','cbg','ccat','ccard','ctxt','cmut','cbt','b1','b2',
-    'cbgg1','cbgg2','cbgdir','ccatg1','ccatg2','ccatgdir','ccardg1','ccardg2','ccardbrd','ccardrad','cdesc',
-    'chdr','chdr2','chdrdir','chtxt','cftr','cftxt','ctabc','cprice',
-    'ctickbg1','ctickbg2','cticktext','ctickgdir',
-    'tktbg','tktbg2','tkttxt','tktmut','tktbrd','tktaccent',
-    'cmodbg','cmodhdr','cmodtxt','cmodinp','cmodinpbrd','cmodlbl','cmodbtn',
-    'cheroeyebrow','cherosub','fsocbg','fsocbrd','fsocc','fsocrad',
-    'fhead','fbody','ovcolor','ovopacity','splashBg','splashTxt','splashNombreTxt'];
-  campos.forEach(function(k){ if(tk[k] !== undefined) C[k] = tk[k]; });
-  C._identidad = id;
-  applyC();
-  aplicarAdminCSS(tk);
-  fillForm();
-  renderTicker();
-  renderCat();
-  saveSt();
-  renderIdentidades();
-  toast('🎨 Identidad "'+tema.nombre+'" aplicada', 's');
-}
-
-function aplicarAdminCSS(tk) {
-  var s = document.documentElement.style;
-  var bg    = tk._admBg    || '#0a0a14';
-  var nav   = tk._admNav   || '#0d0d1a';
-  var card  = tk._admCard  || '#141428';
-  var txt   = tk._admTxt   || '#f0f0ff';
-  var mut   = tk._admMut   || '#8888aa';
-  var brd   = tk._admBrd   || 'rgba(255,255,255,0.07)';
-  var inp   = tk._admInp   || 'rgba(255,255,255,0.07)';
-  var inpBrd= tk._admInpBrd|| 'rgba(255,255,255,0.12)';
-  var acc   = tk._admActiveTxt || tk.cp || '#f0a500';
-  var actBg = tk._admActive|| 'rgba(240,165,0,0.12)';
-  var lbl   = tk._isLight  ? 'rgba(0,0,0,0.28)' : 'rgba(255,255,255,0.25)';
-  s.setProperty('--adm-bg',    bg);
-  s.setProperty('--adm-nav',   nav);
-  s.setProperty('--adm-card',  card);
-  s.setProperty('--adm-txt',   txt);
-  s.setProperty('--adm-mut',   mut);
-  s.setProperty('--adm-brd',   brd);
-  s.setProperty('--adm-inp',   inp);
-  s.setProperty('--adm-inpbrd',inpBrd);
-  s.setProperty('--adm-acc',   acc);
-  s.setProperty('--adm-lbl',   lbl);
-  var admEl = document.getElementById('adm');
-  if (admEl) { admEl.style.background = bg; admEl.style.color = txt; }
-  var navEl = document.getElementById('adm-nav');
-  if (navEl) { navEl.style.background = nav; navEl.style.borderRightColor = brd; }
-  var mainEl = document.getElementById('adm-main');
-  if (mainEl) { mainEl.style.background = bg; mainEl.style.color = txt; }
-  document.querySelectorAll('#adm-nav .nav-section').forEach(function(el){ el.style.color = lbl; });
-  document.querySelectorAll('#adm-nav .an').forEach(function(el){ el.style.color = txt; el.style.background = 'transparent'; });
-  var activeEl = document.querySelector('#adm-nav .an.active');
-  if (activeEl) { activeEl.style.background = actBg; activeEl.style.color = acc; }
-  document.querySelectorAll('#adm-main .ac').forEach(function(el){ el.style.background=card; el.style.borderColor=brd; el.style.color=txt; });
-  document.querySelectorAll('#adm-main .cfg-zone').forEach(function(el){ el.style.background=card; el.style.borderColor=brd; el.style.color=txt; });
-  document.querySelectorAll('#adm-main .asttl,#adm-main .acttl').forEach(function(el){ el.style.color=txt; });
-  document.querySelectorAll('#adm-main .assub,#adm-main .fl').forEach(function(el){ el.style.color=mut; });
-  document.querySelectorAll('#adm .fi').forEach(function(el){ el.style.background=inp; el.style.borderColor=inpBrd; el.style.color=txt; });
-}
-
-function restaurarIdentidadAdmin() {
-  if (!C._identidad) return;
-  var tema = IDENTIDADES.find(function(t){ return t.id === C._identidad; });
-  if (tema) aplicarAdminCSS(tema.tokens);
-}
-
 window.addEventListener('load', function() {
   applyC();
   renderCat();
@@ -4227,7 +3621,6 @@ window.addEventListener('load', function() {
   document.getElementById('yr').textContent = new Date().getFullYear();
   // Banner: mostrar en la tienda al cargar si está activo
   setTimeout(function(){ initBannerPub(); }, 300);
-  setTimeout(function(){ restaurarIdentidadAdmin(); }, 80);
 });
 
 // ============================================================
@@ -4274,7 +3667,7 @@ function applyC() {
   s.setProperty('--cheroeyebrow', C.cheroeyebrow || '#f0a500');
   s.setProperty('--cherosub',     C.cherosub     || 'rgba(220,220,255,0.85)');
   var ey = document.getElementById('hero-eyebrow');
-  if(ey){ ey.textContent = C.eyebrow || '✨ Bienvenido'; ey.style.display='none'; }
+  if(ey){ ey.textContent = C.eyebrow||'✨ Bienvenido'; ey.style.display='none'; }
   s.setProperty('--spd',   (C.spd  || 30) + 's');
   s.setProperty('--tktbg',    C.tktbg    || '#ffffff');
   s.setProperty('--tktbg2',   C.tktbg2   || '#f5f0e8');
@@ -4323,7 +3716,7 @@ function applyC() {
   }
   document.getElementById('hero-sub').textContent   = C.sub  || '';
   var eyel = document.getElementById('hero-eyebrow');
-  if(eyel){ eyel.textContent = C.eyebrow || '✨ Bienvenido'; eyel.style.display='none'; }
+  if(eyel){ eyel.textContent = C.eyebrow||'✨ Bienvenido'; eyel.style.display='none'; }
   var b1w = document.getElementById('hero-btn1-wrap');
   var b1el = document.getElementById('hero-btn1');
   if(b1w) b1w.style.display = (C.btn1show===false) ? 'none' : '';
@@ -5026,7 +4419,6 @@ function doLogin() {
 function closeAdm() { document.getElementById('adm').classList.remove('show'); }
 
 function navTo(el) {
-  if(el&&el.dataset&&el.dataset.sec==='identidades'){setTimeout(renderIdentidades,50);}
   setTimeout(guardarSesionActual, 100);
   document.querySelectorAll('.an').forEach(function(e){ e.classList.remove('active'); });
   el.classList.add('active');
@@ -5064,12 +4456,8 @@ function upImg(ev, inputId, prevId, type) {
         else       { w = Math.round(w * MAX/h); h = MAX; }
       }
       canvas.width = w; canvas.height = h;
-      var ctx2d = canvas.getContext('2d');
-      ctx2d.imageSmoothingEnabled=true;
-      ctx2d.imageSmoothingQuality='high';
-      ctx2d.drawImage(img, 0, 0, w, h);
-      var qual = (type==='banner') ? 0.95 : 0.82;
-      var data = canvas.toDataURL('image/jpeg', qual);
+      var ctx2d = canvas.getContext('2d'); ctx2d.imageSmoothingEnabled=true; ctx2d.imageSmoothingQuality='high'; ctx2d.drawImage(img, 0, 0, w, h);
+      var data = canvas.toDataURL('image/jpeg', (type==='banner')?0.95:0.82);
 
       if (type === 'logo')   { C.logo  = data; applyC(); saveSt(); }
       if (type === 'banner') { C.bimg  = data; applyC(); saveSt(); }
@@ -9179,18 +8567,22 @@ function renderPWAPreview() {
 function aplicarBannerPub() {
   var banner = document.getElementById('banner-pub');
   if (!banner) return;
+  // Fuente de verdad: C.pubActivo (no el checkbox que puede estar sin renderizar)
+  if (!C.pubActivo) { banner.style.display = 'none'; if(typeof renderPubPreview==='function') renderPubPreview(); return; }
+  // Sincronizar checkbox si está disponible
   var activo = document.getElementById('c-pub-activo');
-  if (!activo || !activo.checked) { banner.style.display = 'none'; renderPubPreview(); return; }
+  if (activo) activo.checked = true;
 
-  var titulo  = (document.getElementById('c-pub-titulo')||{}).value || 'Pauta aquí tu negocio';
-  var sub     = (document.getElementById('c-pub-sub')||{}).value || 'Llega a más clientes';
-  var bg      = (document.getElementById('c-pub-bg')||{}).value || '#1a1a2e';
-  var txt     = (document.getElementById('c-pub-txt')||{}).value || '#f0f0ff';
-  var ctaBg   = (document.getElementById('c-pub-cta-bg')||{}).value || '#f0a500';
-  var ico     = (document.getElementById('c-pub-ico')||{}).value || '📢';
-  var size    = ((document.getElementById('c-pub-size')||{}).value) || 'md';
-  var borde   = ((document.getElementById('c-pub-borde')||{}).value) || 'none';
-  var diseno  = ((document.getElementById('c-pub-diseno')||{}).value) || 'clasico';
+  // Leer de C primero (cuando admin está cerrado los inputs están vacíos)
+  var titulo  = C.pubTitulo || (document.getElementById('c-pub-titulo')||{}).value || 'Pauta aquí tu negocio';
+  var sub     = C.pubSub    || (document.getElementById('c-pub-sub')||{}).value    || 'Llega a más clientes';
+  var bg      = C.pubBg     || (document.getElementById('c-pub-bg')||{}).value     || '#1a1a2e';
+  var txt     = C.pubTxt    || (document.getElementById('c-pub-txt')||{}).value    || '#f0f0ff';
+  var ctaBg   = C.pubCtaBg  || (document.getElementById('c-pub-cta-bg')||{}).value || '#f0a500';
+  var ico     = C.pubIco    || (document.getElementById('c-pub-ico')||{}).value    || '📢';
+  var size    = C.pubSize   || ((document.getElementById('c-pub-size')||{}).value)  || 'md';
+  var borde   = C.pubBorde  || ((document.getElementById('c-pub-borde')||{}).value) || 'none';
+  var diseno  = C.pubDiseno || ((document.getElementById('c-pub-diseno')||{}).value) || 'clasico';
   var img     = C.pubImg || '';
 
   banner.style.background = bg;
@@ -9344,75 +8736,29 @@ function renderPubPreview() {
 }
 
 function initBannerPub() {
-  var banner = document.getElementById('banner-pub');
-  if (!banner) return;
-  if (!C.pubActivo) { banner.style.display = 'none'; return; }
-  var titulo = C.pubTitulo || 'Pauta aqui tu negocio';
-  var sub    = C.pubSub    || 'Llega a mas clientes';
-  var bg     = C.pubBg     || '#1a1a2e';
-  var txt    = C.pubTxt    || '#f0f0ff';
-  var ctaBg  = C.pubCtaBg  || '#f0a500';
-  var ico    = C.pubIco    || '📢';
-  var size   = C.pubSize   || 'md';
-  var borde  = C.pubBorde  || 'none';
-  var diseno = C.pubDiseno || 'clasico';
-  var img    = C.pubImg    || '';
-  var url    = C.pubUrl    || '';
-  var ctaTxt = (ctaBg === '#f0a500' || ctaBg === '#ffcc00') ? '#000' : '#fff';
-
-  banner.style.background = bg;
-  banner.style.color = txt;
-  banner.style.border = '';
-  banner.style.borderBottom = '';
-  banner.style.borderLeft = '';
-  if (borde === 'bottom')    banner.style.borderBottom = '3px solid ' + ctaBg;
-  else if (borde === 'full') banner.style.border       = '2px solid ' + ctaBg;
-  else if (borde === 'left') banner.style.borderLeft   = '5px solid ' + ctaBg;
-  if (diseno === 'pill')     { banner.style.borderRadius = '50px'; banner.style.margin = '8px 12px'; }
-  else                       { banner.style.borderRadius = ''; banner.style.margin = ''; }
-  if (diseno === 'neon')     { banner.style.border = '1.5px solid ' + ctaBg; }
-
-  var imgHtml = img
-    ? '<img src="' + img + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px">'
-    : '<span style="font-size:22px">' + ico + '</span>';
-
-  var inner = '';
-  if (size === 'sm') {
-    inner = '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 16px">'
-      + '<span style="font-size:14px">' + ico + '</span>'
-      + '<span style="font-size:13px;font-weight:600;color:' + txt + '">' + titulo + '</span>'
-      + '</div>';
-  } else if (size === 'lg') {
-    inner = '<div style="display:flex;flex-direction:column;align-items:center;padding:22px 20px;text-align:center;gap:12px">'
-      + '<div style="width:64px;height:64px;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12)">' + imgHtml + '</div>'
-      + '<div><div style="font-size:18px;font-weight:900;color:' + txt + ';margin-bottom:4px">' + titulo + '</div>'
-      + '<div style="font-size:13px;color:' + txt + ';opacity:.8">' + sub + '</div></div>'
-      + '</div>';
-  } else {
-    var closeBtn = '<button onclick="event.stopPropagation();document.getElementById(\'banner-pub\').style.display=\'none\'" style="width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.2);border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:' + txt + '">✕</button>';
-    var ctaBtn = '<div style="background:' + ctaBg + ';border-radius:50px;padding:6px 14px;font-size:12px;font-weight:700;flex-shrink:0;color:' + ctaTxt + ';cursor:pointer;white-space:nowrap">Ver →</div>';
-    inner = '<div style="display:flex;align-items:center;gap:12px;padding:11px 16px">'
-      + '<div style="width:38px;height:38px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1)">' + imgHtml + '</div>'
-      + '<div style="flex:1;min-width:0">'
-      + '<div style="font-size:14px;font-weight:700;color:' + txt + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + titulo + '</div>'
-      + '<div style="font-size:12px;color:' + txt + ';opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + sub + '</div>'
-      + '</div>'
-      + ctaBtn + closeBtn
-      + '</div>';
+  if (!C.pubActivo) { var b=document.getElementById('banner-pub'); if(b) b.style.display='none'; return; }
+  var fields = {
+    'c-pub-titulo': C.pubTitulo, 'c-pub-sub': C.pubSub,
+    'c-pub-url': C.pubUrl, 'c-pub-ico': C.pubIco,
+    'c-pub-bg': C.pubBg, 'c-pub-txt': C.pubTxt, 'c-pub-cta-bg': C.pubCtaBg
+  };
+  Object.keys(fields).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && fields[id]) el.value = fields[id];
+  });
+  var chk = document.getElementById('c-pub-activo');
+  if (chk) chk.checked = true;
+  var sizeEl = document.getElementById('c-pub-size');
+  if (sizeEl && C.pubSize) sizeEl.value = C.pubSize;
+  var bordeEl = document.getElementById('c-pub-borde');
+  if (bordeEl && C.pubBorde) bordeEl.value = C.pubBorde;
+  var disenoEl = document.getElementById('c-pub-diseno');
+  if (disenoEl && C.pubDiseno) disenoEl.value = C.pubDiseno;
+  if (C.pubImg) {
+    var prev = document.getElementById('prev-pub-img');
+    if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; }
   }
-
-  banner.innerHTML = inner;
-  banner.style.display = 'block';
-  if (url) { banner.style.cursor = 'pointer'; banner.onclick = function(){ window.open(url, '_blank'); }; }
-  else     { banner.style.cursor = 'default'; banner.onclick = null; }
-
-  var flds = {'c-pub-titulo':titulo,'c-pub-sub':sub,'c-pub-url':url,'c-pub-ico':ico,'c-pub-bg':bg,'c-pub-txt':txt,'c-pub-cta-bg':ctaBg};
-  Object.keys(flds).forEach(function(id){ var el=document.getElementById(id); if(el&&flds[id]) el.value=flds[id]; });
-  var chk=document.getElementById('c-pub-activo'); if(chk) chk.checked=true;
-  var sEl=document.getElementById('c-pub-size'); if(sEl) sEl.value=size;
-  var bEl=document.getElementById('c-pub-borde'); if(bEl) bEl.value=borde;
-  var dEl=document.getElementById('c-pub-diseno'); if(dEl) dEl.value=diseno;
-  if(img){ var pv=document.getElementById('prev-pub-img'); if(pv){pv.src=img;pv.style.display='block';} }
+  aplicarBannerPub();
 }
 
 function renderCajaTablero() {
