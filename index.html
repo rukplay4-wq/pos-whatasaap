@@ -97,14 +97,14 @@ select.fi option{background:#111122}
 #admbtn:hover{background:rgba(255,255,255,.13)}
 
 /* HERO */
-#hero{position:relative;overflow:hidden;min-height:420px;height:55vw;max-height:640px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
-#hero-bg{position:absolute;inset:0;z-index:0}
+#hero{position:relative;overflow:hidden;min-height:420px;height:56vw;max-height:700px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
+#hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:0;overflow:hidden}
 #hero-grad{position:absolute;inset:0;background:linear-gradient(135deg,var(--cb1),var(--cb2));transition:opacity .3s}
-#hero-bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;display:none}
+#hero-bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:none}
 #hero-ov{position:absolute;inset:0;background:transparent;transition:background .3s}
 .hcont{position:relative;z-index:1;max-width:680px}
 .heyebrow{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cheroeyebrow);margin-bottom:11px}
-#hero-title{font-family:var(--fhead);font-size:clamp(2rem,6vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:14px;color:var(--cbt)}
+#hero-title{font-family:var(--fhead);font-size:clamp(2rem,6vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:14px;color:#ffffff!important;text-shadow:0 2px 8px rgba(0,0,0,.45)}
 #hero-sub{font-size:clamp(14px,2.5vw,18px);color:var(--cherosub);margin-bottom:26px}
 .hglow{position:absolute;width:580px;height:580px;border-radius:50%;background:radial-gradient(circle,rgba(240,165,0,.17),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0}
 
@@ -357,7 +357,7 @@ select.fi option{background:#111122}
 
 /* ── RESPONSIVE DESKTOP ── */
 @media(min-width:1024px){
-  #hero{min-height:480px;height:45vw;max-height:640px;padding:80px 40px}
+  #hero{min-height:500px;height:52vw;max-height:780px;padding:80px 40px}
   .hcont{max-width:800px}
   #hero-title{font-size:clamp(3rem,5vw,5rem)}
   #catalog{padding:56px 40px}
@@ -373,10 +373,13 @@ select.fi option{background:#111122}
   #sftr{padding:48px 40px 24px}
 }
 @media(min-width:1440px){
-  #hero{min-height:500px;height:40vw;max-height:680px}
+  #hero{min-height:540px;height:48vw;max-height:860px}
   #pgrid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
   #hero-title{font-size:clamp(4rem,5vw,6rem)}
   #adm-main{padding:32px 48px}
+}
+@media(min-width:1920px){
+  #hero{height:44vw;max-height:960px}
 }
 @media(max-width:660px){
   #hero{min-height:320px!important;height:75vw!important;max-height:480px!important}
@@ -2008,16 +2011,35 @@ function setBtnPos(justify, valign) {
             <div class="cfg-zone">
               <div class="cfg-zone-ttl">🎨 PALETAS RÁPIDAS — aplica un tema completo de un toque</div>
               <div class="cfg-zone-body">
-                <div style="display:flex;flex-wrap:wrap;gap:8px;padding-top:4px">
-                  <button class="btn bsm" style="background:#f0a500;color:#000;border-radius:10px;font-weight:700" onclick="setPalette('gold')">✨ Dorado</button>
-                  <button class="btn bsm" style="background:#e53e3e;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('red')">🔴 Rojo</button>
-                  <button class="btn bsm" style="background:#38a169;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('green')">🟢 Verde</button>
-                  <button class="btn bsm" style="background:#805ad5;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('purple')">🟣 Morado</button>
-                  <button class="btn bsm" style="background:#3182ce;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('blue')">🔵 Azul</button>
-                  <button class="btn bsm" style="background:#ed64a6;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('pink')">🩷 Rosa</button>
-                  <button class="btn bsm" style="background:#dd6b20;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('orange')">🟠 Naranja</button>
-                  <button class="btn bsm" style="background:#319795;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('teal')">🩵 Teal</button>
-                  <button class="btn bsm" style="background:#fff;color:#111;border-radius:10px;font-weight:700;border:1px solid #ccc" onclick="setPalette('light')">☀️ Claro</button>
+                <!-- ORIGINAL -->
+                <div style="margin-bottom:12px">
+                  <button class="btn bsm" style="background:linear-gradient(90deg,#1a0533,#0a1a3a);color:#f0a500;border:2px solid #f0a500;border-radius:10px;font-weight:700;font-size:13px;padding:8px 18px" onclick="setPalette('original')">⭐ Original (por defecto)</button>
+                  <div style="font-size:11px;color:var(--cmut);margin-top:5px">Vuelve exactamente al tema que venía de fábrica.</div>
+                </div>
+                <!-- OSCUROS -->
+                <div style="margin-bottom:8px;font-size:11px;font-weight:700;color:var(--cmut);text-transform:uppercase;letter-spacing:.06em">🌑 Oscuros</div>
+                <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px">
+                  <button class="btn bsm" style="background:#0a0a0f;color:#f0a500;border:1.5px solid #f0a500;border-radius:10px;font-weight:700" onclick="setPalette('gold')">✨ Dorado</button>
+                  <button class="btn bsm" style="background:#0d0808;color:#e53e3e;border:1.5px solid #e53e3e;border-radius:10px;font-weight:700" onclick="setPalette('red')">🔴 Rojo</button>
+                  <button class="btn bsm" style="background:#060d08;color:#38a169;border:1.5px solid #38a169;border-radius:10px;font-weight:700" onclick="setPalette('green')">🟢 Verde</button>
+                  <button class="btn bsm" style="background:#0a080f;color:#805ad5;border:1.5px solid #805ad5;border-radius:10px;font-weight:700" onclick="setPalette('purple')">🟣 Morado</button>
+                  <button class="btn bsm" style="background:#07090f;color:#3182ce;border:1.5px solid #3182ce;border-radius:10px;font-weight:700" onclick="setPalette('blue')">🔵 Azul</button>
+                  <button class="btn bsm" style="background:#0f080d;color:#ed64a6;border:1.5px solid #ed64a6;border-radius:10px;font-weight:700" onclick="setPalette('pink')">🩷 Rosa</button>
+                  <button class="btn bsm" style="background:#0d0905;color:#dd6b20;border:1.5px solid #dd6b20;border-radius:10px;font-weight:700" onclick="setPalette('orange')">🟠 Naranja</button>
+                  <button class="btn bsm" style="background:#050d0d;color:#319795;border:1.5px solid #319795;border-radius:10px;font-weight:700" onclick="setPalette('teal')">🩵 Teal</button>
+                  <button class="btn bsm" style="background:#0f172a;color:#6ee7b7;border:1.5px solid #6ee7b7;border-radius:10px;font-weight:700" onclick="setPalette('midnight')">🌌 Midnight</button>
+                  <button class="btn bsm" style="background:#1c0a00;color:#f97316;border:1.5px solid #f97316;border-radius:10px;font-weight:700" onclick="setPalette('sunset')">🌅 Sunset</button>
+                  <button class="btn bsm" style="background:#052e16;color:#86efac;border:1.5px solid #86efac;border-radius:10px;font-weight:700" onclick="setPalette('forest')">🌲 Forest</button>
+                  <button class="btn bsm" style="background:#0c1a2e;color:#38bdf8;border:1.5px solid #38bdf8;border-radius:10px;font-weight:700" onclick="setPalette('ocean')">🌊 Ocean</button>
+                  <button class="btn bsm" style="background:#0f172a;color:#94a3b8;border:1.5px solid #94a3b8;border-radius:10px;font-weight:700" onclick="setPalette('slate')">🪨 Slate</button>
+                </div>
+                <!-- CLAROS -->
+                <div style="margin-bottom:8px;font-size:11px;font-weight:700;color:var(--cmut);text-transform:uppercase;letter-spacing:.06em">☀️ Claros</div>
+                <div style="display:flex;flex-wrap:wrap;gap:7px">
+                  <button class="btn bsm" style="background:#f8fafc;color:#2563eb;border:1.5px solid #2563eb;border-radius:10px;font-weight:700" onclick="setPalette('light')">☀️ Blanco azul</button>
+                  <button class="btn bsm" style="background:#f5f3ff;color:#7c3aed;border:1.5px solid #7c3aed;border-radius:10px;font-weight:700" onclick="setPalette('lavender')">💜 Lavanda</button>
+                  <button class="btn bsm" style="background:#fdfaf5;color:#d97706;border:1.5px solid #d97706;border-radius:10px;font-weight:700" onclick="setPalette('cream')">🍦 Crema</button>
+                  <button class="btn bsm" style="background:#fff1f2;color:#be123c;border:1.5px solid #be123c;border-radius:10px;font-weight:700" onclick="setPalette('cherry')">🍒 Cherry</button>
                 </div>
               </div>
             </div>
@@ -2866,7 +2888,7 @@ function setBtnPos(justify, valign) {
             <div style="font-size:13px;color:var(--cmut);margin-bottom:14px">Vende este espacio a un anunciante. Aparece debajo del header visible para todos los clientes.</div>
 
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;margin-bottom:16px">
-              <input type="checkbox" id="c-pub-activo" style="accent-color:var(--cp);width:16px;height:16px" onchange="aplicarBannerPub()"> Activar banner publicitario
+              <input type="checkbox" id="c-pub-activo" style="accent-color:var(--cp);width:16px;height:16px" onchange="aplicarBannerPub();C.pubActivo=this.checked;saveSt()"> Activar banner publicitario
             </label>
 
             <div class="agrid" style="margin-bottom:16px">
@@ -3526,6 +3548,8 @@ function initFirebase() {
     if (data.ASESORES) ASESORES = data.ASESORES;
     try { localStorage.setItem(SK, JSON.stringify({C:C,P:P,CATS:CATS,ORD:ORD,CUS:CUS,ASESORES:ASESORES,_ts:data._ts||Date.now()})); } catch(e) {}
     applyC(); renderCat(); renderTicker();
+    // Reaplicar banner vendible cuando llegan datos de Firebase
+    setTimeout(function(){ if(typeof _mostrarBannerDesdeC==='function') _mostrarBannerDesdeC(); }, 50);
     if (!_loaded) {
       _loaded = true;
       renderProdList(); renderCatList(); renderOrds(); renderCRM();
@@ -3620,7 +3644,7 @@ window.addEventListener('load', function() {
   renderPts();
   document.getElementById('yr').textContent = new Date().getFullYear();
   // Banner: mostrar en la tienda al cargar si está activo
-  setTimeout(function(){ initBannerPub(); }, 300);
+  setTimeout(function(){ if(typeof _mostrarBannerDesdeC==='function') _mostrarBannerDesdeC(); }, 200);
 });
 
 // ============================================================
@@ -4891,20 +4915,32 @@ function setSocStyle(t) {
 
 function setPalette(n) {
   var p = {
-    gold:  {cp:'#f0a500',cbg:'#0a0a0f',ccat:'#0d0d1a',ccard:'#141428',b1:'#1a0a00',b2:'#0a0f1a',chdr:'#0d0a00',chtxt:'#f0e0a0',cftr:'#060600',cftxt:'#a08830',ctabc:'#f0a500',cprice:'#f0a500',ccatg1:'#0d0d1a',ccatg2:'#0a0a14',ccardg1:'#141428',ccardg2:'#1a1020',cbgg1:'#0a0a0f',cbgg2:'#0a0a0f',cdesc:'#9988aa'},
-    red:   {cp:'#e53e3e',cbg:'#0d0808',ccat:'#100a0a',ccard:'#1a1010',b1:'#1a0505',b2:'#0a0808',chdr:'#1a0505',chtxt:'#ffd0d0',cftr:'#080303',cftxt:'#cc8080',ctabc:'#e53e3e',cprice:'#e53e3e'},
-    green: {cp:'#38a169',cbg:'#060d08',ccat:'#09100b',ccard:'#0f1a12',b1:'#051a09',b2:'#060d05',chdr:'#051a09',chtxt:'#d0ffd0',cftr:'#030806',cftxt:'#60a070',ctabc:'#38a169',cprice:'#38a169'},
-    purple:{cp:'#805ad5',cbg:'#0a080f',ccat:'#0d0b14',ccard:'#14101e',b1:'#140a2a',b2:'#080a1a',chdr:'#140a2a',chtxt:'#e0d0ff',cftr:'#060408',cftxt:'#9070cc',ctabc:'#805ad5',cprice:'#805ad5'},
-    blue:  {cp:'#3182ce',cbg:'#07090f',ccat:'#090c14',ccard:'#0f1220',b1:'#050f2a',b2:'#08091a',chdr:'#050f2a',chtxt:'#d0e8ff',cftr:'#040609',cftxt:'#6090cc',ctabc:'#3182ce',cprice:'#3182ce'},
-    pink:  {cp:'#ed64a6',cbg:'#0f080d',ccat:'#130a11',ccard:'#1e1018',b1:'#2a0520',b2:'#0f0812',chdr:'#2a0520',chtxt:'#ffd0e8',cftr:'#080406',cftxt:'#cc7090',ctabc:'#ed64a6',cprice:'#ed64a6'},
-    orange:{cp:'#dd6b20',cbg:'#0d0905',ccat:'#100c07',ccard:'#1a1008',b1:'#1a0d05',b2:'#0d0807',chdr:'#1a0d05',chtxt:'#ffe0c0',cftr:'#080503',cftxt:'#cc8040',ctabc:'#dd6b20',cprice:'#dd6b20'},
-    teal:  {cp:'#319795',cbg:'#050d0d',ccat:'#071010',ccard:'#0c1818',b1:'#051a1a',b2:'#050d0d',chdr:'#051a1a',chtxt:'#d0ffff',cftr:'#030808',cftxt:'#509090',ctabc:'#319795',cprice:'#319795'},
-    light: {cp:'#2563eb',cbg:'#f8fafc',ccat:'#f1f5f9',ccard:'#ffffff',b1:'#dbeafe',b2:'#ede9fe',chdr:'#ffffff',chtxt:'#1e293b',cftr:'#1e293b',cftxt:'#94a3b8',ctabc:'#2563eb',cprice:'#2563eb',ctxt:'#1e293b',cbt:'#1e293b',ccatg1:'#f1f5f9',ccatg2:'#e2e8f0',ccardg1:'#ffffff',ccardg2:'#f8fafc',cbgg1:'#f8fafc',cbgg2:'#e2e8f0',cdesc:'#64748b'}
+    // ── ORIGINAL (fábrica) ──
+    original:{cp:'#f0a500',cbg:'#0a0a0f',ccat:'#0d0d1a',ccard:'#141428',b1:'#1a0533',b2:'#0a1a3a',chdr:'#0d0d1a',chdr2:'#0d0d1a',chdrdir:'90deg',chtxt:'#f0f0ff',cftr:'#07070f',cftxt:'#8888aa',ctabc:'#f0a500',cprice:'#f0a500',ctxt:'#f0f0ff',cbt:'#ffffff',cdesc:'#8888aa',ccatg1:'#0d0d1a',ccatg2:'#0d0d1a',ccatgdir:'180deg',ccardg1:'#141428',ccardg2:'#141428',ccardbrd:'rgba(255,255,255,0.07)',ccardrad:'16px',cbgg1:'#0a0a0f',cbgg2:'#0a0a0f',cbgdir:'180deg',ctickbg1:'#f5c518',ctickbg2:'#f0a500',cticktext:'#1a1000',ctickgdir:'90deg',cmodbg:'#141428',cmodhdr:'#0d0d1e',cmodtxt:'#f0f0ff',cmodinp:'rgba(255,255,255,0.06)',cmodinpbrd:'rgba(255,255,255,0.09)',cmodlbl:'#8888aa',cmodbtn:'rgba(255,255,255,0.05)',cheroeyebrow:'#f0a500',cherosub:'rgba(220,220,255,0.85)',fhead:'Playfair Display',fbody:'DM Sans',fsocbg:'rgba(255,255,255,0.13)',fsocbrd:'rgba(255,255,255,0.30)',fsocc:'#e0e0f0',fsocrad:'50px'},
+    // ── OSCUROS ──
+    gold:    {cp:'#f0a500',cbg:'#0a0a0f',ccat:'#0d0d1a',ccard:'#141428',b1:'#1a0a00',b2:'#0a0f1a',chdr:'#0d0a00',chdr2:'#0d0a00',chtxt:'#f0e0a0',cftr:'#060600',cftxt:'#a08830',ctabc:'#f0a500',cprice:'#f0a500',ccatg1:'#0d0d1a',ccatg2:'#0a0a14',ccardg1:'#141428',ccardg2:'#1a1020',cbgg1:'#0a0a0f',cbgg2:'#0a0a0f',cdesc:'#9988aa',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(240,165,0,0.12)',ctickbg1:'#f0a500',ctickbg2:'#e07000',cticktext:'#000000',cmodbg:'#141428',cmodhdr:'#0d0a00',cmodtxt:'#f0f0ff',cmodlbl:'#a08830',fhead:'Playfair Display',fbody:'DM Sans'},
+    red:     {cp:'#e53e3e',cbg:'#0d0808',ccat:'#100a0a',ccard:'#1a1010',b1:'#1a0505',b2:'#0a0808',chdr:'#1a0505',chdr2:'#0d0303',chtxt:'#ffd0d0',cftr:'#080303',cftxt:'#cc8080',ctabc:'#e53e3e',cprice:'#e53e3e',ccatg1:'#100a0a',ccatg2:'#0d0808',ccardg1:'#1a1010',ccardg2:'#150c0c',cbgg1:'#0d0808',cbgg2:'#0d0808',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(229,62,62,0.15)',ctickbg1:'#e53e3e',ctickbg2:'#c53030',cticktext:'#ffffff',cmodbg:'#1a1010',cmodhdr:'#1a0505',cmodtxt:'#f0f0ff',cmodlbl:'#cc8080'},
+    green:   {cp:'#38a169',cbg:'#060d08',ccat:'#09100b',ccard:'#0f1a12',b1:'#051a09',b2:'#060d05',chdr:'#051a09',chdr2:'#041407',chtxt:'#d0ffd0',cftr:'#030806',cftxt:'#60a070',ctabc:'#38a169',cprice:'#38a169',ccatg1:'#09100b',ccatg2:'#060d08',ccardg1:'#0f1a12',ccardg2:'#0c1510',cbgg1:'#060d08',cbgg2:'#060d08',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(56,161,105,0.15)',ctickbg1:'#38a169',ctickbg2:'#276749',cticktext:'#ffffff',cmodbg:'#0f1a12',cmodhdr:'#051a09',cmodtxt:'#f0f0ff',cmodlbl:'#60a070'},
+    purple:  {cp:'#805ad5',cbg:'#0a080f',ccat:'#0d0b14',ccard:'#14101e',b1:'#140a2a',b2:'#080a1a',chdr:'#140a2a',chdr2:'#0d0820',chtxt:'#e0d0ff',cftr:'#060408',cftxt:'#9070cc',ctabc:'#805ad5',cprice:'#805ad5',ccatg1:'#0d0b14',ccatg2:'#0a080f',ccardg1:'#14101e',ccardg2:'#110d18',cbgg1:'#0a080f',cbgg2:'#0a080f',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(128,90,213,0.18)',ctickbg1:'#805ad5',ctickbg2:'#6b46c1',cticktext:'#ffffff',cmodbg:'#14101e',cmodhdr:'#140a2a',cmodtxt:'#f0f0ff',cmodlbl:'#9070cc'},
+    blue:    {cp:'#3182ce',cbg:'#07090f',ccat:'#090c14',ccard:'#0f1220',b1:'#050f2a',b2:'#08091a',chdr:'#050f2a',chdr2:'#04091f',chtxt:'#d0e8ff',cftr:'#040609',cftxt:'#6090cc',ctabc:'#3182ce',cprice:'#3182ce',ccatg1:'#090c14',ccatg2:'#07090f',ccardg1:'#0f1220',ccardg2:'#0d1020',cbgg1:'#07090f',cbgg2:'#07090f',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(49,130,206,0.15)',ctickbg1:'#3182ce',ctickbg2:'#2b6cb0',cticktext:'#ffffff',cmodbg:'#0f1220',cmodhdr:'#050f2a',cmodtxt:'#f0f0ff',cmodlbl:'#6090cc'},
+    pink:    {cp:'#ed64a6',cbg:'#0f080d',ccat:'#130a11',ccard:'#1e1018',b1:'#2a0520',b2:'#0f0812',chdr:'#2a0520',chdr2:'#200418',chtxt:'#ffd0e8',cftr:'#080406',cftxt:'#cc7090',ctabc:'#ed64a6',cprice:'#ed64a6',ccatg1:'#130a11',ccatg2:'#0f080d',ccardg1:'#1e1018',ccardg2:'#1a0d15',cbgg1:'#0f080d',cbgg2:'#0f080d',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(237,100,166,0.15)',ctickbg1:'#ed64a6',ctickbg2:'#d53f8c',cticktext:'#ffffff',cmodbg:'#1e1018',cmodhdr:'#2a0520',cmodtxt:'#f0f0ff',cmodlbl:'#cc7090'},
+    orange:  {cp:'#dd6b20',cbg:'#0d0905',ccat:'#100c07',ccard:'#1a1008',b1:'#1a0d05',b2:'#0d0807',chdr:'#1a0d05',chdr2:'#130a04',chtxt:'#ffe0c0',cftr:'#080503',cftxt:'#cc8040',ctabc:'#dd6b20',cprice:'#dd6b20',ccatg1:'#100c07',ccatg2:'#0d0905',ccardg1:'#1a1008',ccardg2:'#150d06',cbgg1:'#0d0905',cbgg2:'#0d0905',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(221,107,32,0.15)',ctickbg1:'#dd6b20',ctickbg2:'#c05621',cticktext:'#ffffff',cmodbg:'#1a1008',cmodhdr:'#1a0d05',cmodtxt:'#f0f0ff',cmodlbl:'#cc8040'},
+    teal:    {cp:'#319795',cbg:'#050d0d',ccat:'#071010',ccard:'#0c1818',b1:'#051a1a',b2:'#050d0d',chdr:'#051a1a',chdr2:'#041414',chtxt:'#d0ffff',cftr:'#030808',cftxt:'#509090',ctabc:'#319795',cprice:'#319795',ccatg1:'#071010',ccatg2:'#050d0d',ccardg1:'#0c1818',ccardg2:'#0a1414',cbgg1:'#050d0d',cbgg2:'#050d0d',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(49,151,149,0.15)',ctickbg1:'#319795',ctickbg2:'#2c7a7b',cticktext:'#ffffff',cmodbg:'#0c1818',cmodhdr:'#051a1a',cmodtxt:'#f0f0ff',cmodlbl:'#509090'},
+    midnight:{cp:'#6ee7b7',cbg:'#0f172a',ccat:'#1e293b',ccard:'#1e293b',b1:'#0f172a',b2:'#1e3a5f',chdr:'#0f172a',chdr2:'#0f172a',chtxt:'#e2e8f0',cftr:'#0a1020',cftxt:'#64748b',ctabc:'#6ee7b7',cprice:'#6ee7b7',ccatg1:'#1e293b',ccatg2:'#162032',ccardg1:'#1e293b',ccardg2:'#1a2540',cbgg1:'#0f172a',cbgg2:'#0f172a',ctxt:'#e2e8f0',cbt:'#ffffff',ccardbrd:'rgba(110,231,183,0.15)',ctickbg1:'#6ee7b7',ctickbg2:'#34d399',cticktext:'#0f172a',cmodbg:'#1e293b',cmodhdr:'#0f172a',cmodtxt:'#e2e8f0',cmodlbl:'#64748b',fhead:'Raleway',fbody:'DM Sans'},
+    sunset:  {cp:'#f97316',cbg:'#1c0a00',ccat:'#2d1200',ccard:'#3d1a00',b1:'#7c2d12',b2:'#9a3412',chdr:'#431407',chdr2:'#7c2d12',chtxt:'#fed7aa',cftr:'#120600',cftxt:'#c2733a',ctabc:'#f97316',cprice:'#fb923c',ccatg1:'#2d1200',ccatg2:'#1c0a00',ccardg1:'#3d1a00',ccardg2:'#2d1200',cbgg1:'#1c0a00',cbgg2:'#1c0a00',ctxt:'#fed7aa',cbt:'#ffffff',ccardbrd:'rgba(249,115,22,0.2)',ctickbg1:'#f97316',ctickbg2:'#ea580c',cticktext:'#ffffff',cmodbg:'#3d1a00',cmodhdr:'#431407',cmodtxt:'#fed7aa',cmodlbl:'#c2733a',fhead:'Oswald',fbody:'Roboto'},
+    forest:  {cp:'#86efac',cbg:'#052e16',ccat:'#14532d',ccard:'#166534',b1:'#052e16',b2:'#14532d',chdr:'#052e16',chdr2:'#0a3d1a',chtxt:'#bbf7d0',cftr:'#022616',cftxt:'#4ade80',ctabc:'#86efac',cprice:'#4ade80',ccatg1:'#14532d',ccatg2:'#052e16',ccardg1:'#166534',ccardg2:'#14532d',cbgg1:'#052e16',cbgg2:'#052e16',ctxt:'#dcfce7',cbt:'#ffffff',ccardbrd:'rgba(134,239,172,0.2)',ctickbg1:'#16a34a',ctickbg2:'#15803d',cticktext:'#ffffff',cmodbg:'#166534',cmodhdr:'#052e16',cmodtxt:'#dcfce7',cmodlbl:'#4ade80',fhead:'Montserrat',fbody:'Lato'},
+    ocean:   {cp:'#38bdf8',cbg:'#0c1a2e',ccat:'#0f2744',ccard:'#132f50',b1:'#0c4a6e',b2:'#075985',chdr:'#0c1a2e',chdr2:'#0f2744',chtxt:'#bae6fd',cftr:'#071828',cftxt:'#0ea5e9',ctabc:'#38bdf8',cprice:'#38bdf8',ccatg1:'#0f2744',ccatg2:'#0c1a2e',ccardg1:'#132f50',ccardg2:'#0f2744',cbgg1:'#0c1a2e',cbgg2:'#0c1a2e',ctxt:'#e0f2fe',cbt:'#ffffff',ccardbrd:'rgba(56,189,248,0.2)',ctickbg1:'#0284c7',ctickbg2:'#0369a1',cticktext:'#ffffff',cmodbg:'#132f50',cmodhdr:'#0c1a2e',cmodtxt:'#e0f2fe',cmodlbl:'#0ea5e9',fhead:'Montserrat',fbody:'DM Sans'},
+    slate:   {cp:'#94a3b8',cbg:'#0f172a',ccat:'#1e293b',ccard:'#334155',b1:'#1e293b',b2:'#334155',chdr:'#1e293b',chdr2:'#0f172a',chtxt:'#f1f5f9',cftr:'#0a0f1e',cftxt:'#64748b',ctabc:'#94a3b8',cprice:'#e2e8f0',ccatg1:'#1e293b',ccatg2:'#0f172a',ccardg1:'#334155',ccardg2:'#293548',cbgg1:'#0f172a',cbgg2:'#0f172a',ctxt:'#e2e8f0',cbt:'#ffffff',ccardbrd:'rgba(148,163,184,0.15)',ctickbg1:'#475569',ctickbg2:'#334155',cticktext:'#f1f5f9',cmodbg:'#334155',cmodhdr:'#1e293b',cmodtxt:'#e2e8f0',cmodlbl:'#94a3b8',fhead:'Oswald',fbody:'Roboto'},
+    // ── CLAROS ──
+    light:   {cp:'#2563eb',cbg:'#f8fafc',ccat:'#f1f5f9',ccard:'#ffffff',b1:'#dbeafe',b2:'#ede9fe',chdr:'#ffffff',chdr2:'#f8fafc',chtxt:'#1e293b',cftr:'#1e293b',cftxt:'#94a3b8',ctabc:'#2563eb',cprice:'#2563eb',ctxt:'#1e293b',cbt:'#1e293b',ccatg1:'#f1f5f9',ccatg2:'#e2e8f0',ccardg1:'#ffffff',ccardg2:'#f8fafc',cbgg1:'#f8fafc',cbgg2:'#e2e8f0',cdesc:'#64748b',ccardbrd:'rgba(37,99,235,0.12)',ctickbg1:'#2563eb',ctickbg2:'#1d4ed8',cticktext:'#ffffff',cmodbg:'#ffffff',cmodhdr:'#f1f5f9',cmodtxt:'#1e293b',cmodlbl:'#64748b',fhead:'Montserrat',fbody:'Lato'},
+    lavender:{cp:'#a78bfa',cbg:'#f5f3ff',ccat:'#ede9fe',ccard:'#ffffff',b1:'#ddd6fe',b2:'#e9d5ff',chdr:'#7c3aed',chdr2:'#6d28d9',chtxt:'#ffffff',cftr:'#4c1d95',cftxt:'#a78bfa',ctabc:'#7c3aed',cprice:'#7c3aed',ccatg1:'#ede9fe',ccatg2:'#f5f3ff',ccardg1:'#ffffff',ccardg2:'#faf5ff',cbgg1:'#f5f3ff',cbgg2:'#ede9fe',ctxt:'#1e1b4b',cbt:'#1e1b4b',cdesc:'#6d28d9',ccardbrd:'rgba(167,139,250,0.3)',ctickbg1:'#7c3aed',ctickbg2:'#6d28d9',cticktext:'#ffffff',cmodbg:'#ffffff',cmodhdr:'#ede9fe',cmodtxt:'#1e1b4b',cmodlbl:'#7c3aed',fhead:'Raleway',fbody:'Poppins'},
+    cream:   {cp:'#d97706',cbg:'#fdfaf5',ccat:'#fef9ee',ccard:'#fffcf5',b1:'#fef3c7',b2:'#fde68a',chdr:'#92400e',chdr2:'#78350f',chtxt:'#fef3c7',cftr:'#451a03',cftxt:'#b45309',ctabc:'#d97706',cprice:'#b45309',ccatg1:'#fef9ee',ccatg2:'#fdfaf5',ccardg1:'#fffcf5',ccardg2:'#fef9ee',cbgg1:'#fdfaf5',cbgg2:'#fdfaf5',ctxt:'#1c1008',cbt:'#1c1008',cdesc:'#78350f',ccardbrd:'rgba(217,119,6,0.2)',ctickbg1:'#d97706',ctickbg2:'#b45309',cticktext:'#ffffff',cmodbg:'#fffcf5',cmodhdr:'#fef9ee',cmodtxt:'#1c1008',cmodlbl:'#92400e',fhead:'Playfair Display',fbody:'Lato'},
+    cherry:  {cp:'#fb7185',cbg:'#fff1f2',ccat:'#ffe4e6',ccard:'#ffffff',b1:'#fecdd3',b2:'#fda4af',chdr:'#be123c',chdr2:'#9f1239',chtxt:'#fff1f2',cftr:'#4c0519',cftxt:'#fb7185',ctabc:'#be123c',cprice:'#be123c',ccatg1:'#ffe4e6',ccatg2:'#fff1f2',ccardg1:'#ffffff',ccardg2:'#fff1f2',cbgg1:'#fff1f2',cbgg2:'#ffe4e6',ctxt:'#1c0206',cbt:'#1c0206',cdesc:'#9f1239',ccardbrd:'rgba(251,113,133,0.2)',ctickbg1:'#be123c',ctickbg2:'#9f1239',cticktext:'#ffffff',cmodbg:'#ffffff',cmodhdr:'#ffe4e6',cmodtxt:'#1c0206',cmodlbl:'#be123c',fhead:'Playfair Display',fbody:'Poppins'}
   };
   if (!p[n]) return;
   Object.assign(C, p[n]);
   fillForm(); applyC();
-  toast('🎨 Paleta ' + n + ' aplicada. Presiona Guardar.','s');
+  toast('🎨 Tema "' + n + '" aplicado. Presiona Guardar.','s');
 }
 
 // ============================================================
@@ -8567,120 +8603,103 @@ function renderPWAPreview() {
 function aplicarBannerPub() {
   var banner = document.getElementById('banner-pub');
   if (!banner) return;
-  // Fuente de verdad: C.pubActivo (no el checkbox que puede estar sin renderizar)
-  if (!C.pubActivo) { banner.style.display = 'none'; if(typeof renderPubPreview==='function') renderPubPreview(); return; }
-  // Sincronizar checkbox si está disponible
-  var activo = document.getElementById('c-pub-activo');
-  if (activo) activo.checked = true;
 
-  // Leer de C primero (cuando admin está cerrado los inputs están vacíos)
-  var titulo  = C.pubTitulo || (document.getElementById('c-pub-titulo')||{}).value || 'Pauta aquí tu negocio';
-  var sub     = C.pubSub    || (document.getElementById('c-pub-sub')||{}).value    || 'Llega a más clientes';
-  var bg      = C.pubBg     || (document.getElementById('c-pub-bg')||{}).value     || '#1a1a2e';
-  var txt     = C.pubTxt    || (document.getElementById('c-pub-txt')||{}).value    || '#f0f0ff';
-  var ctaBg   = C.pubCtaBg  || (document.getElementById('c-pub-cta-bg')||{}).value || '#f0a500';
-  var ico     = C.pubIco    || (document.getElementById('c-pub-ico')||{}).value    || '📢';
-  var size    = C.pubSize   || ((document.getElementById('c-pub-size')||{}).value)  || 'md';
-  var borde   = C.pubBorde  || ((document.getElementById('c-pub-borde')||{}).value) || 'none';
-  var diseno  = C.pubDiseno || ((document.getElementById('c-pub-diseno')||{}).value) || 'clasico';
-  var img     = C.pubImg || '';
+  // Sincronizar con checkbox del admin si está disponible
+  var activoChk = document.getElementById('c-pub-activo');
+  var isActivo = activoChk ? activoChk.checked : !!C.pubActivo;
+  if (!isActivo) {
+    banner.style.display = 'none';
+    C.pubActivo = false;
+    if (typeof renderPubPreview === 'function') renderPubPreview();
+    return;
+  }
 
+  // Leer valores: prioridad al input del admin (si está abierto), si no de C
+  function gv(id, fallback) {
+    var el = document.getElementById(id);
+    return (el && el.value) ? el.value : (fallback || '');
+  }
+  var titulo = gv('c-pub-titulo', C.pubTitulo) || 'Pauta aquí tu negocio';
+  var sub    = gv('c-pub-sub',    C.pubSub)    || 'Llega a más clientes';
+  var bg     = gv('c-pub-bg',     C.pubBg)     || '#1a1a2e';
+  var txt    = gv('c-pub-txt',    C.pubTxt)    || '#f0f0ff';
+  var ctaBg  = gv('c-pub-cta-bg', C.pubCtaBg)  || '#f0a500';
+  var ico    = gv('c-pub-ico',    C.pubIco)    || '📢';
+  var size   = gv('c-pub-size',   C.pubSize)   || 'md';
+  var borde  = gv('c-pub-borde',  C.pubBorde)  || 'none';
+  var diseno = gv('c-pub-diseno', C.pubDiseno) || 'clasico';
+  var img    = C.pubImg || '';
+
+  // Guardar en C
+  C.pubActivo = true;
+  C.pubTitulo = titulo; C.pubSub = sub; C.pubBg = bg; C.pubTxt = txt;
+  C.pubCtaBg  = ctaBg;  C.pubIco = ico; C.pubSize = size;
+  C.pubBorde  = borde;  C.pubDiseno = diseno;
+  C.pubUrl    = gv('c-pub-url', C.pubUrl) || '';
+
+  // Estilos base del contenedor
+  banner.style.cssText = '';
   banner.style.background = bg;
   banner.style.color = txt;
-  banner.style.border = '';
-  banner.style.borderBottom = '';
-  banner.style.borderLeft = '';
+  banner.style.display = 'block';
+  banner.style.cursor = 'pointer';
+
+  // Borde
   if (borde === 'bottom')    banner.style.borderBottom = '3px solid ' + ctaBg;
   else if (borde === 'full') banner.style.border = '2px solid ' + ctaBg;
   else if (borde === 'left') banner.style.borderLeft = '5px solid ' + ctaBg;
 
+  // Imagen o emoji
   var imgHtml = img
-    ? '<img src="'+img+'" style="object-fit:cover;border-radius:8px;border:2px solid rgba(255,255,255,.15)">'
-    : '<span style="font-size:28px;line-height:1">'+ico+'</span>';
+    ? '<img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:6px">'
+    : '<span style="font-size:'+(size==='lg'?'32':'20')+'px;line-height:1">'+ico+'</span>';
 
+  // HTML según tamaño
   if (size === 'lg') {
-    // MODO GRANDE — layout centrado tipo tarjeta publicitaria de impacto
     banner.style.cursor = 'default';
     banner.onclick = null;
     banner.innerHTML =
-      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 20px;text-align:center;gap:12px">' +
+      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;text-align:center;gap:12px">' +
         '<div style="width:72px;height:72px;border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12);flex-shrink:0">' + imgHtml + '</div>' +
-        '<div>' +
-          '<div style="font-size:20px;font-weight:900;color:'+txt+';letter-spacing:-.02em;line-height:1.15;margin-bottom:5px">'+titulo+'</div>' +
-          '<div style="font-size:14px;color:'+txt+';opacity:.8;line-height:1.4">'+sub+'</div>' +
-        '</div>' +
+        '<div><div style="font-size:20px;font-weight:900;color:'+txt+';margin-bottom:5px">'+titulo+'</div>' +
+        '<div style="font-size:14px;color:'+txt+';opacity:.8">'+sub+'</div></div>' +
       '</div>';
   } else if (size === 'sm') {
-    // MODO PEQUEÑO — solo texto, sin imagen ni botón
-    banner.style.cursor = 'pointer';
     banner.onclick = abrirBannerPub;
     banner.innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 16px">' +
-        '<span style="font-size:14px">'+ico+'</span>' +
+      '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 16px">' +
+        '<span style="font-size:16px">'+ico+'</span>' +
         '<span style="font-size:13px;font-weight:600;color:'+txt+'">'+titulo+'</span>' +
       '</div>';
   } else {
-    // MODO MEDIANO — franja completa con imagen + texto + botón
-    banner.style.cursor = 'pointer';
+    // md — franja con ícono + texto + botón CTA + cerrar
     banner.onclick = abrirBannerPub;
     banner.innerHTML =
-      '<div style="display:flex;align-items:center;gap:12px;padding:11px 16px">' +
-        '<div style="width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1)">' + imgHtml + '</div>' +
+      '<div style="display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1200px;margin:0 auto">' +
+        '<div style="width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12)">' + imgHtml + '</div>' +
         '<div style="flex:1;min-width:0">' +
           '<div style="font-size:14px;font-weight:700;color:'+txt+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+titulo+'</div>' +
           '<div style="font-size:12px;color:'+txt+';opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sub+'</div>' +
         '</div>' +
-        '<div onclick="event.stopPropagation();abrirBannerPub()" style="background:'+ctaBg+';border-radius:50px;padding:6px 14px;font-size:12px;font-weight:700;flex-shrink:0;color:'+(txt==='#ffffff'||txt==='#f0f0ff'?'#000':'#fff')+';cursor:pointer;white-space:nowrap">Ver →</div>' +
-        '<button onclick="event.stopPropagation();cerrarBannerPub()" style="width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.2);border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+txt+'">✕</button>' +
+        '<div onclick="event.stopPropagation();abrirBannerPub()" style="background:'+ctaBg+';border-radius:50px;padding:7px 16px;font-size:12px;font-weight:700;flex-shrink:0;color:#000;cursor:pointer;white-space:nowrap">Ver →</div>' +
+        '<button onclick="event.stopPropagation();cerrarBannerPub()" style="width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.25);border:none;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+txt+';padding:0">✕</button>' +
       '</div>';
   }
 
-  // Aplicar diseño
+  // Diseño decorativo
   banner.className = '';
-  banner.style.borderRadius = '';
-  banner.style.margin = '';
   if (diseno === 'neon') {
     banner.classList.add('diseno-neon');
     banner.style.setProperty('--pub-color', ctaBg);
     banner.style.border = '1.5px solid ' + ctaBg;
-  } else if (diseno === 'centrado') {
-    banner.classList.add('diseno-centrado');
   } else if (diseno === 'pill') {
     banner.classList.add('diseno-pill');
   } else if (diseno === 'hero') {
     banner.classList.add('diseno-hero');
     if (img) banner.style.background = 'linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('+img+') center/cover';
   }
-  // Tamaño grande
-  if (size === 'lg') {
-    if (inner) inner.style.padding = '16px';
-    var imgWrapLg = document.getElementById('banner-pub-img-wrap');
-    if (imgWrapLg) { imgWrapLg.style.width='56px'; imgWrapLg.style.height='56px'; imgWrapLg.style.borderRadius='10px'; imgWrapLg.style.flexShrink='0'; }
-    var tituloLg = document.getElementById('banner-pub-titulo');
-    if (tituloLg) { tituloLg.style.fontSize='17px'; tituloLg.style.fontWeight='800'; tituloLg.style.lineHeight='1.2'; }
-    var subLg = document.getElementById('banner-pub-sub');
-    if (subLg) { subLg.style.fontSize='13px'; subLg.style.opacity='.9'; }
-    var ctaElLg = document.getElementById('banner-pub-cta');
-    if (ctaElLg) { ctaElLg.style.display='none'; }
-    var closeElLg = document.getElementById('banner-pub-close');
-    if (closeElLg) { closeElLg.style.display='none'; }
-  } else {
-    if (inner) inner.style.padding = size==='sm' ? '7px 16px' : '10px 16px';
-    var imgWrapN = document.getElementById('banner-pub-img-wrap');
-    if (imgWrapN) { imgWrapN.style.width='32px'; imgWrapN.style.height='32px'; imgWrapN.style.borderRadius='6px'; }
-    var tituloN = document.getElementById('banner-pub-titulo');
-    if (tituloN) { tituloN.style.fontSize='13px'; tituloN.style.fontWeight='600'; }
-    var ctaElN = document.getElementById('banner-pub-cta');
-    if (ctaElN) ctaElN.style.display = '';
-    var closeElN = document.getElementById('banner-pub-close');
-    if (closeElN) closeElN.style.display = '';
-  }
-  C.pubDiseno = diseno;
-  banner.style.display = 'block';
-  C.pubActivo = true;
-  C.pubTitulo = titulo; C.pubSub = sub; C.pubBg = bg; C.pubTxt = txt;
-  C.pubCtaBg = ctaBg; C.pubIco = ico; C.pubSize = size; C.pubBorde = borde;
-  renderPubPreview();
+
+  if (typeof renderPubPreview === 'function') renderPubPreview();
 }
 
 function abrirBannerPub() {
@@ -8736,29 +8755,84 @@ function renderPubPreview() {
 }
 
 function initBannerPub() {
-  if (!C.pubActivo) { var b=document.getElementById('banner-pub'); if(b) b.style.display='none'; return; }
-  var fields = {
-    'c-pub-titulo': C.pubTitulo, 'c-pub-sub': C.pubSub,
-    'c-pub-url': C.pubUrl, 'c-pub-ico': C.pubIco,
-    'c-pub-bg': C.pubBg, 'c-pub-txt': C.pubTxt, 'c-pub-cta-bg': C.pubCtaBg
-  };
-  Object.keys(fields).forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el && fields[id]) el.value = fields[id];
-  });
+  var banner = document.getElementById('banner-pub');
+  if (!banner) return;
+  if (!C.pubActivo) { banner.style.display = 'none'; return; }
+  // Poblar campos del admin si están disponibles (sin necesitarlos para mostrar)
+  function sv(id, val) { var el = document.getElementById(id); if (el && val) el.value = val; }
+  sv('c-pub-titulo', C.pubTitulo); sv('c-pub-sub', C.pubSub);
+  sv('c-pub-url', C.pubUrl);      sv('c-pub-ico', C.pubIco);
+  sv('c-pub-bg', C.pubBg);        sv('c-pub-txt', C.pubTxt);
+  sv('c-pub-cta-bg', C.pubCtaBg); sv('c-pub-size', C.pubSize);
+  sv('c-pub-borde', C.pubBorde);  sv('c-pub-diseno', C.pubDiseno);
   var chk = document.getElementById('c-pub-activo');
   if (chk) chk.checked = true;
-  var sizeEl = document.getElementById('c-pub-size');
-  if (sizeEl && C.pubSize) sizeEl.value = C.pubSize;
-  var bordeEl = document.getElementById('c-pub-borde');
-  if (bordeEl && C.pubBorde) bordeEl.value = C.pubBorde;
-  var disenoEl = document.getElementById('c-pub-diseno');
-  if (disenoEl && C.pubDiseno) disenoEl.value = C.pubDiseno;
-  if (C.pubImg) {
-    var prev = document.getElementById('prev-pub-img');
-    if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; }
+  if (C.pubImg) { var prev = document.getElementById('prev-pub-img'); if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; } }
+  // Mostrar directamente desde C sin depender del DOM del admin
+  _mostrarBannerDesdeC();
+}
+
+function _mostrarBannerDesdeC() {
+  var banner = document.getElementById('banner-pub');
+  if (!banner || !C.pubActivo) return;
+  var titulo = C.pubTitulo || 'Pauta aquí tu negocio';
+  var sub    = C.pubSub    || 'Llega a más clientes';
+  var bg     = C.pubBg     || '#1a1a2e';
+  var txt    = C.pubTxt    || '#f0f0ff';
+  var ctaBg  = C.pubCtaBg  || '#f0a500';
+  var ico    = C.pubIco    || '📢';
+  var size   = C.pubSize   || 'md';
+  var borde  = C.pubBorde  || 'none';
+  var diseno = C.pubDiseno || 'clasico';
+  var img    = C.pubImg    || '';
+
+  banner.style.cssText = '';
+  banner.style.background = bg;
+  banner.style.color = txt;
+  banner.style.display = 'block';
+  if (borde === 'bottom')    banner.style.borderBottom = '3px solid ' + ctaBg;
+  else if (borde === 'full') banner.style.border = '2px solid ' + ctaBg;
+  else if (borde === 'left') banner.style.borderLeft = '5px solid ' + ctaBg;
+
+  var imgHtml = img
+    ? '<img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:6px">'
+    : '<span style="font-size:'+(size==='lg'?'32':'20')+'px;line-height:1">'+ico+'</span>';
+
+  if (size === 'lg') {
+    banner.style.cursor = 'default';
+    banner.onclick = null;
+    banner.innerHTML =
+      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;text-align:center;gap:12px">' +
+        '<div style="width:72px;height:72px;border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12)">' + imgHtml + '</div>' +
+        '<div><div style="font-size:20px;font-weight:900;color:'+txt+';margin-bottom:5px">'+titulo+'</div>' +
+        '<div style="font-size:14px;color:'+txt+';opacity:.8">'+sub+'</div></div>' +
+      '</div>';
+  } else if (size === 'sm') {
+    banner.style.cursor = 'pointer';
+    banner.onclick = abrirBannerPub;
+    banner.innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 16px">' +
+        '<span style="font-size:16px">'+ico+'</span>' +
+        '<span style="font-size:13px;font-weight:600;color:'+txt+'">'+titulo+'</span>' +
+      '</div>';
+  } else {
+    banner.style.cursor = 'pointer';
+    banner.onclick = abrirBannerPub;
+    banner.innerHTML =
+      '<div style="display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1200px;margin:0 auto">' +
+        '<div style="width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12)">' + imgHtml + '</div>' +
+        '<div style="flex:1;min-width:0">' +
+          '<div style="font-size:14px;font-weight:700;color:'+txt+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+titulo+'</div>' +
+          '<div style="font-size:12px;color:'+txt+';opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sub+'</div>' +
+        '</div>' +
+        '<div onclick="event.stopPropagation();abrirBannerPub()" style="background:'+ctaBg+';border-radius:50px;padding:7px 16px;font-size:12px;font-weight:700;flex-shrink:0;color:#000;cursor:pointer;white-space:nowrap">Ver →</div>' +
+        '<button onclick="event.stopPropagation();cerrarBannerPub()" style="width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.25);border:none;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+txt+';padding:0">✕</button>' +
+      '</div>';
   }
-  aplicarBannerPub();
+  banner.className = '';
+  if (diseno === 'neon') { banner.classList.add('diseno-neon'); banner.style.setProperty('--pub-color', ctaBg); banner.style.border = '1.5px solid ' + ctaBg; }
+  else if (diseno === 'pill') { banner.classList.add('diseno-pill'); }
+  else if (diseno === 'hero') { banner.classList.add('diseno-hero'); if (img) banner.style.background = 'linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('+img+') center/cover'; }
 }
 
 function renderCajaTablero() {
