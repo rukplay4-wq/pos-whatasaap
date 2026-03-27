@@ -13,17 +13,325 @@
 <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22ComercioCol%22%2C%22short_name%22%3A%22ComercioCol%22%2C%22start_url%22%3A%22./%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FFCC00%22%2C%22theme_color%22%3A%22%23FFCC00%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage/svg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI%2BCiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNGRkNDMDAiIHJ4PSI4MCIvPgogIDxwYXRoIGQ9Ik0gMTUwIDIzMCBDIDE1MCAxMDAsIDM2MiAxMDAsIDM2MiAyMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFBMEEwMCIgc3Ryb2tlLXdpZHRoPSIzOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8%2BCiAgPHBhdGggZD0iTSAxMjAgMjM1IEwgMzkyIDIzNSBMIDM3MCAzODUgUSAzNjggNDEwIDI1NiA0MTAgUSAxNDQgNDEwIDE0MiAzODUgWiIgZmlsbD0iIzFBMEEwMCIvPgogIDxsaW5lIHgxPSIxNzIiIHkxPSIyMzUiIHgyPSIxNjIiIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxsaW5lIHgxPSIyMTIiIHkxPSIyMzUiIHgyPSIyMDciIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyMzUiIHgyPSIyNTYiIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxsaW5lIHgxPSIzMDAiIHkxPSIyMzUiIHgyPSIzMDUiIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxsaW5lIHgxPSIzNDAiIHkxPSIyMzUiIHgyPSIzNTAiIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxwYXRoIGQ9Ik0gMTMwIDI3NSBRIDI1NiAyNjggMzgyIDI3NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZDQzAwIiBzdHJva2Utd2lkdGg9IjEwIi8%2BCiAgPHBhdGggZD0iTSAxMzQgMzE1IFEgMjU2IDMwOCAzNzggMzE1IiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkNDMDAiIHN0cm9rZS13aWR0aD0iMTAiLz4KICA8cGF0aCBkPSJNIDEzOSAzNTUgUSAyNTYgMzUwIDM3MyAzNTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxyZWN0IHg9IjEwOCIgeT0iMjIwIiB3aWR0aD0iMjk2IiBoZWlnaHQ9IjMwIiByeD0iOCIgZmlsbD0iIzFBMEEwMCIvPgogIDxjaXJjbGUgY3g9IjE2NSIgY3k9IjIzNSIgcj0iMTYiIGZpbGw9IiNGRkNDMDAiLz4KICA8Y2lyY2xlIGN4PSIzNDciIGN5PSIyMzUiIHI9IjE2IiBmaWxsPSIjRkZDQzAwIi8%2BCjwvc3ZnPg%3D%3D%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image/svg%2Bxml%22%7D%2C%7B%22src%22%3A%22data%3Aimage/svg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI%2BCiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNGRkNDMDAiIHJ4PSI4MCIvPgogIDxwYXRoIGQ9Ik0gMTUwIDIzMCBDIDE1MCAxMDAsIDM2MiAxMDAsIDM2MiAyMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFBMEEwMCIgc3Ryb2tlLXdpZHRoPSIzOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8%2BCiAgPHBhdGggZD0iTSAxMjAgMjM1IEwgMzkyIDIzNSBMIDM3MCAzODUgUSAzNjggNDEwIDI1NiA0MTAgUSAxNDQgNDEwIDE0MiAzODUgWiIgZmlsbD0iIzFBMEEwMCIvPgogIDxsaW5lIHgxPSIxNzIiIHkxPSIyMzUiIHgyPSIxNjIiIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxsaW5lIHgxPSIyMTIiIHkxPSIyMzUiIHgyPSIyMDciIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxsaW5lIHgxPSIyNTYiIHkxPSIyMzUiIHgyPSIyNTYiIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxsaW5lIHgxPSIzMDAiIHkxPSIyMzUiIHgyPSIzMDUiIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxsaW5lIHgxPSIzNDAiIHkxPSIyMzUiIHgyPSIzNTAiIHkyPSI0MTAiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxwYXRoIGQ9Ik0gMTMwIDI3NSBRIDI1NiAyNjggMzgyIDI3NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZDQzAwIiBzdHJva2Utd2lkdGg9IjEwIi8%2BCiAgPHBhdGggZD0iTSAxMzQgMzE1IFEgMjU2IDMwOCAzNzggMzE1IiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkNDMDAiIHN0cm9rZS13aWR0aD0iMTAiLz4KICA8cGF0aCBkPSJNIDEzOSAzNTUgUSAyNTYgMzUwIDM3MyAzNTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGQ0MwMCIgc3Ryb2tlLXdpZHRoPSIxMCIvPgogIDxyZWN0IHg9IjEwOCIgeT0iMjIwIiB3aWR0aD0iMjk2IiBoZWlnaHQ9IjMwIiByeD0iOCIgZmlsbD0iIzFBMEEwMCIvPgogIDxjaXJjbGUgY3g9IjE2NSIgY3k9IjIzNSIgcj0iMTYiIGZpbGw9IiNGRkNDMDAiLz4KICA8Y2lyY2xlIGN4PSIzNDciIGN5PSIyMzUiIHI9IjE2IiBmaWxsPSIjRkZDQzAwIi8%2BCjwvc3ZnPg%3D%3D%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image/svg%2Bxml%22%7D%5D%7D">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>html,body{background:#07070f!important}
-/* Animaciones banner vendible */
-@keyframes pub-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
-@keyframes pub-bounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}60%{transform:translateY(-2px)}}
-@keyframes pub-glow{0%,100%{box-shadow:0 0 8px rgba(240,165,0,.4)}50%{box-shadow:0 0 22px rgba(240,165,0,.9)}}
-@keyframes pub-shake{0%,100%{transform:translateX(0)}15%{transform:translateX(-3px)}30%{transform:translateX(3px)}45%{transform:translateX(-2px)}60%{transform:translateX(2px)}}
+/* ── BANNER PUB ANIMACIONES ── */
+@keyframes pub-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+@keyframes pub-bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}70%{transform:translateY(-2px)}}
+@keyframes pub-glow{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 18px 4px var(--pub-glow,#f0a500)}}
+@keyframes pub-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+@keyframes pub-slide-in{from{transform:translateY(-110%);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes pub-gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-#banner-pub.anim-pulse{animation:pub-pulse 2.5s ease-in-out infinite}
-#banner-pub.anim-bounce{animation:pub-bounce 2s ease-in-out infinite}
-#banner-pub.anim-glow{animation:pub-glow 2s ease-in-out infinite}
-#banner-pub.anim-shake{animation:pub-shake 3s ease-in-out infinite}
-#banner-pub.anim-gradient{background-size:200% 200%!important;animation:pub-gradient 4s ease infinite}
+#banner-pub.ba-pulse{animation:pub-pulse 2.2s ease-in-out infinite}
+#banner-pub.ba-bounce{animation:pub-bounce 2s ease-in-out infinite}
+#banner-pub.ba-glow{animation:pub-glow 2s ease-in-out infinite}
+#banner-pub.ba-shake{animation:pub-shake 3.5s ease-in-out infinite}
+#banner-pub.ba-slide{animation:pub-slide-in .5s cubic-bezier(.34,1.56,.64,1)}
+#banner-pub.ba-gradient{background-size:300% 300%!important;animation:pub-gradient 4s ease infinite}
+
+/* CSS registradora movido abajo */
+
+/* ═══════════════════════════════════════════════
+   REGISTRADORA POS — DISEÑO FUTURISTA
+═══════════════════════════════════════════════ */
+@keyframes scanLine{0%{top:0%}50%{top:96%}100%{top:0%}}
+@keyframes posGlow{0%,100%{box-shadow:0 0 20px rgba(240,165,0,.1)}50%{box-shadow:0 0 40px rgba(240,165,0,.25)}}
+@keyframes scanPulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+#cajapanel-registradora{
+  background:linear-gradient(135deg,#06060f 0%,#0a0a18 100%);
+  border-radius:16px;
+  padding:16px;
+  border:1px solid rgba(240,165,0,.08);
+}
+
+/* Layout principal — 3 columnas: búsqueda+items | pantalla actividad | cobro */
+#pos-grid{
+  display:grid;
+  grid-template-columns:1fr 220px 280px;
+  gap:10px;
+  height:calc(100vh - 210px);
+  min-height:520px;
+}
+#pos-col-left{display:flex;flex-direction:column;gap:8px;height:100%;min-height:0;position:relative}
+/* Col central: pantalla de actividad */
+#pos-col-mid{
+  display:flex;flex-direction:column;
+  height:100%;
+  background:rgba(255,255,255,.015);
+  border:1px solid rgba(124,106,255,.12);
+  border-radius:14px;
+  overflow:hidden;
+}
+#pos-col-right{
+  display:flex;flex-direction:column;
+  height:100%;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(240,165,0,.12);
+  border-radius:14px;
+  overflow:hidden;
+}
+#pos-col-right-scroll{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+#pos-col-right-scroll::-webkit-scrollbar{width:3px}
+#pos-col-right-scroll::-webkit-scrollbar-thumb{background:rgba(240,165,0,.3);border-radius:3px}
+
+/* Barra de búsqueda */
+#pos-search-wrap{position:relative;flex-shrink:0}
+#reg-search{
+  width:100%;
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(240,165,0,.2);
+  border-radius:12px;
+  padding:11px 14px 11px 44px;
+  color:#f0f0ff;
+  font-size:14px;
+  font-family:inherit;
+  transition:all .2s;
+}
+#reg-search:focus{outline:none;border-color:rgba(240,165,0,.6);background:rgba(240,165,0,.04);box-shadow:0 0 0 3px rgba(240,165,0,.08)}
+#pos-search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;opacity:.4;pointer-events:none}
+#reg-scan-feedback{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--cp);font-weight:800;letter-spacing:.05em;animation:scanPulse 1s infinite;display:none}
+
+/* Sugerencias */
+#reg-sugerencias{
+  display:none;
+  position:absolute;
+  top:calc(100% + 6px);
+  left:0;right:0;
+  background:#0c0c1e;
+  border:1.5px solid rgba(240,165,0,.2);
+  border-radius:12px;
+  max-height:220px;
+  overflow-y:auto;
+  z-index:300;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+}
+#reg-sugerencias::-webkit-scrollbar{width:3px}
+#reg-sugerencias::-webkit-scrollbar-thumb{background:rgba(240,165,0,.3);border-radius:3px}
+.sug-item{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;transition:background .12s;border-bottom:1px solid rgba(255,255,255,.04)}
+.sug-item:last-child{border-bottom:none}
+.sug-item:hover{background:rgba(240,165,0,.06)}
+.sug-item img,.sug-emi{width:34px;height:34px;border-radius:7px;object-fit:cover;flex-shrink:0;background:#111128;display:flex;align-items:center;justify-content:center;font-size:17px}
+.sug-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sug-price{font-size:12px;color:var(--cp);font-weight:700}
+.sug-stock{font-size:10px;color:var(--cmut)}
+
+/* Lista items */
+#pos-items-box{
+  flex:1;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+#pos-items-hdr{
+  padding:9px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-shrink:0;
+  background:rgba(255,255,255,.02);
+}
+#reg-items{flex:1;overflow-y:auto;padding:6px}
+#reg-items::-webkit-scrollbar{width:3px}
+#reg-items::-webkit-scrollbar-thumb{background:rgba(240,165,0,.2);border-radius:3px}
+#reg-empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;color:var(--cmut);font-size:13px;gap:8px;height:100%}
+
+/* Items en el carrito */
+.pos-item-row{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 8px;
+  border-radius:9px;
+  transition:background .12s;
+  border:1px solid transparent;
+}
+.pos-item-row:hover{background:rgba(240,165,0,.04);border-color:rgba(240,165,0,.1)}
+.pos-item-img{width:36px;height:36px;border-radius:7px;object-fit:cover;flex-shrink:0;background:#111128;display:flex;align-items:center;justify-content:center;font-size:17px;overflow:hidden}
+.pos-item-name{font-size:12px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pos-item-price{font-size:11px;color:var(--cmut)}
+.pos-qty-wrap{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.pos-qty-btn{width:24px;height:24px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:var(--ctxt);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;transition:all .12s;font-family:inherit}
+.pos-qty-btn:hover{background:rgba(240,165,0,.15);border-color:rgba(240,165,0,.4);color:var(--cp)}
+.pos-qty-num{font-size:14px;font-weight:800;min-width:22px;text-align:center}
+.pos-item-total{font-size:13px;font-weight:800;color:var(--cp);min-width:60px;text-align:right;flex-shrink:0}
+.pos-item-del{width:22px;height:22px;border-radius:5px;background:rgba(229,62,62,.08);border:1px solid rgba(229,62,62,.2);color:#fc8181;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s;font-family:inherit}
+.pos-item-del:hover{background:rgba(229,62,62,.2)}
+
+/* Panel de cobro */
+#pos-total-box{
+  background:linear-gradient(135deg,rgba(240,165,0,.08),rgba(240,165,0,.03));
+  border:1px solid rgba(240,165,0,.18);
+  border-radius:12px;
+  padding:12px 14px;
+  text-align:center;
+  animation:posGlow 3s ease-in-out infinite;
+  flex-shrink:0;
+}
+#pos-total-label{font-size:10px;font-weight:800;color:var(--cmut);text-transform:uppercase;letter-spacing:.12em;margin-bottom:3px}
+#reg-total-display{font-size:30px;font-weight:900;color:var(--cp);letter-spacing:-.02em;line-height:1;font-family:'Syne','DM Sans',sans-serif}
+#pos-items-count{font-size:11px;color:var(--cmut);margin-top:3px}
+
+/* Métodos de pago */
+.pos-section-lbl{font-size:10px;font-weight:800;color:var(--cmut);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;flex-shrink:0}
+#reg-pagos-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.reg-pago-btn{
+  padding:7px 4px;
+  background:rgba(255,255,255,.03);
+  border:1.5px solid rgba(255,255,255,.08);
+  border-radius:9px;
+  font-size:11px;font-weight:600;
+  cursor:pointer;color:var(--cmut);
+  transition:all .15s;font-family:inherit;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.reg-pago-btn:hover{border-color:rgba(240,165,0,.4);color:var(--cp);background:rgba(240,165,0,.05)}
+.reg-pago-btn.active{
+  background:rgba(240,165,0,.1);
+  border-color:var(--cp);
+  color:var(--cp);
+  font-weight:800;
+  box-shadow:0 0 12px rgba(240,165,0,.15);
+}
+
+/* Efectivo */
+#reg-efectivo-wrap{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:7px}
+#pos-cash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.reg-cash-btn{
+  padding:6px 3px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:7px;
+  font-size:10px;font-weight:700;
+  cursor:pointer;color:var(--ctxt);
+  transition:all .12s;font-family:inherit;
+}
+.reg-cash-btn:hover{background:rgba(240,165,0,.1);border-color:rgba(240,165,0,.4);color:var(--cp)}
+#reg-cambio-display{
+  display:none;
+  background:rgba(52,211,153,.06);
+  border:1px solid rgba(52,211,153,.2);
+  border-radius:8px;padding:8px;text-align:center;
+}
+#reg-cambio-val{font-size:20px;font-weight:900;color:#34d399}
+
+/* Botón cobrar */
+#reg-cobrar-btn{
+  width:100%;padding:13px;
+  background:linear-gradient(135deg,#f0a500,#e09000);
+  color:#000;border:none;border-radius:12px;
+  font-size:16px;font-weight:900;cursor:pointer;
+  letter-spacing:.02em;transition:all .2s;
+  box-shadow:0 4px 20px rgba(240,165,0,.3);
+  font-family:inherit;flex-shrink:0;
+}
+#reg-cobrar-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 6px 28px rgba(240,165,0,.5)}
+#reg-cobrar-btn:active{transform:translateY(0)}
+#reg-cobrar-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* Cobro header */
+#pos-cobro-hdr{
+  padding:10px 14px;
+  border-bottom:1px solid rgba(240,165,0,.1);
+  flex-shrink:0;
+  background:linear-gradient(90deg,rgba(240,165,0,.06),transparent);
+}
+
+/* ── PANTALLA DE ACTIVIDAD ── */
+#pos-actividad-hdr{
+  padding:10px 12px;
+  border-bottom:1px solid rgba(124,106,255,.1);
+  flex-shrink:0;
+  background:linear-gradient(90deg,rgba(124,106,255,.06),transparent);
+  display:flex;align-items:center;justify-content:space-between;
+}
+#pos-actividad-hdr span{font-size:10px;font-weight:800;color:rgba(167,139,250,.7);text-transform:uppercase;letter-spacing:.1em}
+#pos-actividad-feed{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:6px}
+#pos-actividad-feed::-webkit-scrollbar{width:2px}
+#pos-actividad-feed::-webkit-scrollbar-thumb{background:rgba(124,106,255,.3);border-radius:2px}
+.act-item{padding:8px 10px;border-radius:9px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02);animation:actIn .3s ease;font-size:11px;line-height:1.5}
+@keyframes actIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.act-item.venta{border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.04)}
+.act-item.alerta{border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.04)}
+.act-item.info{border-color:rgba(124,106,255,.2);background:rgba(124,106,255,.04)}
+.act-item.stock{border-color:rgba(251,191,36,.2);background:rgba(251,191,36,.04)}
+.act-ico{font-size:14px;margin-right:5px}
+.act-time{font-size:10px;color:var(--cmut);margin-top:3px}
+.act-val{font-size:13px;font-weight:800;color:#34d399}
+/* Stats en tiempo real */
+#pos-stats-bar{padding:8px 10px;border-top:1px solid rgba(255,255,255,.05);flex-shrink:0;display:flex;flex-direction:column;gap:4px}
+.pos-stat-row{display:flex;justify-content:space-between;align-items:center;font-size:11px}
+.pos-stat-lbl{color:var(--cmut);font-weight:600}
+.pos-stat-val{font-weight:800;color:#f0f0ff}
+.pos-stat-val.gold{color:var(--cp)}
+.pos-stat-val.green{color:#34d399}
+
+/* Responsive */
+@media(max-width:1100px){
+  #pos-grid{grid-template-columns:1fr 180px 260px}
+}
+@media(max-width:860px){
+  #pos-grid{grid-template-columns:1fr 240px!important;height:auto!important}
+  #pos-col-mid{display:none}
+  #pos-col-left{height:auto!important}
+  #pos-col-right{height:auto!important}
+  #reg-items{max-height:200px}
+}
+@media(max-width:600px){
+  #pos-grid{grid-template-columns:1fr!important}
+  #pos-col-right{margin-top:8px}
+}
+
+/* ═══════════════════════════════════════════════
+   CEREBRO IA
+═══════════════════════════════════════════════ */
+#cerebro-wrap{display:flex;flex-direction:column;height:calc(100vh - 130px)}
+#cerebro-header{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;flex-shrink:0}
+#cerebro-header h2{font-size:17px;font-weight:800;display:flex;align-items:center;gap:10px}
+.cerebro-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(124,106,255,.12);border:1px solid rgba(124,106,255,.3);border-radius:50px;padding:3px 10px;font-size:11px;font-weight:700;color:#a78bfa}
+.cerebro-badge.activo{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.3);color:#34d399}
+.cerebro-badge.escuchando{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.4);color:#f87171;animation:cb-pulse 1s ease-in-out infinite}
+@keyframes cb-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+#cerebro-chat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+#cerebro-chat::-webkit-scrollbar{width:3px}
+#cerebro-chat::-webkit-scrollbar-thumb{background:rgba(124,106,255,.3);border-radius:3px}
+.cb-msg{display:flex;gap:10px;animation:cbIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cbIn{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
+.cb-msg.user{flex-direction:row-reverse}
+.cb-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px}
+.cb-msg.ai .cb-avatar{background:linear-gradient(135deg,#7c6aff,#a78bfa)}
+.cb-msg.user .cb-avatar{background:rgba(240,165,0,.15);border:1.5px solid rgba(240,165,0,.3);font-size:12px}
+.cb-msg.system .cb-avatar{background:rgba(52,211,153,.1);border:1.5px solid rgba(52,211,153,.3)}
+.cb-bubble{max-width:84%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.6}
+.cb-msg.ai .cb-bubble{background:rgba(124,106,255,.1);border:1px solid rgba(124,106,255,.18);border-bottom-left-radius:4px}
+.cb-msg.user .cb-bubble{background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.18);border-bottom-right-radius:4px;text-align:right}
+.cb-msg.system .cb-bubble{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.18);border-radius:10px;font-size:12px;color:#34d399;width:100%}
+.cb-bubble b{color:var(--cp)}
+.cb-accion{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;background:rgba(124,106,255,.15);border:1px solid rgba(124,106,255,.3);border-radius:50px;font-size:11px;font-weight:700;color:#a78bfa;cursor:pointer;transition:all .15s}
+.cb-accion:hover{background:rgba(124,106,255,.25)}
+.cb-accion.done{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.3);color:#34d399}
+.cb-typing{display:flex;gap:4px;align-items:center;padding:2px 0}
+.cb-typing span{width:6px;height:6px;border-radius:50%;background:#a78bfa;animation:cbDot .8s ease-in-out infinite}
+.cb-typing span:nth-child(2){animation-delay:.15s}
+.cb-typing span:nth-child(3){animation-delay:.3s}
+@keyframes cbDot{0%,80%,100%{opacity:.2;transform:scale(.7)}40%{opacity:1;transform:scale(1)}}
+#cerebro-input-area{padding:12px 14px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:8px;align-items:flex-end;flex-shrink:0;background:rgba(255,255,255,.02)}
+#cerebro-input{flex:1;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.09);border-radius:12px;padding:10px 13px;color:var(--ctxt);font-family:var(--fbody);font-size:13px;resize:none;min-height:42px;max-height:110px;transition:border-color .2s}
+#cerebro-input:focus{outline:none;border-color:#7c6aff}
+#cerebro-mic-btn{width:42px;height:42px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .2s;background:rgba(124,106,255,.12);border:1.5px solid rgba(124,106,255,.3);color:#a78bfa}
+#cerebro-mic-btn:hover{background:rgba(124,106,255,.22);transform:scale(1.05)}
+#cerebro-mic-btn.escuchando{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.4);color:#f87171;animation:micPulse 1s ease-in-out infinite}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 7px rgba(239,68,68,.15)}}
+#cerebro-send-btn{width:42px;height:42px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:linear-gradient(135deg,#7c6aff,#a78bfa);color:#fff;border:none;box-shadow:0 2px 12px rgba(124,106,255,.35);transition:all .2s}
+#cerebro-send-btn:hover{transform:scale(1.08)}
+#cerebro-send-btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+#cerebro-config{padding:14px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(124,106,255,.03);flex-shrink:0}
+.cerebro-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:50px;font-size:11px;cursor:pointer;color:#c0c0e0;transition:all .15s;white-space:nowrap}
+.cerebro-chip:hover{border-color:#7c6aff;color:#a78bfa;background:rgba(124,106,255,.08)}
+.cb-api-ok{color:#34d399;font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px}
+.cb-api-err{color:#f87171;font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px}
+.cb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.cb-dot.ok{background:#34d399;box-shadow:0 0 5px #34d399}
+.cb-dot.err{background:#f87171}
 </style>
 <title>Mi Tienda</title>
 <link id="gfonts" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&family=Raleway:wght@400;600;700;800&family=Oswald:wght@400;600;700&family=Lato:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -109,14 +417,14 @@ select.fi option{background:#111122}
 #admbtn:hover{background:rgba(255,255,255,.13)}
 
 /* HERO */
-#hero{position:relative;overflow:hidden;min-height:420px;height:56vw;max-height:700px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
-#hero-bg{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:0;overflow:hidden}
+#hero{position:relative;overflow:hidden;min-height:420px;height:55vw;max-height:640px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
+#hero-bg{position:absolute;inset:0;z-index:0}
 #hero-grad{position:absolute;inset:0;background:linear-gradient(135deg,var(--cb1),var(--cb2));transition:opacity .3s}
-#hero-bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:none}
+#hero-bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;display:none}
 #hero-ov{position:absolute;inset:0;background:transparent;transition:background .3s}
 .hcont{position:relative;z-index:1;max-width:680px}
 .heyebrow{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cheroeyebrow);margin-bottom:11px}
-#hero-title{font-family:var(--fhead);font-size:clamp(2rem,6vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:14px;color:#ffffff!important;text-shadow:0 2px 8px rgba(0,0,0,.45)}
+#hero-title{font-family:var(--fhead);font-size:clamp(2rem,6vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:14px;color:var(--cbt)}
 #hero-sub{font-size:clamp(14px,2.5vw,18px);color:var(--cherosub);margin-bottom:26px}
 .hglow{position:absolute;width:580px;height:580px;border-radius:50%;background:radial-gradient(circle,rgba(240,165,0,.17),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0}
 
@@ -369,7 +677,7 @@ select.fi option{background:#111122}
 
 /* ── RESPONSIVE DESKTOP ── */
 @media(min-width:1024px){
-  #hero{min-height:500px;height:52vw;max-height:780px;padding:80px 40px}
+  #hero{min-height:480px;height:45vw;max-height:640px;padding:80px 40px}
   .hcont{max-width:800px}
   #hero-title{font-size:clamp(3rem,5vw,5rem)}
   #catalog{padding:56px 40px}
@@ -385,13 +693,10 @@ select.fi option{background:#111122}
   #sftr{padding:48px 40px 24px}
 }
 @media(min-width:1440px){
-  #hero{min-height:540px;height:48vw;max-height:860px}
+  #hero{min-height:500px;height:40vw;max-height:680px}
   #pgrid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
   #hero-title{font-size:clamp(4rem,5vw,6rem)}
   #adm-main{padding:32px 48px}
-}
-@media(min-width:1920px){
-  #hero{height:44vw;max-height:960px}
 }
 @media(max-width:660px){
   #hero{min-height:320px!important;height:75vw!important;max-height:480px!important}
@@ -1141,6 +1446,8 @@ function setBtnPos(justify, valign) {
       <div class="an" data-sec="orders" onclick="navTo(this);cerrarNav()"><span class="ani">&#129534;</span><span>Caja</span></div>
       <div class="an" data-sec="crm" onclick="navTo(this);cerrarNav()"><span class="ani">&#128202;</span><span>CRM</span></div>
       <div class="nav-section">Personal</div>
+      <div class="nav-section">Inteligencia</div>
+      <div class="an" data-sec="cerebro" onclick="navTo(this);cerrarNav();iniciarCerebro()"><span class="ani">🧠</span><span>Cerebro IA</span></div>
 
     </nav>
     <main id="adm-main">
@@ -1246,17 +1553,17 @@ function setBtnPos(justify, valign) {
                   </select>
                 </div>
                 <div class="fg" id="c-btn1url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn1url" placeholder="https://..." oninput="liveC()"></div>
-                <div class="frow" style="margin-top:8px">
+                <div class="frow" style="margin-top:6px">
                   <div class="fg"><label class="fl">Color fondo</label><div class="csw"><input type="color" id="c-btn1bg" value="#f0a500" oninput="liveC();updHex()"><span id="c-btn1bgh">#f0a500</span></div></div>
                   <div class="fg"><label class="fl">Color texto</label><div class="csw"><input type="color" id="c-btn1txt" value="#000000" oninput="liveC();updHex()"><span id="c-btn1txth">#000000</span></div></div>
                 </div>
                 <div class="fg">
-                  <label class="fl">Estilo del botón</label>
-                  <select class="fi" id="c-btn1style" onchange="liveC()" style="max-width:220px">
-                    <option value="solid">⬛ Sólido (relleno)</option>
+                  <label class="fl">Estilo</label>
+                  <select class="fi" id="c-btn1style" onchange="liveC()" style="max-width:200px">
+                    <option value="solid">⬛ Sólido</option>
                     <option value="outline">⬜ Contorno</option>
                     <option value="gradient">🌈 Gradiente</option>
-                    <option value="pill">💊 Píldora redondeada</option>
+                    <option value="pill">💊 Píldora</option>
                     <option value="shadow">🌑 Con sombra</option>
                   </select>
                 </div>
@@ -1279,18 +1586,18 @@ function setBtnPos(justify, valign) {
                   </select>
                 </div>
                 <div class="fg" id="c-btn2url-wrap" style="display:none"><label class="fl">URL</label><input class="fi" id="c-btn2url" placeholder="https://..." oninput="liveC()"></div>
-                <div class="frow" style="margin-top:8px">
-                  <div class="fg"><label class="fl">Color fondo / borde</label><div class="csw"><input type="color" id="c-btn2bg" value="#f0a500" oninput="liveC();updHex()"><span id="c-btn2bgh">#f0a500</span></div></div>
+                <div class="frow" style="margin-top:6px">
+                  <div class="fg"><label class="fl">Color fondo/borde</label><div class="csw"><input type="color" id="c-btn2bg" value="#f0a500" oninput="liveC();updHex()"><span id="c-btn2bgh">#f0a500</span></div></div>
                   <div class="fg"><label class="fl">Color texto</label><div class="csw"><input type="color" id="c-btn2txt" value="#f0a500" oninput="liveC();updHex()"><span id="c-btn2txth">#f0a500</span></div></div>
                 </div>
                 <div class="fg">
-                  <label class="fl">Estilo del botón</label>
-                  <select class="fi" id="c-btn2style" onchange="liveC()" style="max-width:220px">
-                    <option value="outline">⬜ Contorno (por defecto)</option>
-                    <option value="solid">⬛ Sólido (relleno)</option>
+                  <label class="fl">Estilo</label>
+                  <select class="fi" id="c-btn2style" onchange="liveC()" style="max-width:200px">
+                    <option value="outline">⬜ Contorno</option>
+                    <option value="solid">⬛ Sólido</option>
                     <option value="gradient">🌈 Gradiente</option>
-                    <option value="pill">💊 Píldora redondeada</option>
-                    <option value="ghost">👻 Fantasma (solo texto)</option>
+                    <option value="pill">💊 Píldora</option>
+                    <option value="ghost">👻 Solo texto</option>
                   </select>
                 </div>
               </div>
@@ -2051,237 +2358,20 @@ function setBtnPos(justify, valign) {
             <div class="cfg-zone">
               <div class="cfg-zone-ttl">🎨 PALETAS RÁPIDAS — aplica un tema completo de un toque</div>
               <div class="cfg-zone-body">
-                <!-- ORIGINAL -->
-                <div style="margin-bottom:16px">
-                  <button class="btn bsm" style="background:linear-gradient(90deg,#1a0533,#0a1a3a);color:#f0a500;border:2px solid #f0a500;border-radius:10px;font-weight:700;font-size:13px;padding:8px 18px" onclick="setPalette('original')">⭐ Original (por defecto)</button>
-                  <div style="font-size:11px;color:var(--cmut);margin-top:5px">Vuelve exactamente al tema que venía de fábrica.</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;padding-top:4px">
+                  <button class="btn bsm" style="background:#f0a500;color:#000;border-radius:10px;font-weight:700" onclick="setPalette('gold')">✨ Dorado</button>
+                  <button class="btn bsm" style="background:#e53e3e;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('red')">🔴 Rojo</button>
+                  <button class="btn bsm" style="background:#38a169;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('green')">🟢 Verde</button>
+                  <button class="btn bsm" style="background:#805ad5;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('purple')">🟣 Morado</button>
+                  <button class="btn bsm" style="background:#3182ce;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('blue')">🔵 Azul</button>
+                  <button class="btn bsm" style="background:#ed64a6;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('pink')">🩷 Rosa</button>
+                  <button class="btn bsm" style="background:#dd6b20;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('orange')">🟠 Naranja</button>
+                  <button class="btn bsm" style="background:#319795;color:#fff;border-radius:10px;font-weight:700" onclick="setPalette('teal')">🩵 Teal</button>
+                  <button class="btn bsm" style="background:#fff;color:#111;border-radius:10px;font-weight:700;border:1px solid #ccc" onclick="setPalette('light')">☀️ Claro</button>
                 </div>
-
-                <!-- GRID DE IDENTIDADES VISUALES -->
-                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:8px">
-
-                  <!-- DORADO LUJO -->
-                  <div onclick="setPalette('gold')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(240,165,0,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#f0a500'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,165,0,.3)'">
-                    <div style="background:linear-gradient(135deg,#0a0a0f,#1a1000);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#f0a500;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">✨ DORADO</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#f0a500"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0a0a0f;border:1.5px solid #f0a500"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#141428"></div>
-                      </div>
-                      <div style="background:#f0a500;color:#000;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- RUBI PASIÓN -->
-                  <div onclick="setPalette('red')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(229,62,62,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#e53e3e'" onmouseout="this.style.transform='';this.style.borderColor='rgba(229,62,62,.3)'">
-                    <div style="background:linear-gradient(135deg,#0d0808,#1a0505);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#e53e3e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">❤️ RUBÍ</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#e53e3e"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0d0808;border:1.5px solid #e53e3e"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#1a1010"></div>
-                      </div>
-                      <div style="background:#e53e3e;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- ESMERALDA -->
-                  <div onclick="setPalette('green')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(56,161,105,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#38a169'" onmouseout="this.style.transform='';this.style.borderColor='rgba(56,161,105,.3)'">
-                    <div style="background:linear-gradient(135deg,#060d08,#051a09);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#38a169;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">💚 ESMERALDA</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#38a169"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#060d08;border:1.5px solid #38a169"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0f1a12"></div>
-                      </div>
-                      <div style="background:#38a169;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- AMATISTA -->
-                  <div onclick="setPalette('purple')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(128,90,213,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#805ad5'" onmouseout="this.style.transform='';this.style.borderColor='rgba(128,90,213,.3)'">
-                    <div style="background:linear-gradient(135deg,#0a080f,#140a2a);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#805ad5;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">💜 AMATISTA</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#805ad5"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0a080f;border:1.5px solid #805ad5"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#14101e"></div>
-                      </div>
-                      <div style="background:#805ad5;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- ZAFIRO -->
-                  <div onclick="setPalette('blue')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(49,130,206,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#3182ce'" onmouseout="this.style.transform='';this.style.borderColor='rgba(49,130,206,.3)'">
-                    <div style="background:linear-gradient(135deg,#07090f,#071020);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#3182ce;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">💙 ZAFIRO</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#3182ce"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#07090f;border:1.5px solid #3182ce"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0d1428"></div>
-                      </div>
-                      <div style="background:#3182ce;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- ROSA NEON -->
-                  <div onclick="setPalette('pink')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(237,100,166,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#ed64a6'" onmouseout="this.style.transform='';this.style.borderColor='rgba(237,100,166,.3)'">
-                    <div style="background:linear-gradient(135deg,#0f080d,#1a0515);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#ed64a6;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🩷 FUCSIA</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#ed64a6"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0f080d;border:1.5px solid #ed64a6"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#1e1018"></div>
-                      </div>
-                      <div style="background:#ed64a6;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- NARANJA FUEGO -->
-                  <div onclick="setPalette('orange')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(221,107,32,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#dd6b20'" onmouseout="this.style.transform='';this.style.borderColor='rgba(221,107,32,.3)'">
-                    <div style="background:linear-gradient(135deg,#0d0905,#1a0a00);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#dd6b20;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🔥 FUEGO</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#dd6b20"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0d0905;border:1.5px solid #dd6b20"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#1a1208"></div>
-                      </div>
-                      <div style="background:#dd6b20;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- AGUAMARINA -->
-                  <div onclick="setPalette('teal')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(49,151,149,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#319795'" onmouseout="this.style.transform='';this.style.borderColor='rgba(49,151,149,.3)'">
-                    <div style="background:linear-gradient(135deg,#050d0d,#041414);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#319795;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🩵 AGUA</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#319795"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#050d0d;border:1.5px solid #319795"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0a1a1a"></div>
-                      </div>
-                      <div style="background:#319795;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- MEDIANOCHE -->
-                  <div onclick="setPalette('midnight')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(99,179,237,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#63b3ed'" onmouseout="this.style.transform='';this.style.borderColor='rgba(99,179,237,.3)'">
-                    <div style="background:linear-gradient(135deg,#05050f,#0a0a1e);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#63b3ed;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🌙 NOCHE</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#63b3ed"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#05050f;border:1.5px solid #63b3ed"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0a0a1e"></div>
-                      </div>
-                      <div style="background:#63b3ed;color:#000;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- ATARDECER -->
-                  <div onclick="setPalette('sunset')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(246,135,60,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#f6873c'" onmouseout="this.style.transform='';this.style.borderColor='rgba(246,135,60,.3)'">
-                    <div style="background:linear-gradient(135deg,#0f0806,#1a0a05);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#f6873c;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🌅 SUNSET</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#f6873c,#e53e3e)"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0f0806;border:1.5px solid #f6873c"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#1a0a05"></div>
-                      </div>
-                      <div style="background:linear-gradient(90deg,#f6873c,#e53e3e);color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- BOSQUE -->
-                  <div onclick="setPalette('forest')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(72,187,120,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#48bb78'" onmouseout="this.style.transform='';this.style.borderColor='rgba(72,187,120,.3)'">
-                    <div style="background:linear-gradient(135deg,#050f07,#061509);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#48bb78;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🌿 BOSQUE</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#48bb78"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#050f07;border:1.5px solid #48bb78"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0a1e0c"></div>
-                      </div>
-                      <div style="background:#48bb78;color:#000;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- OCÉANO -->
-                  <div onclick="setPalette('ocean')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(66,153,225,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#4299e1'" onmouseout="this.style.transform='';this.style.borderColor='rgba(66,153,225,.3)'">
-                    <div style="background:linear-gradient(135deg,#05080f,#061228);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#4299e1;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🌊 OCÉANO</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#4299e1,#319795)"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#05080f;border:1.5px solid #4299e1"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#061228"></div>
-                      </div>
-                      <div style="background:linear-gradient(90deg,#4299e1,#319795);color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- PIZARRA -->
-                  <div onclick="setPalette('slate')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(160,174,192,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#a0aec0'" onmouseout="this.style.transform='';this.style.borderColor='rgba(160,174,192,.3)'">
-                    <div style="background:linear-gradient(135deg,#0a0c10,#131720);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#a0aec0;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🩶 PIZARRA</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#a0aec0"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0a0c10;border:1.5px solid #a0aec0"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#131720"></div>
-                      </div>
-                      <div style="background:#a0aec0;color:#000;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- LAVANDA -->
-                  <div onclick="setPalette('lavender')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(183,148,244,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#b794f4'" onmouseout="this.style.transform='';this.style.borderColor='rgba(183,148,244,.3)'">
-                    <div style="background:linear-gradient(135deg,#0e0b1a,#180f28);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#b794f4;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">💜 LAVANDA</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#b794f4"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#0e0b1a;border:1.5px solid #b794f4"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#180f28"></div>
-                      </div>
-                      <div style="background:#b794f4;color:#000;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- CREMA ELEGANTE (CLARO) -->
-                  <div onclick="setPalette('cream')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(180,140,100,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#b48c64'" onmouseout="this.style.transform='';this.style.borderColor='rgba(180,140,100,.3)'">
-                    <div style="background:linear-gradient(135deg,#faf7f2,#f0e8d8);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#7c5c3a;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🤎 CREMA</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#b48c64"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#faf7f2;border:1.5px solid #b48c64"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#f0e8d8"></div>
-                      </div>
-                      <div style="background:#b48c64;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- BLANCO MINIMAL (CLARO) -->
-                  <div onclick="setPalette('light')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(0,0,0,.12);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#333'" onmouseout="this.style.transform='';this.style.borderColor='rgba(0,0,0,.12)'">
-                    <div style="background:linear-gradient(135deg,#ffffff,#f5f7fa);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#333;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">⬜ MINIMAL</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#1a1a2e"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#fff;border:1.5px solid #333"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#f5f7fa;border:1px solid #ddd"></div>
-                      </div>
-                      <div style="background:#1a1a2e;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                  <!-- CHERRY BLOSSOM -->
-                  <div onclick="setPalette('cherry')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:2px solid rgba(252,129,129,.3);transition:all .2s" onmouseover="this.style.transform='scale(1.03)';this.style.borderColor='#fc8181'" onmouseout="this.style.transform='';this.style.borderColor='rgba(252,129,129,.3)'">
-                    <div style="background:linear-gradient(135deg,#fff0f3,#ffe4e8);padding:14px;text-align:center">
-                      <div style="font-size:11px;font-weight:800;color:#c53030;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">🍒 CHERRY</div>
-                      <div style="display:flex;gap:4px;justify-content:center;margin-bottom:8px">
-                        <div style="width:18px;height:18px;border-radius:50%;background:#fc8181"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#fff0f3;border:1.5px solid #fc8181"></div>
-                        <div style="width:18px;height:18px;border-radius:50%;background:#ffe4e8"></div>
-                      </div>
-                      <div style="background:#fc8181;color:#fff;font-size:9px;font-weight:800;border-radius:6px;padding:3px 8px;display:inline-block">COMPRAR</div>
-                    </div>
-                  </div>
-
-                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn bp" onclick="saveC()">&#128190; Guardar Todo</button>
@@ -2395,155 +2485,192 @@ function setBtnPos(justify, valign) {
         <!-- TAB: REGISTRADORA (MOSTRADOR) — POS COMPLETO -->
         <div id="cajapanel-registradora" style="display:none">
 
-          <!-- BARRA SUPERIOR: modo escáner -->
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:12px;border:1px solid rgba(255,255,255,.07);flex-wrap:wrap">
-            <div style="font-size:13px;font-weight:700;color:var(--cp)">📷 Escáner</div>
-            <button class="btn bp bsm" onclick="iniciarEscaner()" id="btn-iniciar-scan" style="border-radius:8px">📷 Esta cámara</button>
-            <button class="btn bo bsm" onclick="detenerEscaner()" id="btn-detener-scan" style="display:none;border-radius:8px">⏹ Detener</button>
-            <button class="btn bsm" onclick="activarEscanerRemoto()" style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:8px">📱 Celular remoto</button>
-            <div id="scan-feedback" style="font-size:12px;color:var(--cmut);margin-left:4px">Toca un botón para escanear</div>
+          <!-- HEADER -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+            <div>
+              <div style="font-size:16px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:8px">
+                <span style="background:linear-gradient(135deg,#f0a500,#ff6b00);-webkit-background-clip:text;-webkit-text-fill-color:transparent">⬡</span>
+                Punto de Venta
+              </div>
+              <div style="font-size:11px;color:var(--cmut);margin-top:1px" id="pos-fecha-hora"></div>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn bsm" onclick="iniciarEscaner()" id="btn-iniciar-scan"
+                style="background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.25);color:var(--cp);border-radius:9px;font-size:11px">📷 Escáner</button>
+              <button class="btn bsm" onclick="detenerEscaner()" id="btn-detener-scan"
+                style="display:none;background:rgba(229,62,62,.08);border:1px solid rgba(229,62,62,.25);color:#fc8181;border-radius:9px;font-size:11px">⏹ Detener</button>
+              <button class="btn bsm" onclick="activarEscanerRemoto()"
+                style="background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.25);color:#a5b4fc;border-radius:9px;font-size:11px">📱 Remoto</button>
+              <button class="btn bsm" onclick="limpiarRegistradora()"
+                style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:9px;font-size:11px">🗑</button>
+            </div>
           </div>
 
-          <!-- GRID POS: 3 columnas en desktop, 1 en móvil -->
-          <div style="display:grid;grid-template-columns:240px 1fr 300px;gap:12px;align-items:start" id="pos-grid">
+          <!-- GRID PRINCIPAL -->
+          <div id="pos-grid">
 
-            <!-- COL 1: CÁMARA -->
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <div class="ac" style="padding:0;overflow:hidden">
-                <div id="scanner-wrap" style="position:relative;background:#000;aspect-ratio:1">
-                  <video id="scanner-video" style="width:100%;height:100%;display:block;object-fit:cover" playsinline autoplay muted></video>
-                  <!-- Marco de escaneo -->
-                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
-                    <div style="width:70%;height:70%;border:2px solid var(--cp);border-radius:8px;position:relative;box-shadow:0 0 0 9999px rgba(0,0,0,.5)">
-                      <div style="position:absolute;top:-2px;left:-2px;width:16px;height:16px;border-top:3px solid var(--cp);border-left:3px solid var(--cp);border-radius:3px 0 0 0"></div>
-                      <div style="position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-top:3px solid var(--cp);border-right:3px solid var(--cp);border-radius:0 3px 0 0"></div>
-                      <div style="position:absolute;bottom:-2px;left:-2px;width:16px;height:16px;border-bottom:3px solid var(--cp);border-left:3px solid var(--cp);border-radius:0 0 0 3px"></div>
-                      <div style="position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-bottom:3px solid var(--cp);border-right:3px solid var(--cp);border-radius:0 0 3px 0"></div>
-                      <div id="scan-line" style="position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cp),transparent);animation:scanLine 1.5s ease-in-out infinite;top:0"></div>
-                    </div>
+            <!-- COLUMNA IZQUIERDA: PRODUCTOS -->
+            <div id="pos-col-left" style="position:relative">
+
+              <!-- BÚSQUEDA -->
+              <div id="pos-search-wrap">
+                <div id="pos-search-ico">🔍</div>
+                <input id="reg-search" placeholder="Buscar producto, SKU o escanear..." oninput="buscarProductoRegistradora(this.value)" autocomplete="off">
+                <div id="reg-scan-feedback">● ESCANEANDO</div>
+                <!-- SUGERENCIAS -->
+                <div id="reg-sugerencias"></div>
+              </div>
+
+              <!-- CÁMARA — overlay sobre la columna izquierda -->
+              <div id="scanner-wrap" style="display:none;position:absolute;inset:0;z-index:50;border-radius:14px;overflow:hidden;background:#000">
+                <video id="scanner-video" style="width:100%;height:100%;display:block;object-fit:cover" playsinline autoplay muted></video>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+                  <div style="width:50%;max-width:260px;aspect-ratio:1;border:2px solid var(--cp);border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.6);position:relative">
+                    <div style="position:absolute;top:-2px;left:-2px;width:20px;height:20px;border-top:3px solid var(--cp);border-left:3px solid var(--cp);border-radius:3px 0 0 0"></div>
+                    <div style="position:absolute;top:-2px;right:-2px;width:20px;height:20px;border-top:3px solid var(--cp);border-right:3px solid var(--cp);border-radius:0 3px 0 0"></div>
+                    <div style="position:absolute;bottom:-2px;left:-2px;width:20px;height:20px;border-bottom:3px solid var(--cp);border-left:3px solid var(--cp);border-radius:0 0 0 3px"></div>
+                    <div style="position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-bottom:3px solid var(--cp);border-right:3px solid var(--cp);border-radius:0 0 3px 0"></div>
+                    <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cp),transparent);animation:scanLine 2s linear infinite"></div>
                   </div>
                 </div>
-                <!-- Placeholder cuando cámara está off -->
-                <div id="scanner-placeholder" style="aspect-ratio:1;background:rgba(255,255,255,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer" onclick="iniciarEscaner()">
-                  <div style="font-size:48px">📷</div>
-                  <div style="font-size:12px;color:var(--cmut);text-align:center">Toca para activar<br>la cámara</div>
-                </div>
-              </div>
-              <!-- Búsqueda -->
-              <div style="position:relative">
-                <input id="reg-buscar" class="fi" placeholder="🔍 Buscar..." oninput="buscarProductoRegistradora(this.value)" autocomplete="off" style="font-size:13px">
-                <div id="reg-sugerencias" style="background:var(--ccard);border:1px solid rgba(255,255,255,.12);border-radius:10px;margin-top:4px;display:none;max-height:200px;overflow-y:auto;position:absolute;left:0;right:0;z-index:50;box-shadow:0 8px 32px rgba(0,0,0,.5)"></div>
-              </div>
-              <!-- Info escáner remoto -->
-              <div id="scan-remoto-info" style="display:none;padding:12px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);border-radius:10px;font-size:12px;color:#a5b4fc;text-align:center">
-                <div style="font-weight:700;margin-bottom:6px">📱 Escanea con tu celular</div>
-                <div id="scan-remoto-qr" style="display:flex;justify-content:center;margin-bottom:6px"></div>
-                <div style="color:rgba(165,180,252,.7);font-size:11px">El celular queda como escáner.<br>Cada producto que escanees aparece aquí.</div>
-                <button onclick="desactivarEscanerRemoto()" style="margin-top:8px;background:rgba(229,62,62,.2);color:#fc8181;border:1px solid rgba(229,62,62,.3);border-radius:6px;padding:4px 12px;font-size:11px;cursor:pointer">✕ Desconectar</button>
-              </div>
-            </div>
-
-            <!-- COL 2: CATÁLOGO -->
-            <div class="ac" style="padding:12px">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                <div style="font-size:13px;font-weight:700">🛍️ Productos</div>
-                <div id="reg-cat-tabs" style="display:flex;gap:4px;flex-wrap:wrap"></div>
-              </div>
-              <div id="reg-prod-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(85px,1fr));gap:8px;max-height:calc(100vh - 280px);overflow-y:auto"></div>
-            </div>
-
-            <!-- COL 3: CAJA (ticket) -->
-            <div style="display:flex;flex-direction:column;gap:8px;position:sticky;top:0">
-
-              <!-- Items agregados -->
-              <div class="ac" style="padding:12px;max-height:280px;overflow-y:auto">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-                  <div style="font-size:13px;font-weight:700">🛒 Caja</div>
-                  <button onclick="limpiarRegistradora()" style="background:none;border:none;color:#fc8181;font-size:11px;cursor:pointer;font-weight:600">🗑 Limpiar</button>
-                </div>
-                <div id="reg-items-lista">
-                  <div style="text-align:center;padding:20px;color:var(--cmut)"><div style="font-size:28px;margin-bottom:6px">🛒</div><div style="font-size:12px">Escanea o toca un producto</div></div>
+                <div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px">
+                  <div id="scan-feedback" style="background:rgba(0,0,0,.75);color:var(--cp);font-size:12px;font-weight:700;padding:5px 14px;border-radius:50px;white-space:nowrap;border:1px solid rgba(240,165,0,.3)">Apunta al código de barras</div>
+                  <button onclick="detenerEscaner()" style="background:rgba(229,62,62,.8);border:none;border-radius:50px;color:#fff;font-size:12px;font-weight:700;padding:6px 16px;cursor:pointer;font-family:inherit">⏹ Cerrar cámara</button>
                 </div>
               </div>
 
-              <!-- Total -->
-              <div style="padding:12px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.25);border-radius:12px">
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--cmut);margin-bottom:3px"><span>Subtotal</span><span id="reg-subtotal">$0</span></div>
-                <div id="reg-descuento-wrap" style="display:none;justify-content:space-between;font-size:12px;color:#68d391;margin-bottom:3px"><span>🎟️ Dcto</span><span id="reg-descuento-monto">-$0</span></div>
-                <div id="reg-iva-wrap" style="display:none;justify-content:space-between;font-size:12px;color:#63b3ed;margin-bottom:3px"><span>🧾 IVA</span><span id="reg-iva-monto">+$0</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:26px;font-weight:900;color:var(--cp);padding-top:6px;border-top:1px solid rgba(255,255,255,.08)"><span>TOTAL</span><span id="reg-total">$0</span></div>
-              </div>
-
-              <!-- Cupón -->
-              <div style="display:flex;gap:6px">
-                <input class="fi" id="reg-cupon" placeholder="🎟️ Cupón" style="flex:1;text-transform:uppercase;text-align:center;letter-spacing:.08em;font-size:13px" oninput="this.value=this.value.toUpperCase()">
-                <button class="btn bp bsm" onclick="aplicarCuponRegistradora()" style="border-radius:8px">OK</button>
-              </div>
-              <div id="reg-cupon-msg" style="font-size:11px;margin-top:-4px"></div>
-
-              <!-- Método pago -->
-              <!-- IVA opcional -->
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-                <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
-                  <input type="checkbox" id="reg-iva-activo" style="accent-color:var(--cp)" onchange="actualizarTotalesReg()"> Incluir IVA
-                </label>
-                <select id="reg-iva-pct" onchange="actualizarTotalesReg()" style="font-size:12px;padding:2px 6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:6px;color:var(--ctxt)">
-                  <option value="19">19%</option>
-                  <option value="5">5%</option>
-                  <option value="0">0%</option>
-                </select>
-              </div>
-              <select class="fi" id="reg-pago" onchange="mostrarEfectivoReg()" style="font-size:13px">
-                <option value="">💳 Método de pago...</option>
-                <option value="Efectivo">💵 Efectivo</option>
-                <option value="Nequi">🟣 Nequi</option>
-                <option value="Daviplata">🔴 Daviplata</option>
-                <option value="Bancolombia">🟡 Bancolombia</option>
-                <option value="Transferencia">🏦 Transferencia</option>
-                <option value="Tarjeta">💳 Tarjeta</option>
-                <option value="Otro">📲 Otro</option>
-              </select>
-
-              <!-- Efectivo cambio -->
-              <div id="reg-efectivo-wrap" style="display:none;display:flex;gap:8px;align-items:center">
-                <input class="fi" id="reg-efectivo-valor" type="number" placeholder="Recibió $" oninput="calcularCambio()" style="flex:1;font-size:14px;font-weight:700;text-align:center">
-                <div style="text-align:center;min-width:72px;padding:6px;background:rgba(104,211,145,.08);border-radius:10px;border:1px solid rgba(104,211,145,.2)">
-                  <div style="font-size:9px;color:var(--cmut)">CAMBIO</div>
-                  <div id="reg-cambio" style="font-size:16px;font-weight:800;color:#68d391">$0</div>
+              <!-- ITEMS -->
+              <div id="pos-items-box">
+                <div id="pos-items-hdr">
+                  <span style="font-size:11px;font-weight:800;color:var(--cmut);text-transform:uppercase;letter-spacing:.08em">Artículos</span>
+                  <span id="reg-cant-items" style="font-size:11px;color:var(--cp);font-weight:700">0 items</span>
+                </div>
+                <div id="reg-items">
+                  <div id="reg-empty-state">
+                    <span style="font-size:30px;opacity:.2">⬡</span>
+                    <span>Busca o escanea productos</span>
+                  </div>
                 </div>
               </div>
 
-              <!-- Cliente + notas -->
-              <div style="display:flex;gap:6px">
-                <input class="fi" id="reg-cliente" placeholder="👤 Cliente" style="flex:1;font-size:12px">
-                <input class="fi" id="reg-wa" placeholder="📱 WA" type="tel" style="flex:1;font-size:12px">
+            </div><!-- /col-left -->
+
+            <!-- COLUMNA CENTRAL: PANTALLA DE ACTIVIDAD -->
+            <div id="pos-col-mid">
+              <div id="pos-actividad-hdr">
+                <span>⚡ Actividad</span>
+                <span id="pos-act-badge" style="background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);color:#34d399;border-radius:50px;padding:2px 8px;font-size:10px;font-weight:800">EN VIVO</span>
               </div>
-              <input class="fi" id="reg-notas" placeholder="📝 Notas (opcional)" style="font-size:12px">
+              <div id="pos-actividad-feed">
+                <div class="act-item info">
+                  <span class="act-ico">🧠</span><span style="color:#a78bfa;font-weight:700">Sistema listo</span>
+                  <div class="act-time">Esperando actividad...</div>
+                </div>
+              </div>
+              <div id="pos-stats-bar">
+                <div class="pos-stat-row">
+                  <span class="pos-stat-lbl">Ventas hoy</span>
+                  <span class="pos-stat-val gold" id="pos-stat-ventas">$0</span>
+                </div>
+                <div class="pos-stat-row">
+                  <span class="pos-stat-lbl">Pedidos</span>
+                  <span class="pos-stat-val" id="pos-stat-pedidos">0</span>
+                </div>
+                <div class="pos-stat-row">
+                  <span class="pos-stat-lbl">Pendientes</span>
+                  <span class="pos-stat-val green" id="pos-stat-pend">0</span>
+                </div>
+                <div class="pos-stat-row" style="margin-top:4px;padding-top:4px;border-top:1px solid rgba(255,255,255,.05)">
+                  <span class="pos-stat-lbl">Turno</span>
+                  <span class="pos-stat-val" id="pos-stat-turno" style="font-size:10px">—</span>
+                </div>
+              </div>
+            </div><!-- /col-mid -->
 
-              <!-- COBRAR -->
-              <button class="btn bp w100" onclick="cobrarRegistradora()" style="padding:16px;font-size:18px;font-weight:900;border-radius:14px;background:linear-gradient(135deg,var(--cp),#ff8c00);letter-spacing:.05em">
-                💳 COBRAR
-              </button>
+            <!-- COLUMNA DERECHA: COBRO -->
+            <div id="pos-col-right">
 
-              <!-- Acciones -->
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-                <button class="btn bo bsm" onclick="imprimirTicketRegistradora()" style="border-radius:8px;font-size:11px">🖨️ Ticket</button>
-                <button class="btn bsm" style="background:rgba(37,211,102,.12);color:#25d366;border:1px solid rgba(37,211,102,.25);border-radius:8px;font-size:11px" onclick="enviarWARegistradora()">💬 WA</button>
-                <button class="btn bsm" style="background:rgba(99,102,241,.12);color:#a5b4fc;border:1px solid rgba(99,102,241,.25);border-radius:8px;font-size:11px" onclick="generarFacturaPDF()">📄 PDF</button>
+              <!-- HEADER COBRO -->
+              <div id="pos-cobro-hdr">
+                <div style="font-size:10px;font-weight:800;color:rgba(240,165,0,.6);text-transform:uppercase;letter-spacing:.12em;margin-bottom:2px">COBRO</div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12px;color:var(--cmut)" id="reg-items-count">0 productos</span>
+                </div>
               </div>
 
-              <!-- Último cobro -->
-              <div id="reg-ultimo-cobro" style="display:none" class="ac" style="padding:10px">
-                <div class="acttl" style="color:#68d391;font-size:12px">✅ Último cobro</div>
-                <div id="reg-ultimo-cobro-info" style="font-size:12px"></div>
-              </div>
+              <div id="pos-col-right-scroll">
 
-            </div><!-- fin col3 -->
-          </div><!-- fin pos-grid -->
-        </div><!-- fin tab registradora -->
+                <!-- TOTAL -->
+                <div id="pos-total-box">
+                  <div id="pos-total-label">TOTAL A COBRAR</div>
+                  <div id="reg-total-display">$0</div>
+                  <div id="pos-items-count" style="font-size:11px;color:var(--cmut);margin-top:3px"></div>
+                </div>
 
+                <!-- CUPÓN -->
+                <div style="display:flex;gap:6px">
+                  <input class="fi" id="reg-cupon-input" placeholder="🎟 Cupón" style="font-size:12px;border-radius:9px;flex:1;padding:8px 10px">
+                  <button class="btn bsm" onclick="aplicarCuponRegistradora()" style="background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.25);color:var(--cp);border-radius:9px;font-size:11px;white-space:nowrap">Aplicar</button>
+                </div>
+                <div id="reg-descuento-info" style="display:none;font-size:11px;color:#68d391;text-align:center;font-weight:600"></div>
 
-        <!-- TAB: GASTOS DEL DÍA -->
+                <!-- MÉTODO PAGO -->
+                <div>
+                  <div class="pos-section-lbl">Método de pago</div>
+                  <div id="reg-pagos-grid">
+                    <button class="reg-pago-btn active" data-pago="Efectivo" onclick="selPagoReg(this)">💵 Efectivo</button>
+                    <button class="reg-pago-btn" data-pago="Nequi" onclick="selPagoReg(this)">📱 Nequi</button>
+                    <button class="reg-pago-btn" data-pago="Daviplata" onclick="selPagoReg(this)">📱 Daviplata</button>
+                    <button class="reg-pago-btn" data-pago="Transferencia" onclick="selPagoReg(this)">🏦 Transf.</button>
+                    <button class="reg-pago-btn" data-pago="Tarjeta" onclick="selPagoReg(this)" style="grid-column:1/-1">💳 Tarjeta</button>
+                  </div>
+                </div>
+
+                <!-- EFECTIVO -->
+                <div id="reg-efectivo-wrap">
+                  <div style="font-size:10px;font-weight:800;color:var(--cmut);text-transform:uppercase;letter-spacing:.08em">¿Con cuánto paga?</div>
+                  <div id="pos-cash-grid">
+                    <button class="reg-cash-btn" onclick="setCashReg(5000)">5K</button>
+                    <button class="reg-cash-btn" onclick="setCashReg(10000)">10K</button>
+                    <button class="reg-cash-btn" onclick="setCashReg(20000)">20K</button>
+                    <button class="reg-cash-btn" onclick="setCashReg(50000)">50K</button>
+                    <button class="reg-cash-btn" onclick="setCashReg(100000)">100K</button>
+                    <button class="reg-cash-btn" onclick="setCashReg(200000)">200K</button>
+                    <button class="reg-cash-btn" onclick="setCashRegExacto()" style="grid-column:3/-1">Exacto ✓</button>
+                  </div>
+                  <input class="fi" id="reg-cash-input" type="number" placeholder="Otro valor..." oninput="calcularCambio()" style="font-size:13px;border-radius:8px;padding:8px 10px">
+                  <div id="reg-cambio-display">
+                    <div style="font-size:10px;color:var(--cmut);font-weight:700;text-transform:uppercase;letter-spacing:.08em">CAMBIO</div>
+                    <div id="reg-cambio-val">$0</div>
+                  </div>
+                </div>
+
+                <!-- CLIENTE -->
+                <div>
+                  <div class="pos-section-lbl">Cliente (opcional)</div>
+                  <input class="fi" id="reg-cliente-nombre" placeholder="Nombre" style="font-size:12px;border-radius:9px;margin-bottom:6px;padding:8px 10px">
+                  <input class="fi" id="reg-cliente-wa" placeholder="WhatsApp para ticket" type="tel" style="font-size:12px;border-radius:9px;padding:8px 10px">
+                </div>
+
+                <!-- NOTAS -->
+                <input class="fi" id="reg-notas" placeholder="📝 Notas (opcional)" style="font-size:11px;border-radius:9px;padding:8px 10px">
+
+                <!-- COBRAR -->
+                <button onclick="cobrarRegistradora()" id="reg-cobrar-btn">⚡ COBRAR</button>
+
+                <!-- TICKET -->
+                <div style="display:flex;gap:6px">
+                  <button onclick="imprimirTicketRegistradora()" style="flex:1;padding:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:var(--ctxt);font-family:inherit">🖨️ Ticket</button>
+                  <button onclick="enviarWARegistradora()" style="flex:1;padding:8px;background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.2);border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#25d366;font-family:inherit">💬 WA</button>
+                </div>
+
+              </div><!-- /scroll -->
+            </div><!-- /col-right -->
+
+          </div><!-- /pos-grid -->
+
+        </div><!-- /cajapanel-registradora -->
+
         <div id="cajapanel-gastos" style="display:none">
           <div class="ac" style="max-width:520px">
             <div class="acttl">📉 Gastos del Día</div>
@@ -3173,15 +3300,21 @@ function setBtnPos(justify, valign) {
             <div class="fg" style="margin-bottom:12px">
               <label class="fl">✨ Animación del banner</label>
               <select class="fi" id="c-pub-anim" onchange="aplicarBannerPub()" style="max-width:240px">
-                <option value="none">⬜ Sin animación</option>
+                <option value="">Sin animación</option>
                 <option value="pulse">💓 Pulso suave</option>
-                <option value="slide">➡️ Deslizamiento</option>
                 <option value="bounce">🏀 Rebote</option>
                 <option value="glow">🌟 Brillo pulsante</option>
-                <option value="shake">📳 Vibración atención</option>
-                <option value="gradient">🌈 Gradiente animado</option>
+                <option value="shake">📳 Vibración</option>
+                <option value="slide">⬇️ Caída al entrar</option>
+                <option value="gradient">🌈 Gradiente vivo</option>
               </select>
-              <div style="font-size:11px;color:var(--cmut);margin-top:4px">La animación llama la atención de los clientes sobre el banner</div>
+            </div>
+
+            <div class="fg" style="margin-bottom:12px">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px">
+                <input type="checkbox" id="c-pub-mostrar-x" onchange="aplicarBannerPub()" style="width:16px;height:16px;accent-color:var(--cp)" checked>
+                <span>Mostrar botón ✕ para que el cliente cierre el banner</span>
+              </label>
             </div>
 
             <div class="fg" style="margin-bottom:12px">
@@ -3494,6 +3627,53 @@ function setBtnPos(justify, valign) {
         </div>
       </section>
 
+
+      <!-- CEREBRO IA -->
+      <section class="asec" id="sec-cerebro" style="padding:0;overflow:hidden">
+        <div id="cerebro-wrap">
+          <div id="cerebro-header">
+            <h2><span style="font-size:20px">🧠</span> Cerebro IA <span class="cerebro-badge" id="cb-estado-badge">Configura API Key</span></h2>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span id="cb-api-status"></span>
+              <button class="btn bsm" onclick="toggleCerebroConfig()" style="background:rgba(124,106,255,.1);border:1px solid rgba(124,106,255,.3);color:#a78bfa;border-radius:9px;font-size:11px">⚙️ Config</button>
+              <button class="btn bsm" onclick="limpiarCerebro()" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:9px;font-size:11px">🗑 Limpiar</button>
+            </div>
+          </div>
+          <div id="cerebro-config" style="display:none">
+            <div style="font-size:10px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">🔑 API Key de Anthropic</div>
+            <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+              <input class="fi" type="password" id="cerebro-apikey-input" placeholder="sk-ant-api03-..." autocomplete="off" style="border-radius:9px;flex:1;min-width:200px;font-family:monospace;font-size:12px">
+              <button class="btn bsm" onclick="guardarCerebroKey()" style="background:linear-gradient(135deg,#7c6aff,#a78bfa);color:#fff;border:none;border-radius:9px">Activar</button>
+            </div>
+            <div style="font-size:11px;color:var(--cmut);margin-bottom:12px">Tu key se guarda solo en este navegador.</div>
+            <div style="font-size:10px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">📚 Entrena al Cerebro</div>
+            <textarea class="fi" id="cerebro-contexto" rows="3" placeholder="Ej: Mi tienda vende ropa, mis clientes son jóvenes, horario 8am-8pm, cuando digo jordan me refiero al Nike Air Jordan..." style="font-size:12px;border-radius:9px;margin-bottom:8px"></textarea>
+            <button class="btn bsm" onclick="guardarCerebroContexto()" style="background:rgba(124,106,255,.1);border:1px solid rgba(124,106,255,.3);color:#a78bfa;border-radius:9px">💾 Guardar entrenamiento</button>
+            <div style="margin-top:12px;font-size:10px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">⚡ Ejemplos</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span class="cerebro-chip" onclick="usarEjemplo(this)">📊 Ventas de hoy</span>
+              <span class="cerebro-chip" onclick="usarEjemplo(this)">📥 Descargar Excel</span>
+              <span class="cerebro-chip" onclick="usarEjemplo(this)">🔄 Abrir dashboard</span>
+              <span class="cerebro-chip" onclick="usarEjemplo(this)">🏷️ Activar banner</span>
+              <span class="cerebro-chip" onclick="usarEjemplo(this)">🔒 Cerrar turno</span>
+              <span class="cerebro-chip" onclick="usarEjemplo(this)">📋 Pedidos pendientes</span>
+              <span class="cerebro-chip" onclick="usarEjemplo(this)">🎨 Tema morado</span>
+            </div>
+          </div>
+          <div id="cerebro-chat">
+            <div class="cb-msg system">
+              <div class="cb-avatar">🧠</div>
+              <div class="cb-bubble"><b>Hola, soy el Cerebro de tu tienda.</b><br>Controlo cualquier función del panel con tu voz o texto. Configura tu API Key para comenzar.</div>
+            </div>
+          </div>
+          <div id="cerebro-input-area">
+            <button id="cerebro-mic-btn" onclick="toggleMicCerebro()" title="Hablar">🎤</button>
+            <textarea id="cerebro-input" placeholder="Escribe o habla... ej: muéstrame las ventas de hoy" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarCerebro()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px'"></textarea>
+            <button id="cerebro-send-btn" onclick="enviarCerebro()">→</button>
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
 </div>
@@ -3800,8 +3980,6 @@ function initFirebase() {
     if (data.ASESORES) ASESORES = data.ASESORES;
     try { localStorage.setItem(SK, JSON.stringify({C:C,P:P,CATS:CATS,ORD:ORD,CUS:CUS,ASESORES:ASESORES,_ts:data._ts||Date.now()})); } catch(e) {}
     applyC(); renderCat(); renderTicker();
-    // Reaplicar banner vendible cuando llegan datos de Firebase
-    setTimeout(function(){ if(typeof _mostrarBannerDesdeC==='function') _mostrarBannerDesdeC(); }, 50);
     if (!_loaded) {
       _loaded = true;
       renderProdList(); renderCatList(); renderOrds(); renderCRM();
@@ -3896,7 +4074,7 @@ window.addEventListener('load', function() {
   renderPts();
   document.getElementById('yr').textContent = new Date().getFullYear();
   // Banner: mostrar en la tienda al cargar si está activo
-  setTimeout(function(){ if(typeof _mostrarBannerDesdeC==='function') _mostrarBannerDesdeC(); }, 200);
+  setTimeout(function(){ initBannerPub(); }, 300);
 });
 
 // ============================================================
@@ -3998,76 +4176,30 @@ function applyC() {
   if(b1w) b1w.style.display = (C.btn1show===false) ? 'none' : '';
   if(b1el) {
     b1el.textContent = C.btn1 || 'Ver Catálogo 🛍️';
-    // Aplicar colores y estilo personalizados btn1
     var b1bg  = C.btn1bg  || '#f0a500';
-    var b1txt = C.btn1txt || '#000000';
+    var b1tx  = C.btn1txt || '#000000';
     var b1sty = C.btn1style || 'solid';
-    b1el.style.cssText = '';
-    if (b1sty === 'solid') {
-      b1el.style.background = b1bg;
-      b1el.style.color = b1txt;
-      b1el.style.border = 'none';
-      b1el.style.borderRadius = '50px';
-    } else if (b1sty === 'outline') {
-      b1el.style.background = 'transparent';
-      b1el.style.color = b1bg;
-      b1el.style.border = '2px solid ' + b1bg;
-      b1el.style.borderRadius = '50px';
-    } else if (b1sty === 'gradient') {
-      b1el.style.background = 'linear-gradient(135deg,' + b1bg + ',' + b1txt + ')';
-      b1el.style.color = '#fff';
-      b1el.style.border = 'none';
-      b1el.style.borderRadius = '50px';
-    } else if (b1sty === 'pill') {
-      b1el.style.background = b1bg;
-      b1el.style.color = b1txt;
-      b1el.style.border = 'none';
-      b1el.style.borderRadius = '100px';
-      b1el.style.padding = '14px 36px';
-    } else if (b1sty === 'shadow') {
-      b1el.style.background = b1bg;
-      b1el.style.color = b1txt;
-      b1el.style.border = 'none';
-      b1el.style.borderRadius = '50px';
-      b1el.style.boxShadow = '0 6px 24px ' + b1bg + '66';
-    }
+    b1el.removeAttribute('style');
+    if (b1sty==='solid')   { b1el.style.cssText='background:'+b1bg+';color:'+b1tx+';border:none;border-radius:50px;padding:13px 32px;font-size:16px;font-weight:700;cursor:pointer'; }
+    else if (b1sty==='outline') { b1el.style.cssText='background:transparent;color:'+b1bg+';border:2px solid '+b1bg+';border-radius:50px;padding:11px 30px;font-size:16px;font-weight:700;cursor:pointer'; }
+    else if (b1sty==='gradient'){ b1el.style.cssText='background:linear-gradient(135deg,'+b1bg+','+b1tx+');color:#fff;border:none;border-radius:50px;padding:13px 32px;font-size:16px;font-weight:700;cursor:pointer'; }
+    else if (b1sty==='pill')    { b1el.style.cssText='background:'+b1bg+';color:'+b1tx+';border:none;border-radius:100px;padding:14px 40px;font-size:16px;font-weight:800;cursor:pointer;letter-spacing:.02em'; }
+    else if (b1sty==='shadow')  { b1el.style.cssText='background:'+b1bg+';color:'+b1tx+';border:none;border-radius:50px;padding:13px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 6px 28px '+b1bg+'88'; }
   }
-  // btn2 — actualizar texto y colores
   var b2el = document.getElementById('hero-btn2');
-  var b2bbl = document.getElementById('hero-btn2-bubble-txt');
-  var b2bg  = C.btn2bg  || C.cp || '#f0a500';
-  var b2txt = C.btn2txt || C.cp || '#f0a500';
-  var b2sty = C.btn2style || 'outline';
   if(b2el) {
     b2el.textContent = C.btn2 || 'Mi Carrito 🛒';
-    b2el.style.cssText = '';
-    if (b2sty === 'solid') {
-      b2el.style.background = b2bg;
-      b2el.style.color = b2txt;
-      b2el.style.border = 'none';
-      b2el.style.borderRadius = '50px';
-    } else if (b2sty === 'outline') {
-      b2el.style.background = 'transparent';
-      b2el.style.color = b2bg;
-      b2el.style.border = '2px solid ' + b2bg;
-      b2el.style.borderRadius = '50px';
-    } else if (b2sty === 'gradient') {
-      b2el.style.background = 'linear-gradient(135deg,' + b2bg + ',' + b2txt + ')';
-      b2el.style.color = '#fff';
-      b2el.style.border = 'none';
-      b2el.style.borderRadius = '50px';
-    } else if (b2sty === 'pill') {
-      b2el.style.background = b2bg;
-      b2el.style.color = b2txt;
-      b2el.style.border = 'none';
-      b2el.style.borderRadius = '100px';
-      b2el.style.padding = '14px 36px';
-    } else if (b2sty === 'ghost') {
-      b2el.style.background = 'transparent';
-      b2el.style.color = b2bg;
-      b2el.style.border = 'none';
-    }
+    var b2bg  = C.btn2bg  || C.cp || '#f0a500';
+    var b2tx  = C.btn2txt || C.cp || '#f0a500';
+    var b2sty = C.btn2style || 'outline';
+    b2el.removeAttribute('style');
+    if (b2sty==='solid')   { b2el.style.cssText='background:'+b2bg+';color:'+b2tx+';border:none;border-radius:50px;padding:13px 32px;font-size:16px;font-weight:700;cursor:pointer'; }
+    else if (b2sty==='outline'){ b2el.style.cssText='background:transparent;color:'+b2bg+';border:2px solid '+b2bg+';border-radius:50px;padding:11px 30px;font-size:16px;font-weight:700;cursor:pointer'; }
+    else if (b2sty==='gradient'){ b2el.style.cssText='background:linear-gradient(135deg,'+b2bg+','+b2tx+');color:#fff;border:none;border-radius:50px;padding:13px 32px;font-size:16px;font-weight:700;cursor:pointer'; }
+    else if (b2sty==='pill')   { b2el.style.cssText='background:'+b2bg+';color:'+b2tx+';border:none;border-radius:100px;padding:14px 40px;font-size:16px;font-weight:800;cursor:pointer;letter-spacing:.02em'; }
+    else if (b2sty==='ghost')  { b2el.style.cssText='background:transparent;color:'+b2bg+';border:none;font-size:16px;font-weight:700;cursor:pointer;text-decoration:underline'; }
   }
+  var b2bbl = document.getElementById('hero-btn2-bubble-txt');
   if(b2bbl) b2bbl.textContent = C.btn2 || 'Mi Carrito 🛒';
 
   // ── Burbuja flotante (nombre + btn2) ──
@@ -4944,15 +5076,16 @@ function fillForm() {
   sv('c-btn1', C.btn1||'Ver Catálogo 🛍️'); sv('c-btn2', C.btn2||'Mi Carrito 🛒');
   var cb1s=document.getElementById('c-btn1show'); if(cb1s) cb1s.checked=(C.btn1show!==false);
   var cb2s=document.getElementById('c-btn2show'); if(cb2s) cb2s.checked=(C.btn2show!==false);
-  // Colores botones
-  var fb1bg=document.getElementById('c-btn1bg'); if(fb1bg) fb1bg.value=C.btn1bg||'#f0a500';
-  var fb1tx=document.getElementById('c-btn1txt'); if(fb1tx) fb1tx.value=C.btn1txt||'#000000';
-  var fb1st=document.getElementById('c-btn1style'); if(fb1st){for(var ii=0;ii<fb1st.options.length;ii++){if(fb1st.options[ii].value===(C.btn1style||'solid')){fb1st.selectedIndex=ii;break;}}}
-  var fb2bg=document.getElementById('c-btn2bg'); if(fb2bg) fb2bg.value=C.btn2bg||'#f0a500';
-  var fb2tx=document.getElementById('c-btn2txt'); if(fb2tx) fb2tx.value=C.btn2txt||'#f0a500';
-  var fb2st=document.getElementById('c-btn2style'); if(fb2st){for(var jj=0;jj<fb2st.options.length;jj++){if(fb2st.options[jj].value===(C.btn2style||'outline')){fb2st.selectedIndex=jj;break;}}}
+  // Colores botones hero
+  var fb1bg=document.getElementById('c-btn1bg'); if(fb1bg) { fb1bg.value=C.btn1bg||'#f0a500'; var sp=document.getElementById('c-btn1bgh'); if(sp) sp.textContent=C.btn1bg||'#f0a500'; }
+  var fb1tx=document.getElementById('c-btn1txt'); if(fb1tx) { fb1tx.value=C.btn1txt||'#000000'; var sp2=document.getElementById('c-btn1txth'); if(sp2) sp2.textContent=C.btn1txt||'#000000'; }
+  var fb1st=document.getElementById('c-btn1style'); if(fb1st){for(var si=0;si<fb1st.options.length;si++){if(fb1st.options[si].value===(C.btn1style||'solid')){fb1st.selectedIndex=si;break;}}}
+  var fb2bg=document.getElementById('c-btn2bg'); if(fb2bg) { fb2bg.value=C.btn2bg||'#f0a500'; var sp3=document.getElementById('c-btn2bgh'); if(sp3) sp3.textContent=C.btn2bg||'#f0a500'; }
+  var fb2tx=document.getElementById('c-btn2txt'); if(fb2tx) { fb2tx.value=C.btn2txt||'#f0a500'; var sp4=document.getElementById('c-btn2txth'); if(sp4) sp4.textContent=C.btn2txt||'#f0a500'; }
+  var fb2st=document.getElementById('c-btn2style'); if(fb2st){for(var sj=0;sj<fb2st.options.length;sj++){if(fb2st.options[sj].value===(C.btn2style||'outline')){fb2st.selectedIndex=sj;break;}}}
   // Animación banner
-  var fpba=document.getElementById('c-pub-anim'); if(fpba){for(var kk=0;kk<fpba.options.length;kk++){if(fpba.options[kk].value===(C.pubAnim||'none')){fpba.selectedIndex=kk;break;}}}
+  var fpba=document.getElementById('c-pub-anim'); if(fpba){for(var sk=0;sk<fpba.options.length;sk++){if(fpba.options[sk].value===(C.pubAnim||'')){fpba.selectedIndex=sk;break;}}}
+  var fpbx=document.getElementById('c-pub-mostrar-x'); if(fpbx) fpbx.checked=(C.pubMostrarX!==false);
   var sa1=document.getElementById('c-btn1action'); if(sa1){for(var i=0;i<sa1.options.length;i++){if(sa1.options[i].value===(C.btn1action||'catalog')){sa1.selectedIndex=i;break;}}}
   var sa2=document.getElementById('c-btn2action'); if(sa2){for(var i=0;i<sa2.options.length;i++){if(sa2.options[i].value===(C.btn2action||'cart')){sa2.selectedIndex=i;break;}}}
   sv('c-btn1url', C.btn1url||''); sv('c-btn2url', C.btn2url||'');
@@ -5044,16 +5177,14 @@ function liveC() {
   var cb2s=document.getElementById('c-btn2show'); if(cb2s) C.btn2show=cb2s.checked;
   var sa1=document.getElementById('c-btn1action'); if(sa1) C.btn1action=sa1.value;
   var sa2=document.getElementById('c-btn2action'); if(sa2) C.btn2action=sa2.value;
-  C.btn1url = g('c-btn1url')||''; C.btn2url = g('c-btn2url')||'';
-  // Colores y estilos de botones
+  // Colores y estilos botones hero
   var eb1bg=document.getElementById('c-btn1bg'); if(eb1bg&&eb1bg.value) C.btn1bg=eb1bg.value;
   var eb1tx=document.getElementById('c-btn1txt'); if(eb1tx&&eb1tx.value) C.btn1txt=eb1tx.value;
   var eb1st=document.getElementById('c-btn1style'); if(eb1st) C.btn1style=eb1st.value;
   var eb2bg=document.getElementById('c-btn2bg'); if(eb2bg&&eb2bg.value) C.btn2bg=eb2bg.value;
   var eb2tx=document.getElementById('c-btn2txt'); if(eb2tx&&eb2tx.value) C.btn2txt=eb2tx.value;
   var eb2st=document.getElementById('c-btn2style'); if(eb2st) C.btn2style=eb2st.value;
-  // Animación banner
-  var epba=document.getElementById('c-pub-anim'); if(epba) C.pubAnim=epba.value;
+  C.btn1url = g('c-btn1url')||''; C.btn2url = g('c-btn2url')||'';
   C.cheroeyebrow = g('c-cheroeyebrow');
   C.cherosub     = g('c-cherosub');
   C.ctickbg1  = g('c-ctickbg1'); C.ctickbg2 = g('c-ctickbg2');
@@ -5252,32 +5383,20 @@ function setSocStyle(t) {
 
 function setPalette(n) {
   var p = {
-    // ── ORIGINAL (fábrica) ──
-    original:{cp:'#f0a500',cbg:'#0a0a0f',ccat:'#0d0d1a',ccard:'#141428',b1:'#1a0533',b2:'#0a1a3a',chdr:'#0d0d1a',chdr2:'#0d0d1a',chdrdir:'90deg',chtxt:'#f0f0ff',cftr:'#07070f',cftxt:'#8888aa',ctabc:'#f0a500',cprice:'#f0a500',ctxt:'#f0f0ff',cbt:'#ffffff',cdesc:'#8888aa',ccatg1:'#0d0d1a',ccatg2:'#0d0d1a',ccatgdir:'180deg',ccardg1:'#141428',ccardg2:'#141428',ccardbrd:'rgba(255,255,255,0.07)',ccardrad:'16px',cbgg1:'#0a0a0f',cbgg2:'#0a0a0f',cbgdir:'180deg',ctickbg1:'#f5c518',ctickbg2:'#f0a500',cticktext:'#1a1000',ctickgdir:'90deg',cmodbg:'#141428',cmodhdr:'#0d0d1e',cmodtxt:'#f0f0ff',cmodinp:'rgba(255,255,255,0.06)',cmodinpbrd:'rgba(255,255,255,0.09)',cmodlbl:'#8888aa',cmodbtn:'rgba(255,255,255,0.05)',cheroeyebrow:'#f0a500',cherosub:'rgba(220,220,255,0.85)',fhead:'Playfair Display',fbody:'DM Sans',fsocbg:'rgba(255,255,255,0.13)',fsocbrd:'rgba(255,255,255,0.30)',fsocc:'#e0e0f0',fsocrad:'50px'},
-    // ── OSCUROS ──
-    gold:    {cp:'#f0a500',cbg:'#0a0a0f',ccat:'#0d0d1a',ccard:'#141428',b1:'#1a0a00',b2:'#0a0f1a',chdr:'#0d0a00',chdr2:'#0d0a00',chtxt:'#f0e0a0',cftr:'#060600',cftxt:'#a08830',ctabc:'#f0a500',cprice:'#f0a500',ccatg1:'#0d0d1a',ccatg2:'#0a0a14',ccardg1:'#141428',ccardg2:'#1a1020',cbgg1:'#0a0a0f',cbgg2:'#0a0a0f',cdesc:'#9988aa',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(240,165,0,0.12)',ctickbg1:'#f0a500',ctickbg2:'#e07000',cticktext:'#000000',cmodbg:'#141428',cmodhdr:'#0d0a00',cmodtxt:'#f0f0ff',cmodlbl:'#a08830',fhead:'Playfair Display',fbody:'DM Sans'},
-    red:     {cp:'#e53e3e',cbg:'#0d0808',ccat:'#100a0a',ccard:'#1a1010',b1:'#1a0505',b2:'#0a0808',chdr:'#1a0505',chdr2:'#0d0303',chtxt:'#ffd0d0',cftr:'#080303',cftxt:'#cc8080',ctabc:'#e53e3e',cprice:'#e53e3e',ccatg1:'#100a0a',ccatg2:'#0d0808',ccardg1:'#1a1010',ccardg2:'#150c0c',cbgg1:'#0d0808',cbgg2:'#0d0808',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(229,62,62,0.15)',ctickbg1:'#e53e3e',ctickbg2:'#c53030',cticktext:'#ffffff',cmodbg:'#1a1010',cmodhdr:'#1a0505',cmodtxt:'#f0f0ff',cmodlbl:'#cc8080'},
-    green:   {cp:'#38a169',cbg:'#060d08',ccat:'#09100b',ccard:'#0f1a12',b1:'#051a09',b2:'#060d05',chdr:'#051a09',chdr2:'#041407',chtxt:'#d0ffd0',cftr:'#030806',cftxt:'#60a070',ctabc:'#38a169',cprice:'#38a169',ccatg1:'#09100b',ccatg2:'#060d08',ccardg1:'#0f1a12',ccardg2:'#0c1510',cbgg1:'#060d08',cbgg2:'#060d08',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(56,161,105,0.15)',ctickbg1:'#38a169',ctickbg2:'#276749',cticktext:'#ffffff',cmodbg:'#0f1a12',cmodhdr:'#051a09',cmodtxt:'#f0f0ff',cmodlbl:'#60a070'},
-    purple:  {cp:'#805ad5',cbg:'#0a080f',ccat:'#0d0b14',ccard:'#14101e',b1:'#140a2a',b2:'#080a1a',chdr:'#140a2a',chdr2:'#0d0820',chtxt:'#e0d0ff',cftr:'#060408',cftxt:'#9070cc',ctabc:'#805ad5',cprice:'#805ad5',ccatg1:'#0d0b14',ccatg2:'#0a080f',ccardg1:'#14101e',ccardg2:'#110d18',cbgg1:'#0a080f',cbgg2:'#0a080f',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(128,90,213,0.18)',ctickbg1:'#805ad5',ctickbg2:'#6b46c1',cticktext:'#ffffff',cmodbg:'#14101e',cmodhdr:'#140a2a',cmodtxt:'#f0f0ff',cmodlbl:'#9070cc'},
-    blue:    {cp:'#3182ce',cbg:'#07090f',ccat:'#090c14',ccard:'#0f1220',b1:'#050f2a',b2:'#08091a',chdr:'#050f2a',chdr2:'#04091f',chtxt:'#d0e8ff',cftr:'#040609',cftxt:'#6090cc',ctabc:'#3182ce',cprice:'#3182ce',ccatg1:'#090c14',ccatg2:'#07090f',ccardg1:'#0f1220',ccardg2:'#0d1020',cbgg1:'#07090f',cbgg2:'#07090f',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(49,130,206,0.15)',ctickbg1:'#3182ce',ctickbg2:'#2b6cb0',cticktext:'#ffffff',cmodbg:'#0f1220',cmodhdr:'#050f2a',cmodtxt:'#f0f0ff',cmodlbl:'#6090cc'},
-    pink:    {cp:'#ed64a6',cbg:'#0f080d',ccat:'#130a11',ccard:'#1e1018',b1:'#2a0520',b2:'#0f0812',chdr:'#2a0520',chdr2:'#200418',chtxt:'#ffd0e8',cftr:'#080406',cftxt:'#cc7090',ctabc:'#ed64a6',cprice:'#ed64a6',ccatg1:'#130a11',ccatg2:'#0f080d',ccardg1:'#1e1018',ccardg2:'#1a0d15',cbgg1:'#0f080d',cbgg2:'#0f080d',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(237,100,166,0.15)',ctickbg1:'#ed64a6',ctickbg2:'#d53f8c',cticktext:'#ffffff',cmodbg:'#1e1018',cmodhdr:'#2a0520',cmodtxt:'#f0f0ff',cmodlbl:'#cc7090'},
-    orange:  {cp:'#dd6b20',cbg:'#0d0905',ccat:'#100c07',ccard:'#1a1008',b1:'#1a0d05',b2:'#0d0807',chdr:'#1a0d05',chdr2:'#130a04',chtxt:'#ffe0c0',cftr:'#080503',cftxt:'#cc8040',ctabc:'#dd6b20',cprice:'#dd6b20',ccatg1:'#100c07',ccatg2:'#0d0905',ccardg1:'#1a1008',ccardg2:'#150d06',cbgg1:'#0d0905',cbgg2:'#0d0905',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(221,107,32,0.15)',ctickbg1:'#dd6b20',ctickbg2:'#c05621',cticktext:'#ffffff',cmodbg:'#1a1008',cmodhdr:'#1a0d05',cmodtxt:'#f0f0ff',cmodlbl:'#cc8040'},
-    teal:    {cp:'#319795',cbg:'#050d0d',ccat:'#071010',ccard:'#0c1818',b1:'#051a1a',b2:'#050d0d',chdr:'#051a1a',chdr2:'#041414',chtxt:'#d0ffff',cftr:'#030808',cftxt:'#509090',ctabc:'#319795',cprice:'#319795',ccatg1:'#071010',ccatg2:'#050d0d',ccardg1:'#0c1818',ccardg2:'#0a1414',cbgg1:'#050d0d',cbgg2:'#050d0d',ctxt:'#f0f0ff',cbt:'#ffffff',ccardbrd:'rgba(49,151,149,0.15)',ctickbg1:'#319795',ctickbg2:'#2c7a7b',cticktext:'#ffffff',cmodbg:'#0c1818',cmodhdr:'#051a1a',cmodtxt:'#f0f0ff',cmodlbl:'#509090'},
-    midnight:{cp:'#6ee7b7',cbg:'#0f172a',ccat:'#1e293b',ccard:'#1e293b',b1:'#0f172a',b2:'#1e3a5f',chdr:'#0f172a',chdr2:'#0f172a',chtxt:'#e2e8f0',cftr:'#0a1020',cftxt:'#64748b',ctabc:'#6ee7b7',cprice:'#6ee7b7',ccatg1:'#1e293b',ccatg2:'#162032',ccardg1:'#1e293b',ccardg2:'#1a2540',cbgg1:'#0f172a',cbgg2:'#0f172a',ctxt:'#e2e8f0',cbt:'#ffffff',ccardbrd:'rgba(110,231,183,0.15)',ctickbg1:'#6ee7b7',ctickbg2:'#34d399',cticktext:'#0f172a',cmodbg:'#1e293b',cmodhdr:'#0f172a',cmodtxt:'#e2e8f0',cmodlbl:'#64748b',fhead:'Raleway',fbody:'DM Sans'},
-    sunset:  {cp:'#f97316',cbg:'#1c0a00',ccat:'#2d1200',ccard:'#3d1a00',b1:'#7c2d12',b2:'#9a3412',chdr:'#431407',chdr2:'#7c2d12',chtxt:'#fed7aa',cftr:'#120600',cftxt:'#c2733a',ctabc:'#f97316',cprice:'#fb923c',ccatg1:'#2d1200',ccatg2:'#1c0a00',ccardg1:'#3d1a00',ccardg2:'#2d1200',cbgg1:'#1c0a00',cbgg2:'#1c0a00',ctxt:'#fed7aa',cbt:'#ffffff',ccardbrd:'rgba(249,115,22,0.2)',ctickbg1:'#f97316',ctickbg2:'#ea580c',cticktext:'#ffffff',cmodbg:'#3d1a00',cmodhdr:'#431407',cmodtxt:'#fed7aa',cmodlbl:'#c2733a',fhead:'Oswald',fbody:'Roboto'},
-    forest:  {cp:'#86efac',cbg:'#052e16',ccat:'#14532d',ccard:'#166534',b1:'#052e16',b2:'#14532d',chdr:'#052e16',chdr2:'#0a3d1a',chtxt:'#bbf7d0',cftr:'#022616',cftxt:'#4ade80',ctabc:'#86efac',cprice:'#4ade80',ccatg1:'#14532d',ccatg2:'#052e16',ccardg1:'#166534',ccardg2:'#14532d',cbgg1:'#052e16',cbgg2:'#052e16',ctxt:'#dcfce7',cbt:'#ffffff',ccardbrd:'rgba(134,239,172,0.2)',ctickbg1:'#16a34a',ctickbg2:'#15803d',cticktext:'#ffffff',cmodbg:'#166534',cmodhdr:'#052e16',cmodtxt:'#dcfce7',cmodlbl:'#4ade80',fhead:'Montserrat',fbody:'Lato'},
-    ocean:   {cp:'#38bdf8',cbg:'#0c1a2e',ccat:'#0f2744',ccard:'#132f50',b1:'#0c4a6e',b2:'#075985',chdr:'#0c1a2e',chdr2:'#0f2744',chtxt:'#bae6fd',cftr:'#071828',cftxt:'#0ea5e9',ctabc:'#38bdf8',cprice:'#38bdf8',ccatg1:'#0f2744',ccatg2:'#0c1a2e',ccardg1:'#132f50',ccardg2:'#0f2744',cbgg1:'#0c1a2e',cbgg2:'#0c1a2e',ctxt:'#e0f2fe',cbt:'#ffffff',ccardbrd:'rgba(56,189,248,0.2)',ctickbg1:'#0284c7',ctickbg2:'#0369a1',cticktext:'#ffffff',cmodbg:'#132f50',cmodhdr:'#0c1a2e',cmodtxt:'#e0f2fe',cmodlbl:'#0ea5e9',fhead:'Montserrat',fbody:'DM Sans'},
-    slate:   {cp:'#94a3b8',cbg:'#0f172a',ccat:'#1e293b',ccard:'#334155',b1:'#1e293b',b2:'#334155',chdr:'#1e293b',chdr2:'#0f172a',chtxt:'#f1f5f9',cftr:'#0a0f1e',cftxt:'#64748b',ctabc:'#94a3b8',cprice:'#e2e8f0',ccatg1:'#1e293b',ccatg2:'#0f172a',ccardg1:'#334155',ccardg2:'#293548',cbgg1:'#0f172a',cbgg2:'#0f172a',ctxt:'#e2e8f0',cbt:'#ffffff',ccardbrd:'rgba(148,163,184,0.15)',ctickbg1:'#475569',ctickbg2:'#334155',cticktext:'#f1f5f9',cmodbg:'#334155',cmodhdr:'#1e293b',cmodtxt:'#e2e8f0',cmodlbl:'#94a3b8',fhead:'Oswald',fbody:'Roboto'},
-    // ── CLAROS ──
-    light:   {cp:'#2563eb',cbg:'#f8fafc',ccat:'#f1f5f9',ccard:'#ffffff',b1:'#dbeafe',b2:'#ede9fe',chdr:'#ffffff',chdr2:'#f8fafc',chtxt:'#1e293b',cftr:'#1e293b',cftxt:'#94a3b8',ctabc:'#2563eb',cprice:'#2563eb',ctxt:'#1e293b',cbt:'#1e293b',ccatg1:'#f1f5f9',ccatg2:'#e2e8f0',ccardg1:'#ffffff',ccardg2:'#f8fafc',cbgg1:'#f8fafc',cbgg2:'#e2e8f0',cdesc:'#64748b',ccardbrd:'rgba(37,99,235,0.12)',ctickbg1:'#2563eb',ctickbg2:'#1d4ed8',cticktext:'#ffffff',cmodbg:'#ffffff',cmodhdr:'#f1f5f9',cmodtxt:'#1e293b',cmodlbl:'#64748b',fhead:'Montserrat',fbody:'Lato'},
-    lavender:{cp:'#a78bfa',cbg:'#f5f3ff',ccat:'#ede9fe',ccard:'#ffffff',b1:'#ddd6fe',b2:'#e9d5ff',chdr:'#7c3aed',chdr2:'#6d28d9',chtxt:'#ffffff',cftr:'#4c1d95',cftxt:'#a78bfa',ctabc:'#7c3aed',cprice:'#7c3aed',ccatg1:'#ede9fe',ccatg2:'#f5f3ff',ccardg1:'#ffffff',ccardg2:'#faf5ff',cbgg1:'#f5f3ff',cbgg2:'#ede9fe',ctxt:'#1e1b4b',cbt:'#1e1b4b',cdesc:'#6d28d9',ccardbrd:'rgba(167,139,250,0.3)',ctickbg1:'#7c3aed',ctickbg2:'#6d28d9',cticktext:'#ffffff',cmodbg:'#ffffff',cmodhdr:'#ede9fe',cmodtxt:'#1e1b4b',cmodlbl:'#7c3aed',fhead:'Raleway',fbody:'Poppins'},
-    cream:   {cp:'#d97706',cbg:'#fdfaf5',ccat:'#fef9ee',ccard:'#fffcf5',b1:'#fef3c7',b2:'#fde68a',chdr:'#92400e',chdr2:'#78350f',chtxt:'#fef3c7',cftr:'#451a03',cftxt:'#b45309',ctabc:'#d97706',cprice:'#b45309',ccatg1:'#fef9ee',ccatg2:'#fdfaf5',ccardg1:'#fffcf5',ccardg2:'#fef9ee',cbgg1:'#fdfaf5',cbgg2:'#fdfaf5',ctxt:'#1c1008',cbt:'#1c1008',cdesc:'#78350f',ccardbrd:'rgba(217,119,6,0.2)',ctickbg1:'#d97706',ctickbg2:'#b45309',cticktext:'#ffffff',cmodbg:'#fffcf5',cmodhdr:'#fef9ee',cmodtxt:'#1c1008',cmodlbl:'#92400e',fhead:'Playfair Display',fbody:'Lato'},
-    cherry:  {cp:'#fb7185',cbg:'#fff1f2',ccat:'#ffe4e6',ccard:'#ffffff',b1:'#fecdd3',b2:'#fda4af',chdr:'#be123c',chdr2:'#9f1239',chtxt:'#fff1f2',cftr:'#4c0519',cftxt:'#fb7185',ctabc:'#be123c',cprice:'#be123c',ccatg1:'#ffe4e6',ccatg2:'#fff1f2',ccardg1:'#ffffff',ccardg2:'#fff1f2',cbgg1:'#fff1f2',cbgg2:'#ffe4e6',ctxt:'#1c0206',cbt:'#1c0206',cdesc:'#9f1239',ccardbrd:'rgba(251,113,133,0.2)',ctickbg1:'#be123c',ctickbg2:'#9f1239',cticktext:'#ffffff',cmodbg:'#ffffff',cmodhdr:'#ffe4e6',cmodtxt:'#1c0206',cmodlbl:'#be123c',fhead:'Playfair Display',fbody:'Poppins'}
+    gold:  {cp:'#f0a500',cbg:'#0a0a0f',ccat:'#0d0d1a',ccard:'#141428',b1:'#1a0a00',b2:'#0a0f1a',chdr:'#0d0a00',chtxt:'#f0e0a0',cftr:'#060600',cftxt:'#a08830',ctabc:'#f0a500',cprice:'#f0a500',ccatg1:'#0d0d1a',ccatg2:'#0a0a14',ccardg1:'#141428',ccardg2:'#1a1020',cbgg1:'#0a0a0f',cbgg2:'#0a0a0f',cdesc:'#9988aa'},
+    red:   {cp:'#e53e3e',cbg:'#0d0808',ccat:'#100a0a',ccard:'#1a1010',b1:'#1a0505',b2:'#0a0808',chdr:'#1a0505',chtxt:'#ffd0d0',cftr:'#080303',cftxt:'#cc8080',ctabc:'#e53e3e',cprice:'#e53e3e'},
+    green: {cp:'#38a169',cbg:'#060d08',ccat:'#09100b',ccard:'#0f1a12',b1:'#051a09',b2:'#060d05',chdr:'#051a09',chtxt:'#d0ffd0',cftr:'#030806',cftxt:'#60a070',ctabc:'#38a169',cprice:'#38a169'},
+    purple:{cp:'#805ad5',cbg:'#0a080f',ccat:'#0d0b14',ccard:'#14101e',b1:'#140a2a',b2:'#080a1a',chdr:'#140a2a',chtxt:'#e0d0ff',cftr:'#060408',cftxt:'#9070cc',ctabc:'#805ad5',cprice:'#805ad5'},
+    blue:  {cp:'#3182ce',cbg:'#07090f',ccat:'#090c14',ccard:'#0f1220',b1:'#050f2a',b2:'#08091a',chdr:'#050f2a',chtxt:'#d0e8ff',cftr:'#040609',cftxt:'#6090cc',ctabc:'#3182ce',cprice:'#3182ce'},
+    pink:  {cp:'#ed64a6',cbg:'#0f080d',ccat:'#130a11',ccard:'#1e1018',b1:'#2a0520',b2:'#0f0812',chdr:'#2a0520',chtxt:'#ffd0e8',cftr:'#080406',cftxt:'#cc7090',ctabc:'#ed64a6',cprice:'#ed64a6'},
+    orange:{cp:'#dd6b20',cbg:'#0d0905',ccat:'#100c07',ccard:'#1a1008',b1:'#1a0d05',b2:'#0d0807',chdr:'#1a0d05',chtxt:'#ffe0c0',cftr:'#080503',cftxt:'#cc8040',ctabc:'#dd6b20',cprice:'#dd6b20'},
+    teal:  {cp:'#319795',cbg:'#050d0d',ccat:'#071010',ccard:'#0c1818',b1:'#051a1a',b2:'#050d0d',chdr:'#051a1a',chtxt:'#d0ffff',cftr:'#030808',cftxt:'#509090',ctabc:'#319795',cprice:'#319795'},
+    light: {cp:'#2563eb',cbg:'#f8fafc',ccat:'#f1f5f9',ccard:'#ffffff',b1:'#dbeafe',b2:'#ede9fe',chdr:'#ffffff',chtxt:'#1e293b',cftr:'#1e293b',cftxt:'#94a3b8',ctabc:'#2563eb',cprice:'#2563eb',ctxt:'#1e293b',cbt:'#1e293b',ccatg1:'#f1f5f9',ccatg2:'#e2e8f0',ccardg1:'#ffffff',ccardg2:'#f8fafc',cbgg1:'#f8fafc',cbgg2:'#e2e8f0',cdesc:'#64748b'}
   };
   if (!p[n]) return;
   Object.assign(C, p[n]);
   fillForm(); applyC();
-  toast('🎨 Tema "' + n + '" aplicado. Presiona Guardar.','s');
+  toast('🎨 Paleta ' + n + ' aplicada. Presiona Guardar.','s');
 }
 
 // ============================================================
@@ -8940,131 +9059,126 @@ function renderPWAPreview() {
 function aplicarBannerPub() {
   var banner = document.getElementById('banner-pub');
   if (!banner) return;
-
-  // Sincronizar con checkbox del admin si está disponible
-  var activoChk = document.getElementById('c-pub-activo');
-  var isActivo = activoChk ? activoChk.checked : !!C.pubActivo;
-  if (!isActivo) {
+  if (!C.pubActivo) {
     banner.style.display = 'none';
-    C.pubActivo = false;
-    if (typeof renderPubPreview === 'function') renderPubPreview();
-    saveSt();urn;
+    if(typeof renderPubPreview==='function') renderPubPreview();
+    return;
   }
+  var activo = document.getElementById('c-pub-activo');
+  if (activo) activo.checked = true;
 
-  // Leer valores: prioridad al input del admin (si está abierto), si no de C
-  function gv(id, fallback) {
-    var el = document.getElementById(id);
-    return (el && el.value) ? el.value : (fallback || '');
+  function gv(id, fb) { var el=document.getElementById(id); return (el&&el.value)?el.value:(fb||''); }
+  function gb(id, fb) { var el=document.getElementById(id); return el?el.checked:fb; }
+
+  var titulo  = C.pubTitulo || gv('c-pub-titulo','Pauta aquí tu negocio');
+  var sub     = C.pubSub    || gv('c-pub-sub','Llega a más clientes');
+  var bg      = C.pubBg     || gv('c-pub-bg','#1a1a2e');
+  var txt     = C.pubTxt    || gv('c-pub-txt','#f0f0ff');
+  var ctaBg   = C.pubCtaBg  || gv('c-pub-cta-bg','#f0a500');
+  var ico     = C.pubIco    || gv('c-pub-ico','📢');
+  var size    = C.pubSize   || gv('c-pub-size','md');
+  var borde   = C.pubBorde  || gv('c-pub-borde','none');
+  var diseno  = C.pubDiseno || gv('c-pub-diseno','clasico');
+  var anim    = C.pubAnim   !== undefined ? C.pubAnim   : (gv('c-pub-anim',''));
+  var mostrarX= C.pubMostrarX !== undefined ? C.pubMostrarX : gb('c-pub-mostrar-x', true);
+  var img     = C.pubImg || '';
+
+  // Sincronizar controles si están presentes
+  var animEl = document.getElementById('c-pub-anim');
+  if (animEl && !animEl.value && anim) {
+    for(var oi=0;oi<animEl.options.length;oi++){if(animEl.options[oi].value===anim){animEl.selectedIndex=oi;break;}}
   }
-  var titulo = gv('c-pub-titulo', C.pubTitulo) || 'Pauta aquí tu negocio';
-  var sub    = gv('c-pub-sub',    C.pubSub)    || 'Llega a más clientes';
-  var bg     = gv('c-pub-bg',     C.pubBg)     || '#1a1a2e';
-  var txt    = gv('c-pub-txt',    C.pubTxt)    || '#f0f0ff';
-  var ctaBg  = gv('c-pub-cta-bg', C.pubCtaBg)  || '#f0a500';
-  var ico    = gv('c-pub-ico',    C.pubIco)    || '📢';
-  var size   = gv('c-pub-size',   C.pubSize)   || 'md';
-  var borde  = gv('c-pub-borde',  C.pubBorde)  || 'none';
-  var diseno = gv('c-pub-diseno', C.pubDiseno) || 'clasico';
-  var img    = C.pubImg || '';
+  var xEl = document.getElementById('c-pub-mostrar-x');
+  if (xEl) xEl.checked = mostrarX;
 
-  // Guardar en C
-  C.pubActivo = true;
-  C.pubTitulo = titulo; C.pubSub = sub; C.pubBg = bg; C.pubTxt = txt;
-  C.pubCtaBg  = ctaBg;  C.pubIco = ico; C.pubSize = size;
-  C.pubBorde  = borde;  C.pubDiseno = diseno;
-  C.pubUrl    = gv('c-pub-url', C.pubUrl) || '';
+  // Guardar estado
+  C.pubActivo=true; C.pubTitulo=titulo; C.pubSub=sub; C.pubBg=bg; C.pubTxt=txt;
+  C.pubCtaBg=ctaBg; C.pubIco=ico; C.pubSize=size; C.pubBorde=borde; C.pubDiseno=diseno;
+  C.pubAnim=anim; C.pubMostrarX=mostrarX;
+  C.pubUrl = gv('c-pub-url', C.pubUrl||'');
 
-  // Estilos base del contenedor
-  banner.style.cssText = '';
-  banner.style.background = bg;
-  banner.style.color = txt;
-  banner.style.display = 'block';
-  banner.style.cursor = 'pointer';
+  // Estilos base
+  banner.style.cssText = 'background:'+bg+';color:'+txt+';display:block;cursor:pointer;transition:all .3s;';
+  if (borde==='bottom')    banner.style.borderBottom = '3px solid '+ctaBg;
+  else if (borde==='full') banner.style.border = '2px solid '+ctaBg;
+  else if (borde==='left') banner.style.borderLeft = '5px solid '+ctaBg;
 
-  // Borde
-  if (borde === 'bottom')    banner.style.borderBottom = '3px solid ' + ctaBg;
-  else if (borde === 'full') banner.style.border = '2px solid ' + ctaBg;
-  else if (borde === 'left') banner.style.borderLeft = '5px solid ' + ctaBg;
+  var ctaTxt = (bg==='#ffffff'||txt==='#ffffff'||txt==='#f0f0ff') ? '#000' : '#fff';
+  var xBtn = mostrarX
+    ? '<button onclick="event.stopPropagation();cerrarBannerPub()" style="width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.25);border:none;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+txt+';padding:0;line-height:1">✕</button>'
+    : '';
 
-  // Imagen o emoji
   var imgHtml = img
-    ? '<img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:6px">'
+    ? '<img src="'+img+'" style="width:100%;height:100%;object-fit:contain;display:block;border-radius:6px">'
     : '<span style="font-size:'+(size==='lg'?'32':'20')+'px;line-height:1">'+ico+'</span>';
 
-  // HTML según tamaño
   if (size === 'lg') {
-    banner.style.cursor = 'default';
-    banner.onclick = null;
-    banner.innerHTML =
-      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;text-align:center;gap:12px">' +
-        '<div style="width:72px;height:72px;border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12);flex-shrink:0">' + imgHtml + '</div>' +
-        '<div><div style="font-size:20px;font-weight:900;color:'+txt+';margin-bottom:5px">'+titulo+'</div>' +
-        '<div style="font-size:14px;color:'+txt+';opacity:.8">'+sub+'</div></div>' +
-      '</div>';
+    banner.onclick = abrirBannerPub;
+    if (img) {
+      banner.innerHTML =
+        '<div style="position:relative;min-height:110px;overflow:hidden">' +
+          '<img src="'+img+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">' +
+          '<div style="position:relative;z-index:1;background:linear-gradient(90deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.15) 70%,transparent 100%);padding:18px 20px;display:flex;align-items:center;gap:16px;min-height:110px">' +
+            '<div style="flex:1">' +
+              '<div style="font-size:19px;font-weight:900;color:#fff;margin-bottom:5px;text-shadow:0 1px 4px rgba(0,0,0,.6)">'+titulo+'</div>' +
+              '<div style="font-size:13px;color:rgba(255,255,255,.88);text-shadow:0 1px 3px rgba(0,0,0,.5)">'+sub+'</div>' +
+            '</div>' +
+            '<div onclick="event.stopPropagation();abrirBannerPub()" style="background:'+ctaBg+';border-radius:50px;padding:10px 22px;font-size:13px;font-weight:800;color:'+ctaTxt+';flex-shrink:0;white-space:nowrap">Ver →</div>' +
+            xBtn +
+          '</div>' +
+        '</div>';
+    } else {
+      banner.innerHTML =
+        '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 20px;text-align:center;gap:12px">' +
+          '<div style="width:72px;height:72px;border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12);flex-shrink:0">' + imgHtml + '</div>' +
+          '<div><div style="font-size:20px;font-weight:900;color:'+txt+';margin-bottom:5px">'+titulo+'</div>' +
+          '<div style="font-size:14px;color:'+txt+';opacity:.8">'+sub+'</div></div>' +
+          xBtn +
+        '</div>';
+    }
   } else if (size === 'sm') {
     banner.onclick = abrirBannerPub;
     banner.innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 16px">' +
-        '<span style="font-size:16px">'+ico+'</span>' +
+      '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 16px">' +
+        '<span style="font-size:14px">'+ico+'</span>' +
         '<span style="font-size:13px;font-weight:600;color:'+txt+'">'+titulo+'</span>' +
+        xBtn +
       '</div>';
   } else {
-    // md — franja con ícono + texto + botón CTA + cerrar
     banner.onclick = abrirBannerPub;
+    var imgBlock = img
+      ? '<div style="width:44px;height:44px;border-radius:8px;overflow:hidden;flex-shrink:0;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center"><img src="'+img+'" style="width:100%;height:100%;object-fit:contain;display:block"></div>'
+      : '<div style="width:40px;height:40px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1)"><span style="font-size:20px">'+ico+'</span></div>';
     banner.innerHTML =
       '<div style="display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1200px;margin:0 auto">' +
-        '<div style="width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12)">' + imgHtml + '</div>' +
+        imgBlock +
         '<div style="flex:1;min-width:0">' +
           '<div style="font-size:14px;font-weight:700;color:'+txt+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+titulo+'</div>' +
           '<div style="font-size:12px;color:'+txt+';opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sub+'</div>' +
         '</div>' +
-        '<div onclick="event.stopPropagation();abrirBannerPub()" style="background:'+ctaBg+';border-radius:50px;padding:7px 16px;font-size:12px;font-weight:700;flex-shrink:0;color:#000;cursor:pointer;white-space:nowrap">Ver →</div>' +
-        '<button onclick="event.stopPropagation();cerrarBannerPub()" style="width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.25);border:none;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+txt+';padding:0">✕</button>' +
+        '<div onclick="event.stopPropagation();abrirBannerPub()" style="background:'+ctaBg+';border-radius:50px;padding:7px 16px;font-size:12px;font-weight:700;flex-shrink:0;color:'+ctaTxt+';cursor:pointer;white-space:nowrap">Ver →</div>' +
+        xBtn +
       '</div>';
   }
 
   // Diseño decorativo
   banner.className = '';
-  if (diseno === 'neon') {
-    banner.classList.add('diseno-neon');
-    banner.style.setProperty('--pub-color', ctaBg);
-    banner.style.border = '1.5px solid ' + ctaBg;
-  } else if (diseno === 'pill') {
-    banner.classList.add('diseno-pill');
-  } else if (diseno === 'hero') {
-    banner.classList.add('diseno-hero');
-    if (img) banner.style.background = 'linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('+img+') center/cover';
-  }
+  if (diseno==='neon') { banner.classList.add('diseno-neon'); banner.style.setProperty('--pub-color',ctaBg); banner.style.border='1.5px solid '+ctaBg; }
+  else if (diseno==='centrado') banner.classList.add('diseno-centrado');
+  else if (diseno==='pill')     banner.classList.add('diseno-pill');
+  else if (diseno==='hero' && img) banner.style.background = 'linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('+img+') center/cover';
 
-  if (typeof renderPubPreview === 'function') renderPubPreview();
-
-  // Aplicar animación
-  var animSel = document.getElementById('c-pub-anim');
-  var anim = animSel ? animSel.value : (C.pubAnim || 'none');
-  C.pubAnim = anim;
-  banner.classList.remove('anim-pulse','anim-slide','anim-bounce','anim-glow','anim-shake','anim-gradient');
-  if (anim && anim !== 'none') {
-    banner.classList.add('anim-' + anim);
-    // Para gradient: hacer fondo animado con los colores del banner
-    if (anim === 'gradient') {
-      var bg2 = bg; // color base
-      // Crear un color complementario ligeramente diferente
-      banner.style.backgroundImage = 'linear-gradient(270deg, ' + bg + ', ' + ctaBg + ', ' + bg + ')';
-      banner.style.backgroundSize = '200% 200%';
-    }
-    if (anim === 'glow') {
-      // Convertir ctaBg a rgb para el glow
-      banner.style.setProperty('--pub-glow-rgb', '240,165,0');
-    }
-    if (anim === 'slide') {
-      // Re-trigger la animación
-      banner.classList.remove('anim-slide');
-      void banner.offsetWidth;
-      banner.classList.add('anim-slide');
-    }
+  // Animación
+  var ANIMS = ['pulse','bounce','glow','shake','slide','gradient'];
+  ANIMS.forEach(function(a){ banner.classList.remove('ba-'+a); });
+  if (anim && ANIMS.indexOf(anim)>=0) {
+    if (anim === 'glow') banner.style.setProperty('--pub-glow', ctaBg);
+    if (anim === 'gradient') { banner.style.backgroundImage='linear-gradient(270deg,'+bg+','+ctaBg+','+bg+')'; banner.style.backgroundSize='300% 300%'; }
+    banner.classList.add('ba-'+anim);
   }
 
   saveSt();
+  if(typeof renderPubPreview==='function') renderPubPreview();
 }
 
 function abrirBannerPub() {
@@ -9081,22 +9195,10 @@ function upBannerPubImg(ev) {
   var file = ev.target.files[0]; if (!file) return;
   var r = new FileReader();
   r.onload = function(e) {
-    var img = new Image();
-    img.onload = function() {
-      var canvas = document.createElement('canvas');
-      var max = 800;
-      var ratio = Math.min(max / img.width, max / img.height, 1);
-      canvas.width = Math.round(img.width * ratio);
-      canvas.height = Math.round(img.height * ratio);
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-      C.pubImg = canvas.toDataURL('image/jpeg', 0.82);
-      var prev = document.getElementById('prev-pub-img');
-      if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; }
-      aplicarBannerPub();
-      saveSt();
-      toast('📷 Imagen del banner guardada','s');
-    };
-    img.src = e.target.result;
+    C.pubImg = e.target.result;
+    var prev = document.getElementById('prev-pub-img');
+    if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; }
+    aplicarBannerPub();
   };
   r.readAsDataURL(file);
 }
@@ -9132,84 +9234,29 @@ function renderPubPreview() {
 }
 
 function initBannerPub() {
-  var banner = document.getElementById('banner-pub');
-  if (!banner) return;
-  if (!C.pubActivo) { banner.style.display = 'none'; return; }
-  // Poblar campos del admin si están disponibles (sin necesitarlos para mostrar)
-  function sv(id, val) { var el = document.getElementById(id); if (el && val) el.value = val; }
-  sv('c-pub-titulo', C.pubTitulo); sv('c-pub-sub', C.pubSub);
-  sv('c-pub-url', C.pubUrl);      sv('c-pub-ico', C.pubIco);
-  sv('c-pub-bg', C.pubBg);        sv('c-pub-txt', C.pubTxt);
-  sv('c-pub-cta-bg', C.pubCtaBg); sv('c-pub-size', C.pubSize);
-  sv('c-pub-borde', C.pubBorde);  sv('c-pub-diseno', C.pubDiseno);
+  if (!C.pubActivo) { var b=document.getElementById('banner-pub'); if(b) b.style.display='none'; return; }
+  var fields = {
+    'c-pub-titulo': C.pubTitulo, 'c-pub-sub': C.pubSub,
+    'c-pub-url': C.pubUrl, 'c-pub-ico': C.pubIco,
+    'c-pub-bg': C.pubBg, 'c-pub-txt': C.pubTxt, 'c-pub-cta-bg': C.pubCtaBg
+  };
+  Object.keys(fields).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && fields[id]) el.value = fields[id];
+  });
   var chk = document.getElementById('c-pub-activo');
   if (chk) chk.checked = true;
-  if (C.pubImg) { var prev = document.getElementById('prev-pub-img'); if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; } }
-  // Mostrar directamente desde C sin depender del DOM del admin
-  _mostrarBannerDesdeC();
-}
-
-function _mostrarBannerDesdeC() {
-  var banner = document.getElementById('banner-pub');
-  if (!banner || !C.pubActivo) return;
-  var titulo = C.pubTitulo || 'Pauta aquí tu negocio';
-  var sub    = C.pubSub    || 'Llega a más clientes';
-  var bg     = C.pubBg     || '#1a1a2e';
-  var txt    = C.pubTxt    || '#f0f0ff';
-  var ctaBg  = C.pubCtaBg  || '#f0a500';
-  var ico    = C.pubIco    || '📢';
-  var size   = C.pubSize   || 'md';
-  var borde  = C.pubBorde  || 'none';
-  var diseno = C.pubDiseno || 'clasico';
-  var img    = C.pubImg    || '';
-
-  banner.style.cssText = '';
-  banner.style.background = bg;
-  banner.style.color = txt;
-  banner.style.display = 'block';
-  if (borde === 'bottom')    banner.style.borderBottom = '3px solid ' + ctaBg;
-  else if (borde === 'full') banner.style.border = '2px solid ' + ctaBg;
-  else if (borde === 'left') banner.style.borderLeft = '5px solid ' + ctaBg;
-
-  var imgHtml = img
-    ? '<img src="'+img+'" style="width:100%;height:100%;object-fit:cover;border-radius:6px">'
-    : '<span style="font-size:'+(size==='lg'?'32':'20')+'px;line-height:1">'+ico+'</span>';
-
-  if (size === 'lg') {
-    banner.style.cursor = 'default';
-    banner.onclick = null;
-    banner.innerHTML =
-      '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;text-align:center;gap:12px">' +
-        '<div style="width:72px;height:72px;border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12)">' + imgHtml + '</div>' +
-        '<div><div style="font-size:20px;font-weight:900;color:'+txt+';margin-bottom:5px">'+titulo+'</div>' +
-        '<div style="font-size:14px;color:'+txt+';opacity:.8">'+sub+'</div></div>' +
-      '</div>';
-  } else if (size === 'sm') {
-    banner.style.cursor = 'pointer';
-    banner.onclick = abrirBannerPub;
-    banner.innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 16px">' +
-        '<span style="font-size:16px">'+ico+'</span>' +
-        '<span style="font-size:13px;font-weight:600;color:'+txt+'">'+titulo+'</span>' +
-      '</div>';
-  } else {
-    banner.style.cursor = 'pointer';
-    banner.onclick = abrirBannerPub;
-    banner.innerHTML =
-      '<div style="display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1200px;margin:0 auto">' +
-        '<div style="width:40px;height:40px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.12)">' + imgHtml + '</div>' +
-        '<div style="flex:1;min-width:0">' +
-          '<div style="font-size:14px;font-weight:700;color:'+txt+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+titulo+'</div>' +
-          '<div style="font-size:12px;color:'+txt+';opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+sub+'</div>' +
-        '</div>' +
-        '<div onclick="event.stopPropagation();abrirBannerPub()" style="background:'+ctaBg+';border-radius:50px;padding:7px 16px;font-size:12px;font-weight:700;flex-shrink:0;color:#000;cursor:pointer;white-space:nowrap">Ver →</div>' +
-        '<button onclick="event.stopPropagation();cerrarBannerPub()" style="width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.25);border:none;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:'+txt+';padding:0">✕</button>' +
-      '</div>';
+  var sizeEl = document.getElementById('c-pub-size');
+  if (sizeEl && C.pubSize) sizeEl.value = C.pubSize;
+  var bordeEl = document.getElementById('c-pub-borde');
+  if (bordeEl && C.pubBorde) bordeEl.value = C.pubBorde;
+  var disenoEl = document.getElementById('c-pub-diseno');
+  if (disenoEl && C.pubDiseno) disenoEl.value = C.pubDiseno;
+  if (C.pubImg) {
+    var prev = document.getElementById('prev-pub-img');
+    if (prev) { prev.src = C.pubImg; prev.style.display = 'block'; }
   }
-  banner.className = '';
-  if (diseno === 'neon') { banner.classList.add('diseno-neon'); banner.style.setProperty('--pub-color', ctaBg); banner.style.border = '1.5px solid ' + ctaBg; }
-  else if (diseno === 'pill') { banner.classList.add('diseno-pill'); }
-  else if (diseno === 'hero') { banner.classList.add('diseno-hero'); if (img) banner.style.background = 'linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('+img+') center/cover'; }
+  aplicarBannerPub();
 }
 
 function renderCajaTablero() {
@@ -11094,7 +11141,7 @@ function iniciarEscaner() {
       var btnI  = document.getElementById('btn-iniciar-scan');
       var btnD  = document.getElementById('btn-detener-scan');
       if (video) { video.srcObject = stream; video.play(); }
-      if (wrap)  wrap.style.display = 'block';
+      if (wrap) { wrap.style.display = 'block'; wrap.style.position='absolute'; wrap.style.inset='0'; wrap.style.zIndex='50'; }
       if (btnI)  btnI.style.display = 'none';
       if (btnD)  btnD.style.display = '';
       toast('📷 Cámara activa — apunta al código del producto','s');
@@ -11248,23 +11295,33 @@ function agregarProductoReg(prod) {
 
 // ── LISTA DE ITEMS ──
 function renderRegItems() {
-  var el = document.getElementById('reg-items-lista');
+  var el = document.getElementById('reg-items');
+  if (!el) el = document.getElementById('reg-items-lista');
   if (!el) return;
+  var emp = document.getElementById('reg-empty-state');
   if (!_regItems.length) {
-    el.innerHTML='<div style="text-align:center;padding:24px;color:var(--cmut)"><div style="font-size:28px;margin-bottom:8px">🛒</div><div style="font-size:13px">Escanea o toca un producto</div></div>';
+    if (emp) emp.style.display = 'flex';
+    el.innerHTML = '';
     return;
   }
-  el.innerHTML = _regItems.map(function(it,i) {
-    return '<div style="display:flex;align-items:center;gap:10px;padding:10px;background:rgba(255,255,255,.03);border-radius:10px;margin-bottom:6px;border:1px solid rgba(255,255,255,.06)">' +
-      '<div style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;flex-shrink:0">'+(it.img?'<img src="'+it.img+'" style="width:100%;height:100%;object-fit:cover">':it.emoji)+'</div>' +
-      '<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+it.name+'</div><div style="font-size:11px;color:var(--cmut)">'+(C.cur||'$')+fmt(it.price)+' c/u</div></div>' +
-      '<div style="display:flex;align-items:center;gap:6px">' +
-        '<button onclick="cambiarCantReg('+i+',-1)" style="width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);color:var(--ctxt);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700">−</button>' +
-        '<span style="font-size:16px;font-weight:800;min-width:28px;text-align:center">'+it.qty+'</span>' +
-        '<button onclick="cambiarCantReg('+i+',1)" style="width:28px;height:28px;border-radius:7px;background:rgba(240,165,0,.15);border:1px solid rgba(240,165,0,.3);color:var(--cp);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700">+</button>' +
+  if (emp) emp.style.display = 'none';
+  el.innerHTML = _regItems.map(function(it, i) {
+    var imgHtml = it.img
+      ? '<img src="'+it.img+'" style="width:100%;height:100%;object-fit:cover">'
+      : '<span style="font-size:17px">'+(it.emoji||'📦')+'</span>';
+    return '<div class="pos-item-row">' +
+      '<div class="pos-item-img">'+imgHtml+'</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div class="pos-item-name">'+it.name+'</div>' +
+        '<div class="pos-item-price">'+(C.cur||'$')+fmt(it.price)+' c/u</div>' +
       '</div>' +
-      '<div style="font-size:15px;font-weight:800;color:var(--cp);min-width:70px;text-align:right">'+(C.cur||'$')+fmt(it.price*it.qty)+'</div>' +
-      '<button onclick="eliminarItemReg('+i+')" style="background:rgba(229,62,62,.1);border:1px solid rgba(229,62,62,.2);border-radius:6px;color:#fc8181;cursor:pointer;font-size:14px;padding:4px 7px">✕</button>' +
+      '<div class="pos-qty-wrap">' +
+        '<button class="pos-qty-btn" onclick="cambiarCantReg('+i+',-1)">−</button>' +
+        '<span class="pos-qty-num">'+it.qty+'</span>' +
+        '<button class="pos-qty-btn" onclick="cambiarCantReg('+i+',1)">+</button>' +
+      '</div>' +
+      '<div class="pos-item-total">'+(C.cur||'$')+fmt(it.price*it.qty)+'</div>' +
+      '<button class="pos-item-del" onclick="eliminarItemReg('+i+')">✕</button>' +
     '</div>';
   }).join('');
 }
@@ -11304,6 +11361,9 @@ function actualizarTotalesReg() {
   var subEl=document.getElementById('reg-subtotal'); var totEl=document.getElementById('reg-total');
   if (subEl) subEl.textContent=(C.cur||'$')+fmt(sub);
   if (totEl) totEl.textContent=(C.cur||'$')+fmt(totalConIva);
+  var totDisp=document.getElementById('reg-total-display'); if(totDisp) totDisp.textContent=(C.cur||'$')+fmt(totalConIva);
+  var cntDisp=document.getElementById('reg-items-count'); if(cntDisp) cntDisp.textContent=_regItems.reduce(function(s,i){return s+i.qty;},0)+' productos';
+  var cantDisp=document.getElementById('reg-cant-items'); if(cantDisp) cantDisp.textContent=_regItems.reduce(function(s,i){return s+i.qty;},0)+' items';
   calcularCambio();
 }
 
@@ -11314,12 +11374,18 @@ function mostrarEfectivoReg() {
 }
 
 function calcularCambio() {
-  var totalStr=(document.getElementById('reg-total')||{}).textContent||'0';
-  // Formato colombiano: $1.234.567 -> quitar todo menos dígitos
-  var total=parseFloat(totalStr.replace(/[^0-9]/g,''))||0;
-  var recibio=parseFloat((document.getElementById('reg-efectivo-valor')||{}).value||0);
-  var cambio=Math.max(0,recibio-total);
-  var el=document.getElementById('reg-cambio');
+  var totDisp = document.getElementById('reg-total-display');
+  var totStr = totDisp ? totDisp.textContent : ((document.getElementById('reg-total')||{}).textContent||'0');
+  var total = parseFloat(totStr.replace(/[^0-9]/g,''))||0;
+  var recibio = parseFloat((document.getElementById('reg-cash-input')||document.getElementById('reg-efectivo-valor')||{}).value||0);
+  var cambio = Math.max(0, recibio - total);
+  // Nuevo diseño
+  var cambioDisp = document.getElementById('reg-cambio-display');
+  var cambioVal  = document.getElementById('reg-cambio-val');
+  if (cambioDisp) cambioDisp.style.display = recibio > 0 ? 'block' : 'none';
+  if (cambioVal)  cambioVal.textContent = (C.cur||'$') + fmt(cambio);
+  // Viejo diseño (compatibilidad)
+  var el = document.getElementById('reg-cambio');
   if (el) { el.textContent=(C.cur||'$')+fmt(cambio); el.style.color=cambio>0?'#68d391':'var(--cmut)'; }
 }
 
@@ -11349,14 +11415,46 @@ function limpiarRegistradora() {
 }
 
 // ── COBRAR — descuenta stock automáticamente ──
+
+function selPagoReg(btn) {
+  document.querySelectorAll('.reg-pago-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  var pago = btn.dataset.pago;
+  var wrap = document.getElementById('reg-efectivo-wrap');
+  if (wrap) wrap.style.display = pago === 'Efectivo' ? 'flex' : 'none';
+}
+
+function setCashReg(monto) {
+  var inp = document.getElementById('reg-cash-input');
+  if (inp) { inp.value = monto; calcularCambio(); }
+}
+
+function setCashRegExacto() {
+  var totDisp = document.getElementById('reg-total-display');
+  var totStr = totDisp ? totDisp.textContent : '0';
+  var total = parseFloat(totStr.replace(/[^0-9]/g,''))||0;
+  var inp = document.getElementById('reg-cash-input');
+  if (inp) { inp.value = total; calcularCambio(); }
+}
+
+function actualizarFechaPOS() {
+  var el = document.getElementById('pos-fecha-hora');
+  if (el) {
+    var now = new Date();
+    el.textContent = now.toLocaleDateString('es-CO',{weekday:'long',day:'numeric',month:'long'}) + ' — ' +
+      now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  }
+}
+
 function cobrarRegistradora() {
   if (!_regItems.length) { toast('⚠️ Agrega al menos un producto','e'); return; }
-  var pago=(document.getElementById('reg-pago')||{}).value||'';
+  var pagoBtn=document.querySelector('.reg-pago-btn.active');
+  var pago=pagoBtn?pagoBtn.dataset.pago:'';
   if (!pago) { toast('⚠️ Selecciona el método de pago','e'); return; }
   var sub=_regItems.reduce(function(s,it){return s+it.price*it.qty;},0);
   var total=_regCupon&&typeof aplicarCuponAlTotal==='function'?aplicarCuponAlTotal(sub,_regCupon.codigo):sub;
-  var cliente=(document.getElementById('reg-cliente')||{}).value||'Cliente mostrador';
-  var wa=(document.getElementById('reg-wa')||{}).value||'';
+  var cliente=(document.getElementById('reg-cliente-nombre')||{}).value||'Cliente mostrador';
+  var wa=(document.getElementById('reg-cliente-wa')||{}).value||'';
   var notas=(document.getElementById('reg-notas')||{}).value||'';
   var ganancia=_regItems.reduce(function(s,it){
     var p=P.find(function(x){return x.id===it.id;});
@@ -11402,7 +11500,7 @@ function cobrarRegistradora() {
     '<div style="font-size:14px;font-weight:700;color:#68d391;margin-bottom:4px">✅ Cobrado — '+(C.cur||'$')+fmt(total)+'</div>'+
     '<div style="font-size:12px;color:var(--cmut)">'+o.id+' · '+o.ts+'</div>'+
     '<div style="font-size:11px;color:var(--cmut);margin-top:3px">Cliente: '+o.name+' · Pago: '+pago+'</div>';
-  toast('💳 ¡Cobro! '+(C.cur||'$')+fmt(total),'s');
+  posAgregarActividad('venta','💳','Venta cobrada', (cliente||'Mostrador') + ' · ' + (pago||''), (C.cur||'$')+fmt(total)); posActualizarStats(); toast('💳 ¡Cobro! '+(C.cur||'$')+fmt(total),'s');
   lanzarCelebracion();
   renderRegCatGrid(_regCatActiva);
   renderOrds(); renderCRM();
@@ -11924,6 +12022,335 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+// ================================================================
+// CEREBRO IA
+// ================================================================
+var _cbKey = localStorage.getItem('cb_key') || '';
+var _cbCtx = localStorage.getItem('cb_ctx') || '';
+var _cbHistory = [];
+var _cbMicActivo = false;
+var _cbRecognition = null;
+var _cbTypingEl = null;
+
+function iniciarCerebro() {
+  var ki = document.getElementById('cerebro-apikey-input');
+  var ci = document.getElementById('cerebro-contexto');
+  if (ki && _cbKey) ki.value = _cbKey;
+  if (ci && _cbCtx) ci.value = _cbCtx;
+  actualizarEstadoCerebro();
+}
+
+function actualizarEstadoCerebro() {
+  var badge = document.getElementById('cb-estado-badge');
+  var status = document.getElementById('cb-api-status');
+  if (!badge) return;
+  if (_cbKey && _cbKey.indexOf('sk-ant') === 0) {
+    badge.textContent = 'Activo';
+    badge.className = 'cerebro-badge activo';
+    if (status) status.innerHTML = '<span class="cb-api-ok"><span class="cb-dot ok"></span>API conectada</span>';
+  } else {
+    badge.textContent = 'Configura tu API Key';
+    badge.className = 'cerebro-badge';
+    if (status) status.innerHTML = '<span class="cb-api-err"><span class="cb-dot err"></span>Sin API Key</span>';
+  }
+}
+
+function toggleCerebroConfig() {
+  var cfg = document.getElementById('cerebro-config');
+  if (cfg) cfg.style.display = cfg.style.display === 'none' ? 'block' : 'none';
+}
+
+function guardarCerebroKey() {
+  var ki = document.getElementById('cerebro-apikey-input');
+  var k = ki ? ki.value.trim() : '';
+  if (k.indexOf('sk-ant') !== 0) { cbToast('La key debe empezar con sk-ant'); return; }
+  _cbKey = k;
+  localStorage.setItem('cb_key', k);
+  actualizarEstadoCerebro();
+  cbToast('API Key activada');
+  toggleCerebroConfig();
+}
+
+function guardarCerebroContexto() {
+  var ci = document.getElementById('cerebro-contexto');
+  _cbCtx = ci ? ci.value : '';
+  localStorage.setItem('cb_ctx', _cbCtx);
+  cbToast('Entrenamiento guardado');
+}
+
+function getCerebroSystem() {
+  var productos = (P || []).slice(0, 25).map(function(p) {
+    return p.name + ' (' + (C.cur||'$') + fmt(p.price) + ')' + (p.agotado ? '[AGOTADO]' : '');
+  }).join(', ');
+  var hoy = new Date();
+  var ordsHoy = (ORD || []).filter(function(o) {
+    return o._ts && new Date(o._ts).toDateString() === hoy.toDateString();
+  });
+  var totalHoy = ordsHoy.reduce(function(s,o){ return s+(o.total||0); }, 0);
+  var pendientes = (ORD || []).filter(function(o){ return o.status==='pending'; }).length;
+
+  var sys = 'Eres el Cerebro IA del panel de "' + (C.name||'Mi Tienda') + '". ';
+  sys += 'CONTEXTO: ' + (_cbCtx || 'Sin contexto.') + ' ';
+  sys += 'ESTADO HOY: ventas $' + fmt(totalHoy) + ' (' + ordsHoy.length + ' pedidos), pendientes: ' + pendientes + ', productos: ' + (P||[]).length + ', turno: ' + (TURNO_ABIERTO?'abierto':'cerrado') + '. ';
+  sys += 'PRODUCTOS: ' + (productos||'sin productos') + '. ';
+  sys += 'ACCIONES: cuando el usuario pida algo ejecutable, incluye al final exactamente: <ACCION>{"fn":"NOMBRE","desc":"descripcion corta"}</ACCION>. ';
+  sys += 'FUNCIONES: navTo_dashboard, navTo_orders, navTo_prods, navTo_crm, navTo_cfg, navTo_mesas, navTo_security, exportExcel, exportExcelCRM, cierreCaja, toggleTurno, renderDashboard, renderOrds, activarBanner, desactivarBanner, limpiarRegistradora, setPalette_gold, setPalette_purple, setPalette_red, setPalette_green, setPalette_blue, setPalette_midnight, setPalette_original, mostrarVentas, mostrarTopProductos, mostrarPendientes. ';
+  sys += 'REGLAS: responde en español colombiano, directo y claro, maximo 4 lineas de texto antes de la accion.';
+  return sys;
+}
+
+async function enviarCerebro() {
+  var inp = document.getElementById('cerebro-input');
+  var msg = inp ? inp.value.trim() : '';
+  if (!msg) return;
+  if (!_cbKey || _cbKey.indexOf('sk-ant') !== 0) {
+    cbAgregarMensaje('system', 'Primero configura tu API Key en Ajustes Config.');
+    return;
+  }
+  inp.value = '';
+  inp.style.height = 'auto';
+  cbAgregarMensaje('user', msg);
+  _cbHistory.push({ role: 'user', content: msg });
+  var sendBtn = document.getElementById('cerebro-send-btn');
+  if (sendBtn) sendBtn.disabled = true;
+  _cbTypingEl = cbAgregarTyping();
+
+  try {
+    var hist = _cbHistory.slice(-8);
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': _cbKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 800, system: getCerebroSystem(), messages: hist })
+    });
+    if (!res.ok) { var e = await res.json().catch(function(){return{};}); throw new Error(e.error ? e.error.message : 'Error ' + res.status); }
+    var data = await res.json();
+    var resp = data.content[0].text;
+    _cbHistory.push({ role: 'assistant', content: resp });
+    if (_cbTypingEl) { _cbTypingEl.remove(); _cbTypingEl = null; }
+    var acMatch = resp.match(/<ACCION>([^<]+)<\/ACCION>/);
+    var texto = resp.replace(/<ACCION>[^<]+<\/ACCION>/g, '').trim();
+    if (acMatch) {
+      try { var ac = JSON.parse(acMatch[1]); cbMensajeConAccion(texto, ac); }
+      catch(ex) { cbAgregarMensaje('ai', texto); }
+    } else {
+      cbAgregarMensaje('ai', texto);
+    }
+  } catch(err) {
+    if (_cbTypingEl) { _cbTypingEl.remove(); _cbTypingEl = null; }
+    cbAgregarMensaje('system', 'Error: ' + err.message);
+  }
+  if (sendBtn) sendBtn.disabled = false;
+}
+
+function cbEjecutarAccion(fn) {
+  if (fn.indexOf('navTo_') === 0) {
+    var sec = fn.replace('navTo_', '');
+    var el = document.querySelector('.an[data-sec="' + sec + '"]');
+    if (el && typeof navTo === 'function') { navTo(el); return 'Listo'; }
+  }
+  if (fn.indexOf('setPalette_') === 0) {
+    var pal = fn.replace('setPalette_', '');
+    if (typeof setPalette === 'function') { setPalette(pal); saveC(); return 'Tema aplicado'; }
+  }
+  var acc = {
+    exportExcel: function(){ if(typeof exportExcel==='function') exportExcel(); },
+    exportExcelCRM: function(){ if(typeof exportExcelCRM==='function') exportExcelCRM(); },
+    cierreCaja: function(){ if(typeof cierreCaja==='function') cierreCaja(); },
+    toggleTurno: function(){ if(typeof toggleTurno==='function') toggleTurno(); },
+    renderDashboard: function(){ if(typeof renderDashboard==='function') renderDashboard(); },
+    renderOrds: function(){ if(typeof renderOrds==='function') renderOrds(); },
+    activarBanner: function(){ C.pubActivo=true; if(typeof aplicarBannerPub==='function') aplicarBannerPub(); },
+    desactivarBanner: function(){ C.pubActivo=false; if(typeof aplicarBannerPub==='function') aplicarBannerPub(); },
+    limpiarRegistradora: function(){ if(typeof limpiarRegistradora==='function') limpiarRegistradora(); },
+    mostrarVentas: function(){
+      var h=new Date(); var o=(ORD||[]).filter(function(x){return x._ts&&new Date(x._ts).toDateString()===h.toDateString();});
+      var t=o.reduce(function(s,x){return s+(x.total||0);},0);
+      var p=o.filter(function(x){return x.status==='pending';}).length;
+      var c=o.filter(function(x){return x.status==='paid'||x.status==='dispatched';}).length;
+      cbAgregarMensaje('system','Ventas hoy: '+(C.cur||'$')+fmt(t)+' | Pedidos: '+o.length+' | Cobrados: '+c+' | Pendientes: '+p);
+    },
+    mostrarTopProductos: function(){
+      var cnt={}; (ORD||[]).forEach(function(o){(o.items||[]).forEach(function(i){cnt[i.name]=(cnt[i.name]||0)+i.qty;});});
+      var top=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a];}).slice(0,5);
+      cbAgregarMensaje('system', top.length ? 'Top: '+top.map(function(k,i){return (i+1)+'. '+k+' ('+cnt[k]+')';}).join(' | ') : 'Sin datos aún');
+    },
+    mostrarPendientes: function(){
+      var p=(ORD||[]).filter(function(o){return o.status==='pending';});
+      cbAgregarMensaje('system', p.length ? p.length+' pendientes: '+p.slice(0,5).map(function(o){return o.name+' '+(C.cur||'$')+fmt(o.total);}).join(' | ') : 'Sin pedidos pendientes');
+    }
+  };
+  if (acc[fn]) { acc[fn](); return 'Ejecutado'; }
+  return 'Accion no encontrada: ' + fn;
+}
+
+function cbAgregarMensaje(tipo, texto) {
+  var chat = document.getElementById('cerebro-chat');
+  if (!chat) return null;
+  var div = document.createElement('div');
+  div.className = 'cb-msg ' + tipo;
+  var av = tipo==='user'?'👤':tipo==='system'?'⚡':'🧠';
+  div.innerHTML = '<div class="cb-avatar">'+av+'</div><div class="cb-bubble">'+cbFmt(texto)+'</div>';
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
+}
+
+function cbMensajeConAccion(texto, ac) {
+  var chat = document.getElementById('cerebro-chat');
+  if (!chat) return;
+  var div = document.createElement('div');
+  div.className = 'cb-msg ai';
+  var id = 'cba'+Date.now();
+  div.innerHTML = '<div class="cb-avatar">🧠</div><div class="cb-bubble">'+cbFmt(texto)+'<div style="margin-top:10px"><span class="cb-accion" id="'+id+'" onclick="cbRunBtn(this,\''+ac.fn+'\')">▶ '+(ac.desc||'Ejecutar')+'</span></div></div>';
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function cbRunBtn(el, fn) {
+  var r = cbEjecutarAccion(fn);
+  el.className = 'cb-accion done';
+  el.textContent = '✅ ' + r;
+  el.onclick = null;
+}
+
+function cbAgregarTyping() {
+  var chat = document.getElementById('cerebro-chat');
+  if (!chat) return null;
+  var div = document.createElement('div');
+  div.className = 'cb-msg ai';
+  div.innerHTML = '<div class="cb-avatar">🧠</div><div class="cb-bubble"><div class="cb-typing"><span></span><span></span><span></span></div></div>';
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
+}
+
+function cbFmt(t) {
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
+}
+
+function limpiarCerebro() {
+  _cbHistory = [];
+  var chat = document.getElementById('cerebro-chat');
+  if (chat) chat.innerHTML = '<div class="cb-msg system"><div class="cb-avatar">🧠</div><div class="cb-bubble"><b>Chat limpiado.</b> En que te ayudo?</div></div>';
+}
+
+function usarEjemplo(el) {
+  var inp = document.getElementById('cerebro-input');
+  if (inp) { inp.value = el.textContent.trim(); inp.focus(); }
+}
+
+function toggleMicCerebro() {
+  if (_cbMicActivo) { detenerMicCerebro(); } else { iniciarMicCerebro(); }
+}
+
+function iniciarMicCerebro() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { cbAgregarMensaje('system','Tu navegador no soporta voz. Usa Chrome.'); return; }
+  _cbRecognition = new SR();
+  _cbRecognition.lang = 'es-CO';
+  _cbRecognition.continuous = false;
+  _cbRecognition.interimResults = true;
+  _cbRecognition.onstart = function() {
+    _cbMicActivo = true;
+    var btn = document.getElementById('cerebro-mic-btn');
+    var badge = document.getElementById('cb-estado-badge');
+    if (btn) { btn.classList.add('escuchando'); btn.innerHTML = '🔴'; }
+    if (badge) { badge.textContent = 'Escuchando...'; badge.className = 'cerebro-badge escuchando'; }
+  };
+  _cbRecognition.onresult = function(e) {
+    var t = '';
+    for (var i = e.resultIndex; i < e.results.length; i++) t += e.results[i][0].transcript;
+    var inp = document.getElementById('cerebro-input');
+    if (inp) inp.value = t;
+    if (e.results[e.results.length-1].isFinal) { detenerMicCerebro(); setTimeout(enviarCerebro, 300); }
+  };
+  _cbRecognition.onerror = function(e) {
+    detenerMicCerebro();
+    var msgs = {'not-allowed':'Permiso de microfono denegado.','no-speech':'No escuche nada.','network':'Error de red.'};
+    cbAgregarMensaje('system', msgs[e.error] || 'Error: '+e.error);
+  };
+  _cbRecognition.onend = function() { detenerMicCerebro(); };
+  _cbRecognition.start();
+}
+
+function detenerMicCerebro() {
+  _cbMicActivo = false;
+  if (_cbRecognition) { try { _cbRecognition.stop(); } catch(e){} _cbRecognition = null; }
+  var btn = document.getElementById('cerebro-mic-btn');
+  if (btn) { btn.classList.remove('escuchando'); btn.innerHTML = '🎤'; }
+  actualizarEstadoCerebro();
+}
+
+function cbToast(msg) { if (typeof toast === 'function') toast(msg,'s'); }
+
+
+// ══════════════════════════════════════════
+// PANTALLA DE ACTIVIDAD — Registradora
+// ══════════════════════════════════════════
+function posAgregarActividad(tipo, icono, titulo, detalle, valor) {
+  var feed = document.getElementById('pos-actividad-feed');
+  if (!feed) return;
+  var t = new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  var div = document.createElement('div');
+  div.className = 'act-item ' + (tipo||'info');
+  var valHtml = valor ? '<div class="act-val">' + valor + '</div>' : '';
+  div.innerHTML =
+    '<div style="display:flex;align-items:center;gap:4px">' +
+      '<span class="act-ico">' + icono + '</span>' +
+      '<span style="font-weight:700">' + titulo + '</span>' +
+    '</div>' +
+    (detalle ? '<div style="color:var(--cmut);margin-top:2px">' + detalle + '</div>' : '') +
+    valHtml +
+    '<div class="act-time">' + t + '</div>';
+  // Insertar al principio
+  if (feed.firstChild) {
+    feed.insertBefore(div, feed.firstChild);
+  } else {
+    feed.appendChild(div);
+  }
+  // Máximo 20 items
+  while (feed.children.length > 20) {
+    feed.removeChild(feed.lastChild);
+  }
+}
+
+function posActualizarStats() {
+  var hoy = new Date().toDateString();
+  var ordsHoy = (ORD||[]).filter(function(o){ return o._ts && new Date(o._ts).toDateString()===hoy; });
+  var totalHoy = ordsHoy.reduce(function(s,o){ return s+(o.total||0); },0);
+  var pend = (ORD||[]).filter(function(o){ return o.status==='pending'; }).length;
+  var sv = document.getElementById('pos-stat-ventas');
+  var sp = document.getElementById('pos-stat-pedidos');
+  var se = document.getElementById('pos-stat-pend');
+  var st = document.getElementById('pos-stat-turno');
+  if (sv) sv.textContent = (C.cur||'$') + fmt(totalHoy);
+  if (sp) sp.textContent = ordsHoy.length;
+  if (se) se.textContent = pend;
+  if (st) {
+    if (typeof TURNO_ABIERTO !== 'undefined') {
+      st.textContent = TURNO_ABIERTO ? 'Abierto ✓' : 'Cerrado';
+      st.style.color = TURNO_ABIERTO ? '#34d399' : '#f87171';
+    }
+  }
+}
+
+function actualizarFechaPOS() {
+  var el = document.getElementById('pos-fecha-hora');
+  if (!el) return;
+  var now = new Date();
+  el.textContent = now.toLocaleDateString('es-CO',{weekday:'short',day:'numeric',month:'short'}) +
+    ' — ' + now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  posActualizarStats();
+}
+
+// Interceptar cobrarRegistradora para agregar actividad
+var _originalCobrarRegistradora = typeof cobrarRegistradora === 'function' ? cobrarRegistradora : null;
+
 </script>
 
 <!-- MODAL EDITAR PEDIDO -->
